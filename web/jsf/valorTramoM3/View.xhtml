@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ValorTramoM3ViewDlg" widgetVar="ValorTramoM3ViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewValorTramoM3Title}">
+            <h:form id="ValorTramoM3ViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{valorTramoM3Controller.selected != null}">
+                        <h:outputText value="#{bundle.ViewValorTramoM3Label_idValorTramo}"/>
+                        <h:outputText value="#{valorTramoM3Controller.selected.idValorTramo}" title="#{bundle.ViewValorTramoM3Title_idValorTramo}"/>
+                        <h:outputText value="#{bundle.ViewValorTramoM3Label_nombreTramo}"/>
+                        <h:outputText value="#{valorTramoM3Controller.selected.nombreTramo}" title="#{bundle.ViewValorTramoM3Title_nombreTramo}"/>
+                        <h:outputText value="#{bundle.ViewValorTramoM3Label_m3Inicio}"/>
+                        <h:outputText value="#{valorTramoM3Controller.selected.m3Inicio}" title="#{bundle.ViewValorTramoM3Title_m3Inicio}"/>
+                        <h:outputText value="#{bundle.ViewValorTramoM3Label_m3Final}"/>
+                        <h:outputText value="#{valorTramoM3Controller.selected.m3Final}" title="#{bundle.ViewValorTramoM3Title_m3Final}"/>
+                        <h:outputText value="#{bundle.ViewValorTramoM3Label_porcentajeRecargo}"/>
+                        <h:outputText value="#{valorTramoM3Controller.selected.porcentajeRecargo}" title="#{bundle.ViewValorTramoM3Title_porcentajeRecargo}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ValorTramoM3ViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

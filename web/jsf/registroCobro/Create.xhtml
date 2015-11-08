@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RegistroCobroCreateDlg" widgetVar="RegistroCobroCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRegistroCobroTitle}">
+            <h:form id="RegistroCobroCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{registroCobroController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_idRegistroCobro}" for="idRegistroCobro" />
+                        <p:inputText id="idRegistroCobro" value="#{registroCobroController.selected.idRegistroCobro}" title="#{bundle.CreateRegistroCobroTitle_idRegistroCobro}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_idRegistroCobro}"/>
+                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_cuotas}" for="cuotas" />
+                        <p:inputText id="cuotas" value="#{registroCobroController.selected.cuotas}" title="#{bundle.CreateRegistroCobroTitle_cuotas}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_cuotas}"/>
+                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_monto}" for="monto" />
+                        <p:inputText id="monto" value="#{registroCobroController.selected.monto}" title="#{bundle.CreateRegistroCobroTitle_monto}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_monto}"/>
+                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{registroCobroController.selected.descripcion}" title="#{bundle.CreateRegistroCobroTitle_descripcion}" />
+                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_fechaCreacion}" for="fechaCreacion" />
+                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy" value="#{registroCobroController.selected.fechaCreacion}" title="#{bundle.EditRegistroCobroTitle_fechaCreacion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_mesPrimeraCuota}" for="mesPrimeraCuota" />
+                        <p:inputText id="mesPrimeraCuota" value="#{registroCobroController.selected.mesPrimeraCuota}" title="#{bundle.CreateRegistroCobroTitle_mesPrimeraCuota}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_mesPrimeraCuota}"/>
+                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_idCuenta}" for="idCuenta" />
+                        <p:selectOneMenu id="idCuenta" value="#{registroCobroController.selected.idCuenta}" required="true" requiredMessage="#{bundle.EditRegistroCobroRequiredMessage_idCuenta}">
+                            <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
+                                           var="idCuentaItem"
+                                           itemValue="#{idCuentaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_idTipoCobro}" for="idTipoCobro" />
+                        <p:selectOneMenu id="idTipoCobro" value="#{registroCobroController.selected.idTipoCobro}" required="true" requiredMessage="#{bundle.EditRegistroCobroRequiredMessage_idTipoCobro}">
+                            <f:selectItems value="#{tipoCobroController.itemsAvailableSelectOne}"
+                                           var="idTipoCobroItem"
+                                           itemValue="#{idTipoCobroItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{registroCobroController.create}" value="#{bundle.Save}" update="display,:RegistroCobroListForm:datalist,:growl" oncomplete="handleSubmit(args,'RegistroCobroCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RegistroCobroCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

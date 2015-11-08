@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SocioCreateDlg" widgetVar="SocioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSocioTitle}">
+            <h:form id="SocioCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{socioController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_rut}" for="rut" />
+                        <p:inputText id="rut" value="#{socioController.selected.rut}" title="#{bundle.CreateSocioTitle_rut}" required="true" requiredMessage="#{bundle.CreateSocioRequiredMessage_rut}"/>
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{socioController.selected.nombre}" title="#{bundle.CreateSocioTitle_nombre}" required="true" requiredMessage="#{bundle.CreateSocioRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_apellido}" for="apellido" />
+                        <p:inputText id="apellido" value="#{socioController.selected.apellido}" title="#{bundle.CreateSocioTitle_apellido}" required="true" requiredMessage="#{bundle.CreateSocioRequiredMessage_apellido}"/>
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_celular}" for="celular" />
+                        <p:inputText id="celular" value="#{socioController.selected.celular}" title="#{bundle.CreateSocioTitle_celular}" />
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{socioController.selected.direccion}" title="#{bundle.CreateSocioTitle_direccion}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{socioController.create}" value="#{bundle.Save}" update="display,:SocioListForm:datalist,:growl" oncomplete="handleSubmit(args,'SocioCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SocioCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

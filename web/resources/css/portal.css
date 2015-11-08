@@ -1,0 +1,25 @@
+body {
+    background-image: url("images/fondo01.jpg");
+    background-color: #cccccc;
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.banner {
+    background-image: url("images/BannerAgua01.jpg");
+    background-color: transparent;
+    height:80px;
+}
+
+.layoutNoBorder{
+   background-color:#ffffff;  
+   border: none;
+   padding: 0px;
+}
+
+.myLayoutStyleClass .ui-layout-unit-content{
+   background: transparent;
+   border: none;
+   padding: 0px;
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CobroCuotaCreateDlg" widgetVar="CobroCuotaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCobroCuotaTitle}">
+            <h:form id="CobroCuotaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cobroCuotaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateCobroCuotaLabel_cobroCuotaPK_numeroCuota}" for="cobroCuotaPK_numeroCuota" />
+                        <p:inputText id="cobroCuotaPK_numeroCuota" value="#{cobroCuotaController.selected.cobroCuotaPK.numeroCuota}" title="#{bundle.CreateCobroCuotaTitle_cobroCuotaPK_numeroCuota}" required="true" requiredMessage="#{bundle.CreateCobroCuotaRequiredMessage_cobroCuotaPK_numeroCuota}"/>
+                        <p:outputLabel value="#{bundle.CreateCobroCuotaLabel_valorCuota}" for="valorCuota" />
+                        <p:inputText id="valorCuota" value="#{cobroCuotaController.selected.valorCuota}" title="#{bundle.CreateCobroCuotaTitle_valorCuota}" required="true" requiredMessage="#{bundle.CreateCobroCuotaRequiredMessage_valorCuota}"/>
+                        <p:outputLabel value="#{bundle.CreateCobroCuotaLabel_mes}" for="mes" />
+                        <p:inputText id="mes" value="#{cobroCuotaController.selected.mes}" title="#{bundle.CreateCobroCuotaTitle_mes}" required="true" requiredMessage="#{bundle.CreateCobroCuotaRequiredMessage_mes}"/>
+                        <p:outputLabel value="#{bundle.CreateCobroCuotaLabel_anio}" for="anio" />
+                        <p:inputText id="anio" value="#{cobroCuotaController.selected.anio}" title="#{bundle.CreateCobroCuotaTitle_anio}" required="true" requiredMessage="#{bundle.CreateCobroCuotaRequiredMessage_anio}"/>
+                        <p:outputLabel value="#{bundle.CreateCobroCuotaLabel_pagado}" for="pagado" />
+                        <p:selectBooleanCheckbox id="pagado" value="#{cobroCuotaController.selected.pagado}" required="true" requiredMessage="#{bundle.EditCobroCuotaRequiredMessage_pagado}"/>
+                        <p:outputLabel value="#{bundle.CreateCobroCuotaLabel_registroCobro}" for="registroCobro" />
+                        <p:selectOneMenu id="registroCobro" value="#{cobroCuotaController.selected.registroCobro}" required="true" requiredMessage="#{bundle.EditCobroCuotaRequiredMessage_registroCobro}">
+                            <f:selectItems value="#{registroCobroController.itemsAvailableSelectOne}"
+                                           var="registroCobroItem"
+                                           itemValue="#{registroCobroItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cobroCuotaController.create}" value="#{bundle.Save}" update="display,:CobroCuotaListForm:datalist,:growl" oncomplete="handleSubmit(args,'CobroCuotaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CobroCuotaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

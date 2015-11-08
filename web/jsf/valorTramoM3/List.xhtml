@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListValorTramoM3Title}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="ValorTramoM3ListForm">
+                <p:panel header="#{bundle.ListValorTramoM3Title}">
+                    <p:dataTable id="datalist" value="#{valorTramoM3Controller.items}" var="item"
+                                 selectionMode="single" selection="#{valorTramoM3Controller.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idValorTramo}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValorTramoM3Title_idValorTramo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idValorTramo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValorTramoM3Title_nombreTramo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombreTramo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValorTramoM3Title_m3Inicio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.m3Inicio}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValorTramoM3Title_m3Final}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.m3Final}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValorTramoM3Title_porcentajeRecargo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.porcentajeRecargo}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{valorTramoM3Controller.prepareCreate}" update=":ValorTramoM3CreateForm" oncomplete="PF('ValorTramoM3CreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ValorTramoM3ViewForm" oncomplete="PF('ValorTramoM3ViewDialog').show()" disabled="#{empty valorTramoM3Controller.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ValorTramoM3EditForm" oncomplete="PF('ValorTramoM3EditDialog').show()" disabled="#{empty valorTramoM3Controller.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{valorTramoM3Controller.destroy}" update=":growl,datalist" disabled="#{empty valorTramoM3Controller.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

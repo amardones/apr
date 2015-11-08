@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SocioViewDlg" widgetVar="SocioViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewSocioTitle}">
+            <h:form id="SocioViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{socioController.selected != null}">
+                        <h:outputText value="#{bundle.ViewSocioLabel_rut}"/>
+                        <h:outputText value="#{socioController.selected.rut}" title="#{bundle.ViewSocioTitle_rut}"/>
+                        <h:outputText value="#{bundle.ViewSocioLabel_nombre}"/>
+                        <h:outputText value="#{socioController.selected.nombre}" title="#{bundle.ViewSocioTitle_nombre}"/>
+                        <h:outputText value="#{bundle.ViewSocioLabel_apellido}"/>
+                        <h:outputText value="#{socioController.selected.apellido}" title="#{bundle.ViewSocioTitle_apellido}"/>
+                        <h:outputText value="#{bundle.ViewSocioLabel_celular}"/>
+                        <h:outputText value="#{socioController.selected.celular}" title="#{bundle.ViewSocioTitle_celular}"/>
+                        <h:outputText value="#{bundle.ViewSocioLabel_direccion}"/>
+                        <h:outputText value="#{socioController.selected.direccion}" title="#{bundle.ViewSocioTitle_direccion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="SocioViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

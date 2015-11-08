@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RegistroEstadoCreateDlg" widgetVar="RegistroEstadoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRegistroEstadoTitle}">
+            <h:form id="RegistroEstadoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{registroEstadoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateRegistroEstadoLabel_estadoAnterior}" for="estadoAnterior" />
+                        <p:inputText id="estadoAnterior" value="#{registroEstadoController.selected.estadoAnterior}" title="#{bundle.CreateRegistroEstadoTitle_estadoAnterior}" required="true" requiredMessage="#{bundle.CreateRegistroEstadoRequiredMessage_estadoAnterior}"/>
+                        <p:outputLabel value="#{bundle.CreateRegistroEstadoLabel_estadoActual}" for="estadoActual" />
+                        <p:inputText id="estadoActual" value="#{registroEstadoController.selected.estadoActual}" title="#{bundle.CreateRegistroEstadoTitle_estadoActual}" required="true" requiredMessage="#{bundle.CreateRegistroEstadoRequiredMessage_estadoActual}"/>
+                        <p:outputLabel value="#{bundle.CreateRegistroEstadoLabel_metrosCubicos}" for="metrosCubicos" />
+                        <p:inputText id="metrosCubicos" value="#{registroEstadoController.selected.metrosCubicos}" title="#{bundle.CreateRegistroEstadoTitle_metrosCubicos}" required="true" requiredMessage="#{bundle.CreateRegistroEstadoRequiredMessage_metrosCubicos}"/>
+                        <p:outputLabel value="#{bundle.CreateRegistroEstadoLabel_fechaRegistro}" for="fechaRegistro" />
+                        <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy HH:mm:ss" value="#{registroEstadoController.selected.fechaRegistro}" title="#{bundle.EditRegistroEstadoTitle_fechaRegistro}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateRegistroEstadoLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{registroEstadoController.selected.descripcion}" title="#{bundle.CreateRegistroEstadoTitle_descripcion}" />
+                        <p:outputLabel value="#{bundle.CreateRegistroEstadoLabel_cuenta}" for="cuenta" />
+                        <p:selectOneMenu id="cuenta" value="#{registroEstadoController.selected.cuenta}" required="true" requiredMessage="#{bundle.EditRegistroEstadoRequiredMessage_cuenta}">
+                            <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
+                                           var="cuentaItem"
+                                           itemValue="#{cuentaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateRegistroEstadoLabel_periodo}" for="periodo" />
+                        <p:selectOneMenu id="periodo" value="#{registroEstadoController.selected.periodo}" required="true" requiredMessage="#{bundle.EditRegistroEstadoRequiredMessage_periodo}">
+                            <f:selectItems value="#{periodoController.itemsAvailableSelectOne}"
+                                           var="periodoItem"
+                                           itemValue="#{periodoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{registroEstadoController.create}" value="#{bundle.Save}" update="display,:RegistroEstadoListForm:datalist,:growl" oncomplete="handleSubmit(args,'RegistroEstadoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RegistroEstadoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

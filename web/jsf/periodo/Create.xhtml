@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PeriodoCreateDlg" widgetVar="PeriodoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePeriodoTitle}">
+            <h:form id="PeriodoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{periodoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_idPeriodo}" for="idPeriodo" />
+                        <p:inputText id="idPeriodo" value="#{periodoController.selected.idPeriodo}" title="#{bundle.CreatePeriodoTitle_idPeriodo}" required="true" requiredMessage="#{bundle.CreatePeriodoRequiredMessage_idPeriodo}"/>
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{periodoController.selected.nombre}" title="#{bundle.CreatePeriodoTitle_nombre}" required="true" requiredMessage="#{bundle.CreatePeriodoRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaInicio}" for="fechaInicio" />
+                        <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{periodoController.selected.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaInicio}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaFin}" for="fechaFin" />
+                        <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{periodoController.selected.fechaFin}" title="#{bundle.EditPeriodoTitle_fechaFin}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaFin}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaVencimiento}" for="fechaVencimiento" />
+                        <p:calendar id="fechaVencimiento" pattern="MM/dd/yyyy" value="#{periodoController.selected.fechaVencimiento}" title="#{bundle.EditPeriodoTitle_fechaVencimiento}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaVencimiento}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaTomaLectura}" for="fechaTomaLectura" />
+                        <p:calendar id="fechaTomaLectura" pattern="MM/dd/yyyy" value="#{periodoController.selected.fechaTomaLectura}" title="#{bundle.EditPeriodoTitle_fechaTomaLectura}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaTomaLectura}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaEmision}" for="fechaEmision" />
+                        <p:calendar id="fechaEmision" pattern="MM/dd/yyyy" value="#{periodoController.selected.fechaEmision}" title="#{bundle.EditPeriodoTitle_fechaEmision}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaEmision}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_idValoresParametricos}" for="idValoresParametricos" />
+                        <p:selectOneMenu id="idValoresParametricos" value="#{periodoController.selected.idValoresParametricos}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_idValoresParametricos}">
+                            <f:selectItems value="#{valoresParametricosController.itemsAvailableSelectOne}"
+                                           var="idValoresParametricosItem"
+                                           itemValue="#{idValoresParametricosItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{periodoController.create}" value="#{bundle.Save}" update="display,:PeriodoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PeriodoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PeriodoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

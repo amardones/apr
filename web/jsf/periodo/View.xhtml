@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PeriodoViewDlg" widgetVar="PeriodoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPeriodoTitle}">
+            <h:form id="PeriodoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{periodoController.selected != null}">
+                        <h:outputText value="#{bundle.ViewPeriodoLabel_idPeriodo}"/>
+                        <h:outputText value="#{periodoController.selected.idPeriodo}" title="#{bundle.ViewPeriodoTitle_idPeriodo}"/>
+                        <h:outputText value="#{bundle.ViewPeriodoLabel_nombre}"/>
+                        <h:outputText value="#{periodoController.selected.nombre}" title="#{bundle.ViewPeriodoTitle_nombre}"/>
+                        <h:outputText value="#{bundle.ViewPeriodoLabel_fechaInicio}"/>
+                        <h:outputText value="#{periodoController.selected.fechaInicio}" title="#{bundle.ViewPeriodoTitle_fechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewPeriodoLabel_fechaFin}"/>
+                        <h:outputText value="#{periodoController.selected.fechaFin}" title="#{bundle.ViewPeriodoTitle_fechaFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewPeriodoLabel_fechaVencimiento}"/>
+                        <h:outputText value="#{periodoController.selected.fechaVencimiento}" title="#{bundle.ViewPeriodoTitle_fechaVencimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewPeriodoLabel_fechaTomaLectura}"/>
+                        <h:outputText value="#{periodoController.selected.fechaTomaLectura}" title="#{bundle.ViewPeriodoTitle_fechaTomaLectura}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewPeriodoLabel_fechaEmision}"/>
+                        <h:outputText value="#{periodoController.selected.fechaEmision}" title="#{bundle.ViewPeriodoTitle_fechaEmision}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewPeriodoLabel_idValoresParametricos}"/>
+                        <h:outputText value="#{periodoController.selected.idValoresParametricos}" title="#{bundle.ViewPeriodoTitle_idValoresParametricos}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PeriodoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

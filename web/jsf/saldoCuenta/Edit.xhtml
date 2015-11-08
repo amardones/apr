@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SaldoCuentaEditDlg" widgetVar="SaldoCuentaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditSaldoCuentaTitle}">
+            <h:form id="SaldoCuentaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{saldoCuentaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditSaldoCuentaLabel_idSaldoCuenta}" for="idSaldoCuenta" />
+                        <p:inputText id="idSaldoCuenta" value="#{saldoCuentaController.selected.idSaldoCuenta}" title="#{bundle.EditSaldoCuentaTitle_idSaldoCuenta}" required="true" requiredMessage="#{bundle.EditSaldoCuentaRequiredMessage_idSaldoCuenta}"/>
+                        <p:outputLabel value="#{bundle.EditSaldoCuentaLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{saldoCuentaController.selected.descripcion}" title="#{bundle.EditSaldoCuentaTitle_descripcion}" />
+                        <p:outputLabel value="#{bundle.EditSaldoCuentaLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy HH:mm:ss" value="#{saldoCuentaController.selected.fecha}" title="#{bundle.EditSaldoCuentaTitle_fecha}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditSaldoCuentaLabel_monto}" for="monto" />
+                        <p:inputText id="monto" value="#{saldoCuentaController.selected.monto}" title="#{bundle.EditSaldoCuentaTitle_monto}" required="true" requiredMessage="#{bundle.EditSaldoCuentaRequiredMessage_monto}"/>
+                        <p:outputLabel value="#{bundle.EditSaldoCuentaLabel_idCuenta}" for="idCuenta" />
+                        <p:selectOneMenu id="idCuenta" value="#{saldoCuentaController.selected.idCuenta}" required="true" requiredMessage="#{bundle.EditSaldoCuentaRequiredMessage_idCuenta}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
+                                           var="idCuentaItem"
+                                           itemValue="#{idCuentaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditSaldoCuentaLabel_tipoMovimiento}" for="tipoMovimiento" />
+                        <p:selectOneMenu id="tipoMovimiento" value="#{saldoCuentaController.selected.tipoMovimiento}" required="true" requiredMessage="#{bundle.EditSaldoCuentaRequiredMessage_tipoMovimiento}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoMovimientoController.itemsAvailableSelectOne}"
+                                           var="tipoMovimientoItem"
+                                           itemValue="#{tipoMovimientoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{saldoCuentaController.update}" value="#{bundle.Save}" update="display,:SaldoCuentaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SaldoCuentaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SaldoCuentaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

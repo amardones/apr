@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoCobroViewDlg" widgetVar="TipoCobroViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewTipoCobroTitle}">
+            <h:form id="TipoCobroViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipoCobroController.selected != null}">
+                        <h:outputText value="#{bundle.ViewTipoCobroLabel_idTipoCobro}"/>
+                        <h:outputText value="#{tipoCobroController.selected.idTipoCobro}" title="#{bundle.ViewTipoCobroTitle_idTipoCobro}"/>
+                        <h:outputText value="#{bundle.ViewTipoCobroLabel_codigoTipoCobro}"/>
+                        <h:outputText value="#{tipoCobroController.selected.codigoTipoCobro}" title="#{bundle.ViewTipoCobroTitle_codigoTipoCobro}"/>
+                        <h:outputText value="#{bundle.ViewTipoCobroLabel_nombre}"/>
+                        <h:outputText value="#{tipoCobroController.selected.nombre}" title="#{bundle.ViewTipoCobroTitle_nombre}"/>
+                        <h:outputText value="#{bundle.ViewTipoCobroLabel_aceptaPagoCuotas}"/>
+                        <p:selectBooleanCheckbox value="#{tipoCobroController.selected.aceptaPagoCuotas}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewTipoCobroLabel_aceptaRegistroCobro}"/>
+                        <p:selectBooleanCheckbox value="#{tipoCobroController.selected.aceptaRegistroCobro}" disabled="true"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="TipoCobroViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleAvisoCobroCreateDlg" widgetVar="DetalleAvisoCobroCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDetalleAvisoCobroTitle}">
+            <h:form id="DetalleAvisoCobroCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detalleAvisoCobroController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDetalleAvisoCobroLabel_idDetalleAvisoCobro}" for="idDetalleAvisoCobro" />
+                        <p:inputText id="idDetalleAvisoCobro" value="#{detalleAvisoCobroController.selected.idDetalleAvisoCobro}" title="#{bundle.CreateDetalleAvisoCobroTitle_idDetalleAvisoCobro}" required="true" requiredMessage="#{bundle.CreateDetalleAvisoCobroRequiredMessage_idDetalleAvisoCobro}"/>
+                        <p:outputLabel value="#{bundle.CreateDetalleAvisoCobroLabel_idDetalleAvisoCobroAnt}" for="idDetalleAvisoCobroAnt" />
+                        <p:inputText id="idDetalleAvisoCobroAnt" value="#{detalleAvisoCobroController.selected.idDetalleAvisoCobroAnt}" title="#{bundle.CreateDetalleAvisoCobroTitle_idDetalleAvisoCobroAnt}" required="true" requiredMessage="#{bundle.CreateDetalleAvisoCobroRequiredMessage_idDetalleAvisoCobroAnt}"/>
+                        <p:outputLabel value="#{bundle.CreateDetalleAvisoCobroLabel_subTotal}" for="subTotal" />
+                        <p:inputText id="subTotal" value="#{detalleAvisoCobroController.selected.subTotal}" title="#{bundle.CreateDetalleAvisoCobroTitle_subTotal}" required="true" requiredMessage="#{bundle.CreateDetalleAvisoCobroRequiredMessage_subTotal}"/>
+                        <p:outputLabel value="#{bundle.CreateDetalleAvisoCobroLabel_descuento}" for="descuento" />
+                        <p:inputText id="descuento" value="#{detalleAvisoCobroController.selected.descuento}" title="#{bundle.CreateDetalleAvisoCobroTitle_descuento}" required="true" requiredMessage="#{bundle.CreateDetalleAvisoCobroRequiredMessage_descuento}"/>
+                        <p:outputLabel value="#{bundle.CreateDetalleAvisoCobroLabel_total}" for="total" />
+                        <p:inputText id="total" value="#{detalleAvisoCobroController.selected.total}" title="#{bundle.CreateDetalleAvisoCobroTitle_total}" required="true" requiredMessage="#{bundle.CreateDetalleAvisoCobroRequiredMessage_total}"/>
+                        <p:outputLabel value="#{bundle.CreateDetalleAvisoCobroLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{detalleAvisoCobroController.selected.descripcion}" title="#{bundle.CreateDetalleAvisoCobroTitle_descripcion}" />
+                        <p:outputLabel value="#{bundle.CreateDetalleAvisoCobroLabel_pagado}" for="pagado" />
+                        <p:selectBooleanCheckbox id="pagado" value="#{detalleAvisoCobroController.selected.pagado}" required="true" requiredMessage="#{bundle.EditDetalleAvisoCobroRequiredMessage_pagado}"/>
+                        <p:outputLabel value="#{bundle.CreateDetalleAvisoCobroLabel_avisoCobro}" for="avisoCobro" />
+                        <p:selectOneMenu id="avisoCobro" value="#{detalleAvisoCobroController.selected.avisoCobro}" required="true" requiredMessage="#{bundle.EditDetalleAvisoCobroRequiredMessage_avisoCobro}">
+                            <f:selectItems value="#{avisoCobroController.itemsAvailableSelectOne}"
+                                           var="avisoCobroItem"
+                                           itemValue="#{avisoCobroItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateDetalleAvisoCobroLabel_idTipoCobro}" for="idTipoCobro" />
+                        <p:selectOneMenu id="idTipoCobro" value="#{detalleAvisoCobroController.selected.idTipoCobro}" required="true" requiredMessage="#{bundle.EditDetalleAvisoCobroRequiredMessage_idTipoCobro}">
+                            <f:selectItems value="#{tipoCobroController.itemsAvailableSelectOne}"
+                                           var="idTipoCobroItem"
+                                           itemValue="#{idTipoCobroItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalleAvisoCobroController.create}" value="#{bundle.Save}" update="display,:DetalleAvisoCobroListForm:datalist,:growl" oncomplete="handleSubmit(args,'DetalleAvisoCobroCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DetalleAvisoCobroCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

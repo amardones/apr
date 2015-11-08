@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListValoresParametricosTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="ValoresParametricosListForm">
+                <p:panel header="#{bundle.ListValoresParametricosTitle}">
+                    <p:dataTable id="datalist" value="#{valoresParametricosController.items}" var="item"
+                                 selectionMode="single" selection="#{valoresParametricosController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idValoresParametricos}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_idValoresParametricos}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idValoresParametricos}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_valorCargoFijo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valorCargoFijo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_valorM3}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valorM3}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_valorCuotaSocial}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valorCuotaSocial}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_valorInteresDia}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valorInteresDia}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_valorReunionObligatoria}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valorReunionObligatoria}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_valorReunionNoObligatoria}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valorReunionNoObligatoria}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_m3Fijos}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.m3Fijos}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_m3LimiteDctoInterno}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.m3LimiteDctoInterno}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_porcentajeDctoInterno}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.porcentajeDctoInterno}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_fechaActualizacion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechaActualizacion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_descripcionCambios}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcionCambios}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_diaVencimiento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.diaVencimiento}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_diaLecturaMedidor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.diaLecturaMedidor}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_diaEmision}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.diaEmision}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{valoresParametricosController.prepareCreate}" update=":ValoresParametricosCreateForm" oncomplete="PF('ValoresParametricosCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ValoresParametricosViewForm" oncomplete="PF('ValoresParametricosViewDialog').show()" disabled="#{empty valoresParametricosController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ValoresParametricosEditForm" oncomplete="PF('ValoresParametricosEditDialog').show()" disabled="#{empty valoresParametricosController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{valoresParametricosController.destroy}" update=":growl,datalist" disabled="#{empty valoresParametricosController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

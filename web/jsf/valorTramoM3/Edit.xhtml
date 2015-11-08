@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ValorTramoM3EditDlg" widgetVar="ValorTramoM3EditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditValorTramoM3Title}">
+            <h:form id="ValorTramoM3EditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{valorTramoM3Controller.selected != null}">
+                        <p:outputLabel value="#{bundle.EditValorTramoM3Label_idValorTramo}" for="idValorTramo" />
+                        <p:inputText id="idValorTramo" value="#{valorTramoM3Controller.selected.idValorTramo}" title="#{bundle.EditValorTramoM3Title_idValorTramo}" required="true" requiredMessage="#{bundle.EditValorTramoM3RequiredMessage_idValorTramo}"/>
+                        <p:outputLabel value="#{bundle.EditValorTramoM3Label_nombreTramo}" for="nombreTramo" />
+                        <p:inputText id="nombreTramo" value="#{valorTramoM3Controller.selected.nombreTramo}" title="#{bundle.EditValorTramoM3Title_nombreTramo}" required="true" requiredMessage="#{bundle.EditValorTramoM3RequiredMessage_nombreTramo}"/>
+                        <p:outputLabel value="#{bundle.EditValorTramoM3Label_m3Inicio}" for="m3Inicio" />
+                        <p:inputText id="m3Inicio" value="#{valorTramoM3Controller.selected.m3Inicio}" title="#{bundle.EditValorTramoM3Title_m3Inicio}" required="true" requiredMessage="#{bundle.EditValorTramoM3RequiredMessage_m3Inicio}"/>
+                        <p:outputLabel value="#{bundle.EditValorTramoM3Label_m3Final}" for="m3Final" />
+                        <p:inputText id="m3Final" value="#{valorTramoM3Controller.selected.m3Final}" title="#{bundle.EditValorTramoM3Title_m3Final}" required="true" requiredMessage="#{bundle.EditValorTramoM3RequiredMessage_m3Final}"/>
+                        <p:outputLabel value="#{bundle.EditValorTramoM3Label_porcentajeRecargo}" for="porcentajeRecargo" />
+                        <p:inputText id="porcentajeRecargo" value="#{valorTramoM3Controller.selected.porcentajeRecargo}" title="#{bundle.EditValorTramoM3Title_porcentajeRecargo}" required="true" requiredMessage="#{bundle.EditValorTramoM3RequiredMessage_porcentajeRecargo}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{valorTramoM3Controller.update}" value="#{bundle.Save}" update="display,:ValorTramoM3ListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ValorTramoM3EditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ValorTramoM3EditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

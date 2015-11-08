@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SubsidioViewDlg" widgetVar="SubsidioViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewSubsidioTitle}">
+            <h:form id="SubsidioViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{subsidioController.selected != null}">
+                        <h:outputText value="#{bundle.ViewSubsidioLabel_idSubsidio}"/>
+                        <h:outputText value="#{subsidioController.selected.idSubsidio}" title="#{bundle.ViewSubsidioTitle_idSubsidio}"/>
+                        <h:outputText value="#{bundle.ViewSubsidioLabel_nombre}"/>
+                        <h:outputText value="#{subsidioController.selected.nombre}" title="#{bundle.ViewSubsidioTitle_nombre}"/>
+                        <h:outputText value="#{bundle.ViewSubsidioLabel_descripcion}"/>
+                        <h:outputText value="#{subsidioController.selected.descripcion}" title="#{bundle.ViewSubsidioTitle_descripcion}"/>
+                        <h:outputText value="#{bundle.ViewSubsidioLabel_porcentaje}"/>
+                        <h:outputText value="#{subsidioController.selected.porcentaje}" title="#{bundle.ViewSubsidioTitle_porcentaje}"/>
+                        <h:outputText value="#{bundle.ViewSubsidioLabel_metrosCubicosTope}"/>
+                        <h:outputText value="#{subsidioController.selected.metrosCubicosTope}" title="#{bundle.ViewSubsidioTitle_metrosCubicosTope}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="SubsidioViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

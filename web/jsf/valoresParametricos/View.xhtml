@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ValoresParametricosViewDlg" widgetVar="ValoresParametricosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewValoresParametricosTitle}">
+            <h:form id="ValoresParametricosViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{valoresParametricosController.selected != null}">
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_idValoresParametricos}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.idValoresParametricos}" title="#{bundle.ViewValoresParametricosTitle_idValoresParametricos}"/>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_valorCargoFijo}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.valorCargoFijo}" title="#{bundle.ViewValoresParametricosTitle_valorCargoFijo}"/>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_valorM3}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.valorM3}" title="#{bundle.ViewValoresParametricosTitle_valorM3}"/>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_valorCuotaSocial}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.valorCuotaSocial}" title="#{bundle.ViewValoresParametricosTitle_valorCuotaSocial}"/>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_valorInteresDia}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.valorInteresDia}" title="#{bundle.ViewValoresParametricosTitle_valorInteresDia}"/>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_valorReunionObligatoria}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.valorReunionObligatoria}" title="#{bundle.ViewValoresParametricosTitle_valorReunionObligatoria}"/>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_valorReunionNoObligatoria}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.valorReunionNoObligatoria}" title="#{bundle.ViewValoresParametricosTitle_valorReunionNoObligatoria}"/>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_m3Fijos}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.m3Fijos}" title="#{bundle.ViewValoresParametricosTitle_m3Fijos}"/>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_m3LimiteDctoInterno}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.m3LimiteDctoInterno}" title="#{bundle.ViewValoresParametricosTitle_m3LimiteDctoInterno}"/>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_porcentajeDctoInterno}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.porcentajeDctoInterno}" title="#{bundle.ViewValoresParametricosTitle_porcentajeDctoInterno}"/>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_fechaActualizacion}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.fechaActualizacion}" title="#{bundle.ViewValoresParametricosTitle_fechaActualizacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_descripcionCambios}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.descripcionCambios}" title="#{bundle.ViewValoresParametricosTitle_descripcionCambios}"/>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_diaVencimiento}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.diaVencimiento}" title="#{bundle.ViewValoresParametricosTitle_diaVencimiento}"/>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_diaLecturaMedidor}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.diaLecturaMedidor}" title="#{bundle.ViewValoresParametricosTitle_diaLecturaMedidor}"/>
+                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_diaEmision}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.diaEmision}" title="#{bundle.ViewValoresParametricosTitle_diaEmision}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ValoresParametricosViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

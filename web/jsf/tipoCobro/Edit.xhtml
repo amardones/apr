@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoCobroEditDlg" widgetVar="TipoCobroEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditTipoCobroTitle}">
+            <h:form id="TipoCobroEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipoCobroController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditTipoCobroLabel_idTipoCobro}" for="idTipoCobro" />
+                        <p:inputText id="idTipoCobro" value="#{tipoCobroController.selected.idTipoCobro}" title="#{bundle.EditTipoCobroTitle_idTipoCobro}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_idTipoCobro}"/>
+                        <p:outputLabel value="#{bundle.EditTipoCobroLabel_codigoTipoCobro}" for="codigoTipoCobro" />
+                        <p:inputText id="codigoTipoCobro" value="#{tipoCobroController.selected.codigoTipoCobro}" title="#{bundle.EditTipoCobroTitle_codigoTipoCobro}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_codigoTipoCobro}"/>
+                        <p:outputLabel value="#{bundle.EditTipoCobroLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{tipoCobroController.selected.nombre}" title="#{bundle.EditTipoCobroTitle_nombre}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.EditTipoCobroLabel_aceptaPagoCuotas}" for="aceptaPagoCuotas" />
+                        <p:selectBooleanCheckbox id="aceptaPagoCuotas" value="#{tipoCobroController.selected.aceptaPagoCuotas}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_aceptaPagoCuotas}"/>
+                        <p:outputLabel value="#{bundle.EditTipoCobroLabel_aceptaRegistroCobro}" for="aceptaRegistroCobro" />
+                        <p:selectBooleanCheckbox id="aceptaRegistroCobro" value="#{tipoCobroController.selected.aceptaRegistroCobro}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_aceptaRegistroCobro}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoCobroController.update}" value="#{bundle.Save}" update="display,:TipoCobroListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TipoCobroEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TipoCobroEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

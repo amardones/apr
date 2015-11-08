@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RegistroCobroViewDlg" widgetVar="RegistroCobroViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRegistroCobroTitle}">
+            <h:form id="RegistroCobroViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{registroCobroController.selected != null}">
+                        <h:outputText value="#{bundle.ViewRegistroCobroLabel_idRegistroCobro}"/>
+                        <h:outputText value="#{registroCobroController.selected.idRegistroCobro}" title="#{bundle.ViewRegistroCobroTitle_idRegistroCobro}"/>
+                        <h:outputText value="#{bundle.ViewRegistroCobroLabel_cuotas}"/>
+                        <h:outputText value="#{registroCobroController.selected.cuotas}" title="#{bundle.ViewRegistroCobroTitle_cuotas}"/>
+                        <h:outputText value="#{bundle.ViewRegistroCobroLabel_monto}"/>
+                        <h:outputText value="#{registroCobroController.selected.monto}" title="#{bundle.ViewRegistroCobroTitle_monto}"/>
+                        <h:outputText value="#{bundle.ViewRegistroCobroLabel_descripcion}"/>
+                        <h:outputText value="#{registroCobroController.selected.descripcion}" title="#{bundle.ViewRegistroCobroTitle_descripcion}"/>
+                        <h:outputText value="#{bundle.ViewRegistroCobroLabel_fechaCreacion}"/>
+                        <h:outputText value="#{registroCobroController.selected.fechaCreacion}" title="#{bundle.ViewRegistroCobroTitle_fechaCreacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewRegistroCobroLabel_mesPrimeraCuota}"/>
+                        <h:outputText value="#{registroCobroController.selected.mesPrimeraCuota}" title="#{bundle.ViewRegistroCobroTitle_mesPrimeraCuota}"/>
+                        <h:outputText value="#{bundle.ViewRegistroCobroLabel_idCuenta}"/>
+                        <h:outputText value="#{registroCobroController.selected.idCuenta}" title="#{bundle.ViewRegistroCobroTitle_idCuenta}"/>
+                        <h:outputText value="#{bundle.ViewRegistroCobroLabel_idTipoCobro}"/>
+                        <h:outputText value="#{registroCobroController.selected.idTipoCobro}" title="#{bundle.ViewRegistroCobroTitle_idTipoCobro}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="RegistroCobroViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

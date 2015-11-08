@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AvisoCobroEditDlg" widgetVar="AvisoCobroEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditAvisoCobroTitle}">
+            <h:form id="AvisoCobroEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{avisoCobroController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditAvisoCobroLabel_totalPeriodo}" for="totalPeriodo" />
+                        <p:inputText id="totalPeriodo" value="#{avisoCobroController.selected.totalPeriodo}" title="#{bundle.EditAvisoCobroTitle_totalPeriodo}" required="true" requiredMessage="#{bundle.EditAvisoCobroRequiredMessage_totalPeriodo}"/>
+                        <p:outputLabel value="#{bundle.EditAvisoCobroLabel_totalPendiente}" for="totalPendiente" />
+                        <p:inputText id="totalPendiente" value="#{avisoCobroController.selected.totalPendiente}" title="#{bundle.EditAvisoCobroTitle_totalPendiente}" required="true" requiredMessage="#{bundle.EditAvisoCobroRequiredMessage_totalPendiente}"/>
+                        <p:outputLabel value="#{bundle.EditAvisoCobroLabel_total}" for="total" />
+                        <p:inputText id="total" value="#{avisoCobroController.selected.total}" title="#{bundle.EditAvisoCobroTitle_total}" required="true" requiredMessage="#{bundle.EditAvisoCobroRequiredMessage_total}"/>
+                        <p:outputLabel value="#{bundle.EditAvisoCobroLabel_fechaCreacion}" for="fechaCreacion" />
+                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{avisoCobroController.selected.fechaCreacion}" title="#{bundle.EditAvisoCobroTitle_fechaCreacion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditAvisoCobroLabel_cuenta}" for="cuenta" />
+                        <p:selectOneMenu id="cuenta" value="#{avisoCobroController.selected.cuenta}" required="true" requiredMessage="#{bundle.EditAvisoCobroRequiredMessage_cuenta}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
+                                           var="cuentaItem"
+                                           itemValue="#{cuentaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditAvisoCobroLabel_periodo}" for="periodo" />
+                        <p:selectOneMenu id="periodo" value="#{avisoCobroController.selected.periodo}" required="true" requiredMessage="#{bundle.EditAvisoCobroRequiredMessage_periodo}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{periodoController.itemsAvailableSelectOne}"
+                                           var="periodoItem"
+                                           itemValue="#{periodoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{avisoCobroController.update}" value="#{bundle.Save}" update="display,:AvisoCobroListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AvisoCobroEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AvisoCobroEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

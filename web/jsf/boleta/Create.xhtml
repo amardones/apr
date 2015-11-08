@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BoletaCreateDlg" widgetVar="BoletaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateBoletaTitle}">
+            <h:form id="BoletaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{boletaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateBoletaLabel_idBoleta}" for="idBoleta" />
+                        <p:inputText id="idBoleta" value="#{boletaController.selected.idBoleta}" title="#{bundle.CreateBoletaTitle_idBoleta}" required="true" requiredMessage="#{bundle.CreateBoletaRequiredMessage_idBoleta}"/>
+                        <p:outputLabel value="#{bundle.CreateBoletaLabel_numeroBoleta}" for="numeroBoleta" />
+                        <p:inputText id="numeroBoleta" value="#{boletaController.selected.numeroBoleta}" title="#{bundle.CreateBoletaTitle_numeroBoleta}" required="true" requiredMessage="#{bundle.CreateBoletaRequiredMessage_numeroBoleta}"/>
+                        <p:outputLabel value="#{bundle.CreateBoletaLabel_fechaCreacion}" for="fechaCreacion" />
+                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{boletaController.selected.fechaCreacion}" title="#{bundle.EditBoletaTitle_fechaCreacion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateBoletaLabel_total}" for="total" />
+                        <p:inputText id="total" value="#{boletaController.selected.total}" title="#{bundle.CreateBoletaTitle_total}" required="true" requiredMessage="#{bundle.CreateBoletaRequiredMessage_total}"/>
+                        <p:outputLabel value="#{bundle.CreateBoletaLabel_avisoCobro}" for="avisoCobro" />
+                        <p:selectOneMenu id="avisoCobro" value="#{boletaController.selected.avisoCobro}" required="true" requiredMessage="#{bundle.EditBoletaRequiredMessage_avisoCobro}">
+                            <f:selectItems value="#{avisoCobroController.itemsAvailableSelectOne}"
+                                           var="avisoCobroItem"
+                                           itemValue="#{avisoCobroItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{boletaController.create}" value="#{bundle.Save}" update="display,:BoletaListForm:datalist,:growl" oncomplete="handleSubmit(args,'BoletaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="BoletaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

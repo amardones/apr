@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CuentaSubsidioCreateDlg" widgetVar="CuentaSubsidioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCuentaSubsidioTitle}">
+            <h:form id="CuentaSubsidioCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cuentaSubsidioController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateCuentaSubsidioLabel_idCuenta}" for="idCuenta" />
+                        <p:inputText id="idCuenta" value="#{cuentaSubsidioController.selected.idCuenta}" title="#{bundle.CreateCuentaSubsidioTitle_idCuenta}" required="true" requiredMessage="#{bundle.CreateCuentaSubsidioRequiredMessage_idCuenta}"/>
+                        <p:outputLabel value="#{bundle.CreateCuentaSubsidioLabel_cuenta}" for="cuenta" />
+                        <p:selectOneMenu id="cuenta" value="#{cuentaSubsidioController.selected.cuenta}" required="true" requiredMessage="#{bundle.EditCuentaSubsidioRequiredMessage_cuenta}">
+                            <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
+                                           var="cuentaItem"
+                                           itemValue="#{cuentaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCuentaSubsidioLabel_idSubsidio}" for="idSubsidio" />
+                        <p:selectOneMenu id="idSubsidio" value="#{cuentaSubsidioController.selected.idSubsidio}" required="true" requiredMessage="#{bundle.EditCuentaSubsidioRequiredMessage_idSubsidio}">
+                            <f:selectItems value="#{subsidioController.itemsAvailableSelectOne}"
+                                           var="idSubsidioItem"
+                                           itemValue="#{idSubsidioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cuentaSubsidioController.create}" value="#{bundle.Save}" update="display,:CuentaSubsidioListForm:datalist,:growl" oncomplete="handleSubmit(args,'CuentaSubsidioCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CuentaSubsidioCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

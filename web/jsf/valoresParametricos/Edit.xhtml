@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ValoresParametricosEditDlg" widgetVar="ValoresParametricosEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditValoresParametricosTitle}">
+            <h:form id="ValoresParametricosEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{valoresParametricosController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_idValoresParametricos}" for="idValoresParametricos" />
+                        <p:inputText id="idValoresParametricos" value="#{valoresParametricosController.selected.idValoresParametricos}" title="#{bundle.EditValoresParametricosTitle_idValoresParametricos}" required="true" requiredMessage="#{bundle.EditValoresParametricosRequiredMessage_idValoresParametricos}"/>
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_valorCargoFijo}" for="valorCargoFijo" />
+                        <p:inputText id="valorCargoFijo" value="#{valoresParametricosController.selected.valorCargoFijo}" title="#{bundle.EditValoresParametricosTitle_valorCargoFijo}" required="true" requiredMessage="#{bundle.EditValoresParametricosRequiredMessage_valorCargoFijo}"/>
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_valorM3}" for="valorM3" />
+                        <p:inputText id="valorM3" value="#{valoresParametricosController.selected.valorM3}" title="#{bundle.EditValoresParametricosTitle_valorM3}" required="true" requiredMessage="#{bundle.EditValoresParametricosRequiredMessage_valorM3}"/>
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_valorCuotaSocial}" for="valorCuotaSocial" />
+                        <p:inputText id="valorCuotaSocial" value="#{valoresParametricosController.selected.valorCuotaSocial}" title="#{bundle.EditValoresParametricosTitle_valorCuotaSocial}" required="true" requiredMessage="#{bundle.EditValoresParametricosRequiredMessage_valorCuotaSocial}"/>
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_valorInteresDia}" for="valorInteresDia" />
+                        <p:inputText id="valorInteresDia" value="#{valoresParametricosController.selected.valorInteresDia}" title="#{bundle.EditValoresParametricosTitle_valorInteresDia}" required="true" requiredMessage="#{bundle.EditValoresParametricosRequiredMessage_valorInteresDia}"/>
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_valorReunionObligatoria}" for="valorReunionObligatoria" />
+                        <p:inputText id="valorReunionObligatoria" value="#{valoresParametricosController.selected.valorReunionObligatoria}" title="#{bundle.EditValoresParametricosTitle_valorReunionObligatoria}" required="true" requiredMessage="#{bundle.EditValoresParametricosRequiredMessage_valorReunionObligatoria}"/>
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_valorReunionNoObligatoria}" for="valorReunionNoObligatoria" />
+                        <p:inputText id="valorReunionNoObligatoria" value="#{valoresParametricosController.selected.valorReunionNoObligatoria}" title="#{bundle.EditValoresParametricosTitle_valorReunionNoObligatoria}" required="true" requiredMessage="#{bundle.EditValoresParametricosRequiredMessage_valorReunionNoObligatoria}"/>
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_m3Fijos}" for="m3Fijos" />
+                        <p:inputText id="m3Fijos" value="#{valoresParametricosController.selected.m3Fijos}" title="#{bundle.EditValoresParametricosTitle_m3Fijos}" required="true" requiredMessage="#{bundle.EditValoresParametricosRequiredMessage_m3Fijos}"/>
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_m3LimiteDctoInterno}" for="m3LimiteDctoInterno" />
+                        <p:inputText id="m3LimiteDctoInterno" value="#{valoresParametricosController.selected.m3LimiteDctoInterno}" title="#{bundle.EditValoresParametricosTitle_m3LimiteDctoInterno}" required="true" requiredMessage="#{bundle.EditValoresParametricosRequiredMessage_m3LimiteDctoInterno}"/>
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_porcentajeDctoInterno}" for="porcentajeDctoInterno" />
+                        <p:inputText id="porcentajeDctoInterno" value="#{valoresParametricosController.selected.porcentajeDctoInterno}" title="#{bundle.EditValoresParametricosTitle_porcentajeDctoInterno}" required="true" requiredMessage="#{bundle.EditValoresParametricosRequiredMessage_porcentajeDctoInterno}"/>
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_fechaActualizacion}" for="fechaActualizacion" />
+                        <p:calendar id="fechaActualizacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{valoresParametricosController.selected.fechaActualizacion}" title="#{bundle.EditValoresParametricosTitle_fechaActualizacion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_descripcionCambios}" for="descripcionCambios" />
+                        <p:inputText id="descripcionCambios" value="#{valoresParametricosController.selected.descripcionCambios}" title="#{bundle.EditValoresParametricosTitle_descripcionCambios}" />
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_diaVencimiento}" for="diaVencimiento" />
+                        <p:inputText id="diaVencimiento" value="#{valoresParametricosController.selected.diaVencimiento}" title="#{bundle.EditValoresParametricosTitle_diaVencimiento}" required="true" requiredMessage="#{bundle.EditValoresParametricosRequiredMessage_diaVencimiento}"/>
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_diaLecturaMedidor}" for="diaLecturaMedidor" />
+                        <p:inputText id="diaLecturaMedidor" value="#{valoresParametricosController.selected.diaLecturaMedidor}" title="#{bundle.EditValoresParametricosTitle_diaLecturaMedidor}" required="true" requiredMessage="#{bundle.EditValoresParametricosRequiredMessage_diaLecturaMedidor}"/>
+                        <p:outputLabel value="#{bundle.EditValoresParametricosLabel_diaEmision}" for="diaEmision" />
+                        <p:inputText id="diaEmision" value="#{valoresParametricosController.selected.diaEmision}" title="#{bundle.EditValoresParametricosTitle_diaEmision}" required="true" requiredMessage="#{bundle.EditValoresParametricosRequiredMessage_diaEmision}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{valoresParametricosController.update}" value="#{bundle.Save}" update="display,:ValoresParametricosListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ValoresParametricosEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ValoresParametricosEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
