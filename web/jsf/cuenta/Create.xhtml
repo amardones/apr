@@ -28,6 +28,7 @@
                                            itemValue="#{cuentaSubsidioItem}"
                                            itemLabel="#{cuentaSubsidioItem.idSubsidio.nombre}"
                                            />
+                            
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_numeroMedidor}" for="numeroMedidor" />
                         <p:selectOneMenu id="numeroMedidor" value="#{cuentaController.selected.numeroMedidor}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_numeroMedidor}">
