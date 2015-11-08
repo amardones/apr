@@ -22,6 +22,7 @@
                                  rowKey="#{item.idCuenta}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
+                                 paginatorPosition="top"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -83,7 +84,7 @@
                             </f:facet>
                             <h:outputText value="#{item.rut}"/>
                         </p:column>
-                        <f:facet name="footer">
+                        <f:facet name="header">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{cuentaController.prepareCreate}" update=":CuentaCreateForm" oncomplete="PF('CuentaCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CuentaViewForm" oncomplete="PF('CuentaViewDialog').show()" disabled="#{empty cuentaController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CuentaEditForm" oncomplete="PF('CuentaEditDialog').show()" disabled="#{empty cuentaController.selected}"/>

@@ -12,35 +12,38 @@
             <h:form id="CuentaCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{cuentaController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateCuentaLabel_idCuenta}" for="idCuenta" />
-                        <p:inputText id="idCuenta" value="#{cuentaController.selected.idCuenta}" title="#{bundle.CreateCuentaTitle_idCuenta}" required="true" requiredMessage="#{bundle.CreateCuentaRequiredMessage_idCuenta}"/>
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_direccion}" for="direccion" />
                         <p:inputText id="direccion" value="#{cuentaController.selected.direccion}" title="#{bundle.CreateCuentaTitle_direccion}" required="true" requiredMessage="#{bundle.CreateCuentaRequiredMessage_direccion}"/>
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_gpsLatitud}" for="gpsLatitud" />
                         <p:inputText id="gpsLatitud" value="#{cuentaController.selected.gpsLatitud}" title="#{bundle.CreateCuentaTitle_gpsLatitud}" />
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_gpsLongitud}" for="gpsLongitud" />
                         <p:inputText id="gpsLongitud" value="#{cuentaController.selected.gpsLongitud}" title="#{bundle.CreateCuentaTitle_gpsLongitud}" />
-                        <p:outputLabel value="#{bundle.CreateCuentaLabel_fechaCreacion}" for="fechaCreacion" />
-                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy" value="#{cuentaController.selected.fechaCreacion}" title="#{bundle.EditCuentaTitle_fechaCreacion}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_activa}" for="activa" />
                         <p:selectBooleanCheckbox id="activa" value="#{cuentaController.selected.activa}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_activa}"/>
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_cuentaSubsidio}" for="cuentaSubsidio" />
                         <p:selectOneMenu id="cuentaSubsidio" value="#{cuentaController.selected.cuentaSubsidio}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{cuentaSubsidioController.itemsAvailableSelectOne}"
                                            var="cuentaSubsidioItem"
-                                           itemValue="#{cuentaSubsidioItem}"/>
+                                           itemValue="#{cuentaSubsidioItem}"
+                                           itemLabel="#{cuentaSubsidioItem.idSubsidio.nombre}"
+                                           />
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_numeroMedidor}" for="numeroMedidor" />
                         <p:selectOneMenu id="numeroMedidor" value="#{cuentaController.selected.numeroMedidor}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_numeroMedidor}">
                             <f:selectItems value="#{medidorController.itemsAvailableSelectOne}"
                                            var="numeroMedidorItem"
-                                           itemValue="#{numeroMedidorItem}"/>
+                                           itemValue="#{numeroMedidorItem}"
+                                           itemLabel="#{numeroMedidorItem.numeroMedidor}"
+                                           />
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_rut}" for="rut" />
                         <p:selectOneMenu id="rut" value="#{cuentaController.selected.rut}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_rut}">
                             <f:selectItems value="#{socioController.itemsAvailableSelectOne}"
                                            var="rutItem"
-                                           itemValue="#{rutItem}"/>
+                                           itemValue="#{rutItem}"
+                                           itemLabel="#{rutItem.nombre} #{rutItem.apellido} "
+                                           />
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cuentaController.create}" value="#{bundle.Save}" update="display,:CuentaListForm:datalist,:growl" oncomplete="handleSubmit(args,'CuentaCreateDialog');"/>
