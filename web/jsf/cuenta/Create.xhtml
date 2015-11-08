@@ -44,6 +44,7 @@
                                            itemValue="#{rutItem}"
                                            itemLabel="#{rutItem.nombre} #{rutItem.apellido} "
                                            />
+                            
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cuentaController.create}" value="#{bundle.Save}" update="display,:CuentaListForm:datalist,:growl" oncomplete="handleSubmit(args,'CuentaCreateDialog');"/>
