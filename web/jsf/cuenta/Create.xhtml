@@ -32,7 +32,7 @@
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_numeroMedidor}" for="numeroMedidor" />
                         <p:selectOneMenu id="numeroMedidor" value="#{cuentaController.selected.numeroMedidor}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_numeroMedidor}">
-                            <f:selectItems value="#{medidorController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{medidorController.getMedidoresDisponibles}"
                                            var="numeroMedidorItem"
                                            itemValue="#{numeroMedidorItem}"
                                            itemLabel="#{numeroMedidorItem.numeroMedidor}"
