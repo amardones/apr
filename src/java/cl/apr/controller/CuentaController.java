@@ -3,6 +3,7 @@ package cl.apr.controller;
 import cl.apr.entity.Cuenta;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
+import cl.apr.entity.Medidor;
 import cl.apr.facade.CuentaFacade;
 
 import java.io.Serializable;
@@ -25,6 +26,8 @@ public class CuentaController implements Serializable {
 
     @EJB
     private cl.apr.facade.CuentaFacade ejbFacade;
+    @EJB
+    private cl.apr.facade.MedidorFacade ejbMedidorFacade;
     private List<Cuenta> items = null;
     private Cuenta selected;
 
@@ -79,6 +82,11 @@ public class CuentaController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+    
+    public List<Medidor> getMedidoresDisponiblesEditar() {
+        
+        return ejbMedidorFacade.getMedidoresDisponiblesEditar(selected.getNumeroMedidor().getNumeroMedidor());
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

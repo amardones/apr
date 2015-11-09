@@ -45,4 +45,18 @@ public class MedidorFacade extends AbstractFacade<Medidor> {
          return query.getResultList();
        
     }
+    
+     public List<Medidor> getMedidoresDisponiblesEditar(String numeroMedidor) {
+       /*
+  
+               SELECT DISTINCT  m.* FROM Cuenta c RIGHT JOIN Medidor m ON c.numero_Medidor = m.numero_Medidor 
+
+                WHERE c.id_Cuenta IS NULL OR c.numero_Medidor = '00001'
+               */
+         Query query = em.createQuery(""
+                                        + "SELECT DISTINCT m FROM Cuenta c RIGHT JOIN c.numeroMedidor m WHERE c.idCuenta IS NULL OR c.numeroMedidor.numeroMedidor = :numeroMedidor ", Medidor.class);
+         query.setParameter("numeroMedidor",numeroMedidor);
+         return query.getResultList();
+       
+    }
 }

@@ -109,6 +109,11 @@ public class MedidorController implements Serializable {
         }
     }
 
+    public List<Medidor> getMedidoresDisponibles() {
+        return getFacade().getMedidoresDisponibles();
+    }
+       
+            
     public Medidor getMedidor(java.lang.String id) {
         return getFacade().find(id);
     }
@@ -121,9 +126,7 @@ public class MedidorController implements Serializable {
         return getFacade().findAll();
     }
 
-    public List<Medidor> getMedidoresDisponibles() {
-        return getFacade().getMedidoresDisponibles();
-    }
+  
     
     @FacesConverter(forClass = Medidor.class)
     public static class MedidorControllerConverter implements Converter {
