@@ -3,6 +3,7 @@ package cl.apr.controller;
 import cl.apr.entity.AvisoCobro;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
+import cl.apr.entity.Periodo;
 import cl.apr.facade.AvisoCobroFacade;
 
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class AvisoCobroController implements Serializable {
     private cl.apr.facade.AvisoCobroFacade ejbFacade;
     private List<AvisoCobro> items = null;
     private AvisoCobro selected;
+    private Periodo  periodo;
 
     public AvisoCobroController() {
     }
@@ -34,9 +36,24 @@ public class AvisoCobroController implements Serializable {
     public AvisoCobro getSelected() {
         return selected;
     }
-
+        
     public void setSelected(AvisoCobro selected) {
         this.selected = selected;
+    }
+    
+    public Periodo getPeriodo() {
+        return periodo;
+    }
+    
+     public void setPeriodo(Periodo periodo) {
+        this.periodo = periodo;
+         System.out.println("seleccion periodo: "+periodo.getNombre());
+    }
+          
+    public void generarAvisosCobro() {
+      if(periodo != null && getFacade().crearAvisosDeCobro(periodo.getIdPeriodo(), -1)){
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
+      }
     }
 
     protected void setEmbeddableKeys() {
@@ -80,6 +97,7 @@ public class AvisoCobroController implements Serializable {
     public List<AvisoCobro> getItems() {
         if (items == null) {
             items = getFacade().findAll();
+             System.out.println("AvisoCobroController items.size(): "+items.size());
         }
         return items;
     }

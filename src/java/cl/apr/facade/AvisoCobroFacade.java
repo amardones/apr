@@ -6,9 +6,14 @@
 package cl.apr.facade;
 
 import cl.apr.entity.AvisoCobro;
+import java.util.List;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
 
 /**
  *
@@ -26,6 +31,41 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
 
     public AvisoCobroFacade() {
         super(AvisoCobro.class);
+    }
+    
+     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+     public boolean crearAvisosDeCobro(int periodo, int idCuenta){
+       try{
+           if(em.isOpen()){
+                //em.getTransaction().begin();
+                StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("fn_calcular_avisos_de_cobro");
+                // set parameters
+                storedProcedure.registerStoredProcedureParameter("id_periodo", Integer.class, ParameterMode.IN);
+                storedProcedure.registerStoredProcedureParameter("id_cuenta", Integer.class, ParameterMode.IN);
+                storedProcedure.registerStoredProcedureParameter("result", String.class, ParameterMode.OUT);
+                storedProcedure.setParameter("id_periodo", 1);
+                storedProcedure.setParameter("id_cuenta", -1);
+                // execute SP
+                storedProcedure.execute();
+                // get result
+                String result = (String)storedProcedure.getOutputParameterValue("result");
+                System.out.println("result is: " + result);
+                if(result.equalsIgnoreCase("OK")){
+                     //em.getTransaction().commit();
+                     //em.close();
+                    // List<AvisoCobro> findAllActives = findAllActives();
+                    // System.out.println(" findAllActives.size() is: " + findAllActives.size());
+                     return true;
+                }else{
+                     //em.close();
+                     return false;
+                }
+              
+           }
+       } catch(Exception e){
+             e.printStackTrace();;
+        }
+        return false;
     }
     
 }

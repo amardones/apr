@@ -15,6 +15,26 @@
 
         <ui:define name="body">
             <h:form id="AvisoCobroListForm">
+              
+                
+                 <h:panelGroup id="filtro">
+                    <p:panelGrid columns="3" rendered="#{periodoController.itemsAvailableSelectOne != null}">
+                        <p:outputLabel value="#{bundle.EditAvisoCobroLabel_periodo}" for="periodo" />
+                        <p:selectOneMenu id="periodo" value="#{avisoCobroController.periodo}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{periodoController.itemsAvailableSelectOne}"
+                                           var="periodoItem"
+                                           itemValue="#{periodoItem}"
+                                           itemLabel="#{periodoItem.nombre}"                                           
+                                           />
+                             <p:ajax event="valueChange" update="@form" />
+                        </p:selectOneMenu>
+
+                        <p:commandButton id="crearAvisosButton" icon="ui-icon-add"  value="#{bundle.Create}" actionListener="#{avisoCobroController.generarAvisosCobro}" update=":growl,datalist" disabled="#{empty avisoCobroController.periodo}"/>
+                    </p:panelGrid>                    
+                </h:panelGroup>
+                
+                
                 <p:panel header="#{bundle.ListAvisoCobroTitle}">
                     <p:dataTable id="datalist" value="#{avisoCobroController.items}" var="item"
                                  selectionMode="single" selection="#{avisoCobroController.selected}"
