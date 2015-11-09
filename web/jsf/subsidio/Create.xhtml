@@ -12,8 +12,6 @@
             <h:form id="SubsidioCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{subsidioController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateSubsidioLabel_idSubsidio}" for="idSubsidio" />
-                        <p:inputText id="idSubsidio" value="#{subsidioController.selected.idSubsidio}" title="#{bundle.CreateSubsidioTitle_idSubsidio}" required="true" requiredMessage="#{bundle.CreateSubsidioRequiredMessage_idSubsidio}"/>
                         <p:outputLabel value="#{bundle.CreateSubsidioLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{subsidioController.selected.nombre}" title="#{bundle.CreateSubsidioTitle_nombre}" required="true" requiredMessage="#{bundle.CreateSubsidioRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.CreateSubsidioLabel_descripcion}" for="descripcion" />

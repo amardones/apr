@@ -12,8 +12,6 @@
             <h:form id="SubsidioEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{subsidioController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditSubsidioLabel_idSubsidio}" for="idSubsidio" />
-                        <p:inputText id="idSubsidio" value="#{subsidioController.selected.idSubsidio}" title="#{bundle.EditSubsidioTitle_idSubsidio}" required="true" requiredMessage="#{bundle.EditSubsidioRequiredMessage_idSubsidio}"/>
                         <p:outputLabel value="#{bundle.EditSubsidioLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{subsidioController.selected.nombre}" title="#{bundle.EditSubsidioTitle_nombre}" required="true" requiredMessage="#{bundle.EditSubsidioRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.EditSubsidioLabel_descripcion}" for="descripcion" />

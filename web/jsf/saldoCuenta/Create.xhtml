@@ -12,25 +12,23 @@
             <h:form id="SaldoCuentaCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{saldoCuentaController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateSaldoCuentaLabel_idSaldoCuenta}" for="idSaldoCuenta" />
-                        <p:inputText id="idSaldoCuenta" value="#{saldoCuentaController.selected.idSaldoCuenta}" title="#{bundle.CreateSaldoCuentaTitle_idSaldoCuenta}" required="true" requiredMessage="#{bundle.CreateSaldoCuentaRequiredMessage_idSaldoCuenta}"/>
                         <p:outputLabel value="#{bundle.CreateSaldoCuentaLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{saldoCuentaController.selected.descripcion}" title="#{bundle.CreateSaldoCuentaTitle_descripcion}" />
-                        <p:outputLabel value="#{bundle.CreateSaldoCuentaLabel_fecha}" for="fecha" />
-                        <p:calendar id="fecha" pattern="MM/dd/yyyy HH:mm:ss" value="#{saldoCuentaController.selected.fecha}" title="#{bundle.EditSaldoCuentaTitle_fecha}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateSaldoCuentaLabel_monto}" for="monto" />
                         <p:inputText id="monto" value="#{saldoCuentaController.selected.monto}" title="#{bundle.CreateSaldoCuentaTitle_monto}" required="true" requiredMessage="#{bundle.CreateSaldoCuentaRequiredMessage_monto}"/>
                         <p:outputLabel value="#{bundle.CreateSaldoCuentaLabel_idCuenta}" for="idCuenta" />
                         <p:selectOneMenu id="idCuenta" value="#{saldoCuentaController.selected.idCuenta}" required="true" requiredMessage="#{bundle.EditSaldoCuentaRequiredMessage_idCuenta}">
                             <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
                                            var="idCuentaItem"
-                                           itemValue="#{idCuentaItem}"/>
+                                           itemValue="#{idCuentaItem}"
+                                           itemLabel="#{idCuentaItem.numeroMedidor.numeroMedidor} #{idCuentaItem.rut.nombre} #{idCuentaItem.rut.apellido}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateSaldoCuentaLabel_tipoMovimiento}" for="tipoMovimiento" />
                         <p:selectOneMenu id="tipoMovimiento" value="#{saldoCuentaController.selected.tipoMovimiento}" required="true" requiredMessage="#{bundle.EditSaldoCuentaRequiredMessage_tipoMovimiento}">
                             <f:selectItems value="#{tipoMovimientoController.itemsAvailableSelectOne}"
                                            var="tipoMovimientoItem"
-                                           itemValue="#{tipoMovimientoItem}"/>
+                                           itemValue="#{tipoMovimientoItem}"
+                                           itemLabel="#{tipoMovimientoItem.tipoMovimiento}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{saldoCuentaController.create}" value="#{bundle.Save}" update="display,:SaldoCuentaListForm:datalist,:growl" oncomplete="handleSubmit(args,'SaldoCuentaCreateDialog');"/>

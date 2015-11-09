@@ -18,8 +18,6 @@
                         <p:inputText id="estadoActual" value="#{registroEstadoController.selected.estadoActual}" title="#{bundle.EditRegistroEstadoTitle_estadoActual}" required="true" requiredMessage="#{bundle.EditRegistroEstadoRequiredMessage_estadoActual}"/>
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_metrosCubicos}" for="metrosCubicos" />
                         <p:inputText id="metrosCubicos" value="#{registroEstadoController.selected.metrosCubicos}" title="#{bundle.EditRegistroEstadoTitle_metrosCubicos}" required="true" requiredMessage="#{bundle.EditRegistroEstadoRequiredMessage_metrosCubicos}"/>
-                        <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_fechaRegistro}" for="fechaRegistro" />
-                        <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy HH:mm:ss" value="#{registroEstadoController.selected.fechaRegistro}" title="#{bundle.EditRegistroEstadoTitle_fechaRegistro}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{registroEstadoController.selected.descripcion}" title="#{bundle.EditRegistroEstadoTitle_descripcion}" />
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_cuenta}" for="cuenta" />
@@ -27,7 +25,8 @@
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
                                            var="cuentaItem"
-                                           itemValue="#{cuentaItem}"/>
+                                           itemValue="#{cuentaItem}"
+                                           itemLabel="#{cuentaItem.numeroMedidor.numeroMedidor}  #{cuentaItem.rut.nombre} #{cuentaItem.rut.apellido}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_periodo}" for="periodo" />
                         <p:selectOneMenu id="periodo" value="#{registroEstadoController.selected.periodo}" required="true" requiredMessage="#{bundle.EditRegistroEstadoRequiredMessage_periodo}">
