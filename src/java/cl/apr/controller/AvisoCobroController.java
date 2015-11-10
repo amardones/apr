@@ -26,6 +26,9 @@ public class AvisoCobroController implements Serializable {
 
     @EJB
     private cl.apr.facade.AvisoCobroFacade ejbFacade;
+    @EJB
+    private cl.apr.facade.PeriodoFacade ejbPeriodoFacade;
+     
     private List<AvisoCobro> items = null;
     private AvisoCobro selected;
     private Periodo  periodo;
@@ -82,6 +85,14 @@ public class AvisoCobroController implements Serializable {
         }
     }
 
+    public List<Periodo> getPeriodos() {
+        List<Periodo> periodos = ejbPeriodoFacade.findAll();
+        if(periodo == null && periodos != null && periodos.size() > 0){
+            periodo = periodos.get(0);
+        }
+        return  periodos;
+    }
+    
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AvisoCobroUpdated"));
     }
@@ -95,14 +106,19 @@ public class AvisoCobroController implements Serializable {
     }
 
     public List<AvisoCobro> getItems() {
+       /*
         if (items == null) {
             items = getFacade().findAll();
              System.out.println("AvisoCobroController items.size(): "+items.size());
         }
+        */
+         if(periodo != null)
+             return getFacade().getAvisosPorPeriodo(periodo.getIdPeriodo());
+         
         return items;
     }
-
-    private void persist(PersistAction persistAction, String successMessage) {
+    
+      private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
             try {

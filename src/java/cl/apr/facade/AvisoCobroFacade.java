@@ -6,6 +6,7 @@
 package cl.apr.facade;
 
 import cl.apr.entity.AvisoCobro;
+import cl.apr.entity.Medidor;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -13,6 +14,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 
 /**
@@ -55,6 +57,7 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
                      //em.close();
                     // List<AvisoCobro> findAllActives = findAllActives();
                     // System.out.println(" findAllActives.size() is: " + findAllActives.size());
+                    //em.getEntityManagerFactory().getCache().evictAll();
                      return true;
                 }else{
                      //em.close();
@@ -66,6 +69,14 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
              e.printStackTrace();;
         }
         return false;
+    }
+     
+      public List<AvisoCobro> getAvisosPorPeriodo(int idPeriodo) {
+         Query query = em.createQuery(""
+                                        + "SELECT DISTINCT a FROM AvisoCobro a WHERE a.periodo.idPeriodo  = :idPeriodo ", AvisoCobro.class);
+         query.setParameter("idPeriodo",idPeriodo);
+         return query.getResultList();
+       
     }
     
 }

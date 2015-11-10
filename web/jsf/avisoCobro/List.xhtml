@@ -18,20 +18,43 @@
               
                 
                  <h:panelGroup id="filtro">
-                    <p:panelGrid columns="3" rendered="#{periodoController.itemsAvailableSelectOne != null}">
+                    <p:panelGrid columns="9" rendered="#{periodoController.itemsAvailableSelectOne != null}">
                         <p:outputLabel value="#{bundle.EditAvisoCobroLabel_periodo}" for="periodo" />
-                        <p:selectOneMenu id="periodo" value="#{avisoCobroController.periodo}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{periodoController.itemsAvailableSelectOne}"
+                        <p:selectOneMenu id="periodo" value="#{avisoCobroController.periodo}" >
+<!--                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>-->
+                            <f:selectItems value="#{avisoCobroController.periodos}"
                                            var="periodoItem"
                                            itemValue="#{periodoItem}"
                                            itemLabel="#{periodoItem.nombre}"                                           
                                            />
                              <p:ajax event="valueChange" update="@form" />
                         </p:selectOneMenu>
-
-                        <p:commandButton id="crearAvisosButton" icon="ui-icon-add"  value="#{bundle.Create}" actionListener="#{avisoCobroController.generarAvisosCobro}" update=":growl,datalist" disabled="#{empty avisoCobroController.periodo}"/>
-                    </p:panelGrid>                    
+                        <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaInicio}" for="fechaInicio"/>
+                        <p:outputLabel id="fechaInicio" value="#{avisoCobroController.periodo.fechaInicio}" />
+                        
+                        <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaEmision}" for="fechaEmision" />
+                        <p:outputLabel id="fechaEmision" value="#{avisoCobroController.periodo.fechaEmision}" />
+                        
+                         <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaTomaLectura}" for="fechaTomaLectura" />
+                        <p:outputLabel id="fechaTomaLectura" value="#{avisoCobroController.periodo.fechaTomaLectura}" />
+                        
+                        <p:commandButton id="crearAvisosButton"  value="#{bundle.Create}" actionListener="#{avisoCobroController.generarAvisosCobro}" update=":growl,datalist" disabled="#{empty avisoCobroController.periodo}"/>
+                    
+                         <p:outputLabel  value="" />
+                         <p:outputLabel  value="" />
+                          
+                        <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaFin}" for="fechaFin" />
+                        <p:outputLabel id="fechaFin" value="#{avisoCobroController.periodo.fechaFin}" />
+                        
+                                                
+                        <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaVencimiento}" for="fechaVencimiento" />
+                        <p:outputLabel id="fechaVencimiento" value="#{avisoCobroController.periodo.fechaVencimiento}" />
+                        
+                        <p:outputLabel  value="" />
+                        <p:outputLabel  value="" />
+                        <p:commandButton id="downPdfButton"  value="#{bundle.View}" actionListener="#{avisoCobroController.generarAvisosCobro}" update=":growl,datalist" disabled="#{empty avisoCobroController.periodo}"/>
+                    
+                       </p:panelGrid>                    
                 </h:panelGroup>
                 
                 
@@ -42,10 +65,11 @@
                                  rowKey="#{item.avisoCobroPK}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
+                                 paginatorPosition="top"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+<!--                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>-->
 
                         <p:column>
                             <f:facet name="header">
@@ -85,19 +109,19 @@
                             </f:facet>
                             <h:outputText value="#{item.periodo}"/>
                         </p:column>
-                        <f:facet name="footer">
+<!--                        <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{avisoCobroController.prepareCreate}" update=":AvisoCobroCreateForm" oncomplete="PF('AvisoCobroCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AvisoCobroViewForm" oncomplete="PF('AvisoCobroViewDialog').show()" disabled="#{empty avisoCobroController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":AvisoCobroEditForm" oncomplete="PF('AvisoCobroEditDialog').show()" disabled="#{empty avisoCobroController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{avisoCobroController.destroy}" update=":growl,datalist" disabled="#{empty avisoCobroController.selected}"/>
-                        </f:facet>
+                        </f:facet>-->
                     </p:dataTable>
                 </p:panel>
             </h:form>
 
-            <ui:include src="Create.xhtml"/>
+<!--            <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
+            <ui:include src="View.xhtml"/>-->
         </ui:define>
     </ui:composition>
 
