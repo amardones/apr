@@ -12,8 +12,6 @@
             <h:form id="PeriodoEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{periodoController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditPeriodoLabel_idPeriodo}" for="idPeriodo" />
-                        <p:inputText id="idPeriodo" value="#{periodoController.selected.idPeriodo}" title="#{bundle.EditPeriodoTitle_idPeriodo}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_idPeriodo}"/>
                         <p:outputLabel value="#{bundle.EditPeriodoLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{periodoController.selected.nombre}" title="#{bundle.EditPeriodoTitle_nombre}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaInicio}" for="fechaInicio" />
@@ -31,7 +29,9 @@
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{valoresParametricosController.itemsAvailableSelectOne}"
                                            var="idValoresParametricosItem"
-                                           itemValue="#{idValoresParametricosItem}"/>
+                                           itemValue="#{idValoresParametricosItem}"                               
+                                           itemLabel="metros cubicos fijos #{idValoresParametricosItem.m3Fijos} dia de lectura #{idValoresParametricosItem.diaLecturaMedidor}"/>
+                                           />
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{periodoController.update}" value="#{bundle.Save}" update="display,:PeriodoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PeriodoEditDialog');"/>

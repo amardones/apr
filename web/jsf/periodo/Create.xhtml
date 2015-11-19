@@ -12,8 +12,6 @@
             <h:form id="PeriodoCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{periodoController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_idPeriodo}" for="idPeriodo" />
-                        <p:inputText id="idPeriodo" value="#{periodoController.selected.idPeriodo}" title="#{bundle.CreatePeriodoTitle_idPeriodo}" required="true" requiredMessage="#{bundle.CreatePeriodoRequiredMessage_idPeriodo}"/>
                         <p:outputLabel value="#{bundle.CreatePeriodoLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{periodoController.selected.nombre}" title="#{bundle.CreatePeriodoTitle_nombre}" required="true" requiredMessage="#{bundle.CreatePeriodoRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaInicio}" for="fechaInicio" />
@@ -30,7 +28,8 @@
                         <p:selectOneMenu id="idValoresParametricos" value="#{periodoController.selected.idValoresParametricos}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_idValoresParametricos}">
                             <f:selectItems value="#{valoresParametricosController.itemsAvailableSelectOne}"
                                            var="idValoresParametricosItem"
-                                           itemValue="#{idValoresParametricosItem}"/>
+                                           itemValue="#{idValoresParametricosItem}"
+                                           itemLabel="metros cubicos fijos #{idValoresParametricosItem.m3Fijos} dia de lectura #{idValoresParametricosItem.diaLecturaMedidor}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{periodoController.create}" value="#{bundle.Save}" update="display,:PeriodoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PeriodoCreateDialog');"/>

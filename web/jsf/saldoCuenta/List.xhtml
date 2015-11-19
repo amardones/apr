@@ -57,7 +57,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListSaldoCuentaTitle_idCuenta}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idCuenta}"/>
+                            <h:outputText value="#{item.idCuenta.idCuenta}: #{item.idCuenta.rut.nombre} #{item.idCuenta.rut.apellido}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">

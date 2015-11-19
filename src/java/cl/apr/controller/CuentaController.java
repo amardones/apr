@@ -29,20 +29,9 @@ public class CuentaController implements Serializable {
     @EJB
     private cl.apr.facade.MedidorFacade ejbMedidorFacade;
     private List<Cuenta> items = null;
-    private List<Medidor> medidoresDisponiblesEdit = null;
-    private Cuenta selected = null;
+    private Cuenta selected;
 
     public CuentaController() {
-    }
-
-    public List<Medidor> getMedidoresDisponiblesEdit() {
-        if(selected != null && selected.getNumeroMedidor() != null)
-            medidoresDisponiblesEdit = ejbMedidorFacade.getMedidoresDisponiblesEditar(selected.getNumeroMedidor().getNumeroMedidor());
-        return medidoresDisponiblesEdit;
-    }
-
-    public void setMedidoresDisponiblesEdit(List<Medidor> medidoresDisponiblesEdit) {
-        this.medidoresDisponiblesEdit = medidoresDisponiblesEdit;
     }
 
     public Cuenta getSelected() {
@@ -66,11 +55,6 @@ public class CuentaController implements Serializable {
     public Cuenta prepareCreate() {
         selected = new Cuenta();
         initializeEmbeddableKey();
-        return selected;
-    }
-    
-     public Cuenta cancelCreate() {
-        selected =null;
         return selected;
     }
 
@@ -100,7 +84,10 @@ public class CuentaController implements Serializable {
         return items;
     }
     
-   
+    public List<Medidor> getMedidoresDisponiblesEditar() {
+        
+        return ejbMedidorFacade.getMedidoresDisponiblesEditar(selected.getNumeroMedidor().getNumeroMedidor());
+    }
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {

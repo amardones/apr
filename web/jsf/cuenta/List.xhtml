@@ -85,6 +85,12 @@
                             </f:facet>
                             <h:outputText value="#{item.rut}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.CreateSocioTitle_nombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rut.nombre} #{item.rut.apellido}"/>
+                        </p:column>
                         <f:facet name="header">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{cuentaController.prepareCreate}" update=":CuentaCreateForm" oncomplete="PF('CuentaCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CuentaViewForm" oncomplete="PF('CuentaViewDialog').show()" disabled="#{empty cuentaController.selected}"/>

@@ -12,8 +12,6 @@
             <h:form id="ValoresParametricosCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{valoresParametricosController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateValoresParametricosLabel_idValoresParametricos}" for="idValoresParametricos" />
-                        <p:inputText id="idValoresParametricos" value="#{valoresParametricosController.selected.idValoresParametricos}" title="#{bundle.CreateValoresParametricosTitle_idValoresParametricos}" required="true" requiredMessage="#{bundle.CreateValoresParametricosRequiredMessage_idValoresParametricos}"/>
                         <p:outputLabel value="#{bundle.CreateValoresParametricosLabel_valorCargoFijo}" for="valorCargoFijo" />
                         <p:inputText id="valorCargoFijo" value="#{valoresParametricosController.selected.valorCargoFijo}" title="#{bundle.CreateValoresParametricosTitle_valorCargoFijo}" required="true" requiredMessage="#{bundle.CreateValoresParametricosRequiredMessage_valorCargoFijo}"/>
                         <p:outputLabel value="#{bundle.CreateValoresParametricosLabel_valorM3}" for="valorM3" />
@@ -32,8 +30,6 @@
                         <p:inputText id="m3LimiteDctoInterno" value="#{valoresParametricosController.selected.m3LimiteDctoInterno}" title="#{bundle.CreateValoresParametricosTitle_m3LimiteDctoInterno}" required="true" requiredMessage="#{bundle.CreateValoresParametricosRequiredMessage_m3LimiteDctoInterno}"/>
                         <p:outputLabel value="#{bundle.CreateValoresParametricosLabel_porcentajeDctoInterno}" for="porcentajeDctoInterno" />
                         <p:inputText id="porcentajeDctoInterno" value="#{valoresParametricosController.selected.porcentajeDctoInterno}" title="#{bundle.CreateValoresParametricosTitle_porcentajeDctoInterno}" required="true" requiredMessage="#{bundle.CreateValoresParametricosRequiredMessage_porcentajeDctoInterno}"/>
-                        <p:outputLabel value="#{bundle.CreateValoresParametricosLabel_fechaActualizacion}" for="fechaActualizacion" />
-                        <p:calendar id="fechaActualizacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{valoresParametricosController.selected.fechaActualizacion}" title="#{bundle.EditValoresParametricosTitle_fechaActualizacion}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateValoresParametricosLabel_descripcionCambios}" for="descripcionCambios" />
                         <p:inputText id="descripcionCambios" value="#{valoresParametricosController.selected.descripcionCambios}" title="#{bundle.CreateValoresParametricosTitle_descripcionCambios}" />
                         <p:outputLabel value="#{bundle.CreateValoresParametricosLabel_diaVencimiento}" for="diaVencimiento" />

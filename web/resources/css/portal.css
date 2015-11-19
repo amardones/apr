@@ -1,10 +1,15 @@
 body {
-    background-image: url("images/fondo01.jpg");
+    background-image: url("images/fondo.jpg");    
     background-color: #cccccc;
     padding-left: 15%;
     padding-right: 15%;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+#container {
+    height: 750 px;
+    width: 1000px;
+    background: #ffffff;
 }
 .banner {
     background-image: url("images/BannerAgua01.jpg");
