@@ -12,26 +12,24 @@
             <h:form id="ValoresParametricosViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{valoresParametricosController.selected != null}">
-                        <h:outputText value="#{bundle.ViewValoresParametricosLabel_idValoresParametricos}"/>
-                        <h:outputText value="#{valoresParametricosController.selected.idValoresParametricos}" title="#{bundle.ViewValoresParametricosTitle_idValoresParametricos}"/>
                         <h:outputText value="#{bundle.ViewValoresParametricosLabel_valorCargoFijo}"/>
-                        <h:outputText value="#{valoresParametricosController.selected.valorCargoFijo}" title="#{bundle.ViewValoresParametricosTitle_valorCargoFijo}"/>
+                        <h:outputText value="$ #{valoresParametricosController.selected.valorCargoFijo}" title="#{bundle.ViewValoresParametricosTitle_valorCargoFijo}"/>
                         <h:outputText value="#{bundle.ViewValoresParametricosLabel_valorM3}"/>
-                        <h:outputText value="#{valoresParametricosController.selected.valorM3}" title="#{bundle.ViewValoresParametricosTitle_valorM3}"/>
+                        <h:outputText value="$ #{valoresParametricosController.selected.valorM3}" title="#{bundle.ViewValoresParametricosTitle_valorM3}"/>
                         <h:outputText value="#{bundle.ViewValoresParametricosLabel_valorCuotaSocial}"/>
-                        <h:outputText value="#{valoresParametricosController.selected.valorCuotaSocial}" title="#{bundle.ViewValoresParametricosTitle_valorCuotaSocial}"/>
+                        <h:outputText value="$ #{valoresParametricosController.selected.valorCuotaSocial}" title="#{bundle.ViewValoresParametricosTitle_valorCuotaSocial}"/>
                         <h:outputText value="#{bundle.ViewValoresParametricosLabel_valorInteresDia}"/>
-                        <h:outputText value="#{valoresParametricosController.selected.valorInteresDia}" title="#{bundle.ViewValoresParametricosTitle_valorInteresDia}"/>
+                        <h:outputText value="$ #{valoresParametricosController.selected.valorInteresDia}" title="#{bundle.ViewValoresParametricosTitle_valorInteresDia}"/>
                         <h:outputText value="#{bundle.ViewValoresParametricosLabel_valorReunionObligatoria}"/>
-                        <h:outputText value="#{valoresParametricosController.selected.valorReunionObligatoria}" title="#{bundle.ViewValoresParametricosTitle_valorReunionObligatoria}"/>
+                        <h:outputText value="$ #{valoresParametricosController.selected.valorReunionObligatoria}" title="#{bundle.ViewValoresParametricosTitle_valorReunionObligatoria}"/>
                         <h:outputText value="#{bundle.ViewValoresParametricosLabel_valorReunionNoObligatoria}"/>
-                        <h:outputText value="#{valoresParametricosController.selected.valorReunionNoObligatoria}" title="#{bundle.ViewValoresParametricosTitle_valorReunionNoObligatoria}"/>
+                        <h:outputText value="$ #{valoresParametricosController.selected.valorReunionNoObligatoria}" title="#{bundle.ViewValoresParametricosTitle_valorReunionNoObligatoria}"/>
                         <h:outputText value="#{bundle.ViewValoresParametricosLabel_m3Fijos}"/>
-                        <h:outputText value="#{valoresParametricosController.selected.m3Fijos}" title="#{bundle.ViewValoresParametricosTitle_m3Fijos}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.m3Fijos} m3" title="#{bundle.ViewValoresParametricosTitle_m3Fijos}"/>
                         <h:outputText value="#{bundle.ViewValoresParametricosLabel_m3LimiteDctoInterno}"/>
-                        <h:outputText value="#{valoresParametricosController.selected.m3LimiteDctoInterno}" title="#{bundle.ViewValoresParametricosTitle_m3LimiteDctoInterno}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.m3LimiteDctoInterno} m3" title="#{bundle.ViewValoresParametricosTitle_m3LimiteDctoInterno}"/>
                         <h:outputText value="#{bundle.ViewValoresParametricosLabel_porcentajeDctoInterno}"/>
-                        <h:outputText value="#{valoresParametricosController.selected.porcentajeDctoInterno}" title="#{bundle.ViewValoresParametricosTitle_porcentajeDctoInterno}"/>
+                        <h:outputText value="#{valoresParametricosController.selected.porcentajeDctoInterno} %" title="#{bundle.ViewValoresParametricosTitle_porcentajeDctoInterno}"/>
                         <h:outputText value="#{bundle.ViewValoresParametricosLabel_fechaActualizacion}"/>
                         <h:outputText value="#{valoresParametricosController.selected.fechaActualizacion}" title="#{bundle.ViewValoresParametricosTitle_fechaActualizacion}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />

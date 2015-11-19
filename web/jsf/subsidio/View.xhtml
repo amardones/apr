@@ -19,9 +19,9 @@
                         <h:outputText value="#{bundle.ViewSubsidioLabel_descripcion}"/>
                         <h:outputText value="#{subsidioController.selected.descripcion}" title="#{bundle.ViewSubsidioTitle_descripcion}"/>
                         <h:outputText value="#{bundle.ViewSubsidioLabel_porcentaje}"/>
-                        <h:outputText value="#{subsidioController.selected.porcentaje}" title="#{bundle.ViewSubsidioTitle_porcentaje}"/>
-                        <h:outputText value="#{bundle.ViewSubsidioLabel_metrosCubicosTope}"/>
-                        <h:outputText value="#{subsidioController.selected.metrosCubicosTope}" title="#{bundle.ViewSubsidioTitle_metrosCubicosTope}"/>
+                        <h:outputText value="#{subsidioController.selected.porcentaje} %" title="#{bundle.ViewSubsidioTitle_porcentaje} "/>
+                        <h:outputText value="#{bundle.ViewSubsidioLabel_metrosCubicosTope} "/>
+                        <h:outputText value="#{subsidioController.selected.metrosCubicosTope} metros cúbicos" title="#{bundle.ViewSubsidioTitle_metrosCubicosTope}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="SubsidioViewDialog.hide()"/>
                 </h:panelGroup>
