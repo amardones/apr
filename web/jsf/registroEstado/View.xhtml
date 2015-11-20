@@ -25,9 +25,9 @@
                         <h:outputText value="#{bundle.ViewRegistroEstadoLabel_descripcion}"/>
                         <h:outputText value="#{registroEstadoController.selected.descripcion}" title="#{bundle.ViewRegistroEstadoTitle_descripcion}"/>
                         <h:outputText value="#{bundle.ViewRegistroEstadoLabel_cuenta}"/>
-                        <h:outputText value="#{registroEstadoController.selected.cuenta}" title="#{bundle.ViewRegistroEstadoTitle_cuenta}"/>
+                        <h:outputText value="#{registroEstadoController.selected.cuenta.idCuenta}: #{registroEstadoController.selected.cuenta.rut.nombre} #{registroEstadoController.selected.cuenta.rut.apellido}" title="#{bundle.ViewRegistroEstadoTitle_cuenta}"/>
                         <h:outputText value="#{bundle.ViewRegistroEstadoLabel_periodo}"/>
-                        <h:outputText value="#{registroEstadoController.selected.periodo}" title="#{bundle.ViewRegistroEstadoTitle_periodo}"/>
+                        <h:outputText value="#{registroEstadoController.selected.periodo.idPeriodo}: #{registroEstadoController.selected.periodo.nombre} " title="#{bundle.ViewRegistroEstadoTitle_periodo}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="RegistroEstadoViewDialog.hide()"/>
                 </h:panelGroup>

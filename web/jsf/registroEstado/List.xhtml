@@ -43,7 +43,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRegistroEstadoTitle_metrosCubicos}"/>
                             </f:facet>
-                            <h:outputText value="#{item.metrosCubicos}"/>
+                            <h:outputText value="#{item.metrosCubicos} m3"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -63,13 +63,13 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRegistroEstadoTitle_cuenta}"/>
                             </f:facet>
-                            <h:outputText value="#{item.cuenta}"/>
+                            <h:outputText value="#{item.cuenta.idCuenta}: #{item.cuenta.rut.nombre} #{item.cuenta.rut.apellido}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRegistroEstadoTitle_periodo}"/>
                             </f:facet>
-                            <h:outputText value="#{item.periodo}"/>
+                            <h:outputText value="#{item.periodo.idPeriodo}: #{item.periodo.nombre}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{registroEstadoController.prepareCreate}" update=":RegistroEstadoCreateForm" oncomplete="PF('RegistroEstadoCreateDialog').show()"/>

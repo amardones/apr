@@ -43,12 +43,10 @@
                             <f:selectItems value="#{socioController.itemsAvailableSelectOne}"
                                            var="rutItem"
                                            itemValue="#{rutItem}"
-                                           itemLabel="#{rutItem.nombre} #{rutItem.apellido} "
-                                           />
-                            
-                            
+                                           itemLabel="#{rutItem.nombre} #{rutItem.apellido} "/>                            
                         </p:selectOneMenu>
                     </p:panelGrid>
+                    
                     <p:commandButton actionListener="#{cuentaController.create}" value="#{bundle.Save}" update="display,:CuentaListForm:datalist,:growl" oncomplete="handleSubmit(args,'CuentaCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="CuentaCreateDialog.hide()"/>
                 </h:panelGroup>

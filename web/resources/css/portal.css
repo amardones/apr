@@ -7,13 +7,13 @@ body {
     padding-bottom: 10px;
 }
 #container {
-    height: 750 px;
+    height: 750px;
     width: 1000px;
     background: #ffffff;
 }
 .banner {
     background-image: url("images/BannerAgua01.jpg");
-    background-color: transparent;
+    background-color: appworkspace;
     height:80px;
 }
 

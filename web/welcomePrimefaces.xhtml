@@ -7,11 +7,11 @@
 
     <f:view contentType="text/html">
         <h:head>
-            <f:facet name="first">
-                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>PrimeFaces</title>
-            </f:facet>
-        </h:head>
+        <title><ui:insert name="title">ARP</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="portal.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
 
         <h:body>
 
@@ -23,22 +23,9 @@
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
                     Footer
-                </p:layoutUnit>
+                </p:layoutUnit>            
 
-                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
-                    <p:menu>
-                        <p:submenu label="Resources">
-                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
-
-                        </p:submenu>
-
-                    </p:menu>
-                </p:layoutUnit>
-
-                <p:layoutUnit position="center">
+                <p:layoutUnit position="center" >
                     Welcome to PrimeFaces
                 </p:layoutUnit>
 
