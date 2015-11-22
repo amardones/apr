@@ -23,25 +23,25 @@
                     <p:menubar>
                         <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
                         <p:submenu label="Cuentas">
-                            <p:menuitem value="Cuentas" outcome="/jsf/socio/List" />
+                            <p:menuitem value="Cuentas" outcome="/jsf/cuenta/List" />
                             <p:menuitem value="Socios" outcome="/jsf/socio/List" />                           
-                            <p:menuitem value="Subsidios" outcome="/jsf/socio/List" />                            
-                            <p:menuitem value="Medidores" outcome="/jsf/socio/List" /> 
-                            <p:menuitem value="Saldo Cuenta" outcome="/jsf/socio/List" />    
+                            <p:menuitem value="Subsidios" outcome="/jsf/subsidio/List" />                            
+                            <p:menuitem value="Medidores" outcome="/jsf/medidor/List" /> 
+                            <p:menuitem value="Saldo Cuenta" outcome="/jsf/saldocuenta/List" />    
                         </p:submenu>
                         <p:submenu label="Proceso de calculo">
-                            <p:menuitem value="Registro de medición" outcome="/jsf/socio/List" />
-                            <p:menuitem value="Periodos de cobro" outcome="/jsf/socio/List" />
-                            <p:menuitem value="Avisos de cobro" outcome="/jsf/socio/List" />                  
+                            <p:menuitem value="Registro de medición" outcome="/jsf/registroestado/List" />
+                            <p:menuitem value="Periodos de cobro" outcome="/jsf/periodo/List" />
+                            <p:menuitem value="Avisos de cobro" outcome="/jsf/avisocobro/List" />                  
                         </p:submenu>
                          <p:submenu label="Cobros y Pagos">
-                            <p:menuitem value="Registro de cobros" outcome="/jsf/socio/List" />  
-                            <p:menuitem value="Boletas" outcome="/jsf/socio/List" />                                             
+                            <p:menuitem value="Registro de cobros" outcome="/jsf/registrocobro/List" />  
+                            <p:menuitem value="Boletas" outcome="/jsf/boleta/List" />                                             
                         </p:submenu>
                          <p:submenu label="Parametros">
-                            <p:menuitem value="Valores parametricos" outcome="/jsf/socio/List" />    
-                            <p:menuitem value="Tramos" outcome="/jsf/socio/List" />
-                            <p:menuitem value="Items de pago" outcome="/jsf/socio/List" />
+                            <p:menuitem value="Valores parametricos" outcome="/jsf/valoresParametricos/List" />    
+                            <p:menuitem value="Tramos" outcome="/jsf/valorTramoM3/List" />
+                            <p:menuitem value="Items de pago" outcome="/jsf/valorTramoM3/List" />
                         </p:submenu>
                          <p:submenu label="Reportes">
                           
@@ -50,9 +50,9 @@
                 </h:form>
             </p:layoutUnit>
 
-            <p:layoutUnit position="south" size="40">
+            <p:layoutUnit position="south" size="60" >
                 <ui:insert name="footer"/>
-               Comite de agua portable Rural
+              SISTEMA DE ADMINISTRACIÓN :Comité de agua portable Zona Rural
             </p:layoutUnit>
 
             <p:layoutUnit position="center">
