@@ -27,9 +27,9 @@
                         <h:outputText value="#{bundle.ViewRegistroCobroLabel_mesPrimeraCuota}"/>
                         <h:outputText value="#{registroCobroController.selected.mesPrimeraCuota}" title="#{bundle.ViewRegistroCobroTitle_mesPrimeraCuota}"/>
                         <h:outputText value="#{bundle.ViewRegistroCobroLabel_idCuenta}"/>
-                        <h:outputText value="#{registroCobroController.selected.idCuenta}" title="#{bundle.ViewRegistroCobroTitle_idCuenta}"/>
+                        <h:outputText value="#{registroCobroController.selected.idCuenta.idCuenta}: #{registroCobroController.selected.idCuenta.rut.nombre} #{registroCobroController.selected.idCuenta.rut.apellido}" title="#{bundle.ViewRegistroCobroTitle_idCuenta}"/>
                         <h:outputText value="#{bundle.ViewRegistroCobroLabel_idTipoCobro}"/>
-                        <h:outputText value="#{registroCobroController.selected.idTipoCobro}" title="#{bundle.ViewRegistroCobroTitle_idTipoCobro}"/>
+                        <h:outputText value="#{registroCobroController.selected.idTipoCobro.idTipoCobro}: #{registroCobroController.selected.idTipoCobro.nombre}" title="#{bundle.ViewRegistroCobroTitle_idTipoCobro}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="RegistroCobroViewDialog.hide()"/>
                 </h:panelGroup>

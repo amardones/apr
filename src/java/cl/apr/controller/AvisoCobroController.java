@@ -157,6 +157,14 @@ public class AvisoCobroController implements Serializable {
     public List<AvisoCobro> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
+    public List<AvisoCobro> getAvisodeCobroDisponibles() {
+        return getFacade().avisodeCobroDisponibles();
+    }
+    public List<AvisoCobro> getMedidoresDisponiblesEditar() {
+        
+        return ejbFacade.getavisoDeCobroDisponiblesEditar(selected.getCuenta().getIdCuenta(),selected.getPeriodo().getIdPeriodo());
+    }
+       
 
     @FacesConverter(forClass = AvisoCobro.class)
     public static class AvisoCobroControllerConverter implements Converter {

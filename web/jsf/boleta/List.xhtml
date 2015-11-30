@@ -57,7 +57,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListBoletaTitle_avisoCobro}"/>
                             </f:facet>
-                            <h:outputText value="#{item.avisoCobro}"/>
+                            <h:outputText value="#{item.avisoCobro.cuenta.idCuenta}: #{item.avisoCobro.cuenta.rut.nombre} #{item.avisoCobro.cuenta.rut.apellido} #{item.avisoCobro.periodo.idPeriodo}: #{item.avisoCobro.periodo.nombre}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{boletaController.prepareCreate}" update=":BoletaCreateForm" oncomplete="PF('BoletaCreateDialog').show()"/>

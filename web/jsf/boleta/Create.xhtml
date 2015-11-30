@@ -12,8 +12,6 @@
             <h:form id="BoletaCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{boletaController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateBoletaLabel_idBoleta}" for="idBoleta" />
-                        <p:inputText id="idBoleta" value="#{boletaController.selected.idBoleta}" title="#{bundle.CreateBoletaTitle_idBoleta}" required="true" requiredMessage="#{bundle.CreateBoletaRequiredMessage_idBoleta}"/>
                         <p:outputLabel value="#{bundle.CreateBoletaLabel_numeroBoleta}" for="numeroBoleta" />
                         <p:inputText id="numeroBoleta" value="#{boletaController.selected.numeroBoleta}" title="#{bundle.CreateBoletaTitle_numeroBoleta}" required="true" requiredMessage="#{bundle.CreateBoletaRequiredMessage_numeroBoleta}"/>
                         <p:outputLabel value="#{bundle.CreateBoletaLabel_fechaCreacion}" for="fechaCreacion" />
@@ -22,9 +20,10 @@
                         <p:inputText id="total" value="#{boletaController.selected.total}" title="#{bundle.CreateBoletaTitle_total}" required="true" requiredMessage="#{bundle.CreateBoletaRequiredMessage_total}"/>
                         <p:outputLabel value="#{bundle.CreateBoletaLabel_avisoCobro}" for="avisoCobro" />
                         <p:selectOneMenu id="avisoCobro" value="#{boletaController.selected.avisoCobro}" required="true" requiredMessage="#{bundle.EditBoletaRequiredMessage_avisoCobro}">
-                            <f:selectItems value="#{avisoCobroController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{avisoCobroController.avisodeCobroDisponibles}"
                                            var="avisoCobroItem"
-                                           itemValue="#{avisoCobroItem}"/>
+                                           itemValue="#{avisoCobroItem}"
+itemLabel="#{avisoCobroItem.cuenta.idCuenta}: #{avisoCobroItem.cuenta.rut.nombre} #{avisoCobroItem.cuenta.rut.apellido} #{avisoCobroItem.periodo.idPeriodo}: #{avisoCobroItem.periodo.nombre}"/>                                           />
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{boletaController.create}" value="#{bundle.Save}" update="display,:BoletaListForm:datalist,:growl" oncomplete="handleSubmit(args,'BoletaCreateDialog');"/>

@@ -29,14 +29,18 @@
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
                                            var="idCuentaItem"
-                                           itemValue="#{idCuentaItem}"/>
+                                           itemValue="#{idCuentaItem}"
+                                           itemLabel="#{idCuentaItem.idCuenta}: #{idCuentaItem.rut.nombre} #{idCuentaItem.rut.apellido}"/>           
+
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditRegistroCobroLabel_idTipoCobro}" for="idTipoCobro" />
                         <p:selectOneMenu id="idTipoCobro" value="#{registroCobroController.selected.idTipoCobro}" required="true" requiredMessage="#{bundle.EditRegistroCobroRequiredMessage_idTipoCobro}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{tipoCobroController.itemsAvailableSelectOne}"
                                            var="idTipoCobroItem"
-                                           itemValue="#{idTipoCobroItem}"/>
+                                           itemValue="#{idTipoCobroItem}"
+                                           itemLabel="#{idTipoCobroItem.idTipoCobro}: #{idTipoCobroItem.nombre}"/>           
+
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{registroCobroController.update}" value="#{bundle.Save}" update="display,:RegistroCobroListForm:datalist,:growl" oncomplete="handleSubmit(args, 'RegistroCobroEditDialog');"/>

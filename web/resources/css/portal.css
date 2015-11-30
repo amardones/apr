@@ -28,3 +28,75 @@ body {
    border: none;
    padding: 0px;
 }
+.myButtonCuenta {
+        display: block;
+        width: 200px !important;
+        height: 241px !important;
+        background-image: url("images/cliente2.jpg")  !important;
+    }
+.myButtonCuenta:hover {
+    display: block;
+    width: 200px !important;
+    height: 241px !important;
+    background-image: url("images/cliente1.jpg")  !important;
+}
+.myButtonavisoCobro {
+        display: block;
+        width: 200px !important;
+        height: 241px !important;
+        background-image: url("images/cuenta2.jpg")  !important;
+    }
+.myButtonavisoCobro:hover {
+    display: block;
+    width: 200px !important;
+    height: 241px !important;
+    background-image: url("images/cuenta1.jpg")  !important;
+}
+.myButtonBoleta {
+        display: block;
+        width: 200px !important;
+        height: 241px !important;
+        background-image: url("images/cobros2.jpg")  !important;
+    }
+.myButtonBoleta:hover {
+    display: block;
+    width: 200px !important;
+    height: 241px !important;
+    background-image: url("images/cobros1.jpg")  !important;
+}
+.myButtonregistroEstado {
+        display: block;
+        width: 200px !important;
+        height: 241px !important;
+        background-image: url("images/subsidio2.jpg")  !important;
+    }
+.myButtonregistroEstado:hover {
+        display: block;
+        width: 200px !important;
+        height: 241px !important;
+        background-image: url("images/subsidio.jpg")  !important;
+    }
+.myButtonConfiguracion {
+        display: block;
+        width: 200px !important;
+        height: 241px !important;
+        background-image: url("images/configurar2.jpg")  !important;
+    }
+.myButtonConfiguracion:hover {
+        display: block;
+        width: 200px !important;
+        height: 241px !important;
+        background-image: url("images/configurar1.jpg")  !important;
+    }
+.myButtonReportes {
+        display: block;
+        width: 200px !important;
+        height: 241px !important;
+        background-image: url("images/reportes2.jpg")  !important;
+    }
+.myButtonReportes:hover {
+        display: block;
+        width: 200px !important;
+        height: 241px !important;
+        background-image: url("images/reportes.jpg")  !important;
+    }

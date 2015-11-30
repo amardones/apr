@@ -7,6 +7,7 @@ package cl.apr.facade;
 
 import cl.apr.entity.AvisoCobro;
 import cl.apr.entity.Medidor;
+import cl.apr.entity.Boleta;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -73,10 +74,26 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
      
       public List<AvisoCobro> getAvisosPorPeriodo(int idPeriodo) {
          Query query = em.createQuery(""
-                                        + "SELECT DISTINCT a FROM AvisoCobro a WHERE a.periodo.idPeriodo  = :idPeriodo ", AvisoCobro.class);
+                                        + "SELECT DISTINCT a FROM AvisoCobro a WHERE a.periodo.idPeriodo = :idPeriodo ", AvisoCobro.class);
          query.setParameter("idPeriodo",idPeriodo);
          return query.getResultList();
        
     }
+//buscar los aviso que no han sido pagados
+    public List<AvisoCobro> avisodeCobroDisponibles() {
+         Query query = em.createQuery(""
+                                        + "SELECT m FROM Boleta c RIGHT JOIN c.avisoCobro m WHERE c.idBoleta IS NULL ", AvisoCobro.class);        
+         return query.getResultList();
+    }
+
+    public List<AvisoCobro> getavisoDeCobroDisponiblesEditar(Integer idCuenta, Integer idPeriodo) {
+        Query query = em.createQuery(""
+                                        + "SELECT DISTINCT m FROM Boleta c RIGHT JOIN c.avisoCobro m WHERE c.idBoleta IS NULL OR c.avisoCobro = :idPeriodo", AvisoCobro.class);
+         query.setParameter("idPeriodo",idPeriodo);
+         query.setParameter("idCuenta",idCuenta);
+         return query.getResultList();
+    }
+
+    
     
 }

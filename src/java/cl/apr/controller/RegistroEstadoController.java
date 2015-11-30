@@ -3,6 +3,7 @@ package cl.apr.controller;
 import cl.apr.entity.RegistroEstado;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
+import cl.apr.entity.Periodo;
 import cl.apr.facade.RegistroEstadoFacade;
 
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class RegistroEstadoController implements Serializable {
     private cl.apr.facade.RegistroEstadoFacade ejbFacade;
     private List<RegistroEstado> items = null;
     private RegistroEstado selected;
+    private Periodo  periodo;
 
     public RegistroEstadoController() {
     }
@@ -78,9 +80,12 @@ public class RegistroEstadoController implements Serializable {
     }
 
     public List<RegistroEstado> getItems() {
-        if (items == null) {
+        /*if (items == null) {
             items = getFacade().findAll();
         }
+        return items;*/
+        if(periodo != null)
+             return getFacade().getRegistroEstadoPorPeriodo(periodo.getIdPeriodo());         
         return items;
     }
 

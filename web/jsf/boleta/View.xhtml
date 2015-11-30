@@ -23,7 +23,8 @@
                         <h:outputText value="#{bundle.ViewBoletaLabel_total}"/>
                         <h:outputText value="#{boletaController.selected.total}" title="#{bundle.ViewBoletaTitle_total}"/>
                         <h:outputText value="#{bundle.ViewBoletaLabel_avisoCobro}"/>
-                        <h:outputText value="#{boletaController.selected.avisoCobro}" title="#{bundle.ViewBoletaTitle_avisoCobro}"/>
+                        <h:outputText value="#{boletaController.selected.avisoCobro.cuenta.idCuenta}: #{boletaController.selected.avisoCobro.cuenta.rut.nombre} #{boletaController.selected.avisoCobro.cuenta.rut.apellido} 
+                                      #{boletaController.selected.avisoCobro.periodo.idPeriodo}: #{boletaController.selected.avisoCobro.periodo.nombre}  " title="#{bundle.ViewBoletaTitle_avisoCobro}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="BoletaViewDialog.hide()"/>
                 </h:panelGroup>

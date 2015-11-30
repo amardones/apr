@@ -12,8 +12,6 @@
             <h:form id="RegistroCobroCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{registroCobroController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_idRegistroCobro}" for="idRegistroCobro" />
-                        <p:inputText id="idRegistroCobro" value="#{registroCobroController.selected.idRegistroCobro}" title="#{bundle.CreateRegistroCobroTitle_idRegistroCobro}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_idRegistroCobro}"/>
                         <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_cuotas}" for="cuotas" />
                         <p:inputText id="cuotas" value="#{registroCobroController.selected.cuotas}" title="#{bundle.CreateRegistroCobroTitle_cuotas}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_cuotas}"/>
                         <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_monto}" for="monto" />
@@ -28,13 +26,16 @@
                         <p:selectOneMenu id="idCuenta" value="#{registroCobroController.selected.idCuenta}" required="true" requiredMessage="#{bundle.EditRegistroCobroRequiredMessage_idCuenta}">
                             <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
                                            var="idCuentaItem"
-                                           itemValue="#{idCuentaItem}"/>
+                                           itemValue="#{idCuentaItem}"
+                                           itemLabel="#{idCuentaItem.idCuenta}: #{idCuentaItem.rut.nombre} #{idCuentaItem.rut.apellido}"/>           
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_idTipoCobro}" for="idTipoCobro" />
                         <p:selectOneMenu id="idTipoCobro" value="#{registroCobroController.selected.idTipoCobro}" required="true" requiredMessage="#{bundle.EditRegistroCobroRequiredMessage_idTipoCobro}">
                             <f:selectItems value="#{tipoCobroController.itemsAvailableSelectOne}"
                                            var="idTipoCobroItem"
-                                           itemValue="#{idTipoCobroItem}"/>
+                                           itemValue="#{idTipoCobroItem}"
+                                           itemLabel="#{idTipoCobroItem.idTipoCobro}: #{idTipoCobroItem.nombre}"/>           
+
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{registroCobroController.create}" value="#{bundle.Save}" update="display,:RegistroCobroListForm:datalist,:growl" oncomplete="handleSubmit(args,'RegistroCobroCreateDialog');"/>

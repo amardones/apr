@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
    <h:head>
         <title><ui:insert name="title">ARP</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
@@ -19,55 +20,54 @@
                 <ui:insert name="body"/>
                                  
                
-                <table border="0" width="4">
-                    <thead>
-                        <tr>
-                            <a href="/jsf/cuenta/List">
-                            <th> <img src="resources/images/cliente1.jpg" width="200" height="241" 
-                                      id="img" alt="cuentas" 
-                                      onmouseover="img.src='resources/images/cliente2.jpg'"
-                                      onmousemove="img.src='resources/images/cliente1.jpg';"/>
-                                       <h:link outcome="/jsf/cuenta/List" value="CUENTAS"/>
-                            </th>
-                            </a>
-                            <th> <img src="resources/images/cuenta1.jpg" width="200" height="241" 
-                                      id="img" alt="procesodecalculo" 
-                                      onmouseover="img.src='resources/images/cuenta2.jpg'"
-                                      onmousemove="img.src='resources/images/cuenta1.jpg';"/>
-                                       <h:link outcome="/jsf/avisoCobro/List" value="PROCESO DE CALCULO"/>
-                            </th>
-                            <th> <img src="resources/images/cobros1.jpg" width="200" height="241" alt="cobros1"
-                                      id="img" 
-                                      onmouseover="img.src='resources/images/cobros2.jpg'"
-                                      onmousemove="img.src='resources/images/cobros1.jpg';"/>
-                                       <h:link outcome="/jsf/boleta/List" value="COBRO Y PAGOS"/>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th> <img src="resources/images/subsidio.jpg" width="200" height="241" alt="configurar1"
-                                      id="img" 
-                                      onmouseover="img.src='resources/images/subsidio2.jpg'"
-                                      onmousemove="img.src='resources/images/subsidio.jpg';"/>
-                                       <h:link outcome="/jsf/registroEstado/List" value="REGISTRO ESTADO"/>
-                            </th>
-                            <th> <img src="resources/images/configurar1.jpg" width="200" height="241" alt="configurar1"
-                                      id="img" 
-                                      onmouseover="img.src='resources/images/configurar2.jpg'"
-                                      onmousemove="img.src='resources/images/configurar1.jpg';"/>
-                                       <h:link outcome="/jsf/valoresParametricos/List" value="CONFIGURACIÓN"/>
-                            </th>
-                            <th> <img src="resources/images/reportes.jpg" width="200" height="241" alt="reporte1"
-                                      id="img" 
-                                      onmouseover="img.src='resources/images/reportes2.jpg'"
-                                      onmousemove="img.src='resources/images/reportes.jpg';"/>
-                                       <h:link outcome="/jsf/valoresParametricos/List" value="REPORTES"/>
-                            </th>
-                            
-                        </tr>
-                    </tbody>
-                </table>
+                 <h:form>
+                    <p:panelGrid columns="3">
+                        <p:commandLink  styleClass="myButtonCuenta"
+                        ajax="false"
+                        action="/jsf/cuenta/List?faces-redirect=true"    
+                        />
+                        
+                        <p:commandLink  styleClass="myButtonavisoCobro"
+                        ajax="false"
+                        action="/jsf/avisoCobro/List?faces-redirect=true"    
+                        />
+                        
+                         <p:commandLink  styleClass="myButtonBoleta"
+                        ajax="false"
+                        action="/jsf/boleta/List?faces-redirect=true"    
+                        />
+                        <h:link outcome="/jsf/cuenta/List" value="CUENTAS"
+                        />
+                        <h:link outcome="/jsf/avisoCobro/List" value="AVISO DE COBROS"
+                        />
+                        <h:link outcome="/jsf/boleta/List" value="BOLETAS"
+                        />
+                    </p:panelGrid >
+                    
+                    <p:panelGrid columns="3">
+                         <p:commandLink  styleClass="myButtonregistroEstado"
+                        ajax="false"
+                        action="/jsf/registroEstado/List?faces-redirect=true"    
+                        />
+                        
+                        <p:commandLink  styleClass="myButtonConfiguracion"
+                        ajax="false"
+                        action="/jsf/valoresParametricos/List?faces-redirect=true"    
+                        />
+                        <p:commandLink  styleClass="myButtonReportes"
+                        ajax="false"
+                        action="/jsf/valoresParametricos/List?faces-redirect=true" 
+                        
+                        />
+                        <h:link outcome="/jsf/registroEstado/List" value="REGISTROS DE ESTADOS"
+                        />
+                        <h:link outcome="/jsf/valoresParametricos/List" value="CONFIGURAR"
+                        />
+                        <h:link outcome="/jsf/valoresParametricos/List" value="REPORTES"
+                        />
+                     </p:panelGrid>
+                </h:form>
+                
         </p:layoutUnit>
         <p:layoutUnit position="south" size="60">
                 <ui:insert name="footer"/>
