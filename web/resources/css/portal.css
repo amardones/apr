@@ -100,3 +100,16 @@ body {
         height: 241px !important;
         background-image: url("images/reportes.jpg")  !important;
     }
+   
+ .logoInterior {
+        display: block;
+        width: 250px !important;
+        height: 100px !important;
+        background-image: url("images/logointerior.jpg")  !important;
+    }
+.logoInterior:hover {
+        display: block;
+        width: 250px !important;
+        height: 100px !important;
+        background-image: url("images/logointerior.jpg")  !important;
+    }
