@@ -19,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("registroEstadoController")
 @SessionScoped
@@ -28,7 +29,9 @@ public class RegistroEstadoController implements Serializable {
     private cl.apr.facade.RegistroEstadoFacade ejbFacade;
     private List<RegistroEstado> items = null;
     private RegistroEstado selected;
-    private Periodo  periodo;
+   
+    @Inject
+    private PeriodoController periodoController;
 
     public RegistroEstadoController() {
     }
@@ -84,8 +87,8 @@ public class RegistroEstadoController implements Serializable {
             items = getFacade().findAll();
         }
         return items;*/
-        if(periodo != null)
-             return getFacade().getRegistroEstadoPorPeriodo(periodo.getIdPeriodo());         
+        if(periodoController.getSelected() != null)
+             return getFacade().getRegistroEstadoPorPeriodo(periodoController.getSelected().getIdPeriodo());         
         return items;
     }
 

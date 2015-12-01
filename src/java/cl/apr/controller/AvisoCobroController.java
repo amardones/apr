@@ -3,7 +3,6 @@ package cl.apr.controller;
 import cl.apr.entity.AvisoCobro;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
-import cl.apr.entity.Periodo;
 import cl.apr.facade.AvisoCobroFacade;
 
 import java.io.Serializable;
@@ -28,20 +27,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.faces.bean.ManagedProperty;
+import javax.inject.Inject;
 
 @Named("avisoCobroController")
 @SessionScoped
 public class AvisoCobroController implements Serializable {
 
+    //@ManagedProperty(value="#{periodoController}")
+    @Inject
+    private PeriodoController periodoController;
+    
     @EJB
     private cl.apr.facade.AvisoCobroFacade ejbFacade;
-    @EJB
-    private cl.apr.facade.PeriodoFacade ejbPeriodoFacade;
-     
+         
     private List<AvisoCobro> items = null;
     private AvisoCobro selected;
-    private Periodo  periodo;
-    
+      
     public AvisoCobroController() {
     }
 
@@ -53,17 +55,9 @@ public class AvisoCobroController implements Serializable {
         this.selected = selected;
     }
     
-    public Periodo getPeriodo() {
-        return periodo;
-    }
-    
-     public void setPeriodo(Periodo periodo) {
-        this.periodo = periodo;
-         System.out.println("seleccion periodo: "+periodo.getNombre());
-    }
           
     public void generarTodosLosAvisoCobro() {
-      if(periodo != null && getFacade().crearAvisosDeCobro(periodo.getIdPeriodo(), -1)){
+      if(periodoController.getSelected() != null && getFacade().crearAvisosDeCobro(periodoController.getSelected().getIdPeriodo(), -1)){
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
       }
     }
@@ -78,7 +72,7 @@ public class AvisoCobroController implements Serializable {
      */
      public void generarAvisoCobro(AvisoCobro aviso) {
          if(aviso != null){
-            if(periodo != null && getFacade().crearAvisosDeCobro(aviso.getAvisoCobroPK().getIdPeriodo(), aviso.getAvisoCobroPK().getIdCuenta())){
+            if(periodoController.getSelected() != null && getFacade().crearAvisosDeCobro(aviso.getAvisoCobroPK().getIdPeriodo(), aviso.getAvisoCobroPK().getIdCuenta())){
                 JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
             }
         }
@@ -110,14 +104,14 @@ public class AvisoCobroController implements Serializable {
         }
     }
 
-    public List<Periodo> getPeriodos() {
-        List<Periodo> periodos = ejbPeriodoFacade.findAll();
-        if(periodo == null && periodos != null && periodos.size() > 0){
-            periodo = periodos.get(0);
-        }
-        return  periodos;
-    }
-    
+//    public List<Periodo> getPeriodos() {
+//        List<Periodo> periodos = ejbPeriodoFacade.getPeriodos();
+//        if(periodo == null && periodos != null && periodos.size() > 0){
+//            periodo = periodos.get(0);
+//        }
+//        return  periodos;
+//    }
+//    
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AvisoCobroUpdated"));
     }
@@ -133,9 +127,9 @@ public class AvisoCobroController implements Serializable {
     public List<AvisoCobro> getItems() {
         items = new ArrayList<>();
         try{  
-              if(periodo != null){
+              if(periodoController.getSelected() != null){
              //return periodo.getAvisoCobroList();
-                  items = getFacade().getAvisosPorPeriodo(periodo.getIdPeriodo());
+                  items = getFacade().getAvisosPorPeriodo(periodoController.getSelected().getIdPeriodo());
                  return  items;
          }
          }catch(Exception e){
@@ -247,13 +241,13 @@ public class AvisoCobroController implements Serializable {
 
      public void verAvisos() {
         try {
-            if(periodo != null){
+            if(periodoController.getSelected() != null){
                 FacesContext ctx = FacesContext.getCurrentInstance();
                 ExternalContext ectx = ctx.getExternalContext();
                 HttpServletRequest request = (HttpServletRequest) ectx.getRequest();
                 HttpServletResponse response = (HttpServletResponse) ectx.getResponse();
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/verAviso");
-                request.setAttribute("idPeriodo", periodo.getIdPeriodo());
+                request.setAttribute("idPeriodo", periodoController.getSelected().getIdPeriodo());
                 dispatcher.forward(request, response);
                 ctx.responseComplete();
                 System.out.println("call servlet");

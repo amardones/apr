@@ -6,9 +6,11 @@
 package cl.apr.facade;
 
 import cl.apr.entity.Periodo;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,4 +30,11 @@ public class PeriodoFacade extends AbstractFacade<Periodo> {
         super(Periodo.class);
     }
     
+    public List<Periodo> getPeriodos() {
+         Query query = em.createQuery(""
+                                        + "SELECT p FROM Periodo p order by p.idPeriodo desc", Periodo.class);
+        // query.setParameter("idPeriodo",idPeriodo);
+         return query.getResultList();
+       
+    }
 }

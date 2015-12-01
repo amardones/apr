@@ -16,11 +16,11 @@
         <ui:define name="body">
             <h:form id="RegistroEstadoListForm">
                 <h:panelGroup id="filtro">
-                    <p:panelGrid columns="9" rendered="#{periodoController.itemsAvailableSelectOne != null}">
+                    <p:panelGrid columns="8" rendered="#{periodoController.itemsAvailableSelectOne != null}">
                         <p:outputLabel value="#{bundle.EditAvisoCobroLabel_periodo}" for="periodo" />
-                        <p:selectOneMenu id="periodo" value="#{avisoCobroController.periodo}" >
+                        <p:selectOneMenu id="periodo" value="#{periodoController.selected}" >
 <!--                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>-->
-                            <f:selectItems value="#{avisoCobroController.periodos}"
+                            <f:selectItems value="#{periodoController.periodos}"
                                            var="periodoItem"
                                            itemValue="#{periodoItem}"
                                            itemLabel="#{periodoItem.nombre}"                                           
@@ -28,31 +28,28 @@
                              <p:ajax event="valueChange" update="@form" />
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaInicio}" for="fechaInicio"/>
-                        <p:outputLabel id="fechaInicio" value="#{avisoCobroController.periodo.fechaInicio}" />
+                        <p:outputLabel id="fechaInicio" value="#{periodoController.selected.fechaInicio}" />
                         
                         <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaEmision}" for="fechaEmision" />
-                        <p:outputLabel id="fechaEmision" value="#{avisoCobroController.periodo.fechaEmision}" />
+                        <p:outputLabel id="fechaEmision" value="#{periodoController.selected.fechaEmision}" />
                         
                          <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaTomaLectura}" for="fechaTomaLectura" />
-                        <p:outputLabel id="fechaTomaLectura" value="#{avisoCobroController.periodo.fechaTomaLectura}" />
-                        <p:commandButton id="crearAvisosButton"  value="#{bundle.Create}" actionListener="#{avisoCobroController.generarAvisosCobro}" update=":growl,datalist" disabled="#{empty avisoCobroController.periodo}"/>
-
+                        <p:outputLabel id="fechaTomaLectura" value="#{periodoController.selected.fechaTomaLectura}" />
                        
+               
                          <p:outputLabel  value="" />
                          <p:outputLabel  value="" />
                           
                         <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaFin}" for="fechaFin" />
-                        <p:outputLabel id="fechaFin" value="#{avisoCobroController.periodo.fechaFin}" />
+                        <p:outputLabel id="fechaFin" value="#{periodoController.selected.fechaFin}" />
                         
                                                 
                         <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaVencimiento}" for="fechaVencimiento" />
-                        <p:outputLabel id="fechaVencimiento" value="#{avisoCobroController.periodo.fechaVencimiento}" />
+                        <p:outputLabel id="fechaVencimiento" value="#{periodoController.selected.fechaVencimiento}" />
                         
                         <p:outputLabel  value="" />
-                        <p:outputLabel  value="" /> 
                         
-                        <p:commandButton id="downPdfButton"  value="#{bundle.View}" actionListener="#{avisoCobroController.generarAvisosCobro}" update=":growl,datalist" disabled="#{empty avisoCobroController.periodo}"/>
-                    
+                        
                        </p:panelGrid>                    
                 </h:panelGroup>
                 <p:panel header="#{bundle.ListRegistroEstadoTitle}">

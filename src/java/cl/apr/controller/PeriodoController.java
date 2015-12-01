@@ -28,6 +28,15 @@ public class PeriodoController implements Serializable {
     private List<Periodo> items = null;
     private Periodo selected;
 
+    
+    public List<Periodo> getPeriodos() {
+        List<Periodo> periodos = ejbFacade.getPeriodos();
+        if(selected == null && periodos != null && periodos.size() > 0){
+            selected = periodos.get(0);
+        }
+        return  periodos;
+    }
+    
     public PeriodoController() {
     }
 
