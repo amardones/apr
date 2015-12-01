@@ -16,9 +16,18 @@ import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+
+
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
 
 @Named("avisoCobroController")
 @SessionScoped
@@ -32,7 +41,7 @@ public class AvisoCobroController implements Serializable {
     private List<AvisoCobro> items = null;
     private AvisoCobro selected;
     private Periodo  periodo;
-
+    
     public AvisoCobroController() {
     }
 
@@ -53,10 +62,26 @@ public class AvisoCobroController implements Serializable {
          System.out.println("seleccion periodo: "+periodo.getNombre());
     }
           
-    public void generarAvisosCobro() {
+    public void generarTodosLosAvisoCobro() {
       if(periodo != null && getFacade().crearAvisosDeCobro(periodo.getIdPeriodo(), -1)){
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
       }
+    }
+    /*
+     public void generarAvisoCobro() {
+         if(this.selected != null){
+            if(periodo != null && getFacade().crearAvisosDeCobro(this.selected.getAvisoCobroPK().getIdPeriodo(), this.selected.getAvisoCobroPK().getIdCuenta())){
+                JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
+            }
+        }
+    }
+     */
+     public void generarAvisoCobro(AvisoCobro aviso) {
+         if(aviso != null){
+            if(periodo != null && getFacade().crearAvisosDeCobro(aviso.getAvisoCobroPK().getIdPeriodo(), aviso.getAvisoCobroPK().getIdCuenta())){
+                JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
+            }
+        }
     }
 
     protected void setEmbeddableKeys() {
@@ -106,15 +131,17 @@ public class AvisoCobroController implements Serializable {
     }
 
     public List<AvisoCobro> getItems() {
-       /*
-        if (items == null) {
-            items = getFacade().findAll();
-             System.out.println("AvisoCobroController items.size(): "+items.size());
-        }
-        */
-         if(periodo != null)
-             return getFacade().getAvisosPorPeriodo(periodo.getIdPeriodo());
-         
+        items = new ArrayList<>();
+        try{  
+              if(periodo != null){
+             //return periodo.getAvisoCobroList();
+                  items = getFacade().getAvisosPorPeriodo(periodo.getIdPeriodo());
+                 return  items;
+         }
+         }catch(Exception e){
+              items = new ArrayList<>();
+         }
+        
         return items;
     }
     
@@ -157,6 +184,7 @@ public class AvisoCobroController implements Serializable {
     public List<AvisoCobro> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
+    
     public List<AvisoCobro> getAvisodeCobroDisponibles() {
         return getFacade().avisodeCobroDisponibles();
     }
@@ -164,7 +192,7 @@ public class AvisoCobroController implements Serializable {
         
         return ejbFacade.getavisoDeCobroDisponiblesEditar(selected.getCuenta().getIdCuenta(),selected.getPeriodo().getIdPeriodo());
     }
-       
+     
 
     @FacesConverter(forClass = AvisoCobro.class)
     public static class AvisoCobroControllerConverter implements Converter {
@@ -214,5 +242,73 @@ public class AvisoCobroController implements Serializable {
         }
 
     }
+    
+    
+
+     public void verAvisos() {
+        try {
+            if(periodo != null){
+                FacesContext ctx = FacesContext.getCurrentInstance();
+                ExternalContext ectx = ctx.getExternalContext();
+                HttpServletRequest request = (HttpServletRequest) ectx.getRequest();
+                HttpServletResponse response = (HttpServletResponse) ectx.getResponse();
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/verAviso");
+                request.setAttribute("idPeriodo", periodo.getIdPeriodo());
+                dispatcher.forward(request, response);
+                ctx.responseComplete();
+                System.out.println("call servlet");
+            }
+        } catch (ServletException ex) {
+            Logger.getLogger(AvisoCobroController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AvisoCobroController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     public void verAviso(AvisoCobro aviso) {
+        try {
+            
+            if(aviso != null){
+                FacesContext ctx = FacesContext.getCurrentInstance();
+                ExternalContext ectx = ctx.getExternalContext();
+                
+                HttpServletRequest request = (HttpServletRequest) ectx.getRequest();
+                HttpServletResponse response = (HttpServletResponse) ectx.getResponse();
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/verAviso");
+                request.setAttribute("idCuenta", aviso.getAvisoCobroPK().getIdCuenta());
+                request.setAttribute("idPeriodo", aviso.getAvisoCobroPK().getIdPeriodo());
+                dispatcher.forward(request, response);
+                ctx.responseComplete();
+                System.out.println("call servlet is cuenta: " + aviso.getCuenta().getIdCuenta());
+            }
+        } catch (ServletException ex) {
+            Logger.getLogger(AvisoCobroController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AvisoCobroController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     
+     public boolean recalcularAviso(AvisoCobro aviso) {
+         try{  
+                return aviso.getRegistroEstado().getEstadoActual() >= 0;
+         }catch(Exception e){
+                e.printStackTrace();
+         }
+        
+         return false;
+     }
+     
+     public boolean showCalculo(AvisoCobro aviso) {
+         try{  
+                if(aviso.getRegistroEstado().getFechaRegistro().getTime()  < aviso.getFechaCreacion().getTime()  && aviso.getRegistroEstado().getEstadoActual() != -1){
+                     return true;
+                 }
+               
+         }catch(Exception e){
+                e.printStackTrace();
+         }
+        
+         return false;
+     }
+
 
 }

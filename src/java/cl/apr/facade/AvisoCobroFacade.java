@@ -46,8 +46,8 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
                 storedProcedure.registerStoredProcedureParameter("id_periodo", Integer.class, ParameterMode.IN);
                 storedProcedure.registerStoredProcedureParameter("id_cuenta", Integer.class, ParameterMode.IN);
                 storedProcedure.registerStoredProcedureParameter("result", String.class, ParameterMode.OUT);
-                storedProcedure.setParameter("id_periodo", 1);
-                storedProcedure.setParameter("id_cuenta", -1);
+                storedProcedure.setParameter("id_periodo", periodo);
+                storedProcedure.setParameter("id_cuenta", idCuenta);
                 // execute SP
                 storedProcedure.execute();
                 // get result
@@ -72,13 +72,25 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
         return false;
     }
      
-      public List<AvisoCobro> getAvisosPorPeriodo(int idPeriodo) {
+     public List<AvisoCobro> getAvisosPorPeriodo(int idPeriodo) {
          Query query = em.createQuery(""
                                         + "SELECT DISTINCT a FROM AvisoCobro a WHERE a.periodo.idPeriodo = :idPeriodo ", AvisoCobro.class);
          query.setParameter("idPeriodo",idPeriodo);
          return query.getResultList();
        
     }
+
+     
+     public AvisoCobro getAviso(int idPeriodo, int idCuenta) {
+         Query query = em.createQuery(""
+                                        + "SELECT DISTINCT a FROM AvisoCobro a WHERE a.periodo.idPeriodo  = :idPeriodo AND a.cuenta.idCuenta  = :idCuenta ", AvisoCobro.class);
+         query.setParameter("idPeriodo",idPeriodo);
+         query.setParameter("idCuenta",idCuenta);
+         return (AvisoCobro) query.getSingleResult();
+       
+    }
+
+     
 //buscar los aviso que no han sido pagados
     public List<AvisoCobro> avisodeCobroDisponibles() {
          Query query = em.createQuery(""
@@ -94,6 +106,5 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
          return query.getResultList();
     }
 
-    
-    
+     
 }

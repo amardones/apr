@@ -13,7 +13,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -65,7 +67,15 @@ public class AvisoCobro implements Serializable {
     @JoinColumn(name = "id_periodo", referencedColumnName = "id_periodo", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Periodo periodo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "avisoCobro")
+   
+    @JoinColumns({
+        @JoinColumn(name = "id_periodo", referencedColumnName = "id_periodo", insertable = false, updatable = false),
+        @JoinColumn(name = "id_cuenta", referencedColumnName = "id_cuenta", insertable = false, updatable = false),
+    })
+    @ManyToOne(optional = true, fetch = FetchType.EAGER)
+    private RegistroEstado registroEstado;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "avisoCobro", fetch = FetchType.EAGER)
     private List<DetalleAvisoCobro> detalleAvisoCobroList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "avisoCobro")
     private List<Boleta> boletaList;
@@ -142,6 +152,14 @@ public class AvisoCobro implements Serializable {
 
     public void setPeriodo(Periodo periodo) {
         this.periodo = periodo;
+    }
+    
+     public RegistroEstado getRegistroEstado() {
+        return registroEstado;
+    }
+
+    public void setRegistroEstado(RegistroEstado registroEstado) {
+        this.registroEstado = registroEstado;
     }
 
     @XmlTransient

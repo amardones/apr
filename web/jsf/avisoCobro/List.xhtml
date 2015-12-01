@@ -15,7 +15,10 @@
 
         <ui:define name="body">
             <h:form id="AvisoCobroListForm">
-              
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
                 
                  <h:panelGroup id="filtro">
                     <p:panelGrid columns="9" rendered="#{periodoController.itemsAvailableSelectOne != null}">
@@ -28,6 +31,7 @@
                                            itemLabel="#{periodoItem.nombre}"                                           
                                            />
                              <p:ajax event="valueChange" update="@form" />
+                            
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaInicio}" for="fechaInicio"/>
                         <p:outputLabel id="fechaInicio" value="#{avisoCobroController.periodo.fechaInicio}" />
@@ -38,7 +42,14 @@
                          <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaTomaLectura}" for="fechaTomaLectura" />
                         <p:outputLabel id="fechaTomaLectura" value="#{avisoCobroController.periodo.fechaTomaLectura}" />
                         
-                        <p:commandButton id="crearAvisosButton"  value="#{bundle.Create}" actionListener="#{avisoCobroController.generarAvisosCobro}" update=":growl,datalist" disabled="#{empty avisoCobroController.periodo}"/>
+                        <p:commandButton id="crearAvisosButton"  
+                                         icon="ui-icon-extlink" 
+                                         value="#{bundle.Create}" 
+                                         actionListener="#{avisoCobroController.generarTodosLosAvisoCobro}" 
+                                         update=":growl,datalist" 
+                                         disabled="#{empty avisoCobroController.periodo}">
+                            <p:confirm header="Confirmación" message="Esta seguro de calcular todos los avisos?" icon="ui-icon-alert" />
+                        </p:commandButton>
                     
                          <p:outputLabel  value="" />
                          <p:outputLabel  value="" />
@@ -52,13 +63,19 @@
                         
                         <p:outputLabel  value="" />
                         <p:outputLabel  value="" />
-                        <p:commandButton id="downPdfButton"  value="#{bundle.View}" actionListener="#{avisoCobroController.generarAvisosCobro}" update=":growl,datalist" disabled="#{empty avisoCobroController.periodo}"/>
-                    
-                       </p:panelGrid>                    
+                        <p:commandLink action="#{avisoCobroController.verAvisos}" 
+                               value="#{bundle.View}" 
+                               ajax="false" 
+                               global="false" 
+                               process="@this"
+                               target="blank"/>
+                        
+                    </p:panelGrid>                    
                 </h:panelGroup>
                 
                 
                 <p:panel header="#{bundle.ListAvisoCobroTitle}">
+                    
                     <p:dataTable id="datalist" value="#{avisoCobroController.items}" var="item"
                                  selectionMode="single" selection="#{avisoCobroController.selected}"
                                  paginator="true"
@@ -68,27 +85,15 @@
                                  paginatorPosition="top"
                                  >
 
-<!--                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>-->
-
+<!--                        <p:ajax event="rowSelect"   update="verAvisoItem calcularAvisoItem datalist"/>
+                        <p:ajax event="rowUnselect" update="verAvisoItem calcularAvisoItem datalist"/>-->
+                        
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAvisoCobroTitle_totalPeriodo}"/>
+                                <h:outputText value="#{bundle.ListAvisoCobroTitle_cuenta}"/>
                             </f:facet>
-                            <h:outputText value="#{item.totalPeriodo}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAvisoCobroTitle_totalPendiente}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.totalPendiente}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAvisoCobroTitle_total}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.total}"/>
-                        </p:column>
+                            <h:outputText value="#{item.cuenta.idCuenta}: #{item.cuenta.rut.nombre} #{item.cuenta.rut.apellido}"/>
+                        </p:column> 
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAvisoCobroTitle_fechaCreacion}"/>
@@ -96,25 +101,69 @@
                             <h:outputText value="#{item.fechaCreacion}">
                                 <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                             </h:outputText>
+                        </p:column>   
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedidorTitle_numeroMedidor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cuenta.numeroMedidor.numeroMedidor}"/>
+                        </p:column> 
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRegistroEstadoTitle_estadoAnterior}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.registroEstado.estadoAnterior}" rendered="#{avisoCobroController.showCalculo(item)}"/>
+                        </p:column> 
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRegistroEstadoTitle_estadoActual}"/>
+                            </f:facet>
+                              <h:outputText value="#{item.registroEstado.estadoActual}" rendered="#{avisoCobroController.showCalculo(item)}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAvisoCobroTitle_cuenta}"/>
+                                <h:outputText value="#{bundle.ListRegistroEstadoTitle_metrosCubicos}"/>
                             </f:facet>
-                            <h:outputText value="#{item.cuenta.idCuenta}: #{item.cuenta.rut.nombre} #{item.cuenta.rut.apellido}"/>
+                            <h:outputText value="#{item.registroEstado.metrosCubicos} MT3" rendered="#{avisoCobroController.showCalculo(item)}"/>
+                        </p:column> 
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAvisoCobroTitle_totalPeriodo}"/>
+                            </f:facet>
+                            <h:outputText value="$ #{item.totalPeriodo}" rendered="#{avisoCobroController.showCalculo(item)}">
+                                 <f:convertNumber pattern="#0.000" locale="pt_CL"/>
+                            </h:outputText>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAvisoCobroTitle_periodo}"/>
+                                <h:outputText value="#{bundle.ListAvisoCobroTitle_totalPendiente}"/>
                             </f:facet>
-                            <h:outputText value="#{item.periodo}"/>
+                            <h:outputText value="$ #{item.totalPendiente}" rendered="#{avisoCobroController.showCalculo(item)}"/>
                         </p:column>
-<!--                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{avisoCobroController.prepareCreate}" update=":AvisoCobroCreateForm" oncomplete="PF('AvisoCobroCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AvisoCobroViewForm" oncomplete="PF('AvisoCobroViewDialog').show()" disabled="#{empty avisoCobroController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":AvisoCobroEditForm" oncomplete="PF('AvisoCobroEditDialog').show()" disabled="#{empty avisoCobroController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{avisoCobroController.destroy}" update=":growl,datalist" disabled="#{empty avisoCobroController.selected}"/>
-                        </f:facet>-->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAvisoCobroTitle_total}"/>
+                            </f:facet>
+                            <h:outputText value="$ #{item.total}" rendered="#{avisoCobroController.showCalculo(item)}"/>
+                        </p:column>    
+                         <p:column>
+                             <p:commandButton icon="ui-icon-extlink" 
+                                              actionListener="#{avisoCobroController.generarAvisoCobro(item)}"  
+                                              update=":growl,datalist"
+                                              rendered="#{avisoCobroController.showCalculo(item)}"
+                                              >
+                                 <p:confirm header="Confirmación" message="Va a calcular aviso, desea  continuar?" icon="ui-icon-alert" />
+                             </p:commandButton>
+                             <p:commandLink                                
+                               action="#{avisoCobroController.verAviso(item)}" 
+                               value="#{bundle.View}" 
+                               ajax="false" 
+                               global="false" 
+                               process="@this"
+                               target="blank"
+                               rendered="#{avisoCobroController.showCalculo(item)}"
+                               /> 
+                        </p:column> 
                     </p:dataTable>
                 </p:panel>
             </h:form>
