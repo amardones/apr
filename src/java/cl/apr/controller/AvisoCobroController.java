@@ -281,28 +281,16 @@ public class AvisoCobroController implements Serializable {
         }
     }
      
-     public boolean recalcularAviso(AvisoCobro aviso) {
+     /*
+     public boolean showRecalcular() {
          try{  
-                return aviso.getRegistroEstado().getEstadoActual() >= 0;
+                return periodoController.ultimoPeriodo();
+            
          }catch(Exception e){
                 e.printStackTrace();
          }
         
          return false;
      }
-     
-     public boolean showCalculo(AvisoCobro aviso) {
-         try{  
-                if(aviso.getRegistroEstado().getFechaRegistro().getTime()  < aviso.getFechaCreacion().getTime()  && aviso.getRegistroEstado().getEstadoActual() != -1){
-                     return true;
-                 }
-               
-         }catch(Exception e){
-                e.printStackTrace();
-         }
-        
-         return false;
-     }
-
-
+*/
 }

@@ -27,14 +27,24 @@ public class PeriodoController implements Serializable {
     private cl.apr.facade.PeriodoFacade ejbFacade;
     private List<Periodo> items = null;
     private Periodo selected;
-
+    private Periodo ultimoPeriodo;
     
     public List<Periodo> getPeriodos() {
         List<Periodo> periodos = ejbFacade.getPeriodos();
+        ultimoPeriodo = ejbFacade.getLastPeriodo();
+        System.out.println("ultimoPeriodo: "+ultimoPeriodo.getNombre());
         if(selected == null && periodos != null && periodos.size() > 0){
             selected = periodos.get(0);
         }
         return  periodos;
+    }
+    
+    public boolean ultimoPeriodo(){
+        try{
+            return ultimoPeriodo.getIdPeriodo() == selected.getIdPeriodo();
+        }catch(Exception e){}
+        
+        return false;
     }
     
     public PeriodoController() {

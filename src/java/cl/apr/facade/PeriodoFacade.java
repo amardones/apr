@@ -37,4 +37,12 @@ public class PeriodoFacade extends AbstractFacade<Periodo> {
          return query.getResultList();
        
     }
+    public Periodo getLastPeriodo() {
+         Query query = em.createQuery(""
+                                        + "SELECT p FROM Periodo p order by p.idPeriodo desc ", Periodo.class);
+         query.setMaxResults(1);
+        // query.setParameter("idPeriodo",idPeriodo);
+         return (Periodo) query.getSingleResult();
+       
+    }
 }

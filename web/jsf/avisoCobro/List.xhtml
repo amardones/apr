@@ -45,9 +45,10 @@
                         <p:commandButton id="crearAvisosButton"  
                                          icon="ui-icon-extlink" 
                                          value="#{bundle.Create}" 
-                                         actionListener="#{periodoController.selected.generarTodosLosAvisoCobro}" 
+                                         actionListener="#{avisoCobroController.generarTodosLosAvisoCobro()}" 
                                          update=":growl,datalist" 
-                                         disabled="#{empty periodoController.selected}">
+                                         disabled="#{!periodoController.ultimoPeriodo()}"
+                                         >
                             <p:confirm header="Confirmación" message="Esta seguro de calcular todos los avisos?" icon="ui-icon-alert" />
                         </p:commandButton>
                     
@@ -112,25 +113,25 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRegistroEstadoTitle_estadoAnterior}"/>
                             </f:facet>
-                            <h:outputText value="#{item.registroEstado.estadoAnterior}" rendered="#{avisoCobroController.showCalculo(item)}"/>
+                            <h:outputText value="#{item.registroEstado.estadoAnterior}" />
                         </p:column> 
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRegistroEstadoTitle_estadoActual}"/>
                             </f:facet>
-                              <h:outputText value="#{item.registroEstado.estadoActual}" rendered="#{avisoCobroController.showCalculo(item)}"/>
+                              <h:outputText value="#{item.registroEstado.estadoActual}" />
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRegistroEstadoTitle_metrosCubicos}"/>
                             </f:facet>
-                            <h:outputText value="#{item.registroEstado.metrosCubicos} MT3" rendered="#{avisoCobroController.showCalculo(item)}"/>
+                            <h:outputText value="#{item.registroEstado.metrosCubicos} MT3" />
                         </p:column> 
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAvisoCobroTitle_totalPeriodo}"/>
                             </f:facet>
-                            <h:outputText value="$ #{item.totalPeriodo}" rendered="#{avisoCobroController.showCalculo(item)}">
+                            <h:outputText value="$ #{item.totalPeriodo}" >
                                  <f:convertNumber pattern="#0.000" locale="pt_CL"/>
                             </h:outputText>
                         </p:column>
@@ -138,19 +139,19 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAvisoCobroTitle_totalPendiente}"/>
                             </f:facet>
-                            <h:outputText value="$ #{item.totalPendiente}" rendered="#{avisoCobroController.showCalculo(item)}"/>
+                            <h:outputText value="$ #{item.totalPendiente}" />
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAvisoCobroTitle_total}"/>
                             </f:facet>
-                            <h:outputText value="$ #{item.total}" rendered="#{avisoCobroController.showCalculo(item)}"/>
+                            <h:outputText value="$ #{item.total}"/>
                         </p:column>    
                          <p:column>
                              <p:commandButton icon="ui-icon-extlink" 
                                               actionListener="#{avisoCobroController.generarAvisoCobro(item)}"  
                                               update=":growl,datalist"
-                                              rendered="#{avisoCobroController.showCalculo(item)}"
+                                              rendered="#{periodoController.ultimoPeriodo()}"
                                               >
                                  <p:confirm header="Confirmación" message="Va a calcular aviso, desea  continuar?" icon="ui-icon-alert" />
                              </p:commandButton>
@@ -161,7 +162,6 @@
                                global="false" 
                                process="@this"
                                target="blank"
-                               rendered="#{avisoCobroController.showCalculo(item)}"
                                /> 
                         </p:column> 
                     </p:dataTable>
