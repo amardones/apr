@@ -108,12 +108,33 @@
                             </f:facet>
                             <h:outputText value="#{item.periodo.idPeriodo}: #{item.periodo.nombre}"/>
                         </p:column>
-                      <!--  <f:facet name="footer">
+                        <p:column>
+                            <p:commandButton id="crearAvisosButton"  
+                                         icon="ui-icon-pencil" 
+                                         value="#{bundle.Edit}" 
+                                         actionListener="#{registroEstadoController.editarItem(item)}" 
+                                         update=":RegistroEstadoEditForm" oncomplete="PF('RegistroEstadoEditDialog').show()" 
+                                         disabled="#{!periodoController.ultimoPeriodo()}"
+                                         />                         
+                        </p:column> 
+                        <!--<p:column>
+                            <p:commandLink                                
+                               action="#{periodoController.ultimoPeriodo()}" 
+                               value="#{bundle.View}" 
+                               ajax="false" 
+                               global="false" 
+                               process="@this"
+                               target="blank"
+                               rendered="#{periodoController.ultimoPeriodo()}"
+                               /> 
+                        </p:column>-->
+                      <!-- <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{registroEstadoController.prepareCreate}" update=":RegistroEstadoCreateForm" oncomplete="PF('RegistroEstadoCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":RegistroEstadoViewForm" oncomplete="PF('RegistroEstadoViewDialog').show()" disabled="#{empty registroEstadoController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":RegistroEstadoEditForm" oncomplete="PF('RegistroEstadoEditDialog').show()" disabled="#{empty registroEstadoController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{registroEstadoController.destroy}" update=":growl,datalist" disabled="#{empty registroEstadoController.selected}"/>
                         </f:facet>-->
+                      
                     </p:dataTable>
                 </p:panel>
             </h:form>

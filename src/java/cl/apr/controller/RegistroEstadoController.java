@@ -29,6 +29,7 @@ public class RegistroEstadoController implements Serializable {
     private cl.apr.facade.RegistroEstadoFacade ejbFacade;
     private List<RegistroEstado> items = null;
     private RegistroEstado selected;
+    private int metrosCalculados;
    
     @Inject
     private PeriodoController periodoController;
@@ -56,6 +57,7 @@ public class RegistroEstadoController implements Serializable {
     private RegistroEstadoFacade getFacade() {
         return ejbFacade;
     }
+    
 
     public RegistroEstado prepareCreate() {
         selected = new RegistroEstado();
@@ -90,6 +92,12 @@ public class RegistroEstadoController implements Serializable {
         if(periodoController.getSelected() != null)
              return getFacade().getRegistroEstadoPorPeriodo(periodoController.getSelected().getIdPeriodo());         
         return items;
+    }
+   
+    public int getMetros() {
+        metrosCalculados=(selected.getEstadoActual()-selected.getEstadoAnterior());
+        selected.setMetrosCubicos(metrosCalculados);
+        return  metrosCalculados;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -130,6 +138,14 @@ public class RegistroEstadoController implements Serializable {
 
     public List<RegistroEstado> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+    
+     public void editarItem(RegistroEstado item) {
+         if(item != null){
+            if(periodoController.getSelected() != null ){
+                this.selected = item;
+            }
+        }
     }
 
     @FacesConverter(forClass = RegistroEstado.class)

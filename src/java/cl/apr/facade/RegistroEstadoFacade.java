@@ -5,6 +5,7 @@
  */
 package cl.apr.facade;
 
+import cl.apr.entity.Periodo;
 import cl.apr.entity.RegistroEstado;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -36,4 +37,5 @@ public class RegistroEstadoFacade extends AbstractFacade<RegistroEstado> {
          return query.getResultList();
        
     }
+
 }
