@@ -27,7 +27,18 @@ public class ValoresParametricosController implements Serializable {
     private cl.apr.facade.ValoresParametricosFacade ejbFacade;
     private List<ValoresParametricos> items = null;
     private ValoresParametricos selected;
+    private ValoresParametricos ultimoValoresParametricos;
 
+    public ValoresParametricos getUltimoValoresParametricos() {
+        ultimoValoresParametricos = ejbFacade.getLastValoresParametricos();
+        
+        return ultimoValoresParametricos;
+    }
+
+    public void setUltimoValoresParametricos(ValoresParametricos ultimoValoresParametricos) {
+        this.ultimoValoresParametricos = ultimoValoresParametricos;
+    }
+    
     public ValoresParametricosController() {
     }
 
@@ -50,7 +61,12 @@ public class ValoresParametricosController implements Serializable {
     }
 
     public ValoresParametricos prepareCreate() {
+        ultimoValoresParametricos = ejbFacade.getLastValoresParametricos();
         selected = new ValoresParametricos();
+        if(ultimoValoresParametricos != null){
+            selected = ultimoValoresParametricos; 
+            selected.setIdValoresParametricos(null);
+        }
         initializeEmbeddableKey();
         return selected;
     }

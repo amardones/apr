@@ -24,13 +24,8 @@
                         <p:calendar id="fechaTomaLectura" pattern="MM/dd/yyyy" value="#{periodoController.selected.fechaTomaLectura}" title="#{bundle.EditPeriodoTitle_fechaTomaLectura}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaTomaLectura}" showOn="button"/>
                         <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaEmision}" for="fechaEmision" />
                         <p:calendar id="fechaEmision" pattern="MM/dd/yyyy" value="#{periodoController.selected.fechaEmision}" title="#{bundle.EditPeriodoTitle_fechaEmision}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaEmision}" showOn="button"/>
-                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_idValoresParametricos}" for="idValoresParametricos" />
-                        <p:selectOneMenu id="idValoresParametricos" value="#{periodoController.selected.idValoresParametricos}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_idValoresParametricos}">
-                            <f:selectItems value="#{valoresParametricosController.itemsAvailableSelectOne}"
-                                           var="idValoresParametricosItem"
-                                           itemValue="#{idValoresParametricosItem}"
-                                           itemLabel="metros cubicos fijos #{idValoresParametricosItem.m3Fijos} dia de lectura #{idValoresParametricosItem.diaLecturaMedidor}"/>
-                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_idValoresParametricos}" for="idValoresParametricos" />                        
+                        <p:outputLabel id="idValoresParametricos" value="#{periodoController.selected.idValoresParametricos.fechaActualizacion} #{periodoController.selected.idValoresParametricos.descripcionCambios}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{periodoController.create}" value="#{bundle.Save}" update="display,:PeriodoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PeriodoCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PeriodoCreateDialog.hide()"/>

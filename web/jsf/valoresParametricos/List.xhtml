@@ -27,7 +27,20 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_fechaActualizacion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechaActualizacion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListValoresParametricosTitle_descripcionCambios}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcionCambios}"/>
+                        </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListValoresParametricosTitle_valorCargoFijo}"/>
@@ -82,20 +95,7 @@
                             </f:facet>
                             <h:outputText value="#{item.porcentajeDctoInterno} %"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListValoresParametricosTitle_fechaActualizacion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.fechaActualizacion}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListValoresParametricosTitle_descripcionCambios}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descripcionCambios}"/>
-                        </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListValoresParametricosTitle_diaVencimiento}"/>

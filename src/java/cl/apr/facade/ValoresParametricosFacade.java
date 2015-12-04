@@ -9,6 +9,7 @@ import cl.apr.entity.ValoresParametricos;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,4 +29,12 @@ public class ValoresParametricosFacade extends AbstractFacade<ValoresParametrico
         super(ValoresParametricos.class);
     }
     
+    public ValoresParametricos getLastValoresParametricos() {
+         Query query = em.createQuery(""
+                                        + "SELECT v FROM ValoresParametricos v order by v.idValoresParametricos desc ", ValoresParametricos.class);
+         query.setMaxResults(1);
+        // query.setParameter("idPeriodo",idPeriodo);
+         return (ValoresParametricos) query.getSingleResult();
+       
+    }
 }

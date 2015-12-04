@@ -3,9 +3,12 @@ package cl.apr.controller;
 import cl.apr.entity.Periodo;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
+import cl.apr.entity.ValoresParametricos;
+import cl.apr.enums.EnumFormatoFechaHora;
 import cl.apr.facade.PeriodoFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,13 +21,19 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("periodoController")
 @SessionScoped
 public class PeriodoController implements Serializable {
 
+    
     @EJB
     private cl.apr.facade.PeriodoFacade ejbFacade;
+    
+    @Inject
+    private ValoresParametricosController valoresParametricosController;
+    
     private List<Periodo> items = null;
     private Periodo selected;
     private Periodo ultimoPeriodo;
@@ -62,6 +71,13 @@ public class PeriodoController implements Serializable {
     }
 
     protected void initializeEmbeddableKey() {
+        
+        selected.setNombre(EnumFormatoFechaHora.formatoMesTextoAnio.format(new Date()));
+        selected.setFechaEmision(new Date());
+        selected.setFechaFin(new Date());
+        selected.setFechaInicio(new Date());
+        selected.setFechaTomaLectura(new Date());
+        selected.setFechaVencimiento(new Date());
     }
 
     private PeriodoFacade getFacade() {
@@ -69,9 +85,18 @@ public class PeriodoController implements Serializable {
     }
 
     public Periodo prepareCreate() {
-        selected = new Periodo();
-        initializeEmbeddableKey();
-        return selected;
+        ValoresParametricos v =  valoresParametricosController.getUltimoValoresParametricos();
+        valoresParametricosController.setSelected(v);
+        if(v != null){
+            System.out.println("v.getFechaActualizacion().toString(): "+v.getFechaActualizacion().toString());
+            selected = new Periodo();
+            selected.setIdValoresParametricos(v);
+            initializeEmbeddableKey();
+            return selected;
+        }else{
+             System.out.println("v.getFechaActualizacion().toString(): null ");
+        }
+       return null;
     }
 
     public void create() {
