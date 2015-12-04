@@ -112,7 +112,7 @@
                             <p:commandButton id="crearAvisosButton"  
                                          icon="ui-icon-pencil" 
                                          value="#{bundle.Edit}" 
-                                         actionListener="#{registroEstadoController.editarItem(item)}" 
+                                         actionListener="#{registroEstadoController.estadoActual(item)}" 
                                          update=":RegistroEstadoEditForm" oncomplete="PF('RegistroEstadoEditDialog').show()" 
                                          disabled="#{!periodoController.ultimoPeriodo()}"
                                          />                         

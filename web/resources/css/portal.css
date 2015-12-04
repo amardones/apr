@@ -14,6 +14,7 @@ body {
 .banner {
     background-image: url("images/BannerAgua01.jpg");
     background-color: appworkspace;
+    border: none;
     height:80px;
 }
 
@@ -103,13 +104,16 @@ body {
    
  .logoInterior {
         display: block;
-        width: 250px !important;
-        height: 100px !important;
-        background-image: url("images/logointerior.jpg")  !important;
+        width: 308px !important;
+        height: 143px !important;
+        background-image: url("images/marcanueva.png") !important;
     }
-.logoInterior:hover {
-        display: block;
-        width: 250px !important;
-        height: 100px !important;
-        background-image: url("images/logointerior.jpg")  !important;
+
+    #marco{
+        background-color: white;
+        padding-left: 120px;
+    }
+    #logo{
+        text-align: left;
+        background-color: #fff;
     }

@@ -1,9 +1,16 @@
 .ui-widget {
     font-size: 12px !important;
+    color: black;
+    text-decoration: none;
+}
+.ui-widget a{
+    text-decoration: none;
+    border: none;
 }
 .ui-layout-north {
     z-index: 20 !important;
-    overflow: visible !important;;
+    overflow: visible !important;
+    border: none;
 }
 .ui-layout-north .ui-layout-unit-content {
     overflow: visible !important;
@@ -11,6 +18,7 @@
 .ui-widget-header {
     text-align: center;
     text-transform: uppercase;
+    
 }
 .ui-button {
     margin-top: 10px !important;

@@ -95,8 +95,10 @@ public class RegistroEstadoController implements Serializable {
     }
    
     public int getMetros() {
+        return  metrosCalculados;
+    }
+    public int calculaM3(){
         metrosCalculados=(selected.getEstadoActual()-selected.getEstadoAnterior());
-        selected.setMetrosCubicos(metrosCalculados);
         return  metrosCalculados;
     }
 
@@ -140,7 +142,7 @@ public class RegistroEstadoController implements Serializable {
         return getFacade().findAll();
     }
     
-     public void editarItem(RegistroEstado item) {
+     public void estadoActual(RegistroEstado item) {
          if(item != null){
             if(periodoController.getSelected() != null ){
                 this.selected = item;

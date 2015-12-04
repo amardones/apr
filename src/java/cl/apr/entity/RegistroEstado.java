@@ -110,8 +110,7 @@ public class RegistroEstado implements Serializable {
     }
 
     public int getMetrosCubicos() {
-        metrosCubicos=(this.estadoActual-this.estadoAnterior);
-        this.setMetrosCubicos(metrosCubicos);
+        this.metrosCubicos=(this.estadoActual-this.estadoAnterior);
         return metrosCubicos;
     }
 
