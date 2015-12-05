@@ -39,13 +39,13 @@ public class PeriodoController implements Serializable {
     private Periodo ultimoPeriodo;
     
     public List<Periodo> getPeriodos() {
-        List<Periodo> periodos = ejbFacade.getPeriodos();
+        items = ejbFacade.getPeriodos();
         ultimoPeriodo = ejbFacade.getLastPeriodo();
         System.out.println("ultimoPeriodo: "+ultimoPeriodo.getNombre());
-        if(selected == null && periodos != null && periodos.size() > 0){
-            selected = periodos.get(0);
+        if(selected == null && items != null && items.size() > 0){
+            selected = items.get(0);
         }
-        return  periodos;
+        return  items;
     }
     
     public boolean ultimoPeriodo(){
@@ -72,12 +72,13 @@ public class PeriodoController implements Serializable {
 
     protected void initializeEmbeddableKey() {
         
-        selected.setNombre(EnumFormatoFechaHora.formatoMesTextoAnio.format(new Date()));
-        selected.setFechaEmision(new Date());
-        selected.setFechaFin(new Date());
-        selected.setFechaInicio(new Date());
-        selected.setFechaTomaLectura(new Date());
-        selected.setFechaVencimiento(new Date());
+        selected.setNombre(EnumFormatoFechaHora.formatoMesTextoAnio.format(new Date()).toUpperCase());
+        System.out.println("selected.getNombre():"+selected.getNombre());
+        selected.setFechaEmision(EnumFormatoFechaHora.getDateBy(valoresParametricosController.getUltimoValoresParametricos().getDiaEmision()));
+        selected.setFechaFin(EnumFormatoFechaHora.getDateBy(1));
+        selected.setFechaInicio(EnumFormatoFechaHora.getLastDateMonth());
+        selected.setFechaTomaLectura(EnumFormatoFechaHora.getDateBy(valoresParametricosController.getUltimoValoresParametricos().getDiaLecturaMedidor()));
+        selected.setFechaVencimiento(EnumFormatoFechaHora.getDateBy(valoresParametricosController.getUltimoValoresParametricos().getDiaVencimiento()));
     }
 
     private PeriodoFacade getFacade() {
@@ -118,13 +119,11 @@ public class PeriodoController implements Serializable {
         }
     }
 
-    public List<Periodo> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
-        return items;
+    
+    public List<Periodo> getItems() {       
+        return getPeriodos();
     }
-
+ 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();

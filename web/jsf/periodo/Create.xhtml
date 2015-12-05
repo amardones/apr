@@ -15,17 +15,19 @@
                         <p:outputLabel value="#{bundle.CreatePeriodoLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{periodoController.selected.nombre}" title="#{bundle.CreatePeriodoTitle_nombre}" required="true" requiredMessage="#{bundle.CreatePeriodoRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaInicio}" for="fechaInicio" />
-                        <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{periodoController.selected.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaInicio}" showOn="button"/>
+                        <p:calendar id="fechaInicio" pattern="dd/MM/yyyy" value="#{periodoController.selected.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaInicio}" showOn="button"/>
                         <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaFin}" for="fechaFin" />
-                        <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{periodoController.selected.fechaFin}" title="#{bundle.EditPeriodoTitle_fechaFin}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaFin}" showOn="button"/>
-                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaVencimiento}" for="fechaVencimiento" />
-                        <p:calendar id="fechaVencimiento" pattern="MM/dd/yyyy" value="#{periodoController.selected.fechaVencimiento}" title="#{bundle.EditPeriodoTitle_fechaVencimiento}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaVencimiento}" showOn="button"/>
+                        <p:calendar id="fechaFin" pattern="dd/MM/yyyy" value="#{periodoController.selected.fechaFin}" title="#{bundle.EditPeriodoTitle_fechaFin}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaFin}" showOn="button"/>
                         <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaTomaLectura}" for="fechaTomaLectura" />
-                        <p:calendar id="fechaTomaLectura" pattern="MM/dd/yyyy" value="#{periodoController.selected.fechaTomaLectura}" title="#{bundle.EditPeriodoTitle_fechaTomaLectura}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaTomaLectura}" showOn="button"/>
+                        <p:calendar id="fechaTomaLectura" pattern="dd/MM/yyyy" value="#{periodoController.selected.fechaTomaLectura}" title="#{bundle.EditPeriodoTitle_fechaTomaLectura}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaTomaLectura}" showOn="button"/>
                         <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaEmision}" for="fechaEmision" />
-                        <p:calendar id="fechaEmision" pattern="MM/dd/yyyy" value="#{periodoController.selected.fechaEmision}" title="#{bundle.EditPeriodoTitle_fechaEmision}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaEmision}" showOn="button"/>
-                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_idValoresParametricos}" for="idValoresParametricos" />                        
-                        <p:outputLabel id="idValoresParametricos" value="#{periodoController.selected.idValoresParametricos.fechaActualizacion} #{periodoController.selected.idValoresParametricos.descripcionCambios}" />
+                        <p:calendar id="fechaEmision" pattern="dd/MM/yyyy" value="#{periodoController.selected.fechaEmision}" title="#{bundle.EditPeriodoTitle_fechaEmision}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaEmision}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaVencimiento}" for="fechaVencimiento" />
+                        <p:calendar id="fechaVencimiento" pattern="dd/MM/yyyy" value="#{periodoController.selected.fechaVencimiento}" title="#{bundle.EditPeriodoTitle_fechaVencimiento}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaVencimiento}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.ListValoresParametricosTitle_fechaValoresParametricos}" for="idValoresParametricos" />                        
+                        <p:outputLabel id="idValoresParametricos" value="#{periodoController.selected.idValoresParametricos.fechaActualizacion}" >
+                         <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                        </p:outputLabel>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{periodoController.create}" value="#{bundle.Save}" update="display,:PeriodoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PeriodoCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PeriodoCreateDialog.hide()"/>
