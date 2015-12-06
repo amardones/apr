@@ -91,8 +91,8 @@
                         <f:facet name="header">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{periodoController.prepareCreate}" update=":PeriodoCreateForm" oncomplete="PF('PeriodoCreateDialog').show()"/>
 <!--                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PeriodoViewForm" oncomplete="PF('PeriodoViewDialog').show()" disabled="#{empty periodoController.selected}"/>-->
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PeriodoEditForm" oncomplete="PF('PeriodoEditDialog').show()" disabled="#{empty periodoController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{periodoController.destroy}" update=":growl,datalist" disabled="#{empty periodoController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PeriodoEditForm" oncomplete="PF('PeriodoEditDialog').show()"  disabled="#{!periodoController.ultimoPeriodo(periodoController.selected)}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{periodoController.destroy}" update=":growl,datalist"  disabled="#{!periodoController.ultimoPeriodo(periodoController.selected)}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

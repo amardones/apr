@@ -41,17 +41,19 @@ public class PeriodoController implements Serializable {
     public List<Periodo> getPeriodos() {
         items = ejbFacade.getPeriodos();
         ultimoPeriodo = ejbFacade.getLastPeriodo();
-        System.out.println("ultimoPeriodo: "+ultimoPeriodo.getNombre());
-        if(selected == null && items != null && items.size() > 0){
-            selected = items.get(0);
-        }
+        if(selected == null)
+            selected = ultimoPeriodo;
+        System.out.println("getPeriodos ultimoPeriodo: "+ultimoPeriodo.getNombre());        
         return  items;
     }
     
-    public boolean ultimoPeriodo(){
+    public boolean ultimoPeriodo(Periodo periodo){
         try{
-            return ultimoPeriodo.getIdPeriodo() == selected.getIdPeriodo();
-        }catch(Exception e){}
+            if(periodo!= null && ultimoPeriodo != null)
+                return periodo.getIdPeriodo() == ultimoPeriodo.getIdPeriodo();               
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         
         return false;
     }
@@ -104,6 +106,12 @@ public class PeriodoController implements Serializable {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PeriodoCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
+        }
+        selected = getFacade().getLastPeriodo();
+        if(selected != null && selected .getIdPeriodo() != null && getFacade().crearRegistrosEstados(selected.getIdPeriodo())){
+           JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("RegistroEstadosCreados"));
+        }else{
+            JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("RegistroEstadosCreadosError"));
         }
     }
 

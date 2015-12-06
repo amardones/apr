@@ -8,9 +8,13 @@ package cl.apr.facade;
 import cl.apr.entity.Periodo;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.StoredProcedureQuery;
 
 /**
  *
@@ -44,5 +48,29 @@ public class PeriodoFacade extends AbstractFacade<Periodo> {
         // query.setParameter("idPeriodo",idPeriodo);
          return (Periodo) query.getSingleResult();
        
+    }
+    
+     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+     public boolean crearRegistrosEstados(int periodo){
+       try{
+           if(em.isOpen()){
+                //em.getTransaction().begin();
+                StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("fn_calcular_registro_estado_default");
+                // set parameters
+                storedProcedure.registerStoredProcedureParameter("id_periodo", Integer.class, ParameterMode.IN);
+                storedProcedure.registerStoredProcedureParameter("result", Boolean.class, ParameterMode.OUT);
+                storedProcedure.setParameter("id_periodo", periodo);
+                // execute SP
+                storedProcedure.execute();
+                // get result
+                Boolean result = (Boolean)storedProcedure.getOutputParameterValue("result");
+                System.out.println("result is: " + result);
+                return result;
+              
+           }
+       } catch(Exception e){
+             e.printStackTrace();;
+        }
+        return false;
     }
 }

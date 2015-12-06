@@ -66,6 +66,24 @@
 
                         <p:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRegistroEstadoTitle_periodo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.periodo.idPeriodo}: #{item.periodo.nombre}"/>
+                        </p:column>
+                         <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRegistroEstadoTitle_cuenta}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cuenta.idCuenta}: #{item.cuenta.rut.nombre} #{item.cuenta.rut.apellido}"/>
+                        </p:column>                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.EditMedidorLabel_numeroMedidor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cuenta.numeroMedidor.numeroMedidor}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRegistroEstadoTitle_estadoAnterior}"/>
                             </f:facet>
                             <h:outputText value="#{item.estadoAnterior}"/>
@@ -96,25 +114,14 @@
                             </f:facet>
                             <h:outputText value="#{item.descripcion}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListRegistroEstadoTitle_cuenta}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.cuenta.idCuenta}: #{item.cuenta.rut.nombre} #{item.cuenta.rut.apellido}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListRegistroEstadoTitle_periodo}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.periodo.idPeriodo}: #{item.periodo.nombre}"/>
-                        </p:column>
+                       
                         <p:column>
                             <p:commandButton id="crearAvisosButton"  
                                          icon="ui-icon-pencil" 
                                          value="#{bundle.Edit}" 
                                          actionListener="#{registroEstadoController.estadoActual(item)}" 
                                          update=":RegistroEstadoEditForm" oncomplete="PF('RegistroEstadoEditDialog').show()" 
-                                         disabled="#{!periodoController.ultimoPeriodo()}"
+                                         disabled="#{!periodoController.ultimoPeriodo(periodoController.selected)}"
                                          />                         
                         </p:column> 
                         <!--<p:column>

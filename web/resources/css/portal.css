@@ -107,23 +107,49 @@ body {
         width: 308px !important;
         height: 143px !important;
         background-image: url("images/marcanueva.png") !important;
+        border: 0;
     }
 
     #marco{
         background-color: white;
         padding-left: 120px;
+        border: 0;
     }
     #logo{
         text-align: left;
         background-color: #fff;
+        border: 0;
     }
 
     
    .alignmentCenter {
         text-align : center;
-        border: 5px solid blue;
+        border: 0px solid blue;
         background-color: white;
         color: darkblue;
         font-size: 15px;
        /* margin: 10px;*/
     }
+  
+    
+    .ui-layout-pane-north.ui-widget-content{
+     border: 0;
+    }
+
+     .ui-layout-pane-south.ui-widget-content{
+     border: 0;
+    }
+
+     .ui-layout-pane-east.ui-widget-content{
+     border: 0;
+    }
+
+     .ui-layout-pane-west.ui-widget-content{
+     border: 0;
+    }
+
+     .ui-layout-pane-center.ui-widget-content{
+     border: 0;
+    }
+
+   
