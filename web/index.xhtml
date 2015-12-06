@@ -23,11 +23,10 @@
         
          <p:layoutUnit position="center">
              <div id="marco">
-                <ui:insert name="body"/>
-                                 
+                <ui:insert name="body"/>                                 
                 
                  <h:form >
-                     <h:panelGrid id="panel1" columns="3" border="0" cellpadding="10"  cellspacing="0" >
+                     <h:panelGrid id="panel1" columns="3" border="0" cellpadding="10"  cellspacing="0"  rowClasses="alignmentCenter">
                         <p:commandLink  styleClass="myButtonCuenta"
                         ajax="false"
                         action="/jsf/cuenta/List?faces-redirect=true"                         
@@ -35,49 +34,34 @@
                         <p:commandLink  styleClass="myButtonavisoCobro"
                         ajax="false"
                         action="/jsf/avisoCobro/List?faces-redirect=true"
-                        />
-                        
+                        />                        
                          <p:commandLink  styleClass="myButtonBoleta"
                         ajax="false"
                         action="/jsf/boleta/List?faces-redirect=true"    
-                        />
-                        
-                    </h:panelGrid>
-                     <h:panelGrid id="panel2" columns="3" border="0"   cellpadding="70" cellspacing="0">                                              
-                        <h:link outcome="/jsf/cuenta/List" value="CUENTAS"
-                        />
-                        <h:link outcome="/jsf/avisoCobro/List" value="AVISO DE COBROS"
-                        />
+                        />                        
+                        <h:link outcome="/jsf/cuenta/List" value="CUENTAS"/>
+                        <h:link outcome="/jsf/avisoCobro/List" value="AVISO DE COBROS"/>
                         <h:link outcome="/jsf/boleta/List" value="BOLETAS"
-                        />
+                        />                        
                     </h:panelGrid>
-                       <h:panelGrid id="panel3" columns="3" border="0" cellpadding="10" cellspacing="0">
+                       <h:panelGrid id="panel3" columns="3" border="0" cellpadding="10" cellspacing="0" rowClasses="alignmentCenter">
                          <p:commandLink  styleClass="myButtonregistroEstado"
                         ajax="false"
-                        action="/jsf/registroEstado/List?faces-redirect=true"    
-                        />
-                        
+                        action="/jsf/registroEstado/List?faces-redirect=true" 
+                        />                        
                         <p:commandLink  styleClass="myButtonConfiguracion"
                         ajax="false"
                         action="/jsf/valoresParametricos/List?faces-redirect=true"    
                         />
                         <p:commandLink  styleClass="myButtonReportes"
                         ajax="false"
-                        action="/jsf/valoresParametricos/List?faces-redirect=true" 
-                        
+                        action="/jsf/valoresParametricos/List?faces-redirect=true"                  
                         />
+                                                
+                        <h:link outcome="/jsf/registroEstado/List" value="REGISTROS DE ESTADOS"/>
+                        <h:link outcome="/jsf/valoresParametricos/List" value="CONFIGURAR"/>
+                        <h:link outcome="/jsf/valoresParametricos/List" value="REPORTES"/>
                     </h:panelGrid>
-                     <h:panelGrid id="panel4" columns="3" border="0" cellpadding="60" cellspacing="0">
-                        <h:link outcome="/jsf/registroEstado/List" value="REGISTROS DE ESTADOS"
-                        />
-                        <h:link outcome="/jsf/valoresParametricos/List" value="CONFIGURAR"
-                        />
-                        <h:link outcome="/jsf/valoresParametricos/List" value="REPORTES"
-                        />
-                    </h:panelGrid>
-               
-                   
-                    
                 </h:form>
                    
                  </div>

@@ -117,3 +117,13 @@ body {
         text-align: left;
         background-color: #fff;
     }
+
+    
+   .alignmentCenter {
+        text-align : center;
+        border: 5px solid blue;
+        background-color: white;
+        color: darkblue;
+        font-size: 15px;
+       /* margin: 10px;*/
+    }
