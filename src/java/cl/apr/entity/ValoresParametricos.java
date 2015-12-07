@@ -112,7 +112,7 @@ public class ValoresParametricos implements Serializable {
     @NotNull
     @Column(name = "dia_emision")
     private int diaEmision;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idValoresParametricos")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "idValoresParametricos")
     private List<Periodo> periodoList;
 
     public ValoresParametricos() {

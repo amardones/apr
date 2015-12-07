@@ -19,29 +19,18 @@
                                      title="#{bundle.EditRegistroEstadoTitle_estadoActual}" 
                                      required="true" 
                                      requiredMessage="#{bundle.EditRegistroEstadoRequiredMessage_estadoActual}">
-                                     <p:ajax event="change" update="metrosCubicos" listener="#{registroEstadoController.calculaM3()}"/>
+                            <p:ajax event="change" update="metrosCubicos" listener="#{registroEstadoController.calculaM3()}"/>
                         </p:inputText>             
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_metrosCubicos}" for="metrosCubicos" />
                         <p:inputText id="metrosCubicos" value="#{registroEstadoController.selected.metrosCubicos}" title="#{bundle.EditRegistroEstadoTitle_metrosCubicos}" required="true" disabled="true" requiredMessage="#{bundle.EditRegistroEstadoRequiredMessage_metrosCubicos}"/>
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{registroEstadoController.selected.descripcion}" title="#{bundle.EditRegistroEstadoTitle_descripcion}" />
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_cuenta}" for="cuenta" />
-                        <p:selectOneMenu id="cuenta" value="#{registroEstadoController.selected.cuenta}" required="true" disabled="true" requiredMessage="#{bundle.EditRegistroEstadoRequiredMessage_cuenta}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
-                                           var="cuentaItem"
-                                           
-                                           itemValue="#{cuentaItem}"
-                                           itemLabel="#{cuentaItem.numeroMedidor.numeroMedidor}  #{cuentaItem.rut.nombre} #{cuentaItem.rut.apellido}"/>
-                        </p:selectOneMenu>
+                        <p:outputLabel id="cuenta" value="#{registroEstadoController.selected.cuenta.numeroMedidor.numeroMedidor}  #{registroEstadoController.selected.cuenta.rut.nombre} #{registroEstadoController.selected.cuenta.rut.apellido}"  />
+
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_periodo}" for="periodo" />
-                        <p:selectOneMenu id="periodo" value="#{registroEstadoController.selected.periodo}" disabled="true" required="true" requiredMessage="#{bundle.EditRegistroEstadoRequiredMessage_periodo}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{periodoController.itemsAvailableSelectOne}"
-                                           var="periodoItem"
-                                           itemValue="#{periodoItem}"
-                                           itemLabel="#{periodoItem.nombre}"/>
-                        </p:selectOneMenu>
+                        <p:outputLabel id="periodo"  value="#{registroEstadoController.selected.periodo.nombre}" />
+                
                     </p:panelGrid>
                     <p:commandButton actionListener="#{registroEstadoController.update}" value="#{bundle.Save}" update="display,:RegistroEstadoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'RegistroEstadoEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="RegistroEstadoEditDialog.hide()"/>

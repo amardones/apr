@@ -58,7 +58,9 @@ public class AvisoCobroController implements Serializable {
           
     public void generarTodosLosAvisoCobro() {
       if(periodoController.getSelected() != null && getFacade().crearAvisosDeCobro(periodoController.getSelected().getIdPeriodo(), -1)){
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AvisoCobroCreated"));
+      }else{
+          JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("AvisoDeCobroCrearError"));      
       }
     }
     /*
@@ -73,14 +75,16 @@ public class AvisoCobroController implements Serializable {
      public void generarAvisoCobro(AvisoCobro aviso) {
          if(aviso != null){
             if(periodoController.getSelected() != null && getFacade().crearAvisosDeCobro(aviso.getAvisoCobroPK().getIdPeriodo(), aviso.getAvisoCobroPK().getIdCuenta())){
-                JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
+                JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AvisoCobroCreated"));
+            }else{
+                JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("AvisoDeCobroCrearError"));      
             }
         }
     }
 
     protected void setEmbeddableKeys() {
-        selected.getAvisoCobroPK().setIdCuenta(selected.getCuenta().getIdCuenta());
-        selected.getAvisoCobroPK().setIdPeriodo(selected.getPeriodo().getIdPeriodo());
+        selected.getAvisoCobroPK().setIdCuenta(selected.getRegistroEstado().getCuenta().getIdCuenta());
+        selected.getAvisoCobroPK().setIdPeriodo(selected.getRegistroEstado().getPeriodo().getIdPeriodo());
     }
 
     protected void initializeEmbeddableKey() {
@@ -127,11 +131,11 @@ public class AvisoCobroController implements Serializable {
     public List<AvisoCobro> getItems() {
         items = new ArrayList<>();
         try{  
-              if(periodoController.getSelected() != null){
+            if(periodoController.getSelected() != null){
              //return periodo.getAvisoCobroList();
                   items = getFacade().getAvisosPorPeriodo(periodoController.getSelected().getIdPeriodo());
                  return  items;
-         }
+            }
          }catch(Exception e){
               items = new ArrayList<>();
          }
@@ -184,7 +188,7 @@ public class AvisoCobroController implements Serializable {
     }
     public List<AvisoCobro> getMedidoresDisponiblesEditar() {
         
-        return ejbFacade.getavisoDeCobroDisponiblesEditar(selected.getCuenta().getIdCuenta(),selected.getPeriodo().getIdPeriodo());
+        return ejbFacade.getavisoDeCobroDisponiblesEditar(selected.getRegistroEstado().getCuenta().getIdCuenta(),selected.getRegistroEstado().getPeriodo().getIdPeriodo());
     }
      
 
@@ -272,7 +276,7 @@ public class AvisoCobroController implements Serializable {
                 request.setAttribute("idPeriodo", aviso.getAvisoCobroPK().getIdPeriodo());
                 dispatcher.forward(request, response);
                 ctx.responseComplete();
-                System.out.println("call servlet is cuenta: " + aviso.getCuenta().getIdCuenta());
+                System.out.println("call servlet is cuenta: " + aviso.getRegistroEstado().getCuenta().getIdCuenta());
             }
         } catch (ServletException ex) {
             Logger.getLogger(AvisoCobroController.class.getName()).log(Level.SEVERE, null, ex);

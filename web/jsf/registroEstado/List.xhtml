@@ -15,50 +15,76 @@
 
         <ui:define name="body">
             <h:form id="RegistroEstadoListForm">
-                <h:panelGroup id="filtro">
-                    <p:panelGrid columns="8" rendered="#{periodoController.itemsAvailableSelectOne != null}">
-                        <p:outputLabel value="#{bundle.EditAvisoCobroLabel_periodo}" for="periodo" />
-                        <p:selectOneMenu id="periodo" value="#{periodoController.selected}" >
-<!--                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>-->
-                            <f:selectItems value="#{periodoController.periodos}"
-                                           var="periodoItem"
-                                           itemValue="#{periodoItem}"
-                                           itemLabel="#{periodoItem.nombre}"                                           
-                                           />
-                             <p:ajax event="valueChange" update="@form" />
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaInicio}" for="fechaInicio"/>
-                        <p:outputLabel id="fechaInicio" value="#{periodoController.selected.fechaInicio}" />
-                        
-                        <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaEmision}" for="fechaEmision" />
-                        <p:outputLabel id="fechaEmision" value="#{periodoController.selected.fechaEmision}" />
-                        
-                         <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaTomaLectura}" for="fechaTomaLectura" />
-                        <p:outputLabel id="fechaTomaLectura" value="#{periodoController.selected.fechaTomaLectura}" />
-                       
-               
-                         <p:outputLabel  value="" />
-                         <p:outputLabel  value="" />
-                          
-                        <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaFin}" for="fechaFin" />
-                        <p:outputLabel id="fechaFin" value="#{periodoController.selected.fechaFin}" />
-                        
-                                                
-                        <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaVencimiento}" for="fechaVencimiento" />
-                        <p:outputLabel id="fechaVencimiento" value="#{periodoController.selected.fechaVencimiento}" />
-                        
-                        <p:outputLabel  value="" />
-                        
-                        
-                       </p:panelGrid>                    
-                </h:panelGroup>
-                <p:panel header="#{bundle.ListRegistroEstadoTitle}">
+                         <p:fieldset legend="#{bundle.SeleccionarPeriodo}" style="margin-bottom:20px">                    
+                
+                    
+                     <p:panelGrid  rendered="#{periodoController.itemsAvailableSelectOne != null}" styleClass="panelGridNoBorder">
+                         <f:facet name="header">
+                            <p:row>
+                                <p:column >#{bundle.Periodo}</p:column>
+                                <p:column >#{bundle.ListPeriodoTitle_fechaInicio}</p:column>
+                                <p:column >#{bundle.ListPeriodoTitle_fechaFin}</p:column>
+                                <p:column >#{bundle.ListPeriodoTitle_fechaTomaLectura}</p:column>
+                                <p:column >#{bundle.ListPeriodoTitle_fechaEmision}</p:column>
+                                <p:column >#{bundle.ListPeriodoTitle_fechaVencimiento}</p:column>   
+                                <p:column ></p:column>                                                     
+                            </p:row>
+                        </f:facet>                      
+                     
+                         <p:row>
+                             <p:column styleClass="fontCellEncabezado">
+                                  <p:selectOneMenu id="periodo" value="#{periodoController.selected}" >
+<!--                                <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>-->
+                                    <f:selectItems value="#{periodoController.periodos}"
+                                                   var="periodoItem"
+                                                   itemValue="#{periodoItem}"
+                                                   itemLabel="#{periodoItem.nombre}"                                           
+                                                   />
+                                     <p:ajax event="valueChange" update="@form" />                            
+                                </p:selectOneMenu>
+                             </p:column>   
+                             <p:column styleClass="fontCellEncabezado">
+                                 <p:outputLabel id="fechaInicio" value="#{periodoController.selected.fechaInicio}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
+                             </p:column>  
+                             <p:column styleClass="fontCellEncabezado">
+                                  <p:outputLabel id="fechaFin" value="#{periodoController.selected.fechaFin}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                               </p:outputLabel>
+                             </p:column>  
+                             <p:column styleClass="fontCellEncabezado">
+                                 <p:outputLabel id="fechaTomaLectura" value="#{periodoController.selected.fechaTomaLectura}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                               </p:outputLabel>
+                             </p:column>  
+                             <p:column styleClass="fontCellEncabezado">
+                                 <p:outputLabel id="fechaEmision" value="#{periodoController.selected.fechaEmision}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                               </p:outputLabel>
+                             </p:column>  
+                            <p:column styleClass="fontCellEncabezado">
+                                <p:outputLabel id="fechaVencimiento" value="#{periodoController.selected.fechaVencimiento}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                               </p:outputLabel>  
+                            </p:column>    
+                              <p:column styleClass="fontCellEncabezado">
+                               
+                            </p:column>    
+                       </p:row>
+                    </p:panelGrid>                    
+                
+                </p:fieldset>
+            
+                <p:fieldset legend="#{bundle.ListRegistroEstadoTitle}" style="margin-bottom:20px">
+                   
                     <p:dataTable id="datalist" value="#{registroEstadoController.items}" var="item"
                                  selectionMode="single" selection="#{registroEstadoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.registroEstadoPK}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
+                                 paginatorPosition="bottom"
                                  >
 <!--
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -143,7 +169,7 @@
                         </f:facet>-->
                       
                     </p:dataTable>
-                </p:panel>
+                </p:fieldset>
             </h:form>
 
             <ui:include src="Create.xhtml"/>

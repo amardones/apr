@@ -61,6 +61,7 @@ public class AvisoCobro implements Serializable {
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
+    /*
     @JoinColumn(name = "id_cuenta", referencedColumnName = "id_cuenta", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Cuenta cuenta;
@@ -68,12 +69,14 @@ public class AvisoCobro implements Serializable {
     @ManyToOne(optional = false)
     private Periodo periodo;
    
+    */
     @JoinColumns({
         @JoinColumn(name = "id_periodo", referencedColumnName = "id_periodo", insertable = false, updatable = false),
         @JoinColumn(name = "id_cuenta", referencedColumnName = "id_cuenta", insertable = false, updatable = false),
     })
-    @ManyToOne(optional = true, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
     private RegistroEstado registroEstado;
+    
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "avisoCobro", fetch = FetchType.EAGER)
     private List<DetalleAvisoCobro> detalleAvisoCobroList;
@@ -137,7 +140,7 @@ public class AvisoCobro implements Serializable {
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
-
+/*
     public Cuenta getCuenta() {
         return cuenta;
     }
@@ -153,7 +156,7 @@ public class AvisoCobro implements Serializable {
     public void setPeriodo(Periodo periodo) {
         this.periodo = periodo;
     }
-    
+    */
      public RegistroEstado getRegistroEstado() {
         return registroEstado;
     }

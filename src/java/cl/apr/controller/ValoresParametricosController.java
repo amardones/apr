@@ -6,6 +6,7 @@ import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.facade.ValoresParametricosFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -54,6 +55,7 @@ public class ValoresParametricosController implements Serializable {
     }
 
     protected void initializeEmbeddableKey() {
+         selected.setFechaActualizacion(new Date());
     }
 
     private ValoresParametricosFacade getFacade() {
@@ -65,7 +67,7 @@ public class ValoresParametricosController implements Serializable {
         selected = new ValoresParametricos();
         if(ultimoValoresParametricos != null){
             selected = ultimoValoresParametricos; 
-            selected.setIdValoresParametricos(null);
+            selected.setIdValoresParametricos(null);           
         }
         initializeEmbeddableKey();
         return selected;

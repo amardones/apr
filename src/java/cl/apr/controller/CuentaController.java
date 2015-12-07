@@ -7,6 +7,7 @@ import cl.apr.entity.Medidor;
 import cl.apr.facade.CuentaFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -85,8 +86,11 @@ public class CuentaController implements Serializable {
     }
     
     public List<Medidor> getMedidoresDisponiblesEditar() {
-        
-        return ejbMedidorFacade.getMedidoresDisponiblesEditar(selected.getNumeroMedidor().getNumeroMedidor());
+        if(selected != null && selected.getNumeroMedidor() != null){
+            return ejbMedidorFacade.getMedidoresDisponiblesEditar(selected.getNumeroMedidor().getNumeroMedidor());
+        }else{
+            return new ArrayList<Medidor>();
+        }
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

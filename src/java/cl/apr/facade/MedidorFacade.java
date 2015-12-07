@@ -6,6 +6,7 @@
 package cl.apr.facade;
 
 import cl.apr.entity.Medidor;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -31,7 +32,8 @@ public class MedidorFacade extends AbstractFacade<Medidor> {
     }
     
     public List<Medidor> getMedidoresDisponibles() {
-       /*
+       try{
+        /*
          javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(Medidor.class));
         return getEntityManager().createQuery(cq).getResultList();
@@ -43,6 +45,9 @@ public class MedidorFacade extends AbstractFacade<Medidor> {
                                         + "SELECT m FROM Cuenta c RIGHT JOIN c.numeroMedidor m WHERE c.idCuenta IS NULL ", Medidor.class);
          //query.setParameter("numeroMedidor","00001");
          return query.getResultList();
+       }catch(Exception e){
+           return new ArrayList<Medidor>();
+       }
        
     }
     

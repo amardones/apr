@@ -15,14 +15,19 @@
 
         <ui:define name="body">
             <h:form id="PeriodoListForm">
-                <p:panel header="#{bundle.ListPeriodoTitle}">
+                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+                
+                <p:fieldset legend="#{bundle.ListPeriodoTitle}" style="margin-bottom:20px">
                     <p:dataTable id="datalist" value="#{periodoController.items}" var="item"
                                  selectionMode="single" selection="#{periodoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idPeriodo}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
-                                 paginatorPosition="top"
+                                 paginatorPosition="bottom"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton  editButton deleteButton"/>
@@ -89,13 +94,17 @@
                             </h:outputText>
                         </p:column>
                         <f:facet name="header">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{periodoController.prepareCreate}" update=":PeriodoCreateForm" oncomplete="PF('PeriodoCreateDialog').show()"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{periodoController.prepareCreate}" update=":PeriodoCreateForm" oncomplete="PF('PeriodoCreateDialog').show()" disabled="#{empty valoresParametricosController.ultimoValoresParametricos}"/>
 <!--                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PeriodoViewForm" oncomplete="PF('PeriodoViewDialog').show()" disabled="#{empty periodoController.selected}"/>-->
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PeriodoEditForm" oncomplete="PF('PeriodoEditDialog').show()"  disabled="#{!periodoController.ultimoPeriodo(periodoController.selected)}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{periodoController.destroy}" update=":growl,datalist"  disabled="#{!periodoController.ultimoPeriodo(periodoController.selected)}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{periodoController.destroy}" update=":growl,datalist"  disabled="#{!periodoController.ultimoPeriodo(periodoController.selected)}">
+                                <p:confirm header="Confirmación" message="Esta acción eliminara el periodo, registros de estado y avisos de cobros si existiesen.
+                                           ¿Desea continuar?" icon="ui-icon-alert" 
+                                           />
+                            </p:commandButton>
                         </f:facet>
                     </p:dataTable>
-                </p:panel>
+                </p:fieldset>
             </h:form>
 
             <ui:include src="Create.xhtml"/>

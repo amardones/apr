@@ -74,8 +74,8 @@ public class Cuenta implements Serializable {
     private List<SaldoCuenta> saldoCuentaList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "cuenta")
     private CuentaSubsidio cuentaSubsidio;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuenta")
-    private List<AvisoCobro> avisoCobroList;
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "cuenta")
+    //private List<AvisoCobro> avisoCobroList;
     @JoinColumn(name = "numero_medidor", referencedColumnName = "numero_medidor")
     @ManyToOne(optional = false)
     private Medidor numeroMedidor;
@@ -171,7 +171,7 @@ public class Cuenta implements Serializable {
     public void setCuentaSubsidio(CuentaSubsidio cuentaSubsidio) {
         this.cuentaSubsidio = cuentaSubsidio;
     }
-
+/*
     @XmlTransient
     public List<AvisoCobro> getAvisoCobroList() {
         return avisoCobroList;
@@ -180,7 +180,7 @@ public class Cuenta implements Serializable {
     public void setAvisoCobroList(List<AvisoCobro> avisoCobroList) {
         this.avisoCobroList = avisoCobroList;
     }
-
+*/
     public Medidor getNumeroMedidor() {
         return numeroMedidor;
     }

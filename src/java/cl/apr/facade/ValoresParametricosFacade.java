@@ -30,11 +30,16 @@ public class ValoresParametricosFacade extends AbstractFacade<ValoresParametrico
     }
     
     public ValoresParametricos getLastValoresParametricos() {
-         Query query = em.createQuery(""
+        try{
+            Query query = em.createQuery(""
                                         + "SELECT v FROM ValoresParametricos v order by v.idValoresParametricos desc ", ValoresParametricos.class);
-         query.setMaxResults(1);
-        // query.setParameter("idPeriodo",idPeriodo);
-         return (ValoresParametricos) query.getSingleResult();
+            query.setMaxResults(1);
+            // query.setParameter("idPeriodo",idPeriodo);
+            return (ValoresParametricos) query.getSingleResult();
+        } 
+        catch(Exception e){
+            return null;
+        }
        
     }
 }

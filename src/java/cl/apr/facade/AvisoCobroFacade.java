@@ -74,7 +74,7 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
      
      public List<AvisoCobro> getAvisosPorPeriodo(int idPeriodo) {
          Query query = em.createQuery(""
-                                        + "SELECT DISTINCT a FROM AvisoCobro a WHERE a.periodo.idPeriodo = :idPeriodo ", AvisoCobro.class);
+                                        + "SELECT DISTINCT a FROM AvisoCobro a WHERE a.registroEstado.periodo.idPeriodo = :idPeriodo ", AvisoCobro.class);
          query.setParameter("idPeriodo",idPeriodo);
          return query.getResultList();
        
@@ -83,7 +83,7 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
      
      public AvisoCobro getAviso(int idPeriodo, int idCuenta) {
          Query query = em.createQuery(""
-                                        + "SELECT DISTINCT a FROM AvisoCobro a WHERE a.periodo.idPeriodo  = :idPeriodo AND a.cuenta.idCuenta  = :idCuenta ", AvisoCobro.class);
+                                        + "SELECT DISTINCT a FROM AvisoCobro a WHERE a.registroEstado.periodo.idPeriodo  = :idPeriodo AND a.registroEstado.cuenta.idCuenta  = :idCuenta ", AvisoCobro.class);
          query.setParameter("idPeriodo",idPeriodo);
          query.setParameter("idCuenta",idCuenta);
          return (AvisoCobro) query.getSingleResult();

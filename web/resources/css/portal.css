@@ -104,9 +104,9 @@ body {
    
  .logoInterior {
         display: block;
-        width: 308px !important;
-        height: 143px !important;
-        background-image: url("images/marcanueva.png") !important;
+        width: 194px !important;
+        height: 90px !important;
+        background-image: url("images/marcanuevainterior.png")  !important;
         border: 0;
     }
 
@@ -152,4 +152,36 @@ body {
      border: 0;
     }
 
-   
+    
+   .ui-panelgrid tr, .ui-panelgrid td {
+        border:0 !important;
+        /*background: none repeat scroll 0 0 #FFFFFF;*/
+    }
+    
+    .panelGridNoBorder{
+        width: 100%;
+        background-color: transparent;
+    }
+    .panelGridNoBorder td {
+        border-style: hidden !important;
+        background: none repeat scroll 0 0 #FFFFFF;
+    }
+    
+    .fontCellEncabezado{
+        font-weight: bold; 
+        text-align: center;
+    }
+    
+    .myButtonVer {
+        display: block;
+        width: 36px !important;
+        height: 36px !important;
+        background-image: url("images/pdf-36.png")  !important;
+    }
+     .myButtonCalcular {
+        display: block;
+        width: 36px !important;
+        height: 36px !important;
+        background-image: url("images/calcular-36.png")  !important;
+    }
+    

@@ -140,7 +140,7 @@ public class AvisoPDF {
                     cTituloCuenta.setFixedHeight(20);
                     cTituloCuenta.setPaddingBottom(4);
                     
-                    PdfPCell cTituloPeriodo = new PdfPCell(new Phrase("Detalle de sus lecturas periodo: "+aviso.getPeriodo().getNombre(),fCuerpoCabeceraTabla));
+                    PdfPCell cTituloPeriodo = new PdfPCell(new Phrase("Detalle de sus lecturas periodo: "+aviso.getRegistroEstado().getPeriodo().getNombre(),fCuerpoCabeceraTabla));
                     //cTituloLecturas.setBackgroundColor(colorBlueLigth);
                     cTituloPeriodo.setBorderColor(borderColor);
                     cTituloPeriodo.setBorder(Rectangle.LEFT | Rectangle.BOTTOM);
@@ -174,22 +174,22 @@ public class AvisoPDF {
                     tableHeaderCuenta.getDefaultCell().setFixedHeight(13);
                    
                     tableHeaderCuenta.addCell(new Phrase("N° Cuenta",fCuerpoTabla));
-                    tableHeaderCuenta.addCell(new Phrase(": "+aviso.getCuenta().getIdCuenta(),fCuerpoTabla));
+                    tableHeaderCuenta.addCell(new Phrase(": "+aviso.getRegistroEstado().getCuenta().getIdCuenta(),fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase("F. Emisión",fCuerpoTabla));
-                    tableHeaderCuenta.addCell(new Phrase(": "+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getPeriodo().getFechaEmision()).toUpperCase(),fCuerpoTabla));
+                    tableHeaderCuenta.addCell(new Phrase(": "+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getRegistroEstado().getPeriodo().getFechaEmision()).toUpperCase(),fCuerpoTabla));
                     
                     tableHeaderCuenta.addCell(new Phrase("Cliente",fCuerpoTabla));
-                    tableHeaderCuenta.addCell(new Phrase(": "+aviso.getCuenta().getRut().getNombre() +" "+aviso.getCuenta().getRut().getApellido(),fCuerpoTabla));
+                    tableHeaderCuenta.addCell(new Phrase(": "+aviso.getRegistroEstado().getCuenta().getRut().getNombre() +" "+aviso.getRegistroEstado().getCuenta().getRut().getApellido(),fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase("N° Aviso",fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase(": ",fCuerpoTabla));   
                              
                     tableHeaderCuenta.addCell(new Phrase("N° Cliente",fCuerpoTabla));
-                    tableHeaderCuenta.addCell(new Phrase(": "+aviso.getCuenta().getRut().getRut(),fCuerpoTabla));
+                    tableHeaderCuenta.addCell(new Phrase(": "+aviso.getRegistroEstado().getCuenta().getRut().getRut(),fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase("N° Medidor",fCuerpoTabla));
-                    tableHeaderCuenta.addCell(new Phrase(": "+aviso.getCuenta().getNumeroMedidor().getNumeroMedidor(),fCuerpoTabla));
+                    tableHeaderCuenta.addCell(new Phrase(": "+aviso.getRegistroEstado().getCuenta().getNumeroMedidor().getNumeroMedidor(),fCuerpoTabla));
                     
                     tableHeaderCuenta.addCell(new Phrase("Dirección",fCuerpoTabla));
-                    tableHeaderCuenta.addCell(new Phrase(": "+aviso.getCuenta().getDireccion(),fCuerpoTabla));
+                    tableHeaderCuenta.addCell(new Phrase(": "+aviso.getRegistroEstado().getCuenta().getDireccion(),fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase("",fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase("",fCuerpoTabla));
                     
@@ -201,22 +201,22 @@ public class AvisoPDF {
                     tablePeriodo.getDefaultCell().setFixedHeight(13);
                    
                     tablePeriodo.addCell(new Phrase("F. Periodo",fCuerpoTabla));
-                    tablePeriodo.addCell(new Phrase(": "+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getPeriodo().getFechaInicio()).toUpperCase() +" al "+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getPeriodo().getFechaInicio()).toUpperCase(),fCuerpoTabla));
+                    tablePeriodo.addCell(new Phrase(": "+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getRegistroEstado().getPeriodo().getFechaInicio()).toUpperCase() +" al "+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getRegistroEstado().getPeriodo().getFechaInicio()).toUpperCase(),fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase("Valor cargo fijo",fCuerpoTabla));
-                    tablePeriodo.addCell(new Phrase(": $ "+NumeroFormato.formatearNumeroPesos(aviso.getPeriodo().getIdValoresParametricos().getValorCargoFijo()),fCuerpoTabla));
+                    tablePeriodo.addCell(new Phrase(": $ "+NumeroFormato.formatearNumeroPesos(aviso.getRegistroEstado().getPeriodo().getIdValoresParametricos().getValorCargoFijo()),fCuerpoTabla));
                     
                     tablePeriodo.addCell(new Phrase("Lectura actual",fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase(": "+aviso.getRegistroEstado().getEstadoActual(),fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase("MT3 fijos",fCuerpoTabla));
-                    tablePeriodo.addCell(new Phrase(": "+aviso.getPeriodo().getIdValoresParametricos().getM3Fijos(),fCuerpoTabla));   
+                    tablePeriodo.addCell(new Phrase(": "+aviso.getRegistroEstado().getPeriodo().getIdValoresParametricos().getM3Fijos(),fCuerpoTabla));   
                              
                     tablePeriodo.addCell(new Phrase("Lectura anterior",fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase(": "+aviso.getRegistroEstado().getEstadoAnterior(),fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase("Valor 1 MT3",fCuerpoTabla));
-                    tablePeriodo.addCell(new Phrase(": $ "+NumeroFormato.formatearNumeroPesos(aviso.getPeriodo().getIdValoresParametricos().getValorM3()),fCuerpoTabla));
+                    tablePeriodo.addCell(new Phrase(": $ "+NumeroFormato.formatearNumeroPesos(aviso.getRegistroEstado().getPeriodo().getIdValoresParametricos().getValorM3()),fCuerpoTabla));
                     int m3Adicionales = 0;
-                    if(aviso.getRegistroEstado().getMetrosCubicos() > aviso.getPeriodo().getIdValoresParametricos().getM3Fijos()){
-                        m3Adicionales = aviso.getRegistroEstado().getMetrosCubicos() - aviso.getPeriodo().getIdValoresParametricos().getM3Fijos();
+                    if(aviso.getRegistroEstado().getMetrosCubicos() > aviso.getRegistroEstado().getPeriodo().getIdValoresParametricos().getM3Fijos()){
+                        m3Adicionales = aviso.getRegistroEstado().getMetrosCubicos() - aviso.getRegistroEstado().getPeriodo().getIdValoresParametricos().getM3Fijos();
                     }
                     tablePeriodo.addCell(new Phrase("Consumo (MT3)",fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase(": "+aviso.getRegistroEstado().getMetrosCubicos(),fCuerpoTabla));
@@ -410,7 +410,7 @@ public class AvisoPDF {
                     cTR03.setPadding(5);
                     cTR03.setPaddingLeft(15);
                     
-                    PdfPCell cTR04 = new PdfPCell(new Phrase(""+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getPeriodo().getFechaVencimiento()).toUpperCase(),fCuerpoCabeceraTabla));
+                    PdfPCell cTR04 = new PdfPCell(new Phrase(""+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getRegistroEstado().getPeriodo().getFechaVencimiento()).toUpperCase(),fCuerpoCabeceraTabla));
                     //cTR04.setBackgroundColor(colorBlueLigth);
                     cTR04.setBorderColor(borderColor);
                     cTR04.setBorder(Rectangle.BOTTOM | Rectangle.RIGHT);

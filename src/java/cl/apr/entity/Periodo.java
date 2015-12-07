@@ -86,9 +86,10 @@ public class Periodo implements Serializable {
     private ValoresParametricos idValoresParametricos;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
     private List<RegistroEstado> registroEstadoList;
+    /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
     private List<AvisoCobro> avisoCobroList;
-
+*/
     public Periodo() {
     }
 
@@ -178,7 +179,7 @@ public class Periodo implements Serializable {
     public void setRegistroEstadoList(List<RegistroEstado> registroEstadoList) {
         this.registroEstadoList = registroEstadoList;
     }
-
+/*
     @XmlTransient
     public List<AvisoCobro> getAvisoCobroList() {
         return avisoCobroList;
@@ -187,7 +188,7 @@ public class Periodo implements Serializable {
     public void setAvisoCobroList(List<AvisoCobro> avisoCobroList) {
         this.avisoCobroList = avisoCobroList;
     }
-
+*/
     @Override
     public int hashCode() {
         int hash = 0;

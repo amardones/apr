@@ -8,6 +8,7 @@ package cl.apr.entity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,6 +41,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RegistroEstado.findByFechaRegistro", query = "SELECT r FROM RegistroEstado r WHERE r.fechaRegistro = :fechaRegistro"),
     @NamedQuery(name = "RegistroEstado.findByDescripcion", query = "SELECT r FROM RegistroEstado r WHERE r.descripcion = :descripcion")})
 public class RegistroEstado implements Serializable {
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "registroEstado")
+    private AvisoCobro avisoCobro;
+    @JoinColumn(name = "id_cuenta", referencedColumnName = "id_cuenta", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Cuenta cuenta;
+    @JoinColumn(name = "id_periodo", referencedColumnName = "id_periodo", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Periodo periodo;
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected RegistroEstadoPK registroEstadoPK;
@@ -60,12 +70,6 @@ public class RegistroEstado implements Serializable {
     @Size(max = 100)
     @Column(name = "descripcion")
     private String descripcion;
-    @JoinColumn(name = "id_cuenta", referencedColumnName = "id_cuenta", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Cuenta cuenta;
-    @JoinColumn(name = "id_periodo", referencedColumnName = "id_periodo", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Periodo periodo;
 
     public RegistroEstado() {
     }
@@ -110,7 +114,6 @@ public class RegistroEstado implements Serializable {
     }
 
     public int getMetrosCubicos() {
-        this.metrosCubicos=(this.estadoActual-this.estadoAnterior);
         return metrosCubicos;
     }
 
@@ -132,22 +135,6 @@ public class RegistroEstado implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public Cuenta getCuenta() {
-        return cuenta;
-    }
-
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
-    }
-
-    public Periodo getPeriodo() {
-        return periodo;
-    }
-
-    public void setPeriodo(Periodo periodo) {
-        this.periodo = periodo;
     }
 
     @Override
@@ -173,6 +160,30 @@ public class RegistroEstado implements Serializable {
     @Override
     public String toString() {
         return "cl.apr.entity.RegistroEstado[ registroEstadoPK=" + registroEstadoPK + " ]";
+    }
+
+    public Cuenta getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
+    }
+
+    public Periodo getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(Periodo periodo) {
+        this.periodo = periodo;
+    }
+
+    public AvisoCobro getAvisoCobro() {
+        return avisoCobro;
+    }
+
+    public void setAvisoCobro(AvisoCobro avisoCobro) {
+        this.avisoCobro = avisoCobro;
     }
     
 }

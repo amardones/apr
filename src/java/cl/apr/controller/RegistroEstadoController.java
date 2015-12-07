@@ -90,16 +90,17 @@ public class RegistroEstadoController implements Serializable {
         }
         return items;*/
         if(periodoController.getSelected() != null)
-             return getFacade().getRegistroEstadoPorPeriodo(periodoController.getSelected().getIdPeriodo());         
+              items = getFacade().getRegistroEstadoPorPeriodo(periodoController.getSelected().getIdPeriodo());  
+        
         return items;
     }
    
     public int getMetros() {
         return  metrosCalculados;
     }
-    public int calculaM3(){
+    public void calculaM3(){
         metrosCalculados=(selected.getEstadoActual()-selected.getEstadoAnterior());
-        return  metrosCalculados;
+        selected.setMetrosCubicos(metrosCalculados);
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

@@ -8,6 +8,7 @@ import cl.apr.enums.EnumFormatoFechaHora;
 import cl.apr.facade.PeriodoFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -43,7 +44,10 @@ public class PeriodoController implements Serializable {
         ultimoPeriodo = ejbFacade.getLastPeriodo();
         if(selected == null)
             selected = ultimoPeriodo;
-        System.out.println("getPeriodos ultimoPeriodo: "+ultimoPeriodo.getNombre());        
+        //System.out.println("getPeriodos ultimoPeriodo: "+ultimoPeriodo.getNombre());    
+        if(items == null)
+            items = new ArrayList<>();
+        
         return  items;
     }
     
@@ -77,8 +81,8 @@ public class PeriodoController implements Serializable {
         selected.setNombre(EnumFormatoFechaHora.formatoMesTextoAnio.format(new Date()).toUpperCase());
         System.out.println("selected.getNombre():"+selected.getNombre());
         selected.setFechaEmision(EnumFormatoFechaHora.getDateBy(valoresParametricosController.getUltimoValoresParametricos().getDiaEmision()));
-        selected.setFechaFin(EnumFormatoFechaHora.getDateBy(1));
-        selected.setFechaInicio(EnumFormatoFechaHora.getLastDateMonth());
+        selected.setFechaInicio(EnumFormatoFechaHora.getDateBy(1));
+        selected.setFechaFin(EnumFormatoFechaHora.getLastDateMonth());
         selected.setFechaTomaLectura(EnumFormatoFechaHora.getDateBy(valoresParametricosController.getUltimoValoresParametricos().getDiaLecturaMedidor()));
         selected.setFechaVencimiento(EnumFormatoFechaHora.getDateBy(valoresParametricosController.getUltimoValoresParametricos().getDiaVencimiento()));
     }
