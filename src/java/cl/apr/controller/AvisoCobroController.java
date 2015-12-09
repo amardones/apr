@@ -183,6 +183,7 @@ public class AvisoCobroController implements Serializable {
         return getFacade().findAll();
     }
     
+    /*
     public List<AvisoCobro> getAvisodeCobroDisponibles() {
         return getFacade().avisodeCobroDisponibles();
     }
@@ -190,7 +191,7 @@ public class AvisoCobroController implements Serializable {
         
         return ejbFacade.getavisoDeCobroDisponiblesEditar(selected.getRegistroEstado().getCuenta().getIdCuenta(),selected.getRegistroEstado().getPeriodo().getIdPeriodo());
     }
-     
+     */
 
     @FacesConverter(forClass = AvisoCobro.class)
     public static class AvisoCobroControllerConverter implements Converter {

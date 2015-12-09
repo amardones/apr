@@ -162,4 +162,7 @@ public class TipoCobroController implements Serializable {
 
     }
 
+    public void seleccionarItem(TipoCobro tipoCobro){
+        selected = tipoCobro;
+    }
 }

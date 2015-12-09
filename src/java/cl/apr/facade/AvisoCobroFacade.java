@@ -90,7 +90,7 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
        
     }
 
-     
+    /* 
 //buscar los aviso que no han sido pagados
     public List<AvisoCobro> avisodeCobroDisponibles() {
          Query query = em.createQuery(""
@@ -105,6 +105,5 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
          query.setParameter("idCuenta",idCuenta);
          return query.getResultList();
     }
-
-     
+*/ 
 }

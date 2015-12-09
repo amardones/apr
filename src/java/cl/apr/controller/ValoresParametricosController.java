@@ -94,9 +94,17 @@ public class ValoresParametricosController implements Serializable {
 
     public List<ValoresParametricos> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().getValoresParametricos();
         }
         return items;
+    }
+    
+    public boolean permiteEliminar() {
+        if (selected != null) {
+           //return v.getPeriodoList().size();
+            return getFacade().getCantidadAvisosCobro(selected.getIdValoresParametricos()) == 0;
+        }
+        return false;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

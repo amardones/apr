@@ -3,9 +3,11 @@ package cl.apr.controller;
 import cl.apr.entity.ValorTramoM3;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
+import cl.apr.entity.ValoresParametricos;
 import cl.apr.facade.ValorTramoM3Facade;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("valorTramoM3Controller")
 @SessionScoped
@@ -28,6 +31,9 @@ public class ValorTramoM3Controller implements Serializable {
     private List<ValorTramoM3> items = null;
     private ValorTramoM3 selected;
 
+     @Inject
+    private ValoresParametricosController valoresParametricosController;
+     
     public ValorTramoM3Controller() {
     }
 
@@ -51,8 +57,35 @@ public class ValorTramoM3Controller implements Serializable {
 
     public ValorTramoM3 prepareCreate() {
         selected = new ValorTramoM3();
+        selected.setNombreTramo("Tramo "+(items.size()+1));
+        ValoresParametricos valParaUltimo = valoresParametricosController.getUltimoValoresParametricos();
+        if(items == null  || items.size() == 0){            
+            if(valParaUltimo != null){
+                  selected.setM3Inicio(valParaUltimo.getM3Fijos());
+                  selected.setM3Final(valParaUltimo.getM3Fijos() + valParaUltimo.getM3Fijos() );
+                  selected.setPorcentajeRecargo(new BigInteger("0"));
+            }          
+        }else{
+            ValorTramoM3 ultimoTramo = getFacade().getLastValorTramoM3();
+            if(ultimoTramo != null){                
+                selected.setM3Inicio(ultimoTramo.getM3Final());
+                selected.setM3Final(ultimoTramo.getM3Final());
+                 if(valParaUltimo != null){
+                      selected.setM3Final(ultimoTramo.getM3Final() + valParaUltimo.getM3Fijos());
+                 }
+            }
+        }
+        
         initializeEmbeddableKey();
         return selected;
+    }
+    
+    public boolean permiteEliminar(){
+         ValorTramoM3 ultimoTramo = getFacade().getLastValorTramoM3();
+         if(ultimoTramo != null && selected != null){
+             return ultimoTramo.getIdValorTramo() == selected.getIdValorTramo();
+         }
+         return selected != null;
     }
 
     public void create() {

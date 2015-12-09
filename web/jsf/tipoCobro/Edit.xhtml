@@ -12,10 +12,6 @@
             <h:form id="TipoCobroEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{tipoCobroController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditTipoCobroLabel_idTipoCobro}" for="idTipoCobro" />
-                        <p:inputText id="idTipoCobro" value="#{tipoCobroController.selected.idTipoCobro}" title="#{bundle.EditTipoCobroTitle_idTipoCobro}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_idTipoCobro}"/>
-                        <p:outputLabel value="#{bundle.EditTipoCobroLabel_codigoTipoCobro}" for="codigoTipoCobro" />
-                        <p:inputText id="codigoTipoCobro" value="#{tipoCobroController.selected.codigoTipoCobro}" title="#{bundle.EditTipoCobroTitle_codigoTipoCobro}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_codigoTipoCobro}"/>
                         <p:outputLabel value="#{bundle.EditTipoCobroLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{tipoCobroController.selected.nombre}" title="#{bundle.EditTipoCobroTitle_nombre}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.EditTipoCobroLabel_aceptaPagoCuotas}" for="aceptaPagoCuotas" />

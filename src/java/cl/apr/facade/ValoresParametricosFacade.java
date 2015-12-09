@@ -6,6 +6,7 @@
 package cl.apr.facade;
 
 import cl.apr.entity.ValoresParametricos;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -42,4 +43,36 @@ public class ValoresParametricosFacade extends AbstractFacade<ValoresParametrico
         }
        
     }
+    
+    public List<ValoresParametricos> getValoresParametricos() {
+        try{
+            Query query = em.createQuery(""
+                                        + "SELECT v FROM ValoresParametricos v order by v.idValoresParametricos desc ", ValoresParametricos.class);
+           // query.setMaxResults(1);
+            // query.setParameter("idPeriodo",idPeriodo);
+            return query.getResultList();
+        } 
+        catch(Exception e){
+            return null;
+        }
+       
+    }
+    
+     public long getCantidadAvisosCobro(int idValoresParametricos) {
+        try{
+            Query query = em.createQuery(""
+                                        + "SELECT DISTINCT COUNT(ac) FROM AvisoCobro ac JOIN ac.registroEstado re JOIN re.periodo p JOIN p.idValoresParametricos vp WHERE vp.idValoresParametricos  = :idValoresParametricos ");
+           //query.set;
+            query.setParameter("idValoresParametricos",idValoresParametricos);
+            return (Long)query.getSingleResult();
+        } 
+        catch(Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+       
+    }
+    
+     
+    //
 }

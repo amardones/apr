@@ -15,35 +15,30 @@
 
         <ui:define name="body">
             <h:form id="TipoCobroListForm">
-                <p:panel header="#{bundle.ListTipoCobroTitle}">
+                <p:fieldset legend="#{bundle.ListTipoCobroTitle}" style="margin-bottom:20px">
                     <p:dataTable id="datalist" value="#{tipoCobroController.items}" var="item"
                                  selectionMode="single" selection="#{tipoCobroController.selected}"
-                                 paginator="true"
+                                 paginator="false"
                                  rowKey="#{item.idTipoCobro}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTipoCobroTitle_idTipoCobro}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idTipoCobro}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTipoCobroTitle_codigoTipoCobro}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.codigoTipoCobro}"/>
-                        </p:column>
+<!--                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>-->
+                        
+                       
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListTipoCobroTitle_nombre}"/>
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                         <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTipoCobroTitle_aceptaRegistroCobro}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.aceptaRegistroCobro}" disabled="true"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -52,19 +47,22 @@
                             <p:selectBooleanCheckbox value="#{item.aceptaPagoCuotas}" disabled="true"/>
                         </p:column>
                         <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTipoCobroTitle_aceptaRegistroCobro}"/>
-                            </f:facet>
-                            <p:selectBooleanCheckbox value="#{item.aceptaRegistroCobro}" disabled="true"/>
-                        </p:column>
-                        <f:facet name="footer">
+                            <p:commandButton   
+                                         icon="ui-icon-pencil" 
+                                         value="#{bundle.Edit}" 
+                                         actionListener="#{tipoCobroController.seleccionarItem(item)}" 
+                                         update=":TipoCobroEditForm" oncomplete="PF('TipoCobroEditDialog').show()" 
+      
+                                         />                         
+                        </p:column> 
+<!--                        <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{tipoCobroController.prepareCreate}" update=":TipoCobroCreateForm" oncomplete="PF('TipoCobroCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":TipoCobroViewForm" oncomplete="PF('TipoCobroViewDialog').show()" disabled="#{empty tipoCobroController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":TipoCobroEditForm" oncomplete="PF('TipoCobroEditDialog').show()" disabled="#{empty tipoCobroController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{tipoCobroController.destroy}" update=":growl,datalist" disabled="#{empty tipoCobroController.selected}"/>
-                        </f:facet>
+                        </f:facet>-->
                     </p:dataTable>
-                </p:panel>
+                </p:fieldset>
             </h:form>
 
             <ui:include src="Create.xhtml"/>
