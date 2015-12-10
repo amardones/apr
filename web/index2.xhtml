@@ -1,25 +1,31 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
-    <h:head>
+   <h:head>
         <title><ui:insert name="title">ARP</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputStylesheet library="css" name="portal.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
-
     <h:body>
-         <p:growl id="growl" life="3000" />
-       
-           
-        <div id="contenidodiv">
-            <div id="contenidodiv_center">
-               <h:form >
+        <br />
+        
+            <p:layoutUnit position="north">
+                <div id="logo">
+                    <img src="resources/images/marcanueva.png" width="308" height="143" alt="marcanueva"/>
+
+                </div>
+            </p:layoutUnit>
+        
+         <p:layoutUnit position="center">
+             <div id="marco">
+                <ui:insert name="body"/>                                 
+                
+                 <h:form >
                      <h:panelGrid id="panel1" columns="3" border="0" cellpadding="10"  cellspacing="0"  rowClasses="alignmentCenter">
                         <p:commandLink  styleClass="myButtonCuenta"
                         ajax="false"
@@ -57,12 +63,155 @@
                         <h:link outcome="/jsf/valoresParametricos/List" value="REPORTES"/>
                     </h:panelGrid>
                 </h:form>
-            </div>           
-        </div>    
-        <div id="topdiv">            
-            <p:graphicImage styleClass="logoInterior" />
-        </div>  
-        <div id="bottomdiv">...</div>
+                   
+                 </div>
+        </p:layoutUnit>
+        <p:layoutUnit position="south" size="60">
+                <ui:insert name="footer"/>
+               SISTEMA DE ADMINISTRACIÓN :Comité de agua portable Zona Rural 
+        </p:layoutUnit>      
+        
     </h:body>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </html>
+

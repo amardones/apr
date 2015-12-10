@@ -10,7 +10,9 @@ div#topdiv {
 	left:0px;
 	width:100%;
 	color:#CCC;
-	background:#00008B;
+	/*background:#00008B;*/
+        background:#fff;
+        
 	padding:0px;
         height: 100px;
         text-align: center;
