@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title><ui:insert name="title">ARP</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="portal.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
+
+    <h:body>
+         <p:growl id="growl" life="3000" />
+       
+           
+        <div id="contenidodiv">
+            <div id="contenidodiv_center">
+                 <ui:insert name="body"/>
+            </div>           
+        </div>    
+        <div id="topdiv">
+            
+            <p:graphicImage styleClass="logoInterior" />
+            <div id="menudiv"> 
+            <h:form id="menuForm"> 
+                <p:menubar>
+                    <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
+                    <p:submenu label="Cuentas">
+                        <p:menuitem value="Cuentas" outcome="/jsf/cuenta/List" />
+                        <p:menuitem value="Socios" outcome="/jsf/socio/List" />                           
+                        <p:menuitem value="Subsidios" outcome="/jsf/subsidio/List" />                            
+                        <p:menuitem value="Medidores" outcome="/jsf/medidor/List" /> 
+                        <p:menuitem value="Saldo Cuenta" outcome="/jsf/saldocuenta/List" />    
+                    </p:submenu>
+                    <p:submenu label="Proceso de calculo">
+                        <p:menuitem value="Periodos de cobro" outcome="/jsf/periodo/List" />
+                        <p:menuitem value="Registro de medición" outcome="/jsf/registroestado/List" />                            
+                        <p:menuitem value="Avisos de cobro" outcome="/jsf/avisocobro/List" />                  
+                    </p:submenu>
+                     <p:submenu label="Cobros y Pagos">
+                        <p:menuitem value="Registro de cobros" outcome="/jsf/registrocobro/List" />  
+                        <p:menuitem value="Boletas" outcome="/jsf/boleta/List" />                                             
+                    </p:submenu>
+                     <p:submenu label="Parametros">
+                        <p:menuitem value="Valores parametricos" outcome="/jsf/valoresParametricos/List" />    
+                        <p:menuitem value="Tramos" outcome="/jsf/valorTramoM3/List" />
+                        <p:menuitem value="Tipos de Cobro" outcome="/jsf/tipoCobro/List" />
+                    </p:submenu>
+                     <p:submenu label="Reportes">
+
+                    </p:submenu>
+                </p:menubar>  
+            </h:form>
+        </div>
+        </div>  
+        <div id="bottomdiv">...</div>
+    </h:body>
+
+</html>
