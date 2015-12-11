@@ -43,7 +43,7 @@ public class UsuarioController implements Serializable {
     
     
     public String login() throws Exception {
-        System.out.println("login()");
+        //System.out.println("login()");
         //FacesContext context = FacesContext.getCurrentInstance();
         //HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         

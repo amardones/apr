@@ -40,8 +40,7 @@ public class SessionUrlFilter implements Filter{
         HttpSession session=req.getSession(true);        
         String requestUrl=req.getRequestURL().toString();        
         String[] urlPermitidaSinSesion=new String[] {
-            "faces/index.xhtml",
-            "faces/home.xhtml"
+            "faces/index.xhtml"
         };
         
         boolean redireccionarPeticion;        
@@ -59,7 +58,7 @@ public class SessionUrlFilter implements Filter{
         }
         
         if(redireccionarPeticion){
-            res.sendRedirect(req.getContextPath()+"/index.xhtml");
+            res.sendRedirect(req.getContextPath()+"/faces/index.xhtml");
         }
         else{
             chain.doFilter(request, response);

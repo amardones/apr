@@ -25,8 +25,15 @@
         <div id="topdiv">
             
             <p:graphicImage styleClass="logoInterior" />
+            
             <div id="menudiv"> 
+                <h:form>
+               <p:outputLabel value="#{UsuarioController.mail==null ? 'Anónimo' : UsuarioController.mail}"/>
+               <p:commandButton value="Cerrar sesión" action="#{UsuarioController.cerrarSesion()}"/>
+               </h:form>
+                    
             <h:form id="menuForm"> 
+                
                 <p:menubar>
                     <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
                     <p:submenu label="Cuentas">
@@ -53,6 +60,7 @@
                      <p:submenu label="Reportes">
 
                     </p:submenu>
+                      
                 </p:menubar>  
             </h:form>
         </div>
