@@ -26,16 +26,17 @@
             
             <p:graphicImage styleClass="logoInterior" />
             
-            <div id="menudiv"> 
+            <div id="menudiv">
+                <div id="divCerrar">
                 <h:form>
                <p:outputLabel value="#{UsuarioController.mail==null ? 'Anónimo' : UsuarioController.mail}"/>
                <p:commandButton value="Cerrar sesión" action="#{UsuarioController.cerrarSesion()}"/>
                </h:form>
-                    
+             </div>       
             <h:form id="menuForm"> 
                 
                 <p:menubar>
-                    <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
+                    <p:menuitem value="#{bundle.Home}" outcome="/home" icon="ui-icon-home"/>
                     <p:submenu label="Cuentas">
                         <p:menuitem value="Cuentas" outcome="/jsf/cuenta/List" />
                         <p:menuitem value="Socios" outcome="/jsf/socio/List" />                           
@@ -65,7 +66,9 @@
             </h:form>
         </div>
         </div>  
-        <div id="bottomdiv">...</div>
+        <div id="bottomdiv">
+            SISTEMA DE ADMINISTRACIÓN :Comité de agua portable Zona Rural
+        </div>
     </h:body>
 
 </html>

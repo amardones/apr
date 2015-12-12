@@ -9,29 +9,38 @@
     <h:head>
         <title><ui:insert name="title">ARP</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
-        <h:outputStylesheet library="css" name="portal.css"/>
+        <h:outputStylesheet library="css" name="login.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
 
     <h:body>
          <p:growl id="growl" life="3000" />
        
-           <h:form id="frmLogin">
+           
+
+        <div id="divLogin">            
+            
+            <div id="divImagen"  > 
+                 <p:graphicImage styleClass="logoInterior"  />
+            </div>
+            <h:form id="frmLogin">
                     <p:growl id="mensageGeneral" showDetail="true" sticky="false"/>
+                    
                     <h:panelGrid columns="2">
-                        <p:outputLabel value="Correo electrónico" for="mail"/>
-                        <p:inputText id="mail" size="40" value="#{UsuarioController.mail}"/>
-                        <p:outputLabel value="password" for="password"/>
-                        <p:password id="password" size="40" value="#{UsuarioController.password}"/>                       
+                        <p:outputLabel value=""/>
+                        <p:outputLabel value="INICIAR SESIÓN" styleClass="formTitulo"/>
+                        <p:outputLabel value="Correo electrónico" for="mail" styleClass="formLabel"/>
+                        <p:inputText id="mail" size="40" value="#{UsuarioController.mail}" styleClass="css-input"/>
+                        <p:outputLabel value="password" for="password" styleClass="formLabel"/>
+                        <p:password id="password" size="40" value="#{UsuarioController.password}" styleClass="css-input"/>                       
                             
                     </h:panelGrid>
-                        <p:commandButton value="Ingresar" ajax="false" action="#{UsuarioController.login()}"/>
+                    <div id="divBoton" style="text-align: right;padding-right: 60px;" >
+                        <p:commandButton value="Ingresar" ajax="false" action="#{UsuarioController.login()}" styleClass="btn"/>
+                    </div>
             </h:form>
-
-        <div id="topdiv">            
-            <p:graphicImage styleClass="logoInterior" />
         </div>  
-        <div id="bottomdiv">...</div>
+        
     </h:body>
 
 </html>

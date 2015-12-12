@@ -73,3 +73,10 @@ html {
         background-image: url("images/marcanuevainterior.png")  !important;
         border: 0;
     }
+    .formLogin {
+        display: block;
+        width: 194px !important;
+        height: 90px !important;
+        background-image: url("images/marcanuevainterior.png")  !important;
+        border: 0;
+    }
