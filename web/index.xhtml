@@ -25,17 +25,16 @@
             </div>
             <h:form id="frmLogin">
                     <p:growl id="mensageGeneral" showDetail="true" sticky="false"/>
-                    
                     <h:panelGrid columns="2">
                         <p:outputLabel value=""/>
                         <p:outputLabel value="INICIAR SESIÓN" styleClass="formTitulo"/>
                         <p:outputLabel value="Correo electrónico" for="mail" styleClass="formLabel"/>
-                        <p:inputText id="mail" size="40" value="#{UsuarioController.mail}" styleClass="css-input"/>
+                        <p:inputText id="mail" size="40" value="#{UsuarioController.mail}" placeholder="Email"/>
                         <p:outputLabel value="password" for="password" styleClass="formLabel"/>
-                        <p:password id="password" size="40" value="#{UsuarioController.password}" styleClass="css-input"/>                       
+                        <p:password id="password" size="40" value="#{UsuarioController.password}" placeholder="Clave"/>                       
                             
                     </h:panelGrid>
-                    <div id="divBoton" style="text-align: right;padding-right: 60px;" >
+                    <div id="divBoton" style="text-align: right;padding-right: 50px;" >
                         <p:commandButton value="Ingresar" ajax="false" action="#{UsuarioController.login()}" styleClass="btn"/>
                     </div>
             </h:form>

@@ -58,21 +58,23 @@ body {
         font-size: 16px;
         font-family: sans-serif;
     }
-    .btn {
-  background: #3498db;
-  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-  background-image: -o-linear-gradient(top, #3498db, #2980b9);
-  background-image: linear-gradient(to bottom, #3498db, #2980b9);
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
-  border-radius: 28px;
-  font-family: Arial;
-  color: #ffffff;
-  font-size: 20px;
-  padding: 10px 20px 10px 20px;
-  text-decoration: none;
+  
+    
+  .btn {
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 28;
+    -moz-border-radius: 28;
+    border-radius: 28px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 20px;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
 }
 
 .btn:hover {
@@ -85,14 +87,49 @@ body {
   text-decoration: none;
 }
 
+
+/*
 .css-input { 
-    font-size:22px; border-width:2px; 
-    border-radius:13px; 
-    border-style:solid; 
-    padding:12px; 
-    border-color:#c7c1c7; 
-    color:#524f52;  
+    font-size:22px  !important; 
+    border-width:2px  !important; 
+    border-radius:13px  !important; 
+    border-style:solid  !important; 
+    padding:3px  !important; 
+    border-color:#c7c1c7  !important;
+    color:#524f52  !important; 
 } 
-.css-input:focus { 
-    outline:none; 
+*/
+
+
+.ui-widget-header .ui-inputfield,
+.ui-widget-content .ui-inputfield {
+    font-weight: normal;
 }
+
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield {
+     background: #fff;
+    -moz-box-shadow: inset 0 0px 0px #8f8f8f;
+    -webkit-box-shadow: inset 0 0px 0px #8f8f8f;
+    box-shadow: inset 0 0px 0px #8f8f8f;
+    color: #333333;
+    font-weight: normal;
+    
+    
+    font-size:22px; 
+    border-width:2px; 
+    border-radius:6px; 
+    border-style:solid; 
+    padding:10px; 
+    border-color:#c7c1c7;
+    color:#524f52; 
+    
+}
+
+.ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus, .ui-widget-header .ui-inputfield.ui-state-focus {
+    -moz-box-shadow: 0px 0px 0px #fbcb09, inset 0 0px 0px #8f8f8f;
+    -webkit-box-shadow: 0px 0px 0px #fbcb09, inset 0 0px 0px #8f8f8f;
+    box-shadow: 0px 0px 0px #fbcb09, inset 0 0px 0px #8f8f8f;
+    font-weight: normal;
+}
+
+
