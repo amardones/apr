@@ -31,10 +31,10 @@ div#bottomdiv {
 }
 
 div#menudiv{	
-	width:1020px;	
+	width:920px;	
         padding:0px;
-        
-        text-align: left;
+        height: 10px;
+        text-align: right;
         display: block;
         margin-left: auto;
         margin-right: auto;  
@@ -51,7 +51,7 @@ div#contenidodiv {
 }
 
 div#contenidodiv_center {
-	width:1000px;
+	width:900px;
         height: 100%;
 	color:#CCC;
 	background:#fff;
@@ -251,3 +251,12 @@ body {
         height: 36px !important;
         background-image: url("images/calcular-36.png")  !important;
     }
+    #divCerrar{
+        text-align: right;
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        display: block;        
+        float: right;
+        
+}

@@ -9,6 +9,7 @@
     <h:head>
         <title><ui:insert name="title">ARP</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="login.css"/>        
         <h:outputStylesheet library="css" name="portal.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
@@ -25,46 +26,43 @@
         <div id="topdiv">
             
             <p:graphicImage styleClass="logoInterior" />
-            
-            <div id="menudiv">
-                <div id="divCerrar">
-                <h:form>
-               <p:outputLabel value="#{UsuarioController.mail==null ? 'Anónimo' : UsuarioController.mail}"/>
-               <p:commandButton value="Cerrar sesión" action="#{UsuarioController.cerrarSesion()}"/>
-               </h:form>
-             </div>       
-            <h:form id="menuForm"> 
-                
-                <p:menubar>
-                    <p:menuitem value="#{bundle.Home}" outcome="/home" icon="ui-icon-home"/>
-                    <p:submenu label="Cuentas">
-                        <p:menuitem value="Cuentas" outcome="/jsf/cuenta/List" />
-                        <p:menuitem value="Socios" outcome="/jsf/socio/List" />                           
-                        <p:menuitem value="Subsidios" outcome="/jsf/subsidio/List" />                            
-                        <p:menuitem value="Medidores" outcome="/jsf/medidor/List" /> 
-                        <p:menuitem value="Saldo Cuenta" outcome="/jsf/saldocuenta/List" />    
-                    </p:submenu>
-                    <p:submenu label="Proceso de calculo">
-                        <p:menuitem value="Periodos de cobro" outcome="/jsf/periodo/List" />
-                        <p:menuitem value="Registro de medición" outcome="/jsf/registroestado/List" />                            
-                        <p:menuitem value="Avisos de cobro" outcome="/jsf/avisocobro/List" />                  
-                    </p:submenu>
-                     <p:submenu label="Cobros y Pagos">
-                        <p:menuitem value="Registro de cobros" outcome="/jsf/registrocobro/List" />  
-                        <p:menuitem value="Boletas" outcome="/jsf/boleta/List" />                                             
-                    </p:submenu>
-                     <p:submenu label="Parametros">
-                        <p:menuitem value="Valores parametricos" outcome="/jsf/valoresParametricos/List" />    
-                        <p:menuitem value="Tramos" outcome="/jsf/valorTramoM3/List" />
-                        <p:menuitem value="Tipos de Cobro" outcome="/jsf/tipoCobro/List" />
-                    </p:submenu>
-                     <p:submenu label="Reportes">
-
-                    </p:submenu>
-                      
-                </p:menubar>  
-            </h:form>
-        </div>
+            <div id="divCerrar">
+                       <h:form>
+                           <p:outputLabel value="Iniciado por : #{UsuarioController.mail==null ? 'Anónimo' : UsuarioController.mail} " styleClass="formLabel"/>
+                           <p:commandButton value="Cerrar sesión" action="#{UsuarioController.cerrarSesion()}" styleClass="btn"/>
+                       </h:form>
+                </div>
+        
+            <div id="menudiv">                      
+                <h:form id="menuForm"> 
+                    <p:menubar>
+                        <p:menuitem value="#{bundle.Home}" outcome="/home" icon="ui-icon-home"/>
+                        <p:submenu label="Cuentas">
+                            <p:menuitem value="1.- Socios" outcome="/jsf/socio/List" />
+                            <p:menuitem value="2.- Medidores" outcome="/jsf/medidor/List" /> 
+                            <p:menuitem value="3.- Cuentas" outcome="/jsf/cuenta/List" />                                                  
+                            <p:menuitem value="4.- Subsidios" outcome="/jsf/subsidio/List" />
+                            <p:menuitem value="5.- Saldo Cuenta" outcome="/jsf/saldocuenta/List" />    
+                        </p:submenu>
+                        <p:submenu label="Proceso de calculo">
+                            <p:menuitem value="1.- Periodos de cobro" outcome="/jsf/periodo/List" />
+                            <p:menuitem value="2.- Registro de medición" outcome="/jsf/registroestado/List" />                            
+                            <p:menuitem value="3.- Avisos de cobro" outcome="/jsf/avisocobro/List" />                  
+                        </p:submenu>
+                         <p:submenu label="Cobros y Pagos">
+                            <p:menuitem value="Registro de cobros" outcome="/jsf/registrocobro/List" />  
+                            <p:menuitem value="Boletas" outcome="/jsf/boleta/List" />                                             
+                        </p:submenu>
+                         <p:submenu label="Parametros">
+                            <p:menuitem value="Valores parametricos" outcome="/jsf/valoresParametricos/List" />    
+                            <p:menuitem value="Tramos" outcome="/jsf/valorTramoM3/List" />
+                            <p:menuitem value="Tipos de Cobro" outcome="/jsf/tipoCobro/List" />
+                        </p:submenu>
+                         <p:submenu label="Reportes">
+                        </p:submenu>
+                    </p:menubar>  
+                </h:form>
+            </div>
         </div>  
         <div id="bottomdiv">
             SISTEMA DE ADMINISTRACIÓN :Comité de agua portable Zona Rural

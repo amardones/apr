@@ -9,6 +9,8 @@
     <h:head>
         <title><ui:insert name="title">ARP</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="login.css"/>
+
         <h:outputStylesheet library="css" name="portal.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
@@ -59,6 +61,12 @@
         </div>  
         <div id="topdiv">            
             <p:graphicImage styleClass="logoInterior" />
+            <div id="divCerrar">
+                       <h:form>
+                           <p:outputLabel value="Iniciado por : #{UsuarioController.mail==null ? 'Anónimo' : UsuarioController.mail}  " styleClass="formLabel"/>
+                           <p:commandButton value="Cerrar sesión" action="#{UsuarioController.cerrarSesion()}" styleClass="btn"/>
+                       </h:form>
+            </div>
         </div>  
          <div id="bottomdiv">
              SISTEMA DE ADMINISTRACIÓN :Comité de agua portable Zona Rural

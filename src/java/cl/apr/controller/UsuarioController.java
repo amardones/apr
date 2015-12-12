@@ -20,7 +20,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Named(value="UsuarioController")
@@ -38,7 +37,7 @@ public class UsuarioController implements Serializable {
 
     public UsuarioController() {
         HttpSession miSession=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-        miSession.setMaxInactiveInterval(5000);
+        miSession.setMaxInactiveInterval(3600);
     }
     
     
@@ -66,7 +65,7 @@ public class UsuarioController implements Serializable {
                 return "/index";
             }            
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error fatal:", "Comuníquese con el administrador"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de acceso:", "Usuario o contraseña incorrecto"));
             return null;
         }         
     }
@@ -76,7 +75,7 @@ public class UsuarioController implements Serializable {
         this.password=null;
         HttpSession httpSession=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         httpSession.invalidate();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Session cerrada"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Sesión cerrada"));
         return "/index";
     }
 
