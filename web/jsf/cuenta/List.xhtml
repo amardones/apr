@@ -38,6 +38,18 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCuentaTitle_rut}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rut}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.CreateSocioTitle_nombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rut.nombre} #{item.rut.apellido}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCuentaTitle_direccion}"/>
                             </f:facet>
                             <h:outputText value="#{item.direccion}"/>
@@ -79,22 +91,10 @@
                                 <h:outputText value="#{bundle.ListCuentaTitle_numeroMedidor}"/>
                             </f:facet>
                             <h:outputText value="#{item.numeroMedidor}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCuentaTitle_rut}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.rut}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CreateSocioTitle_nombre}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.rut.nombre} #{item.rut.apellido}"/>
-                        </p:column>
+                        </p:column>                        
                         <f:facet name="header">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{cuentaController.prepareCreate}" update=":CuentaCreateForm" oncomplete="PF('CuentaCreateDialog').show()"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CuentaEditForm" oncomplete="PF('CuentaEditDialog').show()" disabled="#{empty cuentaController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CuentaEditForm" actionListener="#{cuentaController.prepareUpdate()}" oncomplete="PF('CuentaEditDialog').show()" disabled="#{empty cuentaController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:fieldset>

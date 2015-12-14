@@ -72,6 +72,10 @@ public class CuentaController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
+    public Cuenta prepareUpdate() {
+        selected.setCuentaSubsidio(new CuentaSubsidio());
+        return selected;
+    }
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
