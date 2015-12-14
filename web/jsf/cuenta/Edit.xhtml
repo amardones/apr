@@ -21,12 +21,12 @@
                         <p:outputLabel value="#{bundle.EditCuentaLabel_activa}" for="activa" />
                         <p:selectBooleanCheckbox id="activa" value="#{cuentaController.selected.activa}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_activa}"/>
                         <p:outputLabel value="#{bundle.EditCuentaLabel_cuentaSubsidio}" for="cuentaSubsidio" />
-                        <p:selectOneMenu id="cuentaSubsidio" value="#{cuentaController.selected.cuentaSubsidio}" >
+                        <p:selectOneMenu id="cuentaSubsidio" value="#{cuentaController.selected.cuentaSubsidio.idSubsidio}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{cuentaSubsidioController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{subsidioController.items}"
                                            var="cuentaSubsidioItem"
                                            itemValue="#{cuentaSubsidioItem}"
-                                           itemLabel="#{cuentaSubsidioItem.idSubsidio.nombre}"
+                                           itemLabel="#{cuentaSubsidioItem.nombre}"
                                            />
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditCuentaLabel_numeroMedidor}" for="numeroMedidor" />

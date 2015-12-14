@@ -36,7 +36,7 @@ public class CuentaSubsidio implements Serializable {
     @NotNull
     @Column(name = "id_cuenta")
     private Integer idCuenta;
-    @JoinColumn(name = "id_cuenta", referencedColumnName = "id_cuenta", insertable = false, updatable = false)
+    @JoinColumn(name = "id_cuenta", referencedColumnName = "id_cuenta", insertable = true, updatable = true)
     @OneToOne(optional = false)
     private Cuenta cuenta;
     @JoinColumn(name = "id_subsidio", referencedColumnName = "id_subsidio")

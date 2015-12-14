@@ -15,13 +15,15 @@
 
         <ui:define name="body">
             <h:form id="SaldoCuentaListForm">
-                <p:panel header="#{bundle.ListSaldoCuentaTitle}">
+                <p:fieldset legend="#{bundle.ListSaldoCuentaTitle}" style="margin-bottom:20px">
+               
                     <p:dataTable id="datalist" value="#{saldoCuentaController.items}" var="item"
                                  selectionMode="single" selection="#{saldoCuentaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idSaldoCuenta}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
+                                 paginatorPosition="bottom"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -65,14 +67,14 @@
                             </f:facet>
                             <h:outputText value="#{item.tipoMovimiento}"/>
                         </p:column>
-                        <f:facet name="footer">
+                        <f:facet name="header">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{saldoCuentaController.prepareCreate}" update=":SaldoCuentaCreateForm" oncomplete="PF('SaldoCuentaCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":SaldoCuentaViewForm" oncomplete="PF('SaldoCuentaViewDialog').show()" disabled="#{empty saldoCuentaController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":SaldoCuentaEditForm" oncomplete="PF('SaldoCuentaEditDialog').show()" disabled="#{empty saldoCuentaController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{saldoCuentaController.destroy}" update=":growl,datalist" disabled="#{empty saldoCuentaController.selected}"/>
                         </f:facet>
                     </p:dataTable>
-                </p:panel>
+                </p:fieldset>
             </h:form>
 
             <ui:include src="Create.xhtml"/>

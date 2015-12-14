@@ -15,19 +15,20 @@
 
         <ui:define name="body">
             <h:form id="CuentaListForm">
-                <p:panel header="#{bundle.ListCuentaTitle}">
+                <p:fieldset legend="#{bundle.ListCuentaTitle}" style="margin-bottom:20px">
+               
                     <p:dataTable id="datalist" value="#{cuentaController.items}" var="item"
                                  selectionMode="single" selection="#{cuentaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idCuenta}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
-                                 paginatorPosition="top"
+                                 paginatorPosition="bottom"
                                  >
 
                         
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update="createButton  editButton "/>
+                        <p:ajax event="rowUnselect" update="createButton  editButton "/>
 
                         <p:column>
                             <f:facet name="header">
@@ -71,7 +72,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCuentaTitle_cuentaSubsidio}"/>
                             </f:facet>
-                            <h:outputText value="#{item.cuentaSubsidio}"/>
+                            <h:outputText value="#{item.cuentaSubsidio.idSubsidio.nombre}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -93,12 +94,10 @@
                         </p:column>
                         <f:facet name="header">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{cuentaController.prepareCreate}" update=":CuentaCreateForm" oncomplete="PF('CuentaCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CuentaViewForm" oncomplete="PF('CuentaViewDialog').show()" disabled="#{empty cuentaController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CuentaEditForm" oncomplete="PF('CuentaEditDialog').show()" disabled="#{empty cuentaController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{cuentaController.destroy}" update=":growl,datalist" disabled="#{empty cuentaController.selected}"/>
                         </f:facet>
                     </p:dataTable>
-                </p:panel>
+                </p:fieldset>
             </h:form>
 
             <ui:include src="Create.xhtml"/>

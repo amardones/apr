@@ -3,7 +3,9 @@ package cl.apr.controller;
 import cl.apr.entity.Cuenta;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
+import cl.apr.entity.CuentaSubsidio;
 import cl.apr.entity.Medidor;
+import cl.apr.entity.Subsidio;
 import cl.apr.facade.CuentaFacade;
 
 import java.io.Serializable;
@@ -29,8 +31,19 @@ public class CuentaController implements Serializable {
     private cl.apr.facade.CuentaFacade ejbFacade;
     @EJB
     private cl.apr.facade.MedidorFacade ejbMedidorFacade;
+    @EJB
+    private cl.apr.facade.CuentaSubsidioFacade ejbCuentaSubsidio;
     private List<Cuenta> items = null;
     private Cuenta selected;
+    private Subsidio subsidio;
+
+    public Subsidio getSubsidio() {
+        return subsidio;
+    }
+
+    public void setSubsidio(Subsidio subsidio) {
+        this.subsidio = subsidio;
+    }    
 
     public CuentaController() {
     }
@@ -55,6 +68,7 @@ public class CuentaController implements Serializable {
 
     public Cuenta prepareCreate() {
         selected = new Cuenta();
+        selected.setCuentaSubsidio(new CuentaSubsidio());
         initializeEmbeddableKey();
         return selected;
     }
@@ -67,6 +81,7 @@ public class CuentaController implements Serializable {
     }
 
     public void update() {
+        subsidio=selected.getCuentaSubsidio().getIdSubsidio();
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CuentaUpdated"));
     }
 
@@ -97,7 +112,8 @@ public class CuentaController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                if (persistAction != PersistAction.DELETE) {  
+                    selected.getCuentaSubsidio().setIdCuenta(selected.getIdCuenta());
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);

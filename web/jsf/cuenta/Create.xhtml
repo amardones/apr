@@ -12,6 +12,9 @@
             <h:form id="CuentaCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{cuentaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateCuentaLabel_idCuenta}" for="idCuenta" />
+                        <p:inputText id="idCuenta" value="#{cuentaController.selected.idCuenta}" title="#{bundle.CreateCuentaTitle_idCuenta}" required="true" requiredMessage="#{bundle.CreateCuentaRequiredMessage_idCuenta}"/>
+                        
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_direccion}" for="direccion" />
                         <p:inputText id="direccion" value="#{cuentaController.selected.direccion}" title="#{bundle.CreateCuentaTitle_direccion}" required="true" requiredMessage="#{bundle.CreateCuentaRequiredMessage_direccion}"/>
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_gpsLatitud}" for="gpsLatitud" />
@@ -21,12 +24,12 @@
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_activa}" for="activa" />
                         <p:selectBooleanCheckbox id="activa" value="#{cuentaController.selected.activa}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_activa}"/>
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_cuentaSubsidio}" for="cuentaSubsidio" />
-                        <p:selectOneMenu id="cuentaSubsidio" value="#{cuentaController.selected.cuentaSubsidio}" >
+                        <p:selectOneMenu id="cuentaSubsidio" value="#{cuentaController.selected.cuentaSubsidio.idSubsidio}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{cuentaSubsidioController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{subsidioController.items}"
                                            var="cuentaSubsidioItem"
                                            itemValue="#{cuentaSubsidioItem}"
-                                           itemLabel="#{cuentaSubsidioItem.idSubsidio.nombre}"
+                                           itemLabel="#{cuentaSubsidioItem.nombre}"
                                            />
                             
                         </p:selectOneMenu>

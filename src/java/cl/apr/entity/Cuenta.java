@@ -48,7 +48,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Cuenta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     @Basic(optional = false)
     @Column(name = "id_cuenta")
     private Integer idCuenta;
@@ -68,9 +69,9 @@ public class Cuenta implements Serializable {
     @NotNull
     @Column(name = "activa")
     private boolean activa;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuenta")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "cuenta")
     private List<RegistroEstado> registroEstadoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCuenta")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "idCuenta")
     private List<SaldoCuenta> saldoCuentaList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "cuenta")
     private CuentaSubsidio cuentaSubsidio;
@@ -82,7 +83,7 @@ public class Cuenta implements Serializable {
     @JoinColumn(name = "rut", referencedColumnName = "rut")
     @ManyToOne(optional = false)
     private Socio rut;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCuenta")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "idCuenta")
     private List<RegistroCobro> registroCobroList;
 
     public Cuenta() {

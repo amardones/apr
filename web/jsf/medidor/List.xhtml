@@ -15,13 +15,15 @@
 
         <ui:define name="body">
             <h:form id="MedidorListForm">
-                <p:panel header="#{bundle.ListMedidorTitle}">
+                <p:fieldset legend="#{bundle.ListMedidorTitle}" style="margin-bottom:20px">
+               
                     <p:dataTable id="datalist" value="#{medidorController.items}" var="item"
                                  selectionMode="single" selection="#{medidorController.selected}"
                                  paginator="true"
                                  rowKey="#{item.numeroMedidor}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
+                                 paginatorPosition="bottom"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -39,14 +41,14 @@
                             </f:facet>
                             <h:outputText value="#{item.descripcion}"/>
                         </p:column>
-                        <f:facet name="footer">
+                        <f:facet name="header">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{medidorController.prepareCreate}" update=":MedidorCreateForm" oncomplete="PF('MedidorCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":MedidorViewForm" oncomplete="PF('MedidorViewDialog').show()" disabled="#{empty medidorController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":MedidorEditForm" oncomplete="PF('MedidorEditDialog').show()" disabled="#{empty medidorController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{medidorController.destroy}" update=":growl,datalist" disabled="#{empty medidorController.selected}"/>
                         </f:facet>
                     </p:dataTable>
-                </p:panel>
+                </p:fieldset>
             </h:form>
 
             <ui:include src="Create.xhtml"/>
