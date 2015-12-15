@@ -9,39 +9,62 @@
     <ui:composition>
 
         <p:dialog id="RegistroCobroCreateDlg" widgetVar="RegistroCobroCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRegistroCobroTitle}">
-            <h:form id="RegistroCobroCreateForm">
+            <h:form id="RegistroCobroCreateForm" >
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{registroCobroController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_cuotas}" for="cuotas" />
-                        <p:inputText id="cuotas" value="#{registroCobroController.selected.cuotas}" title="#{bundle.CreateRegistroCobroTitle_cuotas}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_cuotas}"/>
-                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_monto}" for="monto" />
-                        <p:inputText id="monto" value="#{registroCobroController.selected.monto}" title="#{bundle.CreateRegistroCobroTitle_monto}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_monto}"/>
-                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_descripcion}" for="descripcion" />
-                        <p:inputText id="descripcion" value="#{registroCobroController.selected.descripcion}" title="#{bundle.CreateRegistroCobroTitle_descripcion}" />
-                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_fechaCreacion}" for="fechaCreacion" />
-                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy" value="#{registroCobroController.selected.fechaCreacion}" title="#{bundle.EditRegistroCobroTitle_fechaCreacion}"  showOn="button"/>
-                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_mesPrimeraCuota}" for="mesPrimeraCuota" />
-                        <p:inputText id="mesPrimeraCuota" value="#{registroCobroController.selected.mesPrimeraCuota}" title="#{bundle.CreateRegistroCobroTitle_mesPrimeraCuota}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_mesPrimeraCuota}"/>
-                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_idCuenta}" for="idCuenta" />
-                        <p:selectOneMenu id="idCuenta" value="#{registroCobroController.selected.idCuenta}" required="true" requiredMessage="#{bundle.EditRegistroCobroRequiredMessage_idCuenta}">
-                            <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
-                                           var="idCuentaItem"
-                                           itemValue="#{idCuentaItem}"
-                                           itemLabel="#{idCuentaItem.idCuenta}: #{idCuentaItem.rut.nombre} #{idCuentaItem.rut.apellido}"/>           
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_idTipoCobro}" for="idTipoCobro" />
-                        <p:selectOneMenu id="idTipoCobro" value="#{registroCobroController.selected.idTipoCobro}" required="true" requiredMessage="#{bundle.EditRegistroCobroRequiredMessage_idTipoCobro}">
-                            <f:selectItems value="#{tipoCobroController.itemsAvailableSelectOne}"
-                                           var="idTipoCobroItem"
-                                           itemValue="#{idTipoCobroItem}"
-                                           itemLabel="#{idTipoCobroItem.idTipoCobro}: #{idTipoCobroItem.nombre}"/>           
+                        
+                        <p:outputLabel value="Buscar cuenta :" for="cuentaAuto" />
+                         
+                        <p:autoComplete id="cuentaAuto" value="#{cuentaController.selected}"
+                               completeMethod="#{cuentaController.completeCuenta}"
+                                var="idCuentaItem"
+                                itemValue="#{idCuentaItem}"
+                                itemLabel="#{idCuentaItem.idCuenta}-#{idCuentaItem.rut.nombre}-#{idCuentaItem.rut.apellido}" 
+                                forceSelection="true"
+                                >
+                            <p:ajax event="itemSelect"  listener="#{cuentaController.action}" process="@form" update="display2 display3"/> 
+                        </p:autoComplete>
+                    </p:panelGrid>  
+                    <div style="height: 400px; width: 500px">
+                        <h:panelGroup id="display2" >
+                            <p:panelGrid id="panelRegistroCobro" columns="2" rendered="#{cuentaController.selected != null}">
+                                <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_idTipoCobro}" for="idTipoCobro" />
+                                <p:selectOneMenu id="idTipoCobro" 
+                                                 value="#{registroCobroController.selected.idTipoCobro}" 
+                                                 required="true" 
+                                                 requiredMessage="#{bundle.EditRegistroCobroRequiredMessage_idTipoCobro}"
+                                                 
+                                                 >
+                                    <f:selectItems value="#{tipoCobroController.tiposCobroRegistranCobro}"
+                                                   var="idTipoCobroItem"
+                                                   itemValue="#{idTipoCobroItem}"
+                                                   itemLabel="#{idTipoCobroItem.nombre}"/>   
+                                    <p:ajax event="valueChange" update="cuotas" />
 
-                        </p:selectOneMenu>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{registroCobroController.create}" value="#{bundle.Save}" update="display,:RegistroCobroListForm:datalist,:growl" oncomplete="handleSubmit(args,'RegistroCobroCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="RegistroCobroCreateDialog.hide()"/>
+                                </p:selectOneMenu> 
+                                <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_monto}" for="monto" />
+                                <p:inputText id="monto" value="#{registroCobroController.selected.monto}" title="#{bundle.CreateRegistroCobroTitle_monto}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_monto}"/>
+                                <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_descripcion}" for="descripcion" />
+                                <p:inputText id="descripcion" value="#{registroCobroController.selected.descripcion}" title="#{bundle.CreateRegistroCobroTitle_descripcion}" />
+                                <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_cuotas}" for="cuotas" />
+                                <p:inputText id="cuotas" value="#{registroCobroController.selected.cuotas}" title="#{bundle.CreateRegistroCobroTitle_cuotas}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_cuotas}"
+                                             disabled="#{registroCobroController.deshabilitarCuotas()}"
+                                             />
+                               
+                             </p:panelGrid>  
+                        </h:panelGroup>
+                     </div>
+                    <h:panelGroup id="display3" >             
+                        <p:commandButton id="btnCrear" actionListener="#{registroCobroController.create}" value="#{bundle.Save}" update="display,:RegistroCobroListForm:datalist,:growl" oncomplete="handleSubmit(args,'RegistroCobroCreateDialog');"
+                                     rendered="#{cuentaController.selected != null}"
+                                     />
+                        <p:commandButton id="btnCancelar" value="#{bundle.Cancel}" onclick="RegistroCobroCreateDialog.hide()"
+                                     rendered="#{cuentaController.selected != null}"
+                                     />
+                    </h:panelGroup>
                 </h:panelGroup>
             </h:form>
+            
         </p:dialog>
 
     </ui:composition>

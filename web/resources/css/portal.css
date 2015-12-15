@@ -301,3 +301,11 @@ body {
     box-shadow: 0px 0px 0px #fbcb09, inset 0 0px 0px #8f8f8f;
     font-weight: normal;
 }
+
+.ui-panelgrid, .ui-panelgrid td { background-color: transparent !important; }
+
+.ui-panelgrid tr,
+.ui-panelgrid td {
+    background: none;
+    border-style: none !important;
+}
