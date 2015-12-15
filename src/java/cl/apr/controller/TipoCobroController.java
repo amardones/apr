@@ -116,6 +116,15 @@ public class TipoCobroController implements Serializable {
     public List<TipoCobro> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
+    
+    public List<TipoCobro> getTiposCobroRegistranCobro(){
+        selected = null;
+        items =  getFacade().getTiposCobroRegistranCobro();
+        if(items != null && items.size() > 0){
+            selected = items.get(0);
+        }
+         return items;
+    }
 
     public List<TipoCobro> getItemsAvailableSelectOne() {
         return getFacade().findAll();

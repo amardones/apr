@@ -22,6 +22,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.AjaxBehaviorEvent;
 
 @Named("cuentaController")
 @SessionScoped
@@ -154,6 +155,7 @@ public class CuentaController implements Serializable {
     }
 
     @FacesConverter(forClass = Cuenta.class)
+    //@FacesConverter("cuentaControllerConverter")
     public static class CuentaControllerConverter implements Converter {
 
         @Override
@@ -193,5 +195,36 @@ public class CuentaController implements Serializable {
         }
 
     }
+    
+     public List<Cuenta> completeCuenta(String query) {
+        List<Cuenta> filteredThemes = new ArrayList<Cuenta>();
+        try{
+            List<Cuenta> allThemes = getFacade().findAll();
+
+            Cuenta c = null;
+            String s = "";        
+            for (int i = 0; i < allThemes.size(); i++) {
+                 c = allThemes.get(i);
+                 if(c != null){
+                    s = c.getIdCuenta() + c.getRut().getRut() + c.getRut().getNombre() + c.getRut().getApellido();
+                    if(s.toLowerCase().contains(query)) {
+                        filteredThemes.add(c);
+                    }
+                 }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return filteredThemes;
+    }
+     
+     public void action(AjaxBehaviorEvent event){
+         if(selected != null){
+             System.out.println("selected.getIdCuenta(): "+selected.getIdCuenta());
+         }
+         else{
+             System.out.println("selected.getIdCuenta(): null");
+         }
+     }
 
 }

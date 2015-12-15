@@ -3,9 +3,11 @@ package cl.apr.controller;
 import cl.apr.entity.RegistroCobro;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
+import cl.apr.enums.EnumFormatoFechaHora;
 import cl.apr.facade.RegistroCobroFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("registroCobroController")
 @SessionScoped
@@ -28,6 +31,10 @@ public class RegistroCobroController implements Serializable {
     private List<RegistroCobro> items = null;
     private RegistroCobro selected;
 
+    @Inject
+    private CuentaController cuentaController;
+     
+     
     public RegistroCobroController() {
     }
 
@@ -43,19 +50,25 @@ public class RegistroCobroController implements Serializable {
     }
 
     protected void initializeEmbeddableKey() {
+        cuentaController.setSelected(null);
+        selected = new RegistroCobro();
+        selected.setFechaCreacion(new Date());
+        selected.setMesPrimeraCuota(Integer.parseInt(EnumFormatoFechaHora.formatoMes.format(new Date())));
+        selected.setCuotas(1);
     }
 
     private RegistroCobroFacade getFacade() {
         return ejbFacade;
     }
 
-    public RegistroCobro prepareCreate() {
-        selected = new RegistroCobro();
+    public RegistroCobro prepareCreate() {        
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
+        selected.setIdCuenta(cuentaController.getSelected());
+        
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("RegistroCobroCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -162,4 +175,12 @@ public class RegistroCobroController implements Serializable {
 
     }
 
+    
+    public boolean deshabilitarCuotas(){
+        if(selected.getIdTipoCobro() != null && selected.getIdTipoCobro().getAceptaPagoCuotas()){
+            System.out.println("deshabilitarCuotas false");
+            return false;
+        }
+        return true;
+    }
 }

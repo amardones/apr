@@ -5,10 +5,13 @@
  */
 package cl.apr.facade;
 
+import cl.apr.entity.AvisoCobro;
 import cl.apr.entity.TipoCobro;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,4 +31,11 @@ public class TipoCobroFacade extends AbstractFacade<TipoCobro> {
         super(TipoCobro.class);
     }
     
+       public List<TipoCobro> getTiposCobroRegistranCobro() {
+         Query query = em.createQuery(""
+                                        + "SELECT  tc FROM TipoCobro tc WHERE tc.aceptaRegistroCobro = true ", TipoCobro.class);
+        // query.setParameter("idPeriodo",idPeriodo);
+         return query.getResultList();
+       
+    }
 }
