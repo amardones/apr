@@ -19,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -55,10 +57,13 @@ public class Subsidio implements Serializable {
     private String descripcion;
     @Basic(optional = false)
     @NotNull
+    @Max(100)
+    @Min(1)
     @Column(name = "porcentaje")
     private BigInteger porcentaje;
     @Basic(optional = false)
     @NotNull
+    @Min(1)
     @Column(name = "metros_cubicos_tope")
     private int metrosCubicosTope;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSubsidio")

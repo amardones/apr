@@ -6,6 +6,7 @@
 package cl.apr.entity;
 
 import java.io.Serializable;
+import java.lang.annotation.Retention;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -23,7 +24,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -56,31 +59,45 @@ public class Periodo implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "nombre")
     private String nombre;
+    
+    //fecha Fin
+    
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fecha_inicio")
-    @Temporal(TemporalType.DATE)
-    private Date fechaInicio;
-    @Basic(optional = false)
-    @NotNull
+    @Future
     @Column(name = "fecha_fin")
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
+    //vencimiento
     @Basic(optional = false)
     @NotNull
+    @Future
     @Column(name = "fecha_vencimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaVencimiento;
+    //emision
+    @Basic(optional = false)
+    @NotNull
+    @Future
+    @Column(name = "fecha_emision")
+    @Temporal(TemporalType.DATE)
+    private Date fechaEmision;
+    //lectura
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_toma_lectura")
     @Temporal(TemporalType.DATE)
     private Date fechaTomaLectura;
+    //fecha inicio
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_emision")
+    @NotNull 
+    @Column(name = "fecha_inicio")
     @Temporal(TemporalType.DATE)
-    private Date fechaEmision;
+    private Date fechaInicio;
+    
+    
+    
+    
     @JoinColumn(name = "id_valores_parametricos", referencedColumnName = "id_valores_parametricos")
     @ManyToOne(optional = false)
     private ValoresParametricos idValoresParametricos;

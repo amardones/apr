@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -27,6 +28,8 @@ public class SocioController implements Serializable {
     private cl.apr.facade.SocioFacade ejbFacade;
     private List<Socio> items = null;
     private Socio selected;
+    private String rut;
+    private String validacionRut;
 
     public SocioController() {
     }
@@ -55,12 +58,14 @@ public class SocioController implements Serializable {
         return selected;
     }
 
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SocioCreated"));
+    public void create() {   
+            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SocioCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+        
     }
+   
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SocioUpdated"));
@@ -81,12 +86,42 @@ public class SocioController implements Serializable {
         return items;
     }
 
+    public boolean validarRut() {
+        rut=null;
+        boolean validacion = false;
+        try {
+        rut =  selected.getRut().toUpperCase();
+        rut = rut.replace(".", "");
+        rut = rut.replace("-", "");
+        int rutAux = Integer.parseInt(rut.substring(0, rut.length() - 1));
+
+        char dv = rut.charAt(rut.length() - 1);
+
+        int m = 0, s = 1;
+        for (; rutAux != 0; rutAux /= 10) {
+        s = (s + rutAux % 10 * (9 - m++ % 6)) % 11;
+        }
+        if (dv == (char) (s != 0 ? s + 47 : 75)) {
+        validacion = true;
+        }
+
+        } catch (java.lang.NumberFormatException e) {
+        } catch (Exception e) {
+        }
+        return validacion;
+        }
+    
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
+                if (persistAction != PersistAction.DELETE) {  
+                    if(validarRut()){
+                        getFacade().edit(selected);
+                    }else{
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Rut inválido",null));
+                        return;
+                    }
                 } else {
                     getFacade().remove(selected);
                 }

@@ -29,7 +29,12 @@
                         <p:outputLabel value=""/>
                         <p:outputLabel value="INICIAR SESIÓN" styleClass="formTitulo"/>
                         <p:outputLabel value="Correo electrónico" for="mail" styleClass="formLabel"/>
-                        <p:inputText id="mail" size="40" value="#{UsuarioController.mail}" placeholder="Email"/>
+                        <p:inputText id="mail" size="40" value="#{UsuarioController.mail}" placeholder="Email" validatorMessage="Formato inválido">
+                            
+                        <f:validateRegex
+                        pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+                        </p:inputText>
                         <p:outputLabel value="password" for="password" styleClass="formLabel"/>
                         <p:password id="password" size="40" value="#{UsuarioController.password}" placeholder="Clave"/>                       
                             
@@ -38,6 +43,7 @@
                         <p:commandButton value="Ingresar" ajax="false" action="#{UsuarioController.login()}" styleClass="btn"/>
                     </div>
             </h:form>
+            
         </div>  
         
     </h:body>
