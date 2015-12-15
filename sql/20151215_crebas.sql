@@ -1,45 +1,10 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 8                                 */
-/* Created on:     06-12-2015 16:44:31                          */
+/* Created on:     15-12-2015 20:54:29                          */
 /*==============================================================*/
 
-/*
-drop table AVISO_COBRO;
 
-drop table BOLETA;
 
-drop table COBRO_CUOTA;
-
-drop table CUENTA;
-
-drop table CUENTA_SUBSIDIO;
-
-drop table DETALLE_AVISO_COBRO;
-
-drop table MEDIDOR;
-
-drop table PERIODO;
-
-drop table REGISTRO_COBRO;
-
-drop table REGISTRO_COBRO_CUOTA;
-
-drop table REGISTRO_ESTADO;
-
-drop table SALDO_CUENTA;
-
-drop table SOCIO;
-
-drop table SUBSIDIO;
-
-drop table TIPO_COBRO;
-
-drop table TIPO_MOVIMIENTO;
-
-drop table VALORES_PARAMETRICOS;
-
-drop table VALOR_TRAMO_M3;
-*/
 /*==============================================================*/
 /* Table: AVISO_COBRO                                           */
 /*==============================================================*/
@@ -83,7 +48,7 @@ create table COBRO_CUOTA (
 /* Table: CUENTA                                                */
 /*==============================================================*/
 create table CUENTA (
-   ID_CUENTA            SERIAL               not null,
+   ID_CUENTA            INT4                 not null,
    RUT                  VARCHAR(15)          not null,
    NUMERO_MEDIDOR       VARCHAR(20)          not null,
    DIRECCION            VARCHAR(50)          not null,
@@ -239,6 +204,17 @@ create table TIPO_MOVIMIENTO (
    TIPO_MOVIMIENTO      VARCHAR(10)          not null,
    DESCRIPCION          VARCHAR(30)          null,
    constraint PK_TIPO_MOVIMIENTO primary key (TIPO_MOVIMIENTO)
+);
+
+/*==============================================================*/
+/* Table: USUARIO                                               */
+/*==============================================================*/
+create table USUARIO (
+   EMAIL                VARCHAR(30)          not null,
+   PASSWORD             VARCHAR(10)          null,
+   NOMBRE               VARCHAR(20)          null,
+   APELLIDO             VARCHAR(20)          null,
+   constraint PK_USUARIO primary key (EMAIL)
 );
 
 /*==============================================================*/
