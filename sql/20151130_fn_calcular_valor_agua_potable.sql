@@ -79,14 +79,14 @@ BEGIN
 		     --CALCULO SUBSIDIO
 		     IF nombre_sub$ IS NOT NULL THEN
 			descripcion$ :=  descripcion$ || ' # CALCULO SUBSIDIO';
-			monto_descuento_sub$ 	:= round(sub_total$*(1-porcentaje_sub$/100));
+			monto_descuento_sub$ 	:= round(sub_total$*(porcentaje_sub$/100));
 			descripcion$ 		:= descripcion$ ||' # Aplica subsidio '||nombre_sub$||' ('||metros_cubicos_tope_sub$ ||'m3 , ' ||porcentaje_sub$ ||'%)  para '|| metros_cubicos_med$ ||'m3 -> $'||monto_descuento_sub$;
 			
 		     ELSE
 			--CALCULO REGLA INTERNA
 			IF metros_cubicos_med$ <= m3_limite_dcto_interno$ THEN
 				descripcion$ :=  descripcion$ || ' # CALCULO REGLA INTERNA';
-				monto_descuento_int$ 	:= round(sub_total$*(1-porcentaje_dcto_interno$/100));
+				monto_descuento_int$ 	:= round(sub_total$*(porcentaje_dcto_interno$/100));
 				descripcion$ 		:= descripcion$ ||' # Aplica descuento interno -> '||porcentaje_dcto_interno$ ||'% descuento ->$'||monto_descuento_int$;
 			END IF;
 		     END IF;
@@ -177,7 +177,7 @@ BEGIN
 					monto_descuento_sub$ 	:= monto_descuento_sub$ + m3_tramo$ * valor_m3$;
 					--descripcion$ 	:= '- Aplica valor por tramo '||m3_tramo$||'m3 -> $'||valor_m3$||' tramo -> '||(m3_tramo$ * valor_m3$);
 				END IF;	
-				monto_descuento_sub$ := round(monto_descuento_sub$*(1-porcentaje_sub$/100));	
+				monto_descuento_sub$ := round(monto_descuento_sub$*(porcentaje_sub$/100));	
 				descripcion$ 		:= descripcion$ ||' # Aplica subsidio '||nombre_sub$||' ('||metros_cubicos_tope_sub$ ||'m3 , ' ||porcentaje_sub$ ||'%)  para '|| metros_cubicos_aplica_sub$ ||'m3 -> $'||monto_descuento_sub$;			
 			END IF;
 	      END IF;
