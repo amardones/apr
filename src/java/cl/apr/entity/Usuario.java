@@ -10,7 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -27,32 +26,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
-    @NamedQuery(name = "Usuario.findByMail", query = "SELECT u FROM Usuario u WHERE u.mail = :mail"),
+    @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email"),
     @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
     @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
     @NamedQuery(name = "Usuario.findByApellido", query = "SELECT u FROM Usuario u WHERE u.apellido = :apellido")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Id
     @Basic(optional = false)
     @NotNull
-    @Lob
-    @Column(name = "id_usuario")
-    private Object idUsuario;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "mail")
-    private String mail;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
+    @Column(name = "email")
+    private String email;
+    @Size(max = 10)
     @Column(name = "password")
     private String password;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    @Size(max = 20)
     @Column(name = "nombre")
     private String nombre;
     @Size(max = 20)
@@ -62,31 +53,16 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(Object idUsuario) {
-        this.idUsuario = idUsuario;
+    public Usuario(String email) {
+        this.email = email;
     }
 
-    public Usuario(Object idUsuario, String mail, String password, String nombre) {
-        this.idUsuario = idUsuario;
-        this.mail = mail;
-        this.password = password;
-        this.nombre = nombre;
+    public String getEmail() {
+        return email;
     }
 
-    public Object getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Object idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -116,7 +92,7 @@ public class Usuario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
+        hash += (email != null ? email.hashCode() : 0);
         return hash;
     }
 
@@ -127,7 +103,7 @@ public class Usuario implements Serializable {
             return false;
         }
         Usuario other = (Usuario) object;
-        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
+        if ((this.email == null && other.email != null) || (this.email != null && !this.email.equals(other.email))) {
             return false;
         }
         return true;
@@ -135,7 +111,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "cl.apr.entity.Usuario[ idUsuario=" + idUsuario + " ]";
+        return "cl.apr.entity.Usuario[ email=" + email + " ]";
     }
     
 }

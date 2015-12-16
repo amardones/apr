@@ -63,7 +63,7 @@
             <p:graphicImage styleClass="logoInterior" />
             <div id="divCerrar">
                        <h:form>
-                           <p:outputLabel value="Iniciado por : #{UsuarioController.mail==null ? 'Anónimo' : UsuarioController.mail}  " styleClass="formLabel"/>
+                           <p:outputLabel value="Iniciado por : #{UsuarioController.email==null ? 'Anónimo' : UsuarioController.email}  " styleClass="formLabel"/>
                            <p:commandButton value="Cerrar sesión" action="#{UsuarioController.cerrarSesion()}" styleClass="btn"/>
                        </h:form>
             </div>

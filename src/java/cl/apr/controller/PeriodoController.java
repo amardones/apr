@@ -18,6 +18,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -141,6 +142,27 @@ public class PeriodoController implements Serializable {
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
+                    if(selected.getFechaFin().getTime()<selected.getFechaVencimiento().getTime()){
+                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Fecha FIN menor a Fecha vencimiento","Hola"));
+                        return;
+                    }else{
+                        if (selected.getFechaVencimiento().getTime()<selected.getFechaEmision().getTime()) {
+                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Fecha vencimiento menor a Fecha emisión ","Hola1"));
+                        return;
+                        }else{
+                            if(selected.getFechaEmision().getTime()<selected.getFechaTomaLectura().getTime()){
+                                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Fecha emisión menor a Fecha Lectura ","Hola2"));
+                        return;
+                            }else{
+                                if(selected.getFechaTomaLectura().getTime()<selected.getFechaInicio().getTime()){
+                                       FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Fecha Lectura menor a Fecha inicio ","Hola3"));
+                        return;                                 
+                                }
+                            }
+                            
+                        }
+                        
+                    }
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);

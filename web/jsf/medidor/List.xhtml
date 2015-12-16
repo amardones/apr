@@ -26,8 +26,8 @@
                                  paginatorPosition="bottom"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update="createButton  editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton  editButton deleteButton"/>
 
                         <p:column>
                             <f:facet name="header">
@@ -43,7 +43,6 @@
                         </p:column>
                         <f:facet name="header">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{medidorController.prepareCreate}" update=":MedidorCreateForm" oncomplete="PF('MedidorCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":MedidorViewForm" oncomplete="PF('MedidorViewDialog').show()" disabled="#{empty medidorController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":MedidorEditForm" oncomplete="PF('MedidorEditDialog').show()" disabled="#{empty medidorController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{medidorController.destroy}" update=":growl,datalist" disabled="#{empty medidorController.selected}"/>
                         </f:facet>

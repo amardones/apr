@@ -30,7 +30,7 @@ public class UsuarioController implements Serializable {
     private cl.apr.facade.UsuarioFacade ejbFacade;
     private List<Usuario> items = null;
     private Usuario selected;
-    private String mail;
+    private String email;
     private String password;
     
     
@@ -47,13 +47,13 @@ public class UsuarioController implements Serializable {
         //HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         
         try {
-        Usuario Usuario=ejbFacade.getByCorreoElectronico(this.mail);
+        Usuario Usuario=ejbFacade.getByCorreoElectronico(this.email);
         
             if(Usuario!=null){
                 //request.login(this.mail, this.password);
                 if(Usuario.getPassword().equals(this.password)){
                     HttpSession httpSession=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-                    httpSession.setAttribute("mail", this.mail);
+                    httpSession.setAttribute("mail", this.email);
                     
                     return "/home";
                 }else{
@@ -71,7 +71,7 @@ public class UsuarioController implements Serializable {
     }
     public String cerrarSesion()
     {
-        this.mail=null;
+        this.email=null;
         this.password=null;
         HttpSession httpSession=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         httpSession.invalidate();
@@ -201,7 +201,7 @@ public class UsuarioController implements Serializable {
             }
             if (object instanceof Usuario) {
                 Usuario o = (Usuario) object;
-                return getStringKey(o.getMail());
+                return getStringKey(o.getEmail());
             } else {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Usuario.class.getName()});
                 return null;
@@ -209,12 +209,12 @@ public class UsuarioController implements Serializable {
         }
 
     }
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String mail) {
+        this.email = mail;
     }
 
     public String getPassword() {
