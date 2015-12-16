@@ -3,10 +3,14 @@ package cl.apr.controller;
 import cl.apr.entity.RegistroCobro;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
+import cl.apr.entity.CobroCuota;
+import cl.apr.entity.CobroCuotaPK;
 import cl.apr.enums.EnumFormatoFechaHora;
 import cl.apr.facade.RegistroCobroFacade;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -67,12 +71,39 @@ public class RegistroCobroController implements Serializable {
     }
 
     public void create() {
-        selected.setIdCuenta(cuentaController.getSelected());
-        
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("RegistroCobroCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+            BigInteger idRegistroCobro = getFacade().getNextIdRegistroCobro();
+       
+            selected.setIdCuenta(cuentaController.getSelected());
+            selected.setIdRegistroCobro(idRegistroCobro.intValue());
+            
+            List<CobroCuota> cuotas = new ArrayList<CobroCuota>();
+            CobroCuota cc = new CobroCuota();
+            cc.setAnio(2015);
+            cc.setMes(12);
+            cc.setPagado(false);
+            cc.setValorCuota(1500);
+            
+            
+            CobroCuotaPK ccpk = new CobroCuotaPK();
+            ccpk.setNumeroCuota(1);
+            ccpk.setIdRegistroCobro(idRegistroCobro.intValue());
+            cc.setCobroCuotaPK(ccpk);
+           
+            cuotas.add(cc);
+           // selected.setCobroCuotaList(cuotas);
+            //persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("RegistroCobroCreated"));
+           
+            if(getFacade().guardarRegistroCobrosmasCuotas(selected, cuotas)){
+                 JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("RegistroCobroCreated"));
+            }
+            else{
+                JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            }
+            /*
+            if (!JsfUtil.isValidationFailed()) {
+                items = null;    // Invalidate list of items to trigger re-query.
+            }
+                    }*/
     }
 
     public void update() {

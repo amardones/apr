@@ -46,7 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class RegistroCobro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     @Basic(optional = false)
     @Column(name = "id_registro_cobro")
     private Integer idRegistroCobro;

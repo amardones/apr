@@ -5,10 +5,14 @@
  */
 package cl.apr.facade;
 
+import cl.apr.entity.CobroCuota;
 import cl.apr.entity.RegistroCobro;
+import java.math.BigInteger;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,4 +32,44 @@ public class RegistroCobroFacade extends AbstractFacade<RegistroCobro> {
         super(RegistroCobro.class);
     }
     
+     public BigInteger getNextIdRegistroCobro() {
+         BigInteger result = null; 
+         result = (BigInteger) em.createNativeQuery("select nextval('registro_cobro_id_registro_cobro_seq') ").getSingleResult();
+        return result;
+    }
+     
+      public boolean guardarRegistroCobrosmasCuotas(RegistroCobro reg, List<CobroCuota> cuotas) {
+          try{ 
+              System.out.println("reg.getIdRegistroCobro(): "+reg.getIdRegistroCobro());
+             //reg.setCobroCuotaList(cuotas);
+             em.merge(reg);             
+             //em.flush();
+            
+            // em.refresh(reg);
+              for (CobroCuota cobroCuota :cuotas) {
+                  System.out.println("cobroCuota.getCobroCuotaPK().getIdRegistroCobro(): "+cobroCuota.getCobroCuotaPK().getIdRegistroCobro());
+                    em.merge(cobroCuota);
+              }
+             //em.flush();
+             //em.merge(reg.getCobroCuotaList());
+             /*
+            BigInteger idRegistroCobro  = (BigInteger) em.createNativeQuery("select nextval('registro_cobro_id_registro_cobro_seq') ").getSingleResult();
+            if(idRegistroCobro !=null){
+                reg.setIdRegistroCobro(idRegistroCobro.intValue());
+                em.persist(reg);
+                for (CobroCuota cobroCuota :cuotas) {
+                    cobroCuota.getCobroCuotaPK().setIdRegistroCobro(idRegistroCobro.intValue());
+                    em.persist(cobroCuota);
+                }
+                em.flush();
+              
+            }
+                     */
+          }catch(Exception e){
+              e.printStackTrace();
+              return false;
+          }
+        return true;
+    }
+   
 }
