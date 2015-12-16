@@ -49,7 +49,7 @@
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cuentaController.update}" value="#{bundle.Save}" update="display,:CuentaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CuentaEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="CuentaEditDialog.hide()"/>
+                    
                 </h:panelGroup>
             </h:form>
         </p:dialog>

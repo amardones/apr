@@ -1,4 +1,4 @@
-﻿INSERT INTO tipo_movimiento(tipo_movimiento, descripcion) VALUES ('DEPOSITO', 'Suma valores a la cuenta');
+INSERT INTO tipo_movimiento(tipo_movimiento, descripcion) VALUES ('DEPOSITO', 'Suma valores a la cuenta');
 INSERT INTO tipo_movimiento(tipo_movimiento, descripcion) VALUES ('RETIRO', 'Resta valores a la cuenta');
 
 INSERT INTO tipo_cobro(id_tipo_cobro, codigo_tipo_cobro, nombre, acepta_pago_cuotas, acepta_registro_cobro) 

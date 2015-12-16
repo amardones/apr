@@ -20,6 +20,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -58,10 +59,12 @@ public class RegistroEstado implements Serializable {
     private int estadoAnterior;
     @Basic(optional = false)
     @NotNull
+    @Min(0)
     @Column(name = "estado_actual")
     private int estadoActual;
     @Basic(optional = false)
     @NotNull
+    @Min(0)
     @Column(name = "metros_cubicos")
     private int metrosCubicos;
     @Column(name = "fecha_registro")

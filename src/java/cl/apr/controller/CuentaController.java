@@ -18,6 +18,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -117,9 +118,14 @@ public class CuentaController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {  
-                    selected.getCuentaSubsidio().setIdCuenta(selected.getIdCuenta());
-                    getFacade().edit(selected);
+                if (persistAction != PersistAction.DELETE) {
+                    if(selected.getCuentaSubsidio().getIdCuenta()!=null && selected.getCuentaSubsidio().getIdCuenta()>0){
+                        selected.getCuentaSubsidio().setIdCuenta(selected.getIdCuenta());
+                        getFacade().edit(selected);
+                    }else{
+                        selected.setCuentaSubsidio(null);
+                        getFacade().edit(selected);
+                    }
                 } else {
                     getFacade().remove(selected);
                 }
