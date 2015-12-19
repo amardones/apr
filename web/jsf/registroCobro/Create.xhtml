@@ -16,7 +16,7 @@
                         <p:outputLabel value="Buscar cuenta :" for="cuentaAuto" />
                          
                         <p:autoComplete id="cuentaAuto" value="#{cuentaController.selected}"
-                               completeMethod="#{cuentaController.completeCuenta}"
+                                completeMethod="#{cuentaController.completeCuenta}"
                                 var="idCuentaItem"
                                 itemValue="#{idCuentaItem}"
                                 itemLabel="#{idCuentaItem.idCuenta}-#{idCuentaItem.rut.nombre}-#{idCuentaItem.rut.apellido}" 
@@ -50,19 +50,76 @@
                                 <p:inputText id="cuotas" value="#{registroCobroController.selected.cuotas}" title="#{bundle.CreateRegistroCobroTitle_cuotas}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_cuotas}"
                                              disabled="#{registroCobroController.deshabilitarCuotas()}"
                                              />
-                               
+                                <p:commandButton value="Visualizar Cuotas" id="ajax" update="RegistroCobroCreateForm" actionListener="#{registroCobroController.calcularCuotas()}" styleClass="ui-priority-primary" />
                              </p:panelGrid>  
                         </h:panelGroup>
-                     </div>
-                    <h:panelGroup id="display3" >             
-                        <p:commandButton id="btnCrear" actionListener="#{registroCobroController.create}" value="#{bundle.Save}" update="display,:RegistroCobroListForm:datalist,:growl" oncomplete="handleSubmit(args,'RegistroCobroCreateDialog');"
-                                     rendered="#{cuentaController.selected != null}"
-                                     />
-                        <p:commandButton id="btnCancelar" value="#{bundle.Cancel}" onclick="RegistroCobroCreateDialog.hide()"
-                                     rendered="#{cuentaController.selected != null}"
-                                     />
-                    </h:panelGroup>
-                </h:panelGroup>
+                        <h:form id="CobroCuotaListForm">
+                            <p:panelGrid columns="2" rendered="#{registroCobroController != null}">
+                                <p:dataTable id="datalist" value="#{registroCobroController.cuotas}" var="item"
+                                             selectionMode="single" selection="#{cobroCuotaController.selected}"
+                                             rowKey="#{item.cobroCuotaPK}"
+                                             >
+
+                                    <!--<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                                    <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>-->
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListCobroCuotaTitle_cobroCuotaPK_numeroCuota}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cobroCuotaPK.numeroCuota}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListCobroCuotaTitle_valorCuota}"/>
+                                        </f:facet>
+                                        <h:outputText value="$ #{item.valorCuota}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListCobroCuotaTitle_mes}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.mes}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListCobroCuotaTitle_anio}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.anio}"/>
+                                    </p:column>
+                                    <!--<p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListCobroCuotaTitle_pagado}"/>
+                                        </f:facet>
+                                        <p:selectBooleanCheckbox value="#{item.pagado}" disabled="true"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListCobroCuotaTitle_registroCobro}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.registroCobro}"/>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{cobroCuotaController.prepareCreate}" update=":CobroCuotaCreateForm" oncomplete="PF('CobroCuotaCreateDialog').show()"/>
+                                        <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CobroCuotaViewForm" oncomplete="PF('CobroCuotaViewDialog').show()" disabled="#{empty cobroCuotaController.selected}"/>
+                                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CobroCuotaEditForm" oncomplete="PF('CobroCuotaEditDialog').show()" disabled="#{empty cobroCuotaController.selected}"/>
+                                        <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{cobroCuotaController.destroy}" update=":growl,datalist" disabled="#{empty cobroCuotaController.selected}"/>
+                                    </f:facet>-->
+                                </p:dataTable>
+                            </p:panelGrid>
+                        </h:form>
+                                 </div>
+                                <h:panelGroup id="display3" >             
+                                    <p:commandButton id="btnCrear" actionListener="#{registroCobroController.create}" value="#{bundle.Save}" update="display,:RegistroCobroListForm:datalist,:growl" oncomplete="handleSubmit(args,'RegistroCobroCreateDialog');"
+                                                 rendered="#{cuentaController.selected != null}"
+                                                 />
+                                    <p:commandButton id="btnCancelar" value="#{bundle.Cancel}" onclick="RegistroCobroCreateDialog.hide()"
+                                                 rendered="#{cuentaController.selected != null}"
+                                                 />
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <!---->
+                 
             </h:form>
             
         </p:dialog>

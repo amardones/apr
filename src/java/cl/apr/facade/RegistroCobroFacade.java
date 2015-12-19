@@ -48,7 +48,9 @@ public class RegistroCobroFacade extends AbstractFacade<RegistroCobro> {
             // em.refresh(reg);
               for (CobroCuota cobroCuota :cuotas) {
                   System.out.println("cobroCuota.getCobroCuotaPK().getIdRegistroCobro(): "+cobroCuota.getCobroCuotaPK().getIdRegistroCobro());
-                    em.merge(cobroCuota);
+                  System.out.println(cobroCuota.getValorCuota());
+                  em.merge(cobroCuota);
+                    
               }
              //em.flush();
              //em.merge(reg.getCobroCuotaList());

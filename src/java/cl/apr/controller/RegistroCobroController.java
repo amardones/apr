@@ -10,7 +10,9 @@ import cl.apr.facade.RegistroCobroFacade;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,6 +22,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -34,7 +37,13 @@ public class RegistroCobroController implements Serializable {
     private cl.apr.facade.RegistroCobroFacade ejbFacade;
     private List<RegistroCobro> items = null;
     private RegistroCobro selected;
+    private List<CobroCuota> cuotas;
 
+    
+    private int mes;
+    private int anio;
+    private int total;
+    private List<Integer> valorCuota;
     @Inject
     private CuentaController cuentaController;
      
@@ -52,7 +61,13 @@ public class RegistroCobroController implements Serializable {
 
     protected void setEmbeddableKeys() {
     }
+    public List<CobroCuota> getCuotas() {
+        return cuotas;
+    }
 
+    public void setCuotas(List<CobroCuota> cuotas) {
+        this.cuotas = cuotas;
+    }
     protected void initializeEmbeddableKey() {
         cuentaController.setSelected(null);
         selected = new RegistroCobro();
@@ -69,14 +84,79 @@ public class RegistroCobroController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
+    public List<Integer> calcularValorCuota(){
+        //calcula el valor de la cuota
+        int valor;
+        int resto;
+        total=0;
+        valorCuota = new ArrayList<Integer>();
+        valor=(selected.getMonto()/selected.getCuotas());
+        resto=(selected.getMonto()%selected.getCuotas());
+        for(int i=0;i<selected.getCuotas();i++){            
+            if(total<resto){                
+                valorCuota.add(valor+1);
+                total++;
+            }else{
+                valorCuota.add(valor); 
+            }
+        }
+        System.out.println(valorCuota.size());
+        return valorCuota;
+    }
+    
+    public List<CobroCuota> calcularCuotas(){
+        //calcular cuotas
+            BigInteger idRegistroCobro = getFacade().getNextIdRegistroCobro();       
+            selected.setIdCuenta(cuentaController.getSelected());
+            selected.setIdRegistroCobro(idRegistroCobro.intValue());            
+            cuotas = new ArrayList<CobroCuota>();
+            valorCuota=calcularValorCuota();
+            
+            //crear variable tipo calendar
+            Calendar fechaCalendar=Calendar.getInstance();
+            try{
+                //asignar feha tipo date a tipo calendar                
+                mes=(fechaCalendar.get(Calendar.MONTH))+2;
+                anio=fechaCalendar.get(Calendar.YEAR);
+                if(mes>=13){
+                mes=1;
+                }
+                selected.setMesPrimeraCuota(mes);
+                
+            }catch (Exception ex) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Fecha vencimiento menor a Fecha emisión ","Hola1"));
+                System.out.println("");
+            }            
+           
+            for(int i=0;i<selected.getCuotas();i++){
+                    CobroCuota cc = new CobroCuota();
+                    if(mes==13){
+                        mes=1;
+                        anio++;
+                    }
+                    cc.setAnio(anio);
+                    cc.setMes(mes);
+                    cc.setPagado(false);
+                    cc.setValorCuota(valorCuota.get(i));
+                    //Numero de coutas si es individual o total                    
+                    CobroCuotaPK ccpk = new CobroCuotaPK();
+                    ccpk.setNumeroCuota(i+1);
+                    //asignar el valor 
+                    ccpk.setIdRegistroCobro(idRegistroCobro.intValue());
+                    cc.setCobroCuotaPK(ccpk);
+                    cuotas.add(cc);
+                    mes++;              
+            }
+        return cuotas;
+    }
 
     public void create() {
-            BigInteger idRegistroCobro = getFacade().getNextIdRegistroCobro();
+            /*BigInteger idRegistroCobro = getFacade().getNextIdRegistroCobro();
        
             selected.setIdCuenta(cuentaController.getSelected());
             selected.setIdRegistroCobro(idRegistroCobro.intValue());
             
-            List<CobroCuota> cuotas = new ArrayList<CobroCuota>();
+            cuotas = new ArrayList<CobroCuota>();
             CobroCuota cc = new CobroCuota();
             cc.setAnio(2015);
             cc.setMes(12);
@@ -86,14 +166,17 @@ public class RegistroCobroController implements Serializable {
             
             CobroCuotaPK ccpk = new CobroCuotaPK();
             ccpk.setNumeroCuota(1);
+            //asignar el valor 
             ccpk.setIdRegistroCobro(idRegistroCobro.intValue());
             cc.setCobroCuotaPK(ccpk);
            
-            cuotas.add(cc);
+            cuotas.add(cc);*/
+            
+            
            // selected.setCobroCuotaList(cuotas);
             //persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("RegistroCobroCreated"));
            
-            if(getFacade().guardarRegistroCobrosmasCuotas(selected, cuotas)){
+            if(getFacade().guardarRegistroCobrosmasCuotas(selected, calcularCuotas())){
                  JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("RegistroCobroCreated"));
             }
             else{
@@ -119,9 +202,9 @@ public class RegistroCobroController implements Serializable {
     }
 
     public List<RegistroCobro> getItems() {
-        if (items == null) {
+        
             items = getFacade().findAll();
-        }
+        
         return items;
     }
 

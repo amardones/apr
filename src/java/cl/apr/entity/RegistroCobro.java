@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -53,10 +54,12 @@ public class RegistroCobro implements Serializable {
     private Integer idRegistroCobro;
     @Basic(optional = false)
     @NotNull
+    @Min(1)
     @Column(name = "cuotas")
     private int cuotas;
     @Basic(optional = false)
     @NotNull
+    @Min(1)
     @Column(name = "monto")
     private int monto;
     @Size(max = 50)
