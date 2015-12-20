@@ -8,9 +8,11 @@ package cl.apr.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -57,11 +59,12 @@ public class CobroCuota implements Serializable {
     @NotNull
     @Column(name = "pagado")
     private boolean pagado;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "registro_cobro_cuota", joinColumns = {
         @JoinColumn(name = "numero_cuota", referencedColumnName = "numero_cuota"),
         @JoinColumn(name = "id_registro_cobro", referencedColumnName = "id_registro_cobro")}, inverseJoinColumns = {
         @JoinColumn(name = "id_detalle_aviso_cobro", referencedColumnName = "id_detalle_aviso_cobro")})
-    @ManyToMany
+    
     private List<DetalleAvisoCobro> detalleAvisoCobroList;
     @JoinColumn(name = "id_registro_cobro", referencedColumnName = "id_registro_cobro", insertable = false, updatable = false)
     @ManyToOne(optional = false)

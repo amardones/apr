@@ -80,7 +80,8 @@ public class RegistroCobroController implements Serializable {
         return ejbFacade;
     }
 
-    public RegistroCobro prepareCreate() {        
+    public RegistroCobro prepareCreate() { 
+        cuotas=null;
         initializeEmbeddableKey();
         return selected;
     }
@@ -116,7 +117,7 @@ public class RegistroCobroController implements Serializable {
             Calendar fechaCalendar=Calendar.getInstance();
             try{
                 //asignar feha tipo date a tipo calendar                
-                mes=(fechaCalendar.get(Calendar.MONTH))+2;
+                mes=(fechaCalendar.get(Calendar.MONTH))+1;
                 anio=fechaCalendar.get(Calendar.YEAR);
                 if(mes>=13){
                 mes=1;

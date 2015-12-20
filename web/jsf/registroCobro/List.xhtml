@@ -86,7 +86,7 @@
                             <h:outputText value="#{item.idTipoCobro.nombre}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus" onclick="#{registroCobroController.setCuotas(null)}"  value="#{bundle.Create}" actionListener="#{registroCobroController.prepareCreate}" update=":RegistroCobroCreateForm" oncomplete="PF('RegistroCobroCreateDialog').show()"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{registroCobroController.prepareCreate}" update=":RegistroCobroCreateForm" oncomplete="PF('RegistroCobroCreateDialog').show()"/>
                             <!--<p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":RegistroCobroViewForm" oncomplete="PF('RegistroCobroViewDialog').show()" disabled="#{empty registroCobroController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":RegistroCobroEditForm" oncomplete="PF('RegistroCobroEditDialog').show()" disabled="#{empty registroCobroController.selected}"/>-->
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{registroCobroController.destroy}" update=":growl,datalist" disabled="#{empty registroCobroController.selected}">
