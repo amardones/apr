@@ -72,7 +72,7 @@ public class RegistroCobroController implements Serializable {
         cuentaController.setSelected(null);
         selected = new RegistroCobro();
         selected.setFechaCreacion(new Date());
-        selected.setMesPrimeraCuota(Integer.parseInt(EnumFormatoFechaHora.formatoMes.format(new Date())));
+        //selected.setMesPrimeraCuota(Integer.parseInt(EnumFormatoFechaHora.formatoMes.format(new Date())));
         selected.setCuotas(1);
     }
 
@@ -119,10 +119,7 @@ public class RegistroCobroController implements Serializable {
                 //asignar feha tipo date a tipo calendar                
                 mes=(fechaCalendar.get(Calendar.MONTH))+2;
                 anio=fechaCalendar.get(Calendar.YEAR);
-                if(mes>=13){
-                mes=1;
-                }
-                selected.setMesPrimeraCuota(mes);
+                
                 
             }catch (Exception ex) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Fecha vencimiento menor a Fecha emisión ","Hola1"));
@@ -133,7 +130,7 @@ public class RegistroCobroController implements Serializable {
                     CobroCuota cc = new CobroCuota();
                     if(mes==13){
                         mes=1;
-                        anio++;
+                        ++anio;
                     }
                     cc.setAnio(anio);
                     cc.setMes(mes);
@@ -148,6 +145,7 @@ public class RegistroCobroController implements Serializable {
                     cuotas.add(cc);
                     mes++;              
             }
+        selected.setMesPrimeraCuota(cuotas.get(0).getMes());
         return cuotas;
     }
 

@@ -85,7 +85,7 @@
                             </f:facet>
                             <h:outputText value="#{item.idTipoCobro.nombre}"/>
                         </p:column>
-                        <f:facet name="footer">
+                        <f:facet name="header">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{registroCobroController.prepareCreate}" update=":RegistroCobroCreateForm" oncomplete="PF('RegistroCobroCreateDialog').show()"/>
                             <!--<p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":RegistroCobroViewForm" oncomplete="PF('RegistroCobroViewDialog').show()" disabled="#{empty registroCobroController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":RegistroCobroEditForm" oncomplete="PF('RegistroCobroEditDialog').show()" disabled="#{empty registroCobroController.selected}"/>-->
