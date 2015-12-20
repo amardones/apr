@@ -1,4 +1,4 @@
-﻿-- Function: fn_calcular_valor_agua_potable(integer,integer)
+-- Function: fn_calcular_valor_agua_potable(integer,integer)
 
 -- DROP FUNCTION fn_calcular_valor_agua_potable(integer,integer);
 

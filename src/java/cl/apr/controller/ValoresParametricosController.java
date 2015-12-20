@@ -76,6 +76,7 @@ public class ValoresParametricosController implements Serializable {
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ValoresParametricosCreated"));
         if (!JsfUtil.isValidationFailed()) {
+            selected = null; 
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
@@ -100,7 +101,7 @@ public class ValoresParametricosController implements Serializable {
     }
     
     public boolean permiteEliminar() {
-        if (selected != null) {
+        if (selected != null && selected.getIdValoresParametricos() != null) {
            //return v.getPeriodoList().size();
             return getFacade().getCantidadAvisosCobro(selected.getIdValoresParametricos()) == 0;
         }

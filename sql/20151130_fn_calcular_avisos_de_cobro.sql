@@ -1,4 +1,4 @@
-﻿-- Function: fn_calcular_avisos_de_cobro(integer,integer)
+-- Function: fn_calcular_avisos_de_cobro(integer,integer)
 
 -- DROP FUNCTION fn_calcular_avisos_de_cobro(integer,integer);
 

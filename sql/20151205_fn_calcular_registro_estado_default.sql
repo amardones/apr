@@ -1,4 +1,4 @@
-﻿-- Function: fn_calcular_registro_estado_default(integer)
+-- Function: fn_calcular_registro_estado_default(integer)
 
 -- DROP FUNCTION fn_calcular_registro_estado_default(integer, integer);
 
