@@ -117,7 +117,7 @@ public class RegistroCobroController implements Serializable {
             Calendar fechaCalendar=Calendar.getInstance();
             try{
                 //asignar feha tipo date a tipo calendar                
-                mes=(fechaCalendar.get(Calendar.MONTH))+1;
+                mes=(fechaCalendar.get(Calendar.MONTH))+2;
                 anio=fechaCalendar.get(Calendar.YEAR);
                 if(mes>=13){
                 mes=1;
