@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -42,6 +43,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "DetalleAvisoCobro.findByDescripcion", query = "SELECT d FROM DetalleAvisoCobro d WHERE d.descripcion = :descripcion"),
     @NamedQuery(name = "DetalleAvisoCobro.findByPagado", query = "SELECT d FROM DetalleAvisoCobro d WHERE d.pagado = :pagado")})
 public class DetalleAvisoCobro implements Serializable {
+
+    @ManyToMany(mappedBy = "detalleAvisoCobroList")
+    private List<Pago> pagoList;
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -202,6 +207,15 @@ public class DetalleAvisoCobro implements Serializable {
     @Override
     public String toString() {
         return "cl.apr.entity.DetalleAvisoCobro[ idDetalleAvisoCobro=" + idDetalleAvisoCobro + " ]";
+    }
+
+    @XmlTransient
+    public List<Pago> getPagoList() {
+        return pagoList;
+    }
+
+    public void setPagoList(List<Pago> pagoList) {
+        this.pagoList = pagoList;
     }
     
 }

@@ -80,8 +80,7 @@ public class AvisoCobro implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "avisoCobro", fetch = FetchType.EAGER)
     private List<DetalleAvisoCobro> detalleAvisoCobroList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "avisoCobro")
-    private List<Boleta> boletaList;
+   
 
     public AvisoCobro() {
     }
@@ -174,14 +173,6 @@ public class AvisoCobro implements Serializable {
         this.detalleAvisoCobroList = detalleAvisoCobroList;
     }
 
-    @XmlTransient
-    public List<Boleta> getBoletaList() {
-        return boletaList;
-    }
-
-    public void setBoletaList(List<Boleta> boletaList) {
-        this.boletaList = boletaList;
-    }
 
     @Override
     public int hashCode() {

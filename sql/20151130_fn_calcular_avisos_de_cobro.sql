@@ -164,8 +164,8 @@ BEGIN
 				
 		--6.- AGREGAR CUOTA SOCIAL
 		
-		SELECT VALOR_CUOTA_SOCIAL INTO valor_cuota_social$ FROM valores_parametricos WHERE id_valores_parametricos = id_valores_parametricos$;
-		
+		--SELECT VALOR_CUOTA_SOCIAL INTO valor_cuota_social$ FROM valores_parametricos WHERE id_valores_parametricos = id_valores_parametricos$;
+		SELECT VALOR INTO valor_cuota_social$ FROM TIPO_COBRO WHERE CODIGO_TIPO_COBRO = 'CUOTSOCIAL';
 		
 		INSERT INTO detalle_aviso_cobro
 						(id_detalle_aviso_cobro_ant, id_periodo, id_cuenta, id_tipo_cobro, sub_total, descuento, total, descripcion, pagado)

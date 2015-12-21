@@ -46,6 +46,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cuenta.findByFechaCreacion", query = "SELECT c FROM Cuenta c WHERE c.fechaCreacion = :fechaCreacion"),
     @NamedQuery(name = "Cuenta.findByActiva", query = "SELECT c FROM Cuenta c WHERE c.activa = :activa")})
 public class Cuenta implements Serializable {
+    @OneToMany(mappedBy = "idCuenta")
+    private List<Pago> pagoList;
+    @Column(name = "es_institucion")
+    private Boolean esInstitucion;
     private static final long serialVersionUID = 1L;
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -147,6 +151,15 @@ public class Cuenta implements Serializable {
         this.activa = activa;
     }
 
+    public boolean isEsInstitucion() {
+        return esInstitucion;
+    }
+
+    public void setEsInstitucion(boolean esInstitucion) {
+        this.esInstitucion = esInstitucion;
+    }
+
+    
     @XmlTransient
     public List<RegistroEstado> getRegistroEstadoList() {
         return registroEstadoList;
@@ -230,6 +243,23 @@ public class Cuenta implements Serializable {
     @Override
     public String toString() {
         return "cl.apr.entity.Cuenta[ idCuenta=" + idCuenta + " ]";
+    }
+
+    public Boolean getEsInstitucion() {
+        return esInstitucion;
+    }
+
+    public void setEsInstitucion(Boolean esInstitucion) {
+        this.esInstitucion = esInstitucion;
+    }
+
+    @XmlTransient
+    public List<Pago> getPagoList() {
+        return pagoList;
+    }
+
+    public void setPagoList(List<Pago> pagoList) {
+        this.pagoList = pagoList;
     }
     
 }

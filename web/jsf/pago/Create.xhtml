@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PagoCreateDlg" widgetVar="PagoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePagoTitle}">
+            <h:form id="PagoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{pagoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePagoLabel_idPago}" for="idPago" />
+                        <p:inputText id="idPago" value="#{pagoController.selected.idPago}" title="#{bundle.CreatePagoTitle_idPago}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_idPago}"/>
+                        <p:outputLabel value="#{bundle.CreatePagoLabel_numeroDocumento}" for="numeroDocumento" />
+                        <p:inputText id="numeroDocumento" value="#{pagoController.selected.numeroDocumento}" title="#{bundle.CreatePagoTitle_numeroDocumento}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_numeroDocumento}"/>
+                        <p:outputLabel value="#{bundle.CreatePagoLabel_fechaCreacion}" for="fechaCreacion" />
+                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{pagoController.selected.fechaCreacion}" title="#{bundle.EditPagoTitle_fechaCreacion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePagoLabel_subtotal}" for="subtotal" />
+                        <p:inputText id="subtotal" value="#{pagoController.selected.subtotal}" title="#{bundle.CreatePagoTitle_subtotal}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_subtotal}"/>
+                        <p:outputLabel value="#{bundle.CreatePagoLabel_interes}" for="interes" />
+                        <p:inputText id="interes" value="#{pagoController.selected.interes}" title="#{bundle.CreatePagoTitle_interes}" />
+                        <p:outputLabel value="#{bundle.CreatePagoLabel_total}" for="total" />
+                        <p:inputText id="total" value="#{pagoController.selected.total}" title="#{bundle.CreatePagoTitle_total}" />
+                        <p:outputLabel value="#{bundle.CreatePagoLabel_idCuenta}" for="idCuenta" />
+                        <p:selectOneMenu id="idCuenta" value="#{pagoController.selected.idCuenta}" >
+                            <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
+                                           var="idCuentaItem"
+                                           itemValue="#{idCuentaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{pagoController.create}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PagoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -39,10 +39,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ValoresParametricos.findByIdValoresParametricos", query = "SELECT v FROM ValoresParametricos v WHERE v.idValoresParametricos = :idValoresParametricos"),
     @NamedQuery(name = "ValoresParametricos.findByValorCargoFijo", query = "SELECT v FROM ValoresParametricos v WHERE v.valorCargoFijo = :valorCargoFijo"),
     @NamedQuery(name = "ValoresParametricos.findByValorM3", query = "SELECT v FROM ValoresParametricos v WHERE v.valorM3 = :valorM3"),
-    @NamedQuery(name = "ValoresParametricos.findByValorCuotaSocial", query = "SELECT v FROM ValoresParametricos v WHERE v.valorCuotaSocial = :valorCuotaSocial"),
-    @NamedQuery(name = "ValoresParametricos.findByValorInteresDia", query = "SELECT v FROM ValoresParametricos v WHERE v.valorInteresDia = :valorInteresDia"),
-    @NamedQuery(name = "ValoresParametricos.findByValorReunionObligatoria", query = "SELECT v FROM ValoresParametricos v WHERE v.valorReunionObligatoria = :valorReunionObligatoria"),
-    @NamedQuery(name = "ValoresParametricos.findByValorReunionNoObligatoria", query = "SELECT v FROM ValoresParametricos v WHERE v.valorReunionNoObligatoria = :valorReunionNoObligatoria"),
     @NamedQuery(name = "ValoresParametricos.findByM3Fijos", query = "SELECT v FROM ValoresParametricos v WHERE v.m3Fijos = :m3Fijos"),
     @NamedQuery(name = "ValoresParametricos.findByM3LimiteDctoInterno", query = "SELECT v FROM ValoresParametricos v WHERE v.m3LimiteDctoInterno = :m3LimiteDctoInterno"),
     @NamedQuery(name = "ValoresParametricos.findByPorcentajeDctoInterno", query = "SELECT v FROM ValoresParametricos v WHERE v.porcentajeDctoInterno = :porcentajeDctoInterno"),
@@ -52,6 +48,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ValoresParametricos.findByDiaLecturaMedidor", query = "SELECT v FROM ValoresParametricos v WHERE v.diaLecturaMedidor = :diaLecturaMedidor"),
     @NamedQuery(name = "ValoresParametricos.findByDiaEmision", query = "SELECT v FROM ValoresParametricos v WHERE v.diaEmision = :diaEmision")})
 public class ValoresParametricos implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idValoresParametricos")
+    private List<Periodo> periodoList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,22 +64,6 @@ public class ValoresParametricos implements Serializable {
     @NotNull
     @Column(name = "valor_m3")
     private int valorM3;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "valor_cuota_social")
-    private int valorCuotaSocial;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "valor_interes_dia")
-    private int valorInteresDia;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "valor_reunion_obligatoria")
-    private int valorReunionObligatoria;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "valor_reunion_no_obligatoria")
-    private int valorReunionNoObligatoria;
     @Basic(optional = false)
     @NotNull
     @Column(name = "m3_fijos")
@@ -112,8 +94,6 @@ public class ValoresParametricos implements Serializable {
     @NotNull
     @Column(name = "dia_emision")
     private int diaEmision;
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "idValoresParametricos")
-    private List<Periodo> periodoList;
 
     public ValoresParametricos() {
     }
@@ -122,14 +102,10 @@ public class ValoresParametricos implements Serializable {
         this.idValoresParametricos = idValoresParametricos;
     }
 
-    public ValoresParametricos(Integer idValoresParametricos, int valorCargoFijo, int valorM3, int valorCuotaSocial, int valorInteresDia, int valorReunionObligatoria, int valorReunionNoObligatoria, int m3Fijos, int m3LimiteDctoInterno, BigInteger porcentajeDctoInterno, int diaVencimiento, int diaLecturaMedidor, int diaEmision) {
+    public ValoresParametricos(Integer idValoresParametricos, int valorCargoFijo, int valorM3, int m3Fijos, int m3LimiteDctoInterno, BigInteger porcentajeDctoInterno, int diaVencimiento, int diaLecturaMedidor, int diaEmision) {
         this.idValoresParametricos = idValoresParametricos;
         this.valorCargoFijo = valorCargoFijo;
         this.valorM3 = valorM3;
-        this.valorCuotaSocial = valorCuotaSocial;
-        this.valorInteresDia = valorInteresDia;
-        this.valorReunionObligatoria = valorReunionObligatoria;
-        this.valorReunionNoObligatoria = valorReunionNoObligatoria;
         this.m3Fijos = m3Fijos;
         this.m3LimiteDctoInterno = m3LimiteDctoInterno;
         this.porcentajeDctoInterno = porcentajeDctoInterno;
@@ -160,38 +136,6 @@ public class ValoresParametricos implements Serializable {
 
     public void setValorM3(int valorM3) {
         this.valorM3 = valorM3;
-    }
-
-    public int getValorCuotaSocial() {
-        return valorCuotaSocial;
-    }
-
-    public void setValorCuotaSocial(int valorCuotaSocial) {
-        this.valorCuotaSocial = valorCuotaSocial;
-    }
-
-    public int getValorInteresDia() {
-        return valorInteresDia;
-    }
-
-    public void setValorInteresDia(int valorInteresDia) {
-        this.valorInteresDia = valorInteresDia;
-    }
-
-    public int getValorReunionObligatoria() {
-        return valorReunionObligatoria;
-    }
-
-    public void setValorReunionObligatoria(int valorReunionObligatoria) {
-        this.valorReunionObligatoria = valorReunionObligatoria;
-    }
-
-    public int getValorReunionNoObligatoria() {
-        return valorReunionNoObligatoria;
-    }
-
-    public void setValorReunionNoObligatoria(int valorReunionNoObligatoria) {
-        this.valorReunionNoObligatoria = valorReunionNoObligatoria;
     }
 
     public int getM3Fijos() {
@@ -258,15 +202,6 @@ public class ValoresParametricos implements Serializable {
         this.diaEmision = diaEmision;
     }
 
-    @XmlTransient
-    public List<Periodo> getPeriodoList() {
-        return periodoList;
-    }
-
-    public void setPeriodoList(List<Periodo> periodoList) {
-        this.periodoList = periodoList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -290,6 +225,15 @@ public class ValoresParametricos implements Serializable {
     @Override
     public String toString() {
         return "cl.apr.entity.ValoresParametricos[ idValoresParametricos=" + idValoresParametricos + " ]";
+    }
+
+    @XmlTransient
+    public List<Periodo> getPeriodoList() {
+        return periodoList;
+    }
+
+    public void setPeriodoList(List<Periodo> periodoList) {
+        this.periodoList = periodoList;
     }
     
 }

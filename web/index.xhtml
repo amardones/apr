@@ -8,89 +8,91 @@
 
     <h:head>
         <title><ui:insert name="title">ARP</ui:insert></title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputStylesheet library="css" name="login.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
 
     <h:body>
-         <p:growl id="growl" life="3000" />
-       
-           
+        <p:growl id="growl" life="3000" />
+
+
 
         <div id="divLogin">            
-            
+
             <div id="divImagen"  > 
-                 <p:graphicImage styleClass="logoInterior"  />
+                <p:graphicImage styleClass="logoInterior"  />
             </div>
             <h:form id="frmLogin">
-                    <p:growl id="mensageGeneral" showDetail="true" sticky="false"/>
-                    <h:panelGrid columns="2">
-                        <p:outputLabel value=""/>
-                        <p:outputLabel value="INICIAR SESIÓN" styleClass="formTitulo"/>
-                        <p:outputLabel value="Correo electrónico" for="mail" styleClass="formLabel"/>
-                        <p:inputText id="mail" size="40" value="#{UsuarioController.email}" placeholder="Email" validatorMessage="Formato inválido">
-                            
-                        <f:validateRegex
-                        pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                <p:growl id="mensageGeneral" showDetail="true" sticky="false"/>
+                <h:panelGrid columns="2">
+                    <p:outputLabel value=""/>
+                    <p:outputLabel value="INICIAR SESIÓN" styleClass="formTitulo"/>
+                    <p:outputLabel value="Correo electrónico" for="mail" styleClass="formLabel"/>
+                    <p:inputText id="mail" size="40" value="#{UsuarioController.email}" placeholder="Email" validatorMessage="Formato inválido">
 
-                        </p:inputText>
-                        <p:outputLabel value="password" for="password" styleClass="formLabel"/>
-                        <p:password id="password" size="40" value="#{UsuarioController.password}" placeholder="Clave"/>                       
-                            
-                    </h:panelGrid>
-                    <div id="divBoton" style="text-align: right;padding-right: 50px;" >
-                        <p:commandButton value="Ingresar" ajax="false" action="#{UsuarioController.login()}" styleClass="btn"/>
-                    </div>
+                        <f:validateRegex
+                            pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+                    </p:inputText>
+                    <p:outputLabel value="password" for="password" styleClass="formLabel"/>
+                    <p:password id="password" size="40" value="#{UsuarioController.password}" placeholder="Clave"/>                       
+
+                </h:panelGrid>
+                <div id="divBoton" style="text-align: right;padding-right: 50px;" >
+                    <p:commandButton value="Ingresar" ajax="false" action="#{UsuarioController.login()}" styleClass="btn"/>
+                </div>
             </h:form>
-            
+
         </div>  
-        
     </h:body>
+
+
 
 </html>
 <!--
 <div id="contenidodiv">
             <div id="contenidodiv_center">
-               <h:form >
-                     <h:panelGrid id="panel1" columns="3" border="0" cellpadding="10"  cellspacing="0"  rowClasses="alignmentCenter">
-                        <p:commandLink  styleClass="myButtonCuenta"
+<h:form >
+    <h:panelGrid id="panel1" columns="3" border="0" cellpadding="10"  cellspacing="0"  rowClasses="alignmentCenter">
+        <p:commandLink  styleClass="myButtonCuenta"
                         ajax="false"
                         action="/jsf/cuenta/List?faces-redirect=true"                         
                         />                        
-                        <p:commandLink  styleClass="myButtonavisoCobro"
+        <p:commandLink  styleClass="myButtonavisoCobro"
                         ajax="false"
                         action="/jsf/avisoCobro/List?faces-redirect=true"
                         />                        
-                         <p:commandLink  styleClass="myButtonBoleta"
+        <p:commandLink  styleClass="myButtonBoleta"
                         ajax="false"
                         action="/jsf/boleta/List?faces-redirect=true"    
                         />                        
-                        <h:link outcome="/jsf/cuenta/List" value="CUENTAS"/>
-                        <h:link outcome="/jsf/avisoCobro/List" value="AVISO DE COBROS"/>
-                        <h:link outcome="/jsf/boleta/List" value="BOLETAS"
-                        />                        
-                    </h:panelGrid>
-                       <h:panelGrid id="panel3" columns="3" border="0" cellpadding="10" cellspacing="0" rowClasses="alignmentCenter">
-                         <p:commandLink  styleClass="myButtonregistroEstado"
+        <h:link outcome="/jsf/cuenta/List" value="CUENTAS"/>
+        <h:link outcome="/jsf/avisoCobro/List" value="AVISO DE COBROS"/>
+        <h:link outcome="/jsf/boleta/List" value="BOLETAS"
+                />                        
+    </h:panelGrid>
+    <h:panelGrid id="panel3" columns="3" border="0" cellpadding="10" cellspacing="0" rowClasses="alignmentCenter">
+        <p:commandLink  styleClass="myButtonregistroEstado"
                         ajax="false"
                         action="/jsf/registroEstado/List?faces-redirect=true" 
                         />                        
-                        <p:commandLink  styleClass="myButtonConfiguracion"
+        <p:commandLink  styleClass="myButtonConfiguracion"
                         ajax="false"
                         action="/jsf/valoresParametricos/List?faces-redirect=true"    
                         />
-                        <p:commandLink  styleClass="myButtonReportes"
+        <p:commandLink  styleClass="myButtonReportes"
                         ajax="false"
                         action="/jsf/valoresParametricos/List?faces-redirect=true"                  
                         />
                                                 
-                        <h:link outcome="/jsf/registroEstado/List" value="REGISTROS DE ESTADOS"/>
-                        <h:link outcome="/jsf/valoresParametricos/List" value="CONFIGURAR"/>
-                        <h:link outcome="/jsf/valoresParametricos/List" value="REPORTES"/>
-                    </h:panelGrid>
-                </h:form>
-            </div>           
-        </div>  
+        <h:link outcome="/jsf/registroEstado/List" value="REGISTROS DE ESTADOS"/>
+        <h:link outcome="/jsf/valoresParametricos/List" value="CONFIGURAR"/>
+        <h:link outcome="/jsf/valoresParametricos/List" value="REPORTES"/>
+    </h:panelGrid>
+</h:form>
+</div>           
+</div>  
 
 -->

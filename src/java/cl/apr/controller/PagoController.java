@@ -1,9 +1,9 @@
 package cl.apr.controller;
 
-import cl.apr.entity.Boleta;
+import cl.apr.entity.Pago;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
-import cl.apr.facade.BoletaFacade;
+import cl.apr.facade.PagoFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,23 +19,24 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("boletaController")
+
+@Named("pagoController")
 @SessionScoped
-public class BoletaController implements Serializable {
+public class PagoController implements Serializable {
 
-    @EJB
-    private cl.apr.facade.BoletaFacade ejbFacade;
-    private List<Boleta> items = null;
-    private Boleta selected;
 
-    public BoletaController() {
+    @EJB private cl.apr.facade.PagoFacade ejbFacade;
+    private List<Pago> items = null;
+    private Pago selected;
+
+    public PagoController() {
     }
 
-    public Boleta getSelected() {
+    public Pago getSelected() {
         return selected;
     }
 
-    public void setSelected(Boleta selected) {
+    public void setSelected(Pago selected) {
         this.selected = selected;
     }
 
@@ -45,36 +46,36 @@ public class BoletaController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private BoletaFacade getFacade() {
+    private PagoFacade getFacade() {
         return ejbFacade;
     }
 
-    public Boleta prepareCreate() {
-        selected = new Boleta();
+    public Pago prepareCreate() {
+        selected = new Pago();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("BoletaCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PagoCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("BoletaUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PagoUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("BoletaDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PagoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Boleta> getItems() {
+    public List<Pago> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,29 +110,29 @@ public class BoletaController implements Serializable {
         }
     }
 
-    public Boleta getBoleta(java.lang.Integer id) {
+    public Pago getPago(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<Boleta> getItemsAvailableSelectMany() {
+    public List<Pago> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Boleta> getItemsAvailableSelectOne() {
+    public List<Pago> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Boleta.class)
-    public static class BoletaControllerConverter implements Converter {
+    @FacesConverter(forClass=Pago.class)
+    public static class PagoControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            BoletaController controller = (BoletaController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "boletaController");
-            return controller.getBoleta(getKey(value));
+            PagoController controller = (PagoController)facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "pagoController");
+            return controller.getPago(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -151,11 +152,11 @@ public class BoletaController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Boleta) {
-                Boleta o = (Boleta) object;
-                return getStringKey(o.getIdBoleta());
+            if (object instanceof Pago) {
+                Pago o = (Pago) object;
+                return getStringKey(o.getIdPago());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Boleta.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Pago.class.getName()});
                 return null;
             }
         }

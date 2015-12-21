@@ -7,7 +7,6 @@ package cl.apr.facade;
 
 import cl.apr.entity.AvisoCobro;
 import cl.apr.entity.Medidor;
-import cl.apr.entity.Boleta;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;

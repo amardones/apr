@@ -1,8 +1,7 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 8                                 */
-/* Created on:     15-12-2015 20:54:29                          */
+/* Created on:     20-12-2015 21:54:00                          */
 /*==============================================================*/
-
 
 
 /*==============================================================*/
@@ -16,19 +15,6 @@ create table AVISO_COBRO (
    TOTAL                INT4                 not null,
    FECHA_CREACION       TIMESTAMP WITH TIME ZONE null,
    constraint PK_AVISO_COBRO primary key (ID_PERIODO, ID_CUENTA)
-);
-
-/*==============================================================*/
-/* Table: BOLETA                                                */
-/*==============================================================*/
-create table BOLETA (
-   ID_BOLETA            SERIAL               not null,
-   ID_PERIODO           INT4                 not null,
-   ID_CUENTA            INT4                 not null,
-   NUMERO_BOLETA        VARCHAR(15)          not null,
-   FECHA_CREACION       TIMESTAMP WITH TIME ZONE null,
-   TOTAL                INT4                 not null,
-   constraint PK_BOLETA primary key (ID_BOLETA)
 );
 
 /*==============================================================*/
@@ -56,6 +42,7 @@ create table CUENTA (
    GPS_LONGITUD         NUMERIC              null,
    FECHA_CREACION       DATE                 null,
    ACTIVA               BOOL                 not null,
+   ES_INSTITUCION       BOOL                 null,
    constraint PK_CUENTA primary key (ID_CUENTA)
 );
 
@@ -92,6 +79,39 @@ create table MEDIDOR (
    NUMERO_MEDIDOR       VARCHAR(20)          not null,
    DESCRIPCION          VARCHAR(100)         null,
    constraint PK_MEDIDOR primary key (NUMERO_MEDIDOR)
+);
+
+/*==============================================================*/
+/* Table: PAGO                                                  */
+/*==============================================================*/
+create table PAGO (
+   ID_PAGO              SERIAL               not null,
+   ID_CUENTA            INT4                 null,
+   NUMERO_DOCUMENTO     VARCHAR(15)          not null,
+   FECHA_CREACION       TIMESTAMP WITH TIME ZONE null,
+   SUBTOTAL             INT4                 not null,
+   INTERES              INT4                 null,
+   TOTAL                INT4                 null,
+   constraint PK_PAGO primary key (ID_PAGO)
+);
+
+/*==============================================================*/
+/* Table: PAGO_DETALLE_AVISO                                    */
+/*==============================================================*/
+create table PAGO_DETALLE_AVISO (
+   ID_PAGO              INT4                 not null,
+   ID_DETALLE_AVISO_COBRO INT4                 not null,
+   constraint PK_PAGO_DETALLE_AVISO primary key (ID_PAGO, ID_DETALLE_AVISO_COBRO)
+);
+
+/*==============================================================*/
+/* Table: PAGO_TIPO_COBRO                                       */
+/*==============================================================*/
+create table PAGO_TIPO_COBRO (
+   ID_TIPO_COBRO        INT4                 not null,
+   ID_PAGO              INT4                 not null,
+   TOTAL                INT4                 null,
+   constraint PK_PAGO_TIPO_COBRO primary key (ID_TIPO_COBRO, ID_PAGO)
 );
 
 /*==============================================================*/
@@ -194,6 +214,7 @@ create table TIPO_COBRO (
    NOMBRE               VARCHAR(50)          not null,
    ACEPTA_PAGO_CUOTAS   BOOL                 not null,
    ACEPTA_REGISTRO_COBRO BOOL                 not null,
+   VALOR                INT4                 null,
    constraint PK_TIPO_COBRO primary key (ID_TIPO_COBRO)
 );
 
@@ -224,10 +245,6 @@ create table VALORES_PARAMETRICOS (
    ID_VALORES_PARAMETRICOS SERIAL               not null,
    VALOR_CARGO_FIJO     INT4                 not null,
    VALOR_M3             INT4                 not null,
-   VALOR_CUOTA_SOCIAL   INT4                 not null,
-   VALOR_INTERES_DIA    INT4                 not null,
-   VALOR_REUNION_OBLIGATORIA INT4                 not null,
-   VALOR_REUNION_NO_OBLIGATORIA INT4                 not null,
    M3_FIJOS             INT4                 not null,
    M3_LIMITE_DCTO_INTERNO INT4                 not null,
    PORCENTAJE_DCTO_INTERNO NUMERIC              not null,
@@ -254,11 +271,6 @@ create table VALOR_TRAMO_M3 (
 alter table AVISO_COBRO
    add constraint FK_AVISO_CO_REFERENCE_REGISTRO foreign key (ID_PERIODO, ID_CUENTA)
       references REGISTRO_ESTADO (ID_PERIODO, ID_CUENTA)
-      on delete restrict on update restrict;
-
-alter table BOLETA
-   add constraint FK_BOLETA_REFERENCE_AVISO_CO foreign key (ID_PERIODO, ID_CUENTA)
-      references AVISO_COBRO (ID_PERIODO, ID_CUENTA)
       on delete restrict on update restrict;
 
 alter table COBRO_CUOTA
@@ -294,6 +306,31 @@ alter table DETALLE_AVISO_COBRO
 alter table DETALLE_AVISO_COBRO
    add constraint FK_DETALLE__REFERENCE_AVISO_CO foreign key (ID_PERIODO, ID_CUENTA)
       references AVISO_COBRO (ID_PERIODO, ID_CUENTA)
+      on delete restrict on update restrict;
+
+alter table PAGO
+   add constraint FK_PAGO_REFERENCE_CUENTA foreign key (ID_CUENTA)
+      references CUENTA (ID_CUENTA)
+      on delete restrict on update restrict;
+
+alter table PAGO_DETALLE_AVISO
+   add constraint FK_PAGO_DET_REFERENCE_PAGO foreign key (ID_PAGO)
+      references PAGO (ID_PAGO)
+      on delete restrict on update restrict;
+
+alter table PAGO_DETALLE_AVISO
+   add constraint FK_PAGO_DET_REFERENCE_DETALLE_ foreign key (ID_DETALLE_AVISO_COBRO)
+      references DETALLE_AVISO_COBRO (ID_DETALLE_AVISO_COBRO)
+      on delete restrict on update restrict;
+
+alter table PAGO_TIPO_COBRO
+   add constraint FK_PAGO_TIP_REFERENCE_TIPO_COB foreign key (ID_TIPO_COBRO)
+      references TIPO_COBRO (ID_TIPO_COBRO)
+      on delete restrict on update restrict;
+
+alter table PAGO_TIPO_COBRO
+   add constraint FK_PAGO_TIP_REFERENCE_PAGO foreign key (ID_PAGO)
+      references PAGO (ID_PAGO)
       on delete restrict on update restrict;
 
 alter table PERIODO

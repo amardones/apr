@@ -5,7 +5,7 @@
  */
 package cl.apr.facade;
 
-import cl.apr.entity.Boleta;
+import cl.apr.entity.Pago;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author hmardones
  */
 @Stateless
-public class BoletaFacade extends AbstractFacade<Boleta> {
+public class PagoFacade extends AbstractFacade<Pago> {
     @PersistenceContext(unitName = "AguaPotablePU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class BoletaFacade extends AbstractFacade<Boleta> {
         return em;
     }
 
-    public BoletaFacade() {
-        super(Boleta.class);
+    public PagoFacade() {
+        super(Pago.class);
     }
     
 }
