@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ValoresParametricos.findByDiaLecturaMedidor", query = "SELECT v FROM ValoresParametricos v WHERE v.diaLecturaMedidor = :diaLecturaMedidor"),
     @NamedQuery(name = "ValoresParametricos.findByDiaEmision", query = "SELECT v FROM ValoresParametricos v WHERE v.diaEmision = :diaEmision")})
 public class ValoresParametricos implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idValoresParametricos")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "idValoresParametricos")
     private List<Periodo> periodoList;
     private static final long serialVersionUID = 1L;
     @Id
