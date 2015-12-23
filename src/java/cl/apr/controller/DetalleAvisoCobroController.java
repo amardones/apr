@@ -6,6 +6,7 @@ import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.facade.DetalleAvisoCobroFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -119,6 +120,15 @@ public class DetalleAvisoCobroController implements Serializable {
 
     public List<DetalleAvisoCobro> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+    public List<DetalleAvisoCobro> getDetalleAvisoCobroDisponibles() {
+        List<DetalleAvisoCobro> itemss=new ArrayList<DetalleAvisoCobro>();
+        itemss= getFacade().getDetalleAvisoCobroDisponibles(selected.getAvisoCobro().getAvisoCobroPK().getIdCuenta());
+        for(int i=0;i<itemss.size();i++){
+            System.out.println("item  :"+itemss.get(i).getIdTipoCobro().getNombre());;
+        }
+        
+        return itemss;
     }
 
     @FacesConverter(forClass = DetalleAvisoCobro.class)

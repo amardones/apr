@@ -46,6 +46,13 @@
                             </f:facet>
                             <p:selectBooleanCheckbox value="#{item.aceptaPagoCuotas}" disabled="true"/>
                         </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTipoCobroTitle_valor}"/>
+                            </f:facet>
+                            <h:outputText value="$ #{item.valor}" />
+                        </p:column>
                         <p:column>
                             <p:commandButton   
                                          icon="ui-icon-pencil" 

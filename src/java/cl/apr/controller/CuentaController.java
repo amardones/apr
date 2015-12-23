@@ -234,5 +234,9 @@ public class CuentaController implements Serializable {
              System.out.println("selected.getIdCuenta(): null");
          }
      }
+//      public void limpiarDetalles(AjaxBehaviorEvent event){
+//        itemsDetalleAvisos = null;
+//        detalleAvisoSelected = null;
+//    }
 
 }

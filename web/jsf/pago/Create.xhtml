@@ -12,7 +12,80 @@
             <h:form id="PagoCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pagoController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_idPago}" for="idPago" />
+                        <p:outputLabel value="Buscar cuenta :" for="cuentaAuto" />
+                         
+                        <p:autoComplete id="cuentaAuto" value="#{cuentaController.selected}"
+                                completeMethod="#{cuentaController.completeCuenta}"
+                                var="idCuentaItem"
+                                itemValue="#{idCuentaItem}"
+                                itemLabel="#{idCuentaItem.idCuenta}-#{idCuentaItem.rut.nombre}-#{idCuentaItem.rut.apellido}" 
+                                forceSelection="true"
+                                >
+                            <p:ajax event="itemSelect"  listener="#{pagoController.limpiarDetalles}" process="@form" update="display2 display3"/> 
+                        </p:autoComplete>
+                    </p:panelGrid>  
+                    <div style="height: 400px; width: 600px">
+                        <h:panelGroup id="display2" >                            
+                            <p:panelGrid id="panelDetalleCobro" columns="2" rendered="#{cuentaController.selected != null}">
+                              <h:form id="DetalleAvisoCobroListForm">
+                                  <p:dataTable id="datalist" value="#{pagoController.itemsDetalleAvisos}" var="item"
+                                               selectionMode="single" selection="#{pagoController.detalleAvisoSelected}"
+                                                     paginator="true"
+                                                     rowKey="#{item.idDetalleAvisoCobro}"
+                                                     rows="10"
+                                                     rowsPerPageTemplate="10,20,30,40,50"
+                                                     paginatorPosition="bottom"
+                                                     >
+
+<!--                                            <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                                            <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                                           --><p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListDetalleAvisoCobroTitle_idTipoCobro}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.idTipoCobro.nombre}"/>
+                                            </p:column>
+                                           <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListDetalleAvisoCobroTitle_subTotal}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.subTotal}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListDetalleAvisoCobroTitle_descuento}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.descuento}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListDetalleAvisoCobroTitle_total}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.total}"/>
+                                            </p:column>                                           
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListDetalleAvisoCobroTitle_pagado}"/>
+                                                </f:facet>
+                                                <p:selectBooleanCheckbox value="#{item.pagado}" disabled="true"/>
+                                            </p:column> 
+                                  </p:dataTable>
+                              </h:form>                           
+                                
+                            </p:panelGrid>                               
+                        </h:panelGroup >
+                    </div>
+                    
+                    <h:panelGroup id="display3" >   
+                        <p:commandButton actionListener="#{pagoController.create}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PagoCreateDialog.hide()"/>                    
+                    </h:panelGroup>
+                        
+                        
+                        
+                        
+                        
+                        <!--<p:outputLabel value="#{bundle.CreatePagoLabel_idPago}" for="idPago" />
                         <p:inputText id="idPago" value="#{pagoController.selected.idPago}" title="#{bundle.CreatePagoTitle_idPago}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_idPago}"/>
                         <p:outputLabel value="#{bundle.CreatePagoLabel_numeroDocumento}" for="numeroDocumento" />
                         <p:inputText id="numeroDocumento" value="#{pagoController.selected.numeroDocumento}" title="#{bundle.CreatePagoTitle_numeroDocumento}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_numeroDocumento}"/>
@@ -29,10 +102,8 @@
                             <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
                                            var="idCuentaItem"
                                            itemValue="#{idCuentaItem}"/>
-                        </p:selectOneMenu>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{pagoController.create}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="PagoCreateDialog.hide()"/>
+                        </p:selectOneMenu>-->
+                    
                 </h:panelGroup>
             </h:form>
         </p:dialog>

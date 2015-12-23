@@ -82,6 +82,12 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCuentaTitle_esInstitucion}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.esInstitucion}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCuentaTitle_cuentaSubsidio}"/>
                             </f:facet>
                             <h:outputText value="#{item.cuentaSubsidio.idSubsidio.nombre}"/>

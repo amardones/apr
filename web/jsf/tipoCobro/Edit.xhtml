@@ -18,6 +18,11 @@
                         <p:selectBooleanCheckbox id="aceptaPagoCuotas" value="#{tipoCobroController.selected.aceptaPagoCuotas}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_aceptaPagoCuotas}"/>
                         <p:outputLabel value="#{bundle.EditTipoCobroLabel_aceptaRegistroCobro}" for="aceptaRegistroCobro" />
                         <p:selectBooleanCheckbox id="aceptaRegistroCobro" value="#{tipoCobroController.selected.aceptaRegistroCobro}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_aceptaRegistroCobro}"/>
+                    
+                        <p:outputLabel value="#{bundle.EditTipoCobroLabel_valor}" for="valor" />
+                        <p:inputText id="valor" value="#{tipoCobroController.selected.valor}" title="#{bundle.EditSaldoCuentaTitle_valor}" />
+                        
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{tipoCobroController.update}" value="#{bundle.Save}" update="display,:TipoCobroListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TipoCobroEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="TipoCobroEditDialog.hide()"/>

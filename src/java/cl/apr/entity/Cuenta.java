@@ -92,6 +92,14 @@ public class Cuenta implements Serializable {
     public Cuenta() {
     }
 
+    public Boolean getEsInstitucion() {
+        return esInstitucion;
+    }
+
+    public void setEsInstitucion(Boolean esInstitucion) {
+        this.esInstitucion = esInstitucion;
+    }
+
     public Cuenta(Integer idCuenta) {
         this.idCuenta = idCuenta;
     }
@@ -150,13 +158,7 @@ public class Cuenta implements Serializable {
         this.activa = activa;
     }
 
-     public boolean isEsInstitucion() {
-        return esInstitucion;
-    }
-
-    public void setEsInstitucion(boolean esInstitucion) {
-        this.esInstitucion = esInstitucion;
-    }
+    
 
     
     @XmlTransient

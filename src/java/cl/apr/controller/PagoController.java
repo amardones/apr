@@ -3,9 +3,11 @@ package cl.apr.controller;
 import cl.apr.entity.Pago;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
+import cl.apr.entity.DetalleAvisoCobro;
 import cl.apr.facade.PagoFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +20,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.inject.Inject;
 
 
 @Named("pagoController")
@@ -26,8 +30,34 @@ public class PagoController implements Serializable {
 
 
     @EJB private cl.apr.facade.PagoFacade ejbFacade;
+    @EJB private cl.apr.facade.DetalleAvisoCobroFacade ejbFacadeDetalleAviso;
+     
     private List<Pago> items = null;
-    private Pago selected;
+    private Pago selected;    
+    private List<DetalleAvisoCobro> itemsDetalleAvisos = null;
+    private DetalleAvisoCobro detalleAvisoSelected = null;
+
+    @Inject
+    private CuentaController cuentaController;
+
+    
+    public DetalleAvisoCobro getDetalleAvisoSelected() {
+        return detalleAvisoSelected;
+    }
+
+    public void setDetalleAvisoSelected(DetalleAvisoCobro detalleAvisoSelected) {
+        this.detalleAvisoSelected = detalleAvisoSelected;
+    }
+   
+    public List<DetalleAvisoCobro> getItemsDetalleAvisos() {
+        if(itemsDetalleAvisos == null){
+            itemsDetalleAvisos= ejbFacadeDetalleAviso.getDetalleAvisoCobroDisponibles(cuentaController.getSelected().getIdCuenta());
+            for(int i=0;i<itemsDetalleAvisos.size();i++){
+                System.out.println("item  :"+itemsDetalleAvisos.get(i).getIdTipoCobro().getNombre());;
+            }
+        }
+        return itemsDetalleAvisos;
+    }
 
     public PagoController() {
     }
@@ -43,16 +73,25 @@ public class PagoController implements Serializable {
     protected void setEmbeddableKeys() {
     }
 
-    protected void initializeEmbeddableKey() {
+    protected void initializeEmbeddableKey() {        
+        cuentaController.setSelected(null);
+        selected = new Pago();
+        selected.setFechaCreacion(new Date());
     }
+    
 
     private PagoFacade getFacade() {
         return ejbFacade;
     }
+//    public List<DetalleAvisoCobro> getDetalleAvisoCobroDisponibles() {        
+//        return ejbFacade.getDetalleAvisoCobroDisponibles(selected.getIdCuenta().getIdCuenta());
+//    }
 
     public Pago prepareCreate() {
         selected = new Pago();
         initializeEmbeddableKey();
+        itemsDetalleAvisos = null;
+        detalleAvisoSelected = null;
         return selected;
     }
 
@@ -80,6 +119,11 @@ public class PagoController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+    
+    public void limpiarDetalles(AjaxBehaviorEvent event){
+        itemsDetalleAvisos = null;
+        detalleAvisoSelected = null;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

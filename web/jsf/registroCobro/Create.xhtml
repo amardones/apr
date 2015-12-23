@@ -52,12 +52,12 @@
                                              />
                                 <p:commandButton value="Visualizar Cuotas" id="ajax" update="RegistroCobroCreateForm" actionListener="#{registroCobroController.calcularCuotas()}" styleClass="ui-priority-primary" />
                              </p:panelGrid>  
-                        </h:panelGroup>
+                        </h:panelGroup >
                         <h:form id="CobroCuotaListForm">
-                            <p:panelGrid columns="2" rendered="#{registroCobroController != null}">
+                            <p:panelGrid columns="2" rendered="#{registroCobroController != null}" >
                                 <p:dataTable id="datalist" value="#{registroCobroController.cuotas}" var="item"
                                              selectionMode="single" selection="#{cobroCuotaController.selected}"
-                                             rowKey="#{item.cobroCuotaPK}"
+                                             rowKey="#{item.cobroCuotaPK}" scrollable="true" scrollHeight="150"
                                              >
 
                                     <!--<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>

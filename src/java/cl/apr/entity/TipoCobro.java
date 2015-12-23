@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class TipoCobro implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoCobro")
     private List<PagoTipoCobro> pagoTipoCobroList;
+    @Min(0)
     @Column(name = "valor")
     private Integer valor;
     private static final long serialVersionUID = 1L;
