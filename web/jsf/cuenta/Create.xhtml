@@ -11,7 +11,7 @@
         <p:dialog id="CuentaCreateDlg" widgetVar="CuentaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCuentaTitle}">
             <h:form id="CuentaCreateForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{cuentaController.selected != null}">
+                    <p:panelGrid columns="2" rendered="#{cuentaController.selected != null?cuentaController.selected.cuentaSubsidio != null: false}">
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_idCuenta}" for="idCuenta" />
                         <p:inputText id="idCuenta" value="#{cuentaController.selected.idCuenta}" title="#{bundle.CreateCuentaTitle_idCuenta}" required="true" requiredMessage="#{bundle.CreateCuentaRequiredMessage_idCuenta}"/>
                         

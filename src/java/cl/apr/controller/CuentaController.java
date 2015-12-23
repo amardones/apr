@@ -37,15 +37,15 @@ public class CuentaController implements Serializable {
     private cl.apr.facade.CuentaSubsidioFacade ejbCuentaSubsidio;
     private List<Cuenta> items = null;
     private Cuenta selected;
-    private Subsidio subsidio;
+    //private Subsidio subsidio;
 
-    public Subsidio getSubsidio() {
-        return subsidio;
-    }
-
-    public void setSubsidio(Subsidio subsidio) {
-        this.subsidio = subsidio;
-    }    
+//    public Subsidio getSubsidio() {
+//        return subsidio;
+//    }
+//
+//    public void setSubsidio(Subsidio subsidio) {
+//        this.subsidio = subsidio;
+//    }    
 
     public CuentaController() {
     }
@@ -82,13 +82,20 @@ public class CuentaController implements Serializable {
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
         if (!JsfUtil.isValidationFailed()) {
+             System.out.println("limpiando cuenta create");
             items = null;    // Invalidate list of items to trigger re-query.
+            selected = null;
         }
     }
 
     public void update() {
-        subsidio=selected.getCuentaSubsidio().getIdSubsidio();
+        //subsidio=selected.getCuentaSubsidio().getIdSubsidio();
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CuentaUpdated"));
+         if (!JsfUtil.isValidationFailed()) {
+              System.out.println("limpiando cuenta update");
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
     }
 
     public void destroy() {
@@ -100,10 +107,9 @@ public class CuentaController implements Serializable {
     }
 
     public List<Cuenta> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
-        return items;
+        
+         items = getFacade().findAll();
+         return items;
     }
     
     public List<Medidor> getMedidoresDisponiblesEditar() {
