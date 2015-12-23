@@ -29,7 +29,7 @@
                         
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_cuentaSubsidio}" for="cuentaSubsidio" />
                         <p:selectOneMenu id="cuentaSubsidio" value="#{cuentaController.selected.cuentaSubsidio.idSubsidio}" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" itemValue="" noSelectionOption="true"/>
                             <f:selectItems value="#{subsidioController.items}"
                                            var="cuentaSubsidioItem"
                                            itemValue="#{cuentaSubsidioItem}"

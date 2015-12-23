@@ -75,7 +75,9 @@ public class CuentaController implements Serializable {
         return selected;
     }
     public Cuenta prepareUpdate() {
-        selected.setCuentaSubsidio(new CuentaSubsidio());
+        if(selected.getCuentaSubsidio() == null)
+            selected.setCuentaSubsidio(new CuentaSubsidio());
+        
         return selected;
     }
 
@@ -125,7 +127,7 @@ public class CuentaController implements Serializable {
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
-                    if(selected.getCuentaSubsidio().getIdCuenta()!=null && selected.getCuentaSubsidio().getIdCuenta()>0){
+                    if(selected.getCuentaSubsidio() != null && selected.getCuentaSubsidio().getIdSubsidio() != null){                        
                         selected.getCuentaSubsidio().setIdCuenta(selected.getIdCuenta());
                         System.out.println("agrega subsidio");
                         getFacade().edit(selected);                       
@@ -232,12 +234,10 @@ public class CuentaController implements Serializable {
         return filteredThemes;
     }
      
-     public void action(AjaxBehaviorEvent event){
+     public void quitarSubsidio(AjaxBehaviorEvent event){
          if(selected != null){
-             System.out.println("selected.getIdCuenta(): "+selected.getIdCuenta());
-         }
-         else{
-             System.out.println("selected.getIdCuenta(): null");
+             selected.setCuentaSubsidio(new CuentaSubsidio());
+             System.out.println("cuenta subsidio reset");
          }
      }
 //      public void limpiarDetalles(AjaxBehaviorEvent event){
