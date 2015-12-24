@@ -240,9 +240,5 @@ public class CuentaController implements Serializable {
              System.out.println("cuenta subsidio reset");
          }
      }
-//      public void limpiarDetalles(AjaxBehaviorEvent event){
-//        itemsDetalleAvisos = null;
-//        detalleAvisoSelected = null;
-//    }
 
 }

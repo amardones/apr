@@ -41,7 +41,7 @@ public class DetalleAvisoCobroFacade extends AbstractFacade<DetalleAvisoCobro> {
             Integer idPeriodo =  (Integer) query1.getSingleResult(); 
             if(idPeriodo != null){
                 Query query = em.createQuery(""
-                                                + "SELECT m FROM DetalleAvisoCobro m WHERE m.avisoCobro.avisoCobroPK.idCuenta=:idCuenta  and m.avisoCobro.avisoCobroPK.idPeriodo=:idPeriodo ", DetalleAvisoCobro.class);
+                                                + "SELECT m FROM DetalleAvisoCobro m WHERE m.avisoCobro.avisoCobroPK.idCuenta=:idCuenta  and m.avisoCobro.avisoCobroPK.idPeriodo=:idPeriodo and m.pagado=FALSE", DetalleAvisoCobro.class);
                  query.setParameter("idCuenta",idCuenta);
                  query.setParameter("idPeriodo",idPeriodo);
                  result = query.getResultList(); 

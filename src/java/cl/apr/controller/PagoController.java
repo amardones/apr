@@ -35,19 +35,22 @@ public class PagoController implements Serializable {
     private List<Pago> items = null;
     private Pago selected;    
     private List<DetalleAvisoCobro> itemsDetalleAvisos = null;
-    private DetalleAvisoCobro detalleAvisoSelected = null;
+    private List<DetalleAvisoCobro> detalleAvisoPagos = null;
+    
 
     @Inject
     private CuentaController cuentaController;
 
-    
-    public DetalleAvisoCobro getDetalleAvisoSelected() {
-        return detalleAvisoSelected;
+    public List<DetalleAvisoCobro> getDetalleAvisoPagos() {
+        return detalleAvisoPagos;
     }
 
-    public void setDetalleAvisoSelected(DetalleAvisoCobro detalleAvisoSelected) {
-        this.detalleAvisoSelected = detalleAvisoSelected;
+    public void setDetalleAvisoPagos(List<DetalleAvisoCobro> detalleAvisoPagos) {
+        this.detalleAvisoPagos = detalleAvisoPagos;
     }
+
+    
+   
    
     public List<DetalleAvisoCobro> getItemsDetalleAvisos() {
         if(itemsDetalleAvisos == null){
@@ -86,12 +89,13 @@ public class PagoController implements Serializable {
 //    public List<DetalleAvisoCobro> getDetalleAvisoCobroDisponibles() {        
 //        return ejbFacade.getDetalleAvisoCobroDisponibles(selected.getIdCuenta().getIdCuenta());
 //    }
+    
 
     public Pago prepareCreate() {
         selected = new Pago();
         initializeEmbeddableKey();
         itemsDetalleAvisos = null;
-        detalleAvisoSelected = null;
+        detalleAvisoPagos=null;
         return selected;
     }
 
@@ -123,7 +127,19 @@ public class PagoController implements Serializable {
     
     public void limpiarDetalles(AjaxBehaviorEvent event){
         itemsDetalleAvisos = null;
-        detalleAvisoSelected = null;
+        detalleAvisoPagos = null;
+    }
+    public void calculaItems(){        
+        int total=0;   
+        selected.setTotal(total);    
+        if(detalleAvisoPagos!=null){ 
+            for(int i=0;i< detalleAvisoPagos.size();i++){
+                System.out.println("estado :"+ detalleAvisoPagos.get(i).getPagado()+"de :"+ detalleAvisoPagos.get(i).getIdTipoCobro().getNombre());                
+                total=total+detalleAvisoPagos.get(i).getTotal() ;             
+            }
+            System.out.println("total es :"+total);              
+        }
+        selected.setTotal(total);       
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
