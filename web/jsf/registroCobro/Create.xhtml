@@ -22,12 +22,12 @@
                                 itemLabel="#{idCuentaItem.idCuenta}-#{idCuentaItem.rut.nombre}-#{idCuentaItem.rut.apellido}" 
                                 forceSelection="true"
                                 >
-                            <p:ajax event="itemSelect"  listener="#{cuentaController.action}" process="@form" update="display2 display3"/> 
+                            <p:ajax event="itemSelect"  listener="#{registroCobroController.resetDatosNuevaCuentaSeleccionada()}" process="@form" update=":RegistroCobroCreateForm:CobroCuotaListForm:datalist display2 display3 "/> 
                         </p:autoComplete>
                     </p:panelGrid>  
                     <div style="height: 400px; width: 500px">
                         <h:panelGroup id="display2" >
-                            <p:panelGrid id="panelRegistroCobro" columns="2" rendered="#{cuentaController.selected != null}">
+                            <p:panelGrid id="panelRegistroCobro" columns="2" rendered="#{cuentaController.selected != null ? registroCobroController.selected != null: false}">
                                 <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_idTipoCobro}" for="idTipoCobro" />
                                 <p:selectOneMenu id="idTipoCobro" 
                                                  value="#{registroCobroController.selected.idTipoCobro}" 
@@ -39,7 +39,7 @@
                                                    var="idTipoCobroItem"
                                                    itemValue="#{idTipoCobroItem}"
                                                    itemLabel="#{idTipoCobroItem.nombre}"/>   
-                                    <p:ajax event="valueChange" update="cuotas" />
+                                    <p:ajax event="valueChange" update="cuotas" listener="#{registroCobroController.resetDatosNuevaCuentaSeleccionada()}" />
 
                                 </p:selectOneMenu> 
                                 <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_monto}" for="monto" />

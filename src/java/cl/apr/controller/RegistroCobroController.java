@@ -46,7 +46,9 @@ public class RegistroCobroController implements Serializable {
     private List<Integer> valorCuota;
     @Inject
     private CuentaController cuentaController;
-     
+    
+    @Inject
+    TipoCobroController tipoCobroController;
      
     public RegistroCobroController() {
     }
@@ -69,6 +71,7 @@ public class RegistroCobroController implements Serializable {
         this.cuotas = cuotas;
     }
     protected void initializeEmbeddableKey() {
+        cuotas=null;
         cuentaController.setSelected(null);
         selected = new RegistroCobro();
         selected.setFechaCreacion(new Date());
@@ -207,6 +210,14 @@ public class RegistroCobroController implements Serializable {
         return items;
     }
 
+    public void resetDatosNuevaCuentaSeleccionada(){
+        cuotas=null;
+        selected = new RegistroCobro();
+        selected.setFechaCreacion(new Date());
+        selected.setCuotas(1);
+        calcularCuotas();
+    }
+    
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
