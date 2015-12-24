@@ -31,6 +31,7 @@ public class PagoController implements Serializable {
 
     @EJB private cl.apr.facade.PagoFacade ejbFacade;
     @EJB private cl.apr.facade.DetalleAvisoCobroFacade ejbFacadeDetalleAviso;
+    
      
     private List<Pago> items = null;
     private Pago selected;    
@@ -100,6 +101,13 @@ public class PagoController implements Serializable {
     }
 
     public void create() {
+        selected.setIdCuenta(cuentaController.getSelected());
+        selected.setDetalleAvisoCobroList(detalleAvisoPagos);
+        for(int i=0;i<detalleAvisoPagos.size();i++){
+            detalleAvisoPagos.get(i).setPagado(true);
+            ejbFacadeDetalleAviso.edit(detalleAvisoPagos.get(i));
+            
+        }
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PagoCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.

@@ -76,8 +76,6 @@
                             <p:panelGrid  columns="2" rendered="#{cuentaController.selected != null}">
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_total}" for="total" />
                                 <p:inputText id="total" value="#{pagoController.selected.total}"  disabled="true" title="#{bundle.CreatePagoTitle_total}" /> 
-                                <p:outputLabel value="#{bundle.CreatePagoLabel_idPago}" for="idPago" />
-                                <p:inputText id="idPago" value="#{pagoController.selected.idPago}" title="#{bundle.CreatePagoTitle_idPago}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_idPago}"/>
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_numeroDocumento}" for="numeroDocumento" />
                                 <p:inputText id="numeroDocumento" value="#{pagoController.selected.numeroDocumento}" title="#{bundle.CreatePagoTitle_numeroDocumento}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_numeroDocumento}"/>
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_interes}" for="interes" />
