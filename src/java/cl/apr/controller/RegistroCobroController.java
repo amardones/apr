@@ -108,7 +108,12 @@ public class RegistroCobroController implements Serializable {
         return valorCuota;
     }
     
-    public List<CobroCuota> calcularCuotas(){
+ 
+    public void calcularCuotas(){
+        if(selected.getMonto() == 0){
+           cuotas = new ArrayList<CobroCuota>();
+           return ;
+        }
         //calcular cuotas
             BigInteger idRegistroCobro = getFacade().getNextIdRegistroCobro();       
             selected.setIdCuenta(cuentaController.getSelected());
@@ -149,7 +154,7 @@ public class RegistroCobroController implements Serializable {
                     mes++;              
             }
         selected.setMesPrimeraCuota(cuotas.get(0).getMes());
-        return cuotas;
+ 
     }
 
     public void create() {
@@ -178,7 +183,7 @@ public class RegistroCobroController implements Serializable {
            // selected.setCobroCuotaList(cuotas);
             //persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("RegistroCobroCreated"));
            
-            if(getFacade().guardarRegistroCobrosmasCuotas(selected, calcularCuotas())){
+            if(getFacade().guardarRegistroCobrosmasCuotas(selected, cuotas)){
                  JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("RegistroCobroCreated"));
             }
             else{
@@ -215,6 +220,18 @@ public class RegistroCobroController implements Serializable {
         selected = new RegistroCobro();
         selected.setFechaCreacion(new Date());
         selected.setCuotas(1);
+        calcularCuotas();
+    }
+    
+     public void cambioEnDatos(){
+       if(selected.getIdTipoCobro() != null){
+           //System.out.println("selected.getNombre():"+selected.getIdTipoCobro().getNombre());
+           if(!selected.getIdTipoCobro().getAceptaPagoCuotas()){
+               selected.setCuotas(1);
+           }       
+           //System.out.println("selected.getIdTipoCobro():"+selected.getIdTipoCobro().getAceptaPagoCuotas());
+             
+        }
         calcularCuotas();
     }
     
@@ -301,10 +318,25 @@ public class RegistroCobroController implements Serializable {
 
     
     public boolean deshabilitarCuotas(){
+       
+        
         if(selected.getIdTipoCobro() != null && selected.getIdTipoCobro().getAceptaPagoCuotas()){
-            System.out.println("deshabilitarCuotas false");
+            //System.out.println("deshabilitarCuotas false");
             return false;
+        }else{
+            if(selected.getIdTipoCobro() != null){
+                selected.setCuotas(1);
+            }
+            return true;
         }
-        return true;
+    }
+    
+    public String mesPago(CobroCuota cc){
+        String mes = "";
+        Date d = EnumFormatoFechaHora.getDate(1, cc.getMes(), cc.getAnio());
+        System.out.println("d.getTime(): "+d.getTime());
+        mes = EnumFormatoFechaHora.formatoMesTexto.format(d).toUpperCase();
+                
+        return mes;
     }
 }

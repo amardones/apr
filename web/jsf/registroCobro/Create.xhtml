@@ -32,25 +32,29 @@
                                 <p:selectOneMenu id="idTipoCobro" 
                                                  value="#{registroCobroController.selected.idTipoCobro}" 
                                                  required="true" 
-                                                 requiredMessage="#{bundle.EditRegistroCobroRequiredMessage_idTipoCobro}"
-                                                 
+                                                 requiredMessage=""                                                 
                                                  >
                                     <f:selectItems value="#{tipoCobroController.tiposCobroRegistranCobro}"
                                                    var="idTipoCobroItem"
                                                    itemValue="#{idTipoCobroItem}"
                                                    itemLabel="#{idTipoCobroItem.nombre}"/>   
-                                    <p:ajax event="valueChange" update="cuotas" listener="#{registroCobroController.resetDatosNuevaCuentaSeleccionada()}" />
+                                    <p:ajax event="valueChange" process="idTipoCobro" update=":RegistroCobroCreateForm:CobroCuotaListForm:datalist cuotas" 
+                                            listener="#{registroCobroController.cambioEnDatos()}" />
 
                                 </p:selectOneMenu> 
                                 <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_monto}" for="monto" />
-                                <p:inputText id="monto" value="#{registroCobroController.selected.monto}" title="#{bundle.CreateRegistroCobroTitle_monto}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_monto}"/>
+                                <p:inputText id="monto" value="#{registroCobroController.selected.monto}" title="#{bundle.CreateRegistroCobroTitle_monto}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_monto}">
+                                    <p:ajax event="change" process="monto" update=":RegistroCobroCreateForm:CobroCuotaListForm:datalist" listener="#{registroCobroController.cambioEnDatos()}"/>
+                                </p:inputText>
                                 <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_descripcion}" for="descripcion" />
                                 <p:inputText id="descripcion" value="#{registroCobroController.selected.descripcion}" title="#{bundle.CreateRegistroCobroTitle_descripcion}" />
                                 <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_cuotas}" for="cuotas" />
                                 <p:inputText id="cuotas" value="#{registroCobroController.selected.cuotas}" title="#{bundle.CreateRegistroCobroTitle_cuotas}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_cuotas}"
                                              disabled="#{registroCobroController.deshabilitarCuotas()}"
-                                             />
-                                <p:commandButton value="Visualizar Cuotas" id="ajax" update="RegistroCobroCreateForm" actionListener="#{registroCobroController.calcularCuotas()}" styleClass="ui-priority-primary" />
+                                             >
+                                     <p:ajax event="change" process="cuotas" update=":RegistroCobroCreateForm:CobroCuotaListForm:datalist" listener="#{registroCobroController.cambioEnDatos()}"/>
+                                </p:inputText>
+<!--                                <p:commandButton value="Visualizar Cuotas" id="ajax" update="RegistroCobroCreateForm" actionListener="#{registroCobroController.calcularCuotas()}" styleClass="ui-priority-primary" />-->
                              </p:panelGrid>  
                         </h:panelGroup >
                         <h:form id="CobroCuotaListForm">
@@ -77,9 +81,9 @@
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">
-                                            <h:outputText value="#{bundle.ListCobroCuotaTitle_mes}"/>
+                                            <h:outputText value="#{bundle.ListCobroCuotaTitle_mes_pago}"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.mes}"/>
+                                        <h:outputText value="#{registroCobroController.mesPago(item)}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">
@@ -113,9 +117,7 @@
                                     <p:commandButton id="btnCrear" actionListener="#{registroCobroController.create}" value="#{bundle.Save}" update="display,:RegistroCobroListForm:datalist,:growl" oncomplete="handleSubmit(args,'RegistroCobroCreateDialog');"
                                                  rendered="#{cuentaController.selected != null}"
                                                  />
-                                    <p:commandButton id="btnCancelar" value="#{bundle.Cancel}" onclick="RegistroCobroCreateDialog.hide()"
-                                                 rendered="#{cuentaController.selected != null}"
-                                                 />
+                                    
                                 </h:panelGroup>
                             </h:panelGroup>
                             <!---->

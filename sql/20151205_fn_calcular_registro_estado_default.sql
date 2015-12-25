@@ -41,7 +41,7 @@ BEGIN
 			id_periodo_ant$ := -1;
 		END IF; 
 
-		SELECT estado_anterior INTO estado_anterior$ FROM registro_estado WHERE id_periodo = id_periodo_ant$ AND id_cuenta = id_cuenta$;
+		SELECT estado_actual INTO estado_anterior$ FROM registro_estado WHERE id_periodo = id_periodo_ant$ AND id_cuenta = id_cuenta$;
 
 		IF estado_anterior$ IS NULL THEN
 			estado_anterior$ := 0;

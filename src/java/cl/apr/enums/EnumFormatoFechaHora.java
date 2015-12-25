@@ -24,6 +24,7 @@ public class EnumFormatoFechaHora {
 	static public SimpleDateFormat formatoDiaMesTextoCortoAnio= new SimpleDateFormat("dd MMM yyyy");
 	static public SimpleDateFormat formatoDiaMesTexto= new SimpleDateFormat("dd MMMM");
         static public SimpleDateFormat formatoMesTextoAnio= new SimpleDateFormat("MMMM yyyy");
+        static public SimpleDateFormat formatoMesTexto= new SimpleDateFormat("MMMM");
 	static public SimpleDateFormat formatoAnoMesDia= new SimpleDateFormat("yyyy/MM/dd");
         
         
@@ -49,6 +50,21 @@ public class EnumFormatoFechaHora {
             Calendar c = Calendar.getInstance();
                     
             c.set(year, month,  Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH), 0, 0);  
+            
+            return c.getTime();
+        }
+         
+          static public  Date getDate(int dia, int mes, int anio){
+                   
+            int day = dia; //12
+            int month = mes -1; //12
+            int year = anio; // 1988
+
+            System.out.println(year);
+
+            Calendar c = Calendar.getInstance();
+                    
+            c.set(year, month,  day);  
             
             return c.getTime();
         }
