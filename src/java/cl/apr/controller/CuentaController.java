@@ -129,10 +129,10 @@ public class CuentaController implements Serializable {
                 if (persistAction != PersistAction.DELETE) {
                     if(selected.getCuentaSubsidio() != null && selected.getCuentaSubsidio().getIdSubsidio() != null){                        
                         selected.getCuentaSubsidio().setIdCuenta(selected.getIdCuenta());
-                        System.out.println("agrega subsidio");
+                        //System.out.println("agrega subsidio");
                         getFacade().edit(selected);                       
                     }else{
-                        System.out.println("sin subsidio");
+                        //System.out.println("sin subsidio");                       
                         selected.setCuentaSubsidio(null);
                         getFacade().edit(selected);
                     }

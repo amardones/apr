@@ -32,6 +32,8 @@
                                            itemValue="#{cuentaSubsidioItem}"
                                            itemLabel="#{cuentaSubsidioItem.nombre}"
                                            />
+                            
+                             <p:ajax event="valueChange" process="cuentaSubsidio"  />
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditCuentaLabel_numeroMedidor}" for="numeroMedidor" />
                         <p:selectOneMenu id="numeroMedidor" value="#{cuentaController.selected.numeroMedidor}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_numeroMedidor}">

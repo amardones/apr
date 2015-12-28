@@ -66,7 +66,7 @@ public class Subsidio implements Serializable {
     @Min(1)
     @Column(name = "metros_cubicos_tope")
     private int metrosCubicosTope;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSubsidio")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "idSubsidio")
     private List<CuentaSubsidio> cuentaSubsidioList;
 
     public Subsidio() {

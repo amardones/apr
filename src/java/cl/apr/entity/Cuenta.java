@@ -73,10 +73,8 @@ public class Cuenta implements Serializable {
     private List<RegistroEstado> registroEstadoList;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "idCuenta")
     private List<SaldoCuenta> saldoCuentaList;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "cuenta")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "cuenta", orphanRemoval=true)
     private CuentaSubsidio cuentaSubsidio;
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "cuenta")
-    //private List<AvisoCobro> avisoCobroList;
     @JoinColumn(name = "numero_medidor", referencedColumnName = "numero_medidor")
     @ManyToOne(optional = false)
     private Medidor numeroMedidor;
