@@ -7,6 +7,8 @@ package cl.apr.facade;
 
 import cl.apr.entity.AvisoCobro;
 import cl.apr.entity.Medidor;
+import java.sql.ResultSet;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -69,6 +71,40 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
              e.printStackTrace();;
         }
         return false;
+    }
+     
+       @TransactionAttribute(TransactionAttributeType.REQUIRED)
+     public void obtenerCursor(){
+       try{
+           if(em.isOpen()){
+                //em.getTransaction().begin();
+                StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("fn_reporte_libro_ingresos");
+                // set parameters
+                storedProcedure.registerStoredProcedureParameter(1, ResultSet.class, ParameterMode.REF_CURSOR);
+                storedProcedure.registerStoredProcedureParameter(2, java.sql.Date.class, ParameterMode.IN);
+                storedProcedure.registerStoredProcedureParameter(3, java.sql.Date.class, ParameterMode.IN);
+               
+                
+                storedProcedure.setParameter(2, new java.sql.Date(new Date().getTime()));
+                storedProcedure.setParameter(3, new java.sql.Date(new Date().getTime()));
+                
+                // execute SP
+                storedProcedure.execute();
+                // get result
+               List result = storedProcedure.getResultList();
+//               while (rs.next()) {              
+//               
+//                System.out.println(rs.getString("nombre"));
+//               
+//                 }
+                System.out.println("result is: " + result.size());
+               
+              
+           }
+       } catch(Exception e){
+             e.printStackTrace();;
+        }
+
     }
      
      public List<AvisoCobro> getAvisosPorPeriodo(int idPeriodo) {
