@@ -15,7 +15,8 @@
 
         <ui:define name="body">
             <h:form id="PagoListForm">
-                <p:panel header="#{bundle.ListPagoTitle}">
+                <p:fieldset legend="#{bundle.ListPagoTitle}" style="margin-bottom:20px">
+                
                     <p:dataTable id="datalist" value="#{pagoController.items}" var="item"
                                  selectionMode="single" selection="#{pagoController.selected}"
                                  paginator="true"
@@ -25,8 +26,8 @@
                                  paginatorPosition="bottom"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton  deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton  deleteButton"/>
+                        <p:ajax event="rowSelect"   update="createButton  "/>
+                        <p:ajax event="rowUnselect" update="createButton  "/>
 
                         <p:column>
                             <f:facet name="header">
@@ -70,16 +71,15 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoTitle_idCuenta}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idCuenta}"/>
+                            <h:outputText value="#{item.idCuenta.idCuenta} :#{item.idCuenta.rut.nombre} #{item.idCuenta.rut.apellido} "/>
                         </p:column>
                         <f:facet name="header">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pagoController.prepareCreate}" update=":PagoCreateForm" oncomplete="PF('PagoCreateDialog').show()"/>
                             <!--<p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PagoViewForm" oncomplete="PF('PagoViewDialog').show()" disabled="#{empty pagoController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PagoEditForm" oncomplete="PF('PagoEditDialog').show()" disabled="#{empty pagoController.selected}"/>
-                            --><p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{pagoController.destroy}" update=":growl,datalist" disabled="#{empty pagoController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PagoEditForm" oncomplete="PF('PagoEditDialog').show()" disabled="#{empty pagoController.selected}"/>-->
                         </f:facet>
                     </p:dataTable>
-                </p:panel>
+                </p:fieldset>
             </h:form>
 
             <ui:include src="Create.xhtml"/>

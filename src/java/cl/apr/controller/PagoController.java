@@ -4,10 +4,13 @@ import cl.apr.entity.Pago;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.entity.DetalleAvisoCobro;
+import cl.apr.entity.Periodo;
 import cl.apr.facade.PagoFacade;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -32,15 +35,21 @@ public class PagoController implements Serializable {
     @EJB private cl.apr.facade.PagoFacade ejbFacade;
     @EJB private cl.apr.facade.DetalleAvisoCobroFacade ejbFacadeDetalleAviso;
     
+    
      
     private List<Pago> items = null;
     private Pago selected;    
     private List<DetalleAvisoCobro> itemsDetalleAvisos = null;
     private List<DetalleAvisoCobro> detalleAvisoPagos = null;
     
+    
 
     @Inject
     private CuentaController cuentaController;
+    @Inject
+    private PeriodoController periodoController;
+    @Inject
+    private TipoCobroController tipoCobroController;
 
     public List<DetalleAvisoCobro> getDetalleAvisoPagos() {
         return detalleAvisoPagos;
@@ -50,7 +59,7 @@ public class PagoController implements Serializable {
         this.detalleAvisoPagos = detalleAvisoPagos;
     }
 
-    
+    final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
    
    
     public List<DetalleAvisoCobro> getItemsDetalleAvisos() {
@@ -103,8 +112,10 @@ public class PagoController implements Serializable {
     public void create() {
         selected.setIdCuenta(cuentaController.getSelected());
         selected.setDetalleAvisoCobroList(detalleAvisoPagos);
+        
         for(int i=0;i<detalleAvisoPagos.size();i++){
             detalleAvisoPagos.get(i).setPagado(true);
+            //detalleAvisoPagos.get(i).getCobroCuotaList().get(i).
             ejbFacadeDetalleAviso.edit(detalleAvisoPagos.get(i));
             
         }
@@ -137,17 +148,55 @@ public class PagoController implements Serializable {
         itemsDetalleAvisos = null;
         detalleAvisoPagos = null;
     }
-    public void calculaItems(){        
-        int total=0;   
-        selected.setTotal(total);    
-        if(detalleAvisoPagos!=null){ 
-            for(int i=0;i< detalleAvisoPagos.size();i++){
-                System.out.println("estado :"+ detalleAvisoPagos.get(i).getPagado()+"de :"+ detalleAvisoPagos.get(i).getIdTipoCobro().getNombre());                
-                total=total+detalleAvisoPagos.get(i).getTotal() ;             
-            }
-            System.out.println("total es :"+total);              
+    public void calculaItems(){ 
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        long diffDays=0;     
+        int valorCodigo=0;
+        int subtotal=0; 
+        int total=0;
+        int interes=0;
+        int diferencia=0;
+        selected.setFechaCreacion(new Date());
+        selected.setSubtotal(subtotal);
+        selected.setInteres(interes);
+        selected.setTotal(total);
+        System.out.println(total+""+interes+""+subtotal);      
+        
+        if(detalleAvisoPagos!=null){
+        int id_periodo=detalleAvisoPagos.get(0).getAvisoCobro().getAvisoCobroPK().getIdPeriodo(); 
+        System.out.println(id_periodo);
+        Periodo periodo=periodoController.getPeriodo(id_periodo);
+        System.out.println(periodo.getFechaVencimiento());
+        cal2.setTime(selected.getFechaCreacion());
+        cal1.setTime(periodo.getFechaVencimiento());
+        if(selected.getFechaCreacion().getTime()>periodoController.getPeriodo(id_periodo).getFechaVencimiento().getTime()){
+            long milis1 = cal1.getTimeInMillis();
+            long milis2 = cal2.getTimeInMillis();
+            long diff = milis2 - milis1;
+            diffDays = diff / (24 * 60 * 60 * 1000);
+            System.out.println("En dias: " + diffDays + " dias.");
         }
-        selected.setTotal(total);       
+        for(int e=0;e<tipoCobroController.getItems().size();e++){
+            if(tipoCobroController.getItems().get(e).getCodigoTipoCobro().equalsIgnoreCase("INTERES")){
+                valorCodigo=tipoCobroController.getItems().get(e).getValor();
+            }
+        }
+        interes=(int) (diffDays*valorCodigo);         
+         
+        System.out.println("dias: "+ diffDays +"interes: "+interes);
+            for(int i=0;i< detalleAvisoPagos.size();i++){
+                
+                System.out.println("estado :"+ detalleAvisoPagos.get(i).getPagado()+"de :"+ detalleAvisoPagos.get(i).getIdTipoCobro().getNombre());                
+                subtotal=subtotal+detalleAvisoPagos.get(i).getTotal() ;             
+            }
+            
+        System.out.println("total: "+total+"  interes :"+interes+" subtotal: "+subtotal);              
+        }
+        selected.setInteres(interes);
+        selected.setSubtotal(subtotal);
+        selected.setTotal(subtotal+interes);
+        
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

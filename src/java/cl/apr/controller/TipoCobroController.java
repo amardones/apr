@@ -75,9 +75,9 @@ public class TipoCobroController implements Serializable {
     }
 
     public List<TipoCobro> getItems() {
-        if (items == null) {
+        
             items = getFacade().findAll();
-        }
+        
         return items;
     }
 

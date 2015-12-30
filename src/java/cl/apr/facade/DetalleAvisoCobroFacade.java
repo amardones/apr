@@ -7,6 +7,7 @@ package cl.apr.facade;
 
 import cl.apr.entity.DetalleAvisoCobro;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -71,4 +72,5 @@ public class DetalleAvisoCobroFacade extends AbstractFacade<DetalleAvisoCobro> {
 //        }    
     }
     */
+
 }

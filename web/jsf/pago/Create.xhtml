@@ -74,12 +74,15 @@
                         </h:panelGroup >
                         <h:panelGroup id="display4" >
                             <p:panelGrid  columns="2" rendered="#{cuentaController.selected != null}">
-                                <p:outputLabel value="#{bundle.CreatePagoLabel_total}" for="total" />
-                                <p:inputText id="total" value="#{pagoController.selected.total}"  disabled="true" title="#{bundle.CreatePagoTitle_total}" /> 
+                                <p:outputLabel value="#{bundle.CreatePagoLabel_subtotal}" for="subtotal" />
+                                <p:inputText id="subtotal" value="#{pagoController.selected.subtotal}"  disabled="true" title="#{bundle.CreatePagoTitle_subtotal}" /> 
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_numeroDocumento}" for="numeroDocumento" />
                                 <p:inputText id="numeroDocumento" value="#{pagoController.selected.numeroDocumento}" title="#{bundle.CreatePagoTitle_numeroDocumento}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_numeroDocumento}"/>
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_interes}" for="interes" />
                                 <p:inputText id="interes" value="#{pagoController.selected.interes}" title="#{bundle.CreatePagoTitle_interes}" />
+                                <p:outputLabel value="#{bundle.CreatePagoLabel_total}" for="total" />
+                                <p:inputText id="total" value="#{pagoController.selected.total}"  disabled="true" title="#{bundle.CreatePagoTitle_total}" /> 
+                               
                             </p:panelGrid>
                           
                           </h:panelGroup> 
@@ -88,7 +91,7 @@
                           
                     <h:panelGroup id="display3" >                               
                         <p:commandButton actionListener="#{pagoController.create}" rendered="#{cuentaController.selected != null}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>
-                        <p:commandButton  rendered="#{cuentaController.selected != null}" value="#{bundle.Cancel}" onclick="PagoCreateDialog.hide()"/>                    
+                                          
                     </h:panelGroup>
                         
                         
