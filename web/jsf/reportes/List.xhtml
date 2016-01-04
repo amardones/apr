@@ -17,47 +17,55 @@
             <h:form id="reportListForm">                
                 <p:fieldset legend="#{bundle.ListReporteTitle}" style="margin-bottom:20px"> 
                     <h:panelGroup id="panel">
-                        <p:panelGrid columns="2" id="panelReportes" >                        
-<!--                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaInicio}" for="fechaInicioReporte" />
-                        <p:calendar id="fechaInicioReporte" pattern="dd/MM/yyyy" value="#{periodoController.selected.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaInicio}" showOn="button"/>
-                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaFin}" for="fechaFinReporte" />
-                        <p:calendar id="fechaFinReporte" pattern="dd/MM/yyyy" value="#{periodoController.selected.fechaFin}" title="#{bundle.EditPeriodoTitle_fechaFin}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaFin}" showOn="button"/>-->
-                        <p:commandButton value="Ver" id="ajax" update="reportListForm" actionListener="#{reportesController.items()}" styleClass="ui-priority-primary" />
-                      
+                        <p:panelGrid columns="6" id="panelReportes" >                        
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaInicio}" for="fechaInicioReporte" />
+                        <p:calendar id="fechaInicioReporte" pattern="dd/MM/yyyy" value="#{reportesController.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaInicio}" showOn="button">
+                            <p:ajax event="dateSelect" process="fechaInicioReporte" update="datalist"/> 
+                        </p:calendar>
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaFin}" for="fechaInicioReporte" />
+                        <p:calendar id="fechaFinReporte" pattern="dd/MM/yyyy" value="#{reportesController.fechaFin}"  showOn="button">
+                            <p:ajax event="dateSelect" process="fechaFinReporte" update="datalist" /> 
+                        </p:calendar>
+                        <h:commandLink>
+                             <p:graphicImage styleClass="myButtonVer" />
+                            <p:dataExporter type="csv" target="datalist" fileName="reporte" pageOnly="true" />
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage styleClass="myButtonVer" /> 
+                            <p:dataExporter type="xml" target="datalist" fileName="reporte" pageOnly="true" />
+                        </h:commandLink>
+                       <h:commandLink>
+                            <p:graphicImage styleClass="myButtonVer" /> 
+                            <p:dataExporter type="xls" target="datalist" fileName="reporte" pageOnly="true"  />
+                        </h:commandLink>
+                        <h:commandLink>
+                             <p:graphicImage styleClass="myButtonVer" /> 
+                            <p:dataExporter type="pdf" target="datalist" fileName="reporte" pageOnly="true"  />
+                        </h:commandLink>
                     </p:panelGrid>  
                         </h:panelGroup> 
                 </p:fieldset>
-                <p:fieldset legend="#{bundle.ListReportesTitle} #{ReportesController.Mes} #{bundle.CreateCobroCuotaTitle_anio} #{ReportesController.Anio}"  style="margin-bottom:20px">
-                <p:dataTable id="datalist" value="#{ReportesController.items}" var="item"
-                                 scrollable="true" scrollHeight="500"
-                                 paginator="true"
+                <p:fieldset legend="#{bundle.ListReportesTitle} #{ReportesController.Mes} #{bundle.CreateCobroCuotaTitle_anio} "  style="margin-bottom:20px">
+                    <p:dataTable id="datalist" value="#{reportesController.items}" var="item"
+                                 scrollable="true" scrollHeight="280"
+                                 paginator="false"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  paginatorPosition="bottom"
                                  >
+                    
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReportesTitle_dia}"/>
+                                <h:outputText value="Cuenta"/>
                             </f:facet>
-                            <h:outputText value="#{item.dia}"/>
+                            <h:outputText value="#{item.cuenta}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReportesTitle_detalle}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.detalle}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReportesTitle_control}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.control}"/>
-                        </p:column>
+          
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListReportesTitle_tarifa}"/>
                             </f:facet>
-                            <h:outputText value="#{item.tarifa}"/>
+                            <h:outputText value="#{item.consumoAgua}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -81,26 +89,40 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListReportesTitle_corteyreposicion}"/>
                             </f:facet>
-                            <h:outputText value="#{item.corteYreposicion}"/>
+                            <h:outputText value="#{item.corteReposicion}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListReportesTitle_derechoIncorp}"/>
                             </f:facet>
-                            <h:outputText value="#{item.derechoIncorp}"/>
+                            <h:outputText value="#{item.derechoIncorporacion}"/>
                         </p:column>
                     <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListReportesTitle_otras}"/>
                             </f:facet>
-                            <h:outputText value="#{item.otras}"/>
+                        <h:outputText value="#{item.otrosCobros}"/>
                         </p:column>
                     <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReportesTitle_giroBanco}"/>
+                                <h:outputText value="Total"/>
                             </f:facet>
-                            <h:outputText value="#{item.giroBanco}"/>
-                        </p:column>
+                        <h:outputText value="#{item.totalItem}"/>
+                    </p:column>
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column colspan="1" style="text-align:right" footerText="Totals:" />                           
+
+                            <p:column footerText="#{reportesController.itemResumen.consumoAgua}" />
+                            <p:column footerText="#{reportesController.itemResumen.cuotaSocial}" />
+                            <p:column footerText="#{reportesController.itemResumen.interes}" />
+                            <p:column footerText="#{reportesController.itemResumen.multas}" />
+                            <p:column footerText="#{reportesController.itemResumen.corteReposicion}" />
+                            <p:column footerText="#{reportesController.itemResumen.derechoIncorporacion}" />
+                            <p:column footerText="#{reportesController.itemResumen.otrosCobros}" />
+                            <p:column footerText="#{reportesController.itemResumen.totalItem}" />
+                        </p:row>
+                    </p:columnGroup>
                 </p:dataTable>
                 </p:fieldset>
 

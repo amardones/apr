@@ -5,6 +5,7 @@ import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.facade.DetalleAvisoCobroFacade;
 import cl.apr.beans.ItemReporte;
+import com.sun.jmx.remote.internal.ArrayQueue;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,31 +31,80 @@ public class ReportesController implements Serializable {
     private cl.apr.facade.DetalleAvisoCobroFacade ejbFacade;
     @EJB
     private cl.apr.facade.PagoFacade pagoFacade;
-    private List<DetalleAvisoCobro> items = null;
-    private ItemReporte selected;
-    private List<ItemReporte> itemReporte;
+    private List<ItemReporte> items = null;
+    private ItemReporte itemResumen=new ItemReporte();
+    private Date fechaInicio;
+    private Date fechaFin;
+    
+    
+    
+
+    public List<ItemReporte> getItems() {
+        items= new ArrayList<>();
+        itemResumen=new ItemReporte();
+        if(fechaInicio!=null&&fechaFin==null){
+            items= pagoFacade.reporteLibroIngreso(fechaInicio , fechaInicio);
+        }
+        if(fechaInicio!=null&&fechaFin!=null){
+            System.out.println("Fecha: "+fechaInicio);
+            items= pagoFacade.reporteLibroIngreso(fechaInicio , fechaFin);
+        }  
+        for (ItemReporte item : items) {
+            itemResumen.setConsumoAgua(itemResumen.getConsumoAgua()+item.getConsumoAgua());
+            itemResumen.setCorteReposicion(itemResumen.getCorteReposicion()+item.getCorteReposicion());
+            itemResumen.setCuotaSocial(itemResumen.getCuotaSocial()+item.getCuotaSocial());
+            itemResumen.setDerechoIncorporacion(itemResumen.getDerechoIncorporacion()+item.getDerechoIncorporacion());
+            itemResumen.setInteres(itemResumen.getInteres()+item.getInteres());
+            itemResumen.setMultas(itemResumen.getMultas()+item.getMultas());
+            itemResumen.setOtrosCobros(itemResumen.getOtrosCobros()+item.getOtrosCobros());
+            itemResumen.setTotalItem(itemResumen.getTotalItem()+item.getTotalItem());
+        }
+        return items;
+    }
+
+    public void setItems(List<ItemReporte> items) {
+        this.items = items;
+    }
+
+    public ItemReporte getItemResumen() {
+        return itemResumen;
+    }
+
+    public void setItemResumen(ItemReporte itemResumen) {
+        this.itemResumen = itemResumen;
+    }
     
     
 
     public ReportesController() {
     }
 
-    public ItemReporte getSelected() {
-        return selected;
+    public Date getFechaFin() {
+        return fechaFin;
     }
 
-    public void setSelected(ItemReporte selected) {
-        this.selected = selected;
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
     }
+
+   
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    
 
     protected void setEmbeddableKeys() {
     }
 
     protected void initializeEmbeddableKey() {
     }
-    public List<ItemReporte> items(){
-        return pagoFacade.reporteLibroIngreso(new Date() , new Date());
-    }
+    
     
 //    private DetalleAvisoCobroFacade getFacade() {
 //        return ejbFacade;

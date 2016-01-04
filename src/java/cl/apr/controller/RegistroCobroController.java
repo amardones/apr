@@ -4,6 +4,7 @@ import cl.apr.entity.RegistroCobro;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.entity.CobroCuota;
+import cl.apr.entity.Pago;
 import cl.apr.entity.CobroCuotaPK;
 import cl.apr.enums.EnumFormatoFechaHora;
 import cl.apr.facade.RegistroCobroFacade;
@@ -339,4 +340,14 @@ public class RegistroCobroController implements Serializable {
                 
         return mes;
     }
+    public String mesPago(RegistroCobro cc){
+        String mes = "";
+        
+        Date d = EnumFormatoFechaHora.getDate(1, cc.getMesPrimeraCuota(), 1);
+        System.out.println("d.getTime(): "+d.getTime());
+        mes = EnumFormatoFechaHora.formatoMesTexto.format(d).toUpperCase();
+                
+        return mes;
+    }
+    
 }

@@ -79,7 +79,10 @@
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_numeroDocumento}" for="numeroDocumento" />
                                 <p:inputText id="numeroDocumento" value="#{pagoController.selected.numeroDocumento}" title="#{bundle.CreatePagoTitle_numeroDocumento}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_numeroDocumento}"/>
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_interes}" for="interes" />
-                                <p:inputText id="interes" value="#{pagoController.selected.interes}" title="#{bundle.CreatePagoTitle_interes}" />
+                                <p:inputText id="interes" value="#{pagoController.selected.interes}" title="#{bundle.CreatePagoTitle_interes}" >
+                                                            <p:ajax event="change" update="total" listener="#{pagoController.calculaInteresManual()}"/>
+
+                                </p:inputText>
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_total}" for="total" />
                                 <p:inputText id="total" value="#{pagoController.selected.total}"  disabled="true" title="#{bundle.CreatePagoTitle_total}" /> 
                                

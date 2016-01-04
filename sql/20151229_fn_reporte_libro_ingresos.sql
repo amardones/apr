@@ -2,7 +2,9 @@
 
 -- DROP FUNCTION fn_reporte_libro_ingresos(date, date);
 
-CREATE OR REPLACE FUNCTION fn_reporte_libro_ingresos("fecha_inicio$" date, "fecha_fin$" date)
+CREATE OR REPLACE FUNCTION fn_reporte_libro_ingresos(
+    "fecha_inicio$" date,
+    "fecha_fin$" date)
   RETURNS refcursor AS
 $BODY$
 	DECLARE
@@ -13,18 +15,17 @@ $BODY$
 		SELECT 
 		pag.ID_PAGO
 		,pag.NUMERO_DOCUMENTO
-		,pag.FECHA_CREACION
+		,to_char(pag.FECHA_CREACION, 'dd/MM/yyyy')
 		,c.ID_CUENTA
 		,s.NOMBRE
 		,s.APELLIDO
-		,REP.ID_PAGO
-		,REP.CONSDEAGUA
-		,REP.CUOTSOCIAL 
-		,(REP.INTERES_PAGO +REP.INTERES ) AS INTERES
-		,REP.MULTA
-		,REP.CORTEYREPO
-		,REP.DEREINCORP
-		,REP.OTROCOBRO
+		,REP.CONSDEAGUA::Integer
+		,REP.CUOTSOCIAL::Integer 
+		,(REP.INTERES_PAGO::Integer +REP.INTERES::Integer ) AS INTERES
+		,REP.MULTA::Integer
+		,REP.CORTEYREPO::Integer
+		,REP.DEREINCORP::Integer
+		,REP.OTROCOBRO::Integer
 
 		FROM cuenta c
 		INNER JOIN SOCIO s on s.rut = c.rut
@@ -60,7 +61,7 @@ $BODY$
 					inner join pago_detalle_aviso pda on pda.id_pago = p.id_pago
 					inner join detalle_aviso_cobro dac on pda.id_detalle_aviso_cobro =  dac.id_detalle_aviso_cobro
 					inner join tipo_cobro tp on tp.id_tipo_cobro = dac.id_tipo_cobro
-					WHERE p.fecha_creacion between to_date('01-01-2015', 'dd-MM-yyyy') AND  to_date('01-01-2017', 'dd-MM-yyyy')
+					WHERE p.fecha_creacion::DATE >= fecha_inicio$ AND  p.fecha_creacion::DATE <= fecha_fin$
 					GROUP BY p.ID_PAGO, p.INTERES,tp.CODIGO_TIPO_COBRO
 				) T
 

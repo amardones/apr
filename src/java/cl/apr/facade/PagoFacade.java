@@ -69,31 +69,83 @@ public class PagoFacade extends AbstractFacade<Pago> {
                 StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("fn_reporte_libro_ingresos");
                 // set parameters
                 storedProcedure.registerStoredProcedureParameter(1,ResultSet.class, ParameterMode.REF_CURSOR);
-                storedProcedure.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
-                storedProcedure.registerStoredProcedureParameter(3, Integer.class, ParameterMode.IN);
+                storedProcedure.registerStoredProcedureParameter(2, java.sql.Date.class, ParameterMode.IN);
+                storedProcedure.registerStoredProcedureParameter(3, java.sql.Date.class, ParameterMode.IN);
                 
-                storedProcedure.setParameter(2, 1);
-                storedProcedure.setParameter(3, 1);
+                storedProcedure.setParameter(2,  new java.sql.Date(fechaInicio.getTime()));
+                storedProcedure.setParameter(3,  new java.sql.Date(fechaFin.getTime()));
                 // execute SP
                 storedProcedure.execute();
                 // get result
                 @SuppressWarnings("unchecked")
                 List result=storedProcedure.getResultList();
-                ItemReporte userRecords = new ItemReporte();
+                //ItemReporte userRecords = new ItemReporte();
                 @SuppressWarnings("rawtypes")
                 Iterator it = result.iterator( );
-                
+                ItemReporte irep;
                 while (it.hasNext( )) {
                     Object[] resulta = (Object[])it.next(); // Iterating through array object 
 //                    userRecords.se= result[0];
 //                    //userRecords.add(new ItemReporte(result[0], result[1], result[2], result[3], result[4], result[5], result[6], result[7]));               
                     
                     System.out.println("DOC "+(String) resulta[1]+"-Cuenta "+(Integer) resulta[3]+":"+(String) resulta[4]+" "+(String) resulta[5]);
-                    
+                    System.out.print("");
                     //userRecords.setDetalle("DOC"+(String) resulta[1]+"-"+(Integer) resulta[3]+":"+(String) resulta[4]+" "+(String) resulta[5]);
-                    }   
+                irep = new ItemReporte();
+                irep.setIdPago((Integer) resulta[0]);
+                irep.setNumeroDocumento((String) resulta[1]);
+                irep.setFechaCreacion((String) resulta[2]);
+                irep.setCuenta((Integer) resulta[3]+":"+(String) resulta[4]+" "+(String) resulta[5]);
+                
+                irep.setConsumoAgua((Integer) resulta[6]);
+                irep.setCuotaSocial((Integer) resulta[7]);
+                irep.setInteres((Integer) resulta[8]);
+                irep.setMultas((Integer) resulta[9]);
+                irep.setCorteReposicion((Integer) resulta[10]);
+                irep.setDerechoIncorporacion((Integer) resulta[11]);
+                irep.setOtrosCobros((Integer) resulta[12]);
+                irep.setTotalItem(irep.getConsumoAgua()
+                                 +irep.getCuotaSocial()
+                                 +irep.getInteres()
+                                 +irep.getMultas()
+                                 +irep.getCorteReposicion()
+                                 +irep.getDerechoIncorporacion()   
+                                 +irep.getOtrosCobros());
+                itemReporte.add(irep);
+                
+                }   
                 
              return itemReporte;
+           }
+           
+       } catch(Exception e){
+             e.printStackTrace();;
+        }
+        return null;
+    }
+     
+     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+     public Integer obtenerInteres(int idCuenta,Date fecha){
+         
+       try{
+           if(em.isOpen()){
+                //em.getTransaction().begin();
+                StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("fn_calcular_interes");
+                // set parameters
+                storedProcedure.registerStoredProcedureParameter(1,Integer.class, ParameterMode.OUT);
+                storedProcedure.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
+                storedProcedure.registerStoredProcedureParameter(3, Date.class, ParameterMode.IN);
+                
+                storedProcedure.setParameter(2, idCuenta);
+                storedProcedure.setParameter(3, fecha);
+                // execute SP
+                storedProcedure.execute();
+                // get result
+                Integer result = (Integer)storedProcedure.getFirstResult();
+                
+                System.out.println("result is: " + result); 
+                
+             return result;
            }
            
        } catch(Exception e){

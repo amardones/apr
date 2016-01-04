@@ -41,7 +41,7 @@ public class PagoController implements Serializable {
     private Pago selected;    
     private List<DetalleAvisoCobro> itemsDetalleAvisos = null;
     private List<DetalleAvisoCobro> detalleAvisoPagos = null;
-    
+    private int total;
     
 
     @Inject
@@ -148,52 +148,57 @@ public class PagoController implements Serializable {
         itemsDetalleAvisos = null;
         detalleAvisoPagos = null;
     }
+    public void calculaInteresManual(){
+        total=(selected.getSubtotal()+selected.getInteres());
+        selected.setTotal(total);
+    }
     public void calculaItems(){ 
-        Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        long diffDays=0;     
-        int valorCodigo=0;
+//        Calendar cal1 = Calendar.getInstance();
+//        Calendar cal2 = Calendar.getInstance();
+//        long diffDays=0;     
+//        int valorCodigo=0;
+        System.out.println("Entro"); 
         int subtotal=0; 
         int total=0;
         int interes=0;
-        int diferencia=0;
         selected.setFechaCreacion(new Date());
         selected.setSubtotal(subtotal);
         selected.setInteres(interes);
         selected.setTotal(total);
-        System.out.println(total+""+interes+""+subtotal);      
+        System.out.println(total+"-"+interes+"-"+subtotal);      
         
-        if(detalleAvisoPagos!=null){
+        if(!detalleAvisoPagos.isEmpty()){
         int id_periodo=detalleAvisoPagos.get(0).getAvisoCobro().getAvisoCobroPK().getIdPeriodo(); 
         System.out.println(id_periodo);
         Periodo periodo=periodoController.getPeriodo(id_periodo);
         System.out.println(periodo.getFechaVencimiento());
-        cal2.setTime(selected.getFechaCreacion());
-        cal1.setTime(periodo.getFechaVencimiento());
-        if(selected.getFechaCreacion().getTime()>periodoController.getPeriodo(id_periodo).getFechaVencimiento().getTime()){
-            long milis1 = cal1.getTimeInMillis();
-            long milis2 = cal2.getTimeInMillis();
-            long diff = milis2 - milis1;
-            diffDays = diff / (24 * 60 * 60 * 1000);
-            System.out.println("En dias: " + diffDays + " dias.");
-        }
-        for(int e=0;e<tipoCobroController.getItems().size();e++){
-            if(tipoCobroController.getItems().get(e).getCodigoTipoCobro().equalsIgnoreCase("INTERES")){
-                valorCodigo=tipoCobroController.getItems().get(e).getValor();
-            }
-        }
-        interes=(int) (diffDays*valorCodigo);         
-         
-        System.out.println("dias: "+ diffDays +"interes: "+interes);
-            for(int i=0;i< detalleAvisoPagos.size();i++){
-                
+//        cal2.setTime(selected.getFechaCreacion());
+//        cal1.setTime(periodo.getFechaVencimiento());
+//        if(selected.getFechaCreacion().getTime()>periodoController.getPeriodo(id_periodo).getFechaVencimiento().getTime()){
+//            long milis1 = cal1.getTimeInMillis();
+//            long milis2 = cal2.getTimeInMillis();
+//            long diff = milis2 - milis1;
+//            diffDays = diff / (24 * 60 * 60 * 1000);
+//            System.out.println("En dias: " + diffDays + " dias.");
+//        }
+//        for(int e=0;e<tipoCobroController.getItems().size();e++){
+//            if(tipoCobroController.getItems().get(e).getCodigoTipoCobro().equalsIgnoreCase("INTERES")){
+//                valorCodigo=tipoCobroController.getItems().get(e).getValor();
+//            }
+//        }
+
+            for(int i=0;i< detalleAvisoPagos.size();i++){                
                 System.out.println("estado :"+ detalleAvisoPagos.get(i).getPagado()+"de :"+ detalleAvisoPagos.get(i).getIdTipoCobro().getNombre());                
-                subtotal=subtotal+detalleAvisoPagos.get(i).getTotal() ;             
+                subtotal=subtotal+detalleAvisoPagos.get(i).getTotal();             
             }
             
-        System.out.println("total: "+total+"  interes :"+interes+" subtotal: "+subtotal);              
+        System.out.println("total: "+total+"  interes :"+interes+" subtotal: "+subtotal); 
+        interes=ejbFacade.obtenerInteres(1,new Date());
         }
-        selected.setInteres(interes);
+        //System.out.println(ejbFacade.obtenerInteres(1,new Date()));
+        
+        //selected.setInteres(ejbFacade.obtenerInteres(selected.getIdCuenta().getIdCuenta(), new Date()));
+        
         selected.setSubtotal(subtotal);
         selected.setTotal(subtotal+interes);
         
