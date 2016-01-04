@@ -37,7 +37,9 @@ public class ReportesController implements Serializable {
     private Date fechaFin;
     
     
-    
+    public void limpiaFecha(){
+        fechaFin=null;
+    }
 
     public List<ItemReporte> getItems() {
         items= new ArrayList<>();
