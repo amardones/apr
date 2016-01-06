@@ -52,6 +52,14 @@ public class AvisoCobro implements Serializable {
     private int totalPeriodo;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "sub_total_periodo")
+    private int subTotalPeriodo;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "descuento_periodo")
+    private int descuentoPeriodo;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "total_pendiente")
     private int totalPendiente;
     @Basic(optional = false)
@@ -139,6 +147,25 @@ public class AvisoCobro implements Serializable {
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
+
+    public int getSubTotalPeriodo() {
+        return subTotalPeriodo;
+    }
+
+    public void setSubTotalPeriodo(int subTotalPeriodo) {
+        this.subTotalPeriodo = subTotalPeriodo;
+    }
+
+    public int getDescuentoPeriodo() {
+        return descuentoPeriodo;
+    }
+
+    public void setDescuentoPeriodo(int descuentoPeriodo) {
+        this.descuentoPeriodo = descuentoPeriodo;
+    }
+
+    
+    
 /*
     public Cuenta getCuenta() {
         return cuenta;

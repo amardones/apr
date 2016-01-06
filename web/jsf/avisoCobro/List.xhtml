@@ -157,7 +157,23 @@
                                 <h:outputText value="#{bundle.ListRegistroEstadoTitle_metrosCubicos}"/>
                             </f:facet>
                             <h:outputText value="#{item.registroEstado.metrosCubicos} MT3" />
-                        </p:column> 
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Sub-Total Periodo"/>
+                            </f:facet>
+                            <h:outputText value="$ #{item.subTotalPeriodo}" >
+                                 <f:convertNumber pattern="#0.000" locale="pt_CL"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Descuento"/>
+                            </f:facet>
+                            <h:outputText value="$ #{item.descuentoPeriodo}" >
+                                 <f:convertNumber pattern="#0.000" locale="pt_CL"/>
+                            </h:outputText>
+                        </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAvisoCobroTitle_totalPeriodo}"/>

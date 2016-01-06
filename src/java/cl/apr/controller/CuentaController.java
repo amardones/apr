@@ -1,5 +1,6 @@
 package cl.apr.controller;
 
+import cl.apr.beans.cuentaSubsidiada;
 import cl.apr.entity.Cuenta;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
@@ -7,8 +8,10 @@ import cl.apr.entity.CuentaSubsidio;
 import cl.apr.entity.Medidor;
 import cl.apr.entity.Subsidio;
 import cl.apr.facade.CuentaFacade;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -33,6 +36,8 @@ public class CuentaController implements Serializable {
     private cl.apr.facade.CuentaFacade ejbFacade;
     @EJB
     private cl.apr.facade.MedidorFacade ejbMedidorFacade;
+    @EJB
+    private cl.apr.facade.ValoresParametricosFacade ejbParametricos;
     @EJB
     private cl.apr.facade.CuentaSubsidioFacade ejbCuentaSubsidio;
     private List<Cuenta> items = null;
@@ -113,6 +118,45 @@ public class CuentaController implements Serializable {
          items = getFacade().findAll();
          return items;
     }
+    public List<cuentaSubsidiada> getCuentasSubsidiadas() {
+         List<cuentaSubsidiada> cc=new ArrayList<cuentaSubsidiada>();
+         cuentaSubsidiada cs= new cuentaSubsidiada();
+         int monto=0;
+         int porcentaje=0;
+         int m3Tope=0; 
+         int valorM3=0;
+         items = getFacade().findAll();
+         for (Cuenta item : items) {
+            if(item.getCuentaSubsidio()!=null){
+                cs.setIdCuenta(item.getIdCuenta());
+                cs.setDireccion(item.getDireccion());                
+                cs.setRut(item.getRut().getRut());
+                cs.setNombre(item.getRut().getNombre()+""+item.getRut().getApellido());
+                porcentaje=item.getCuentaSubsidio().getIdSubsidio().getPorcentaje().intValue();
+                valorM3=ejbParametricos.getLastValoresParametricos().getValorM3();
+                m3Tope=item.getCuentaSubsidio().getIdSubsidio().getMetrosCubicosTope();
+                monto=((m3Tope*valorM3*porcentaje)/100);
+                cs.setPorcentaje(porcentaje);
+                cs.setNombreSubsidio(item.getCuentaSubsidio().getIdSubsidio().getNombre());
+                cs.setMonto(monto);
+                cc.add(cs);
+            }
+         }return cc;
+    }
+    
+    public int getMontoSubsidio(){
+        int monto=0;
+        int porcentaje=0;
+        int m3Fijo=0;
+        int valorM3=0;
+        
+        porcentaje=(selected.getCuentaSubsidio().getIdSubsidio().getPorcentaje().intValue());
+        valorM3=ejbParametricos.getLastValoresParametricos().getValorM3();
+        m3Fijo=ejbParametricos.getLastValoresParametricos().getM3Fijos();
+        return monto=m3Fijo*valorM3*porcentaje;
+    }
+    
+   
     
     public List<Medidor> getMedidoresDisponiblesEditar() {
         if(selected != null && selected.getNumeroMedidor() != null){

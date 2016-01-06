@@ -18,6 +18,8 @@ DECLARE
 
     id_periodo_ant$ integer;
     id_detalle_aviso_cobro$ integer;
+    sub_total_periodo$ integer;
+    descuento_periodo$ integer;
     total_periodo$ integer;
     total_pendiente$ integer;
 
@@ -72,7 +74,7 @@ BEGIN
 	--SI EXISTE UN REGISTRO DE ESTADO VALIDO
 	IF (SELECT count(*) FROM  registro_estado  WHERE id_periodo = id_periodo$ AND id_cuenta = id_cuenta$ AND estado_actual >= 0) > 0 THEN
 		--Insertamos nuevo aviso de cobro - se crea aviso si hay estado asociado
-		INSERT INTO aviso_cobro(id_periodo, id_cuenta, total_periodo, total_pendiente, total, fecha_creacion) VALUES (id_periodo$, id_cuenta$, 0, 0, 0, NOW());
+		INSERT INTO aviso_cobro(id_periodo, id_cuenta, total_periodo, total_pendiente, total, fecha_creacion,descuento_periodo,sub_total_periodo) VALUES (id_periodo$, id_cuenta$, 0, 0, 0, NOW(),0,0);
 		--3.- Calcular tipos de pagos pendientes si periodo anterior existe
 		IF id_periodo_ant$ IS NOT NULL  THEN
 			--insertamos los pagos pendientes
@@ -185,6 +187,9 @@ BEGIN
 
 		
 		--UPDATE VALRES AVISO COBRO
+		SELECT sum (sub_total) INTO sub_total_periodo$ FROM detalle_aviso_cobro WHERE id_periodo = id_periodo$ AND id_cuenta = id_cuenta$ AND (id_detalle_aviso_cobro_ant IS NULL OR id_detalle_aviso_cobro_ant <= 0);
+		SELECT sum (descuento) INTO descuento_periodo$ FROM detalle_aviso_cobro WHERE id_periodo = id_periodo$ AND id_cuenta = id_cuenta$ AND (id_detalle_aviso_cobro_ant IS NULL OR id_detalle_aviso_cobro_ant <= 0);
+
 		SELECT sum (total) INTO total_periodo$ FROM detalle_aviso_cobro WHERE id_periodo = id_periodo$ AND id_cuenta = id_cuenta$ AND (id_detalle_aviso_cobro_ant IS NULL OR id_detalle_aviso_cobro_ant <= 0);
 		SELECT sum (total) INTO total_pendiente$ FROM detalle_aviso_cobro WHERE id_periodo = id_periodo$ AND id_cuenta = id_cuenta$ AND (id_detalle_aviso_cobro_ant > 0);
 		IF total_periodo$ IS NULL THEN
@@ -193,9 +198,17 @@ BEGIN
 		IF  total_pendiente$ IS NULL THEN
 			total_pendiente$ := 0;
 		END IF;
+                IF  sub_total_periodo$ IS NULL THEN
+			sub_total_periodo$ := 0;
+		END IF;
+                IF  descuento_periodo$ IS NULL THEN
+			descuento_periodo$ := 0;
+		END IF;
 	      
 		UPDATE aviso_cobro
 		SET	
+                        sub_total_periodo =sub_total_periodo$,
+                        descuento_periodo=descuento_periodo$,
 			total_periodo = total_periodo$, 
 			total_pendiente = total_pendiente$, 
 			total= (total_periodo$ + total_pendiente$)
