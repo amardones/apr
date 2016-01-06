@@ -6,6 +6,7 @@ import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.facade.DetalleAvisoCobroFacade;
 import cl.apr.beans.ItemReporte;
 import com.sun.jmx.remote.internal.ArrayQueue;
+import java.io.IOException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,9 +20,14 @@ import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Named("reportesController")
 @SessionScoped
@@ -64,6 +70,10 @@ public class ReportesController implements Serializable {
         return items;
     }
 
+     public List<ItemReporte> getItemsBusqueda() {
+         return items;
+     }
+     
     public void setItems(List<ItemReporte> items) {
         this.items = items;
     }
@@ -174,5 +184,26 @@ public class ReportesController implements Serializable {
         }
 
     }*/
+    
+    
+      public void verReporteIngresos() {
+        try {
+            if(items != null){
+                FacesContext ctx = FacesContext.getCurrentInstance();
+                ExternalContext ectx = ctx.getExternalContext();
+                HttpServletRequest request = (HttpServletRequest) ectx.getRequest();
+                HttpServletResponse response = (HttpServletResponse) ectx.getResponse();
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/verReporteIngresos");
+               // request.setAttribute("idPeriodo", periodoController.getSelected().getIdPeriodo());
+                dispatcher.forward(request, response);
+                ctx.responseComplete();
+                System.out.println("call servlet");
+            }
+        } catch (ServletException ex) {
+            Logger.getLogger(AvisoCobroController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AvisoCobroController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

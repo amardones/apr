@@ -22,12 +22,23 @@
                         <p:panelGrid columns="6" id="panelReportes" >                        
                         <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaInicio}" for="fechaInicioReporte" />
                         <p:calendar id="fechaInicioReporte" pattern="dd/MM/yyyy" value="#{reportesController.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaInicio}" showOn="button">
-                            <p:ajax event="dateSelect" process="fechaInicioReporte" update="fechaFinReporte datalist" listener="#{reportesController.limpiaFecha()}"/> 
+                            <p:ajax event="dateSelect" process="fechaInicioReporte" update="fechaFinReporte datalist, btnVerReporte" listener="#{reportesController.limpiaFecha()}"/> 
                         </p:calendar>
                         <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaFin}" for="fechaInicioReporte" />
                         <p:calendar id="fechaFinReporte" pattern="dd/MM/yyyy" value="#{reportesController.fechaFin}"  showOn="button">
-                            <p:ajax event="dateSelect" process="fechaFinReporte" update="datalist" /> 
-                        </p:calendar>                        
+                            <p:ajax event="dateSelect" process="fechaFinReporte" update="datalist, btnVerReporte" /> 
+                        </p:calendar>       
+                         
+                        <p:commandLink id="btnVerReporte" action="#{reportesController.verReporteIngresos()}"                                            
+                                           ajax="false" 
+                                           global="false" 
+                                           process="@this"
+                                           target="blank"
+                                           
+                                           >
+                                         <p:graphicImage styleClass="myButtonVer" /> 
+                                     </p:commandLink>
+                        
                        <!--<h:commandLink>
                             <p:graphicImage styleClass="myButtonVer" /> 
                             <p:dataExporter type="xls" target="datalist" fileName="reporteXLS" pageOnly="true"  />
