@@ -3,6 +3,7 @@ package cl.apr.pdf;
 import cl.apr.entity.AvisoCobro;
 import cl.apr.entity.DetalleAvisoCobro;
 import cl.apr.enums.EnumFormatoFechaHora;
+import cl.apr.pdf.chart.BarChartAviso;
 import cl.apr.util.NumeroFormato;
 import com.itextpdf.text.BadElementException;
 import java.io.ByteArrayOutputStream;
@@ -27,8 +28,10 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 public class AvisoPDF {
 	
@@ -43,10 +46,10 @@ public class AvisoPDF {
 	//private static Font fTitulo = new Font(Font.getFamily("ARIAL"),14,Font.BOLD);
 	//private static Font fTituloTabla = new Font(Font.getFamily("ARIAL"),11,Font.BOLD);
 	//private static Font fSubTituloTabla = new Font(Font.getFamily("ARIAL"),8,Font.BOLD);//10
-	private static Font fCuerpoCabeceraTabla= new Font(Font.getFamily("ARIAL"),8f,Font.BOLD);
-	private static Font fCuerpoCabeceraTablaWhite= new Font(Font.getFamily("ARIAL"),8f,Font.BOLD, BaseColor.WHITE);
-	private static Font fCuerpoTabla = new Font(Font.getFamily("ARIAL"),8f,Font.NORMAL, BaseColor.DARK_GRAY);
-        private static Font fCuerpoTablaBold = new Font(Font.getFamily("ARIAL"),8f,Font.BOLD, BaseColor.DARK_GRAY);
+	private static Font fCuerpoCabeceraTabla= new Font(Font.getFamily("ARIAL"),7f,Font.BOLD);
+	private static Font fCuerpoCabeceraTablaWhite= new Font(Font.getFamily("ARIAL"),7f,Font.BOLD, BaseColor.WHITE);
+	private static Font fCuerpoTabla = new Font(Font.getFamily("ARIAL"),7f,Font.NORMAL, BaseColor.DARK_GRAY);
+        private static Font fCuerpoTablaBold = new Font(Font.getFamily("ARIAL"),7f,Font.BOLD, BaseColor.DARK_GRAY);
 	//private static BaseColor colorRellenoLightGray = BaseColor.LIGHT_GRAY;	
 	
 	private static Font fTextPlazo= new Font(Font.getFamily("ARIAL"),8,Font.BOLD | Font.UNDERLINE );
@@ -265,7 +268,9 @@ public class AvisoPDF {
                     
                     PdfPCell cPag01, cPag02, cPag03;
                     DetalleAvisoCobro det;
+                    String info = "";
                     for(int i=0; i<aviso.getDetalleAvisoCobroList().size(); ++i){
+                        info = "";
                         det = aviso.getDetalleAvisoCobroList().get(i);
                         cPag01 = new PdfPCell(new Phrase(det.getIdTipoCobro().getNombre(),fCuerpoTabla));
                         cPag01.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -273,13 +278,20 @@ public class AvisoPDF {
                         cPag01.setBorder(Rectangle.NO_BORDER);
                         //cPag01.setPadding(5);
                         
-                        cPag02 = new PdfPCell(new Phrase("",fCuerpoTabla));
+                        if(det.getIdDetalleAvisoCobroAnt() > 0){
+                            info += "Pendiente ";
+                        }
+//                        if(det.getDescuento() > 0){
+//                            info += "SubTotal: "+det.getSubTotal() + " | Descuento: "+det.getDescuento();
+//                        }
+                        
+                        cPag02 = new PdfPCell(new Phrase(info,fCuerpoTabla));
                         cPag02.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         cPag02.setHorizontalAlignment(Element.ALIGN_LEFT); 
                         cPag02.setBorder(Rectangle.NO_BORDER);
                         //cPag02.setPadding(5);
                         
-                        cPag03 = new PdfPCell(new Phrase(""+NumeroFormato.formatearNumeroPesos(det.getTotal()),fCuerpoTabla));
+                        cPag03 = new PdfPCell(new Phrase(""+NumeroFormato.formatearNumeroPesos(det.getSubTotal()),fCuerpoTabla));
                         cPag03.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         cPag03.setHorizontalAlignment(Element.ALIGN_RIGHT);   
                         cPag03.setBorder(Rectangle.NO_BORDER);
@@ -309,8 +321,15 @@ public class AvisoPDF {
                     URL urlImagen;
                     Image imagen = null;
                     try {
-                        urlImagen = new URL("http://localhost/APR/resources/images/default_barchart.png");
-                        imagen = Image.getInstance(urlImagen);
+                        BufferedImage bi = BarChartAviso.crearBarchart();
+                                
+                        //urlImagen = new URL("http://localhost/APR/resources/images/default_barchart.png");
+                        //imagen = Image.getInstance(urlImagen);
+                        
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        ImageIO.write(bi, "png", baos);
+                        imagen = Image.getInstance(baos.toByteArray());
+
                     } catch (MalformedURLException ex) {
                         ex.printStackTrace();
                     } catch (BadElementException ex) {
@@ -321,6 +340,19 @@ public class AvisoPDF {
                     }
                    
                 
+                    
+                    cPag01 = new PdfPCell(new Phrase("Detalle de sus consumos",fCuerpoCabeceraTabla));
+                    cPag01.setBorderColor(borderColor);
+                    cPag01.setVerticalAlignment(Element.ALIGN_BOTTOM);
+                    cPag01.setHorizontalAlignment(Element.ALIGN_LEFT);   
+                    cPag01.setBorder(Rectangle.LEFT | Rectangle.BOTTOM);
+                    cPag01.setPaddingBottom(5);
+                       
+                    tablePagos.addCell(cPag01);
+                    tablePagos.addCell(new Phrase(" ",fCuerpoTabla));
+                    tablePagos.addCell(new Phrase(" ",fCuerpoTabla));
+                    
+                    
                     PdfPCell cGrafico = new PdfPCell(imagen, true);
                     //cT03.setBackgroundColor(colorBlueLigth);
                     cGrafico.setBorderColor(borderColor);
@@ -329,14 +361,7 @@ public class AvisoPDF {
                     cGrafico.setHorizontalAlignment(Element.ALIGN_LEFT);
                     cGrafico.setRowspan(10); 
                     cGrafico.setPadding(5);
-
-                    cPag01 = new PdfPCell(new Phrase("Detalle de sus consumos",fCuerpoCabeceraTabla));
-                    cPag01.setBorderColor(borderColor);
-                    cPag01.setVerticalAlignment(Element.ALIGN_BOTTOM);
-                    cPag01.setHorizontalAlignment(Element.ALIGN_LEFT);   
-                    cPag01.setBorder(Rectangle.LEFT | Rectangle.BOTTOM);
-                    cPag01.setPaddingBottom(5);
-                        
+                    
                     //total pendiente
                     cPag02 = new PdfPCell(new Phrase("TOTAL PENDIENTE",fCuerpoTabla));
                     cPag02.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -349,18 +374,46 @@ public class AvisoPDF {
                     cPag03.setVerticalAlignment(Element.ALIGN_MIDDLE);
                     cPag03.setHorizontalAlignment(Element.ALIGN_RIGHT);   
                     cPag03.setBorder(Rectangle.NO_BORDER);
-                    cPag03.setPaddingRight(5);
-                    
-                    
-                    
-                    tablePagos.addCell(cPag01);
-                    tablePagos.addCell(new Phrase(" ",fCuerpoTabla));
-                    tablePagos.addCell(new Phrase(" ",fCuerpoTabla));
+                    cPag03.setPaddingRight(5);                    
                     
                     tablePagos.addCell(cGrafico);
                     tablePagos.addCell(cPag02);                   
                     tablePagos.addCell(cPag03);
-                     
+                    
+                     //total periodo
+                    cPag02 = new PdfPCell(new Phrase("SUB TOTAL PERIODO",fCuerpoTabla));
+                    cPag02.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    cPag02.setHorizontalAlignment(Element.ALIGN_LEFT); 
+                    cPag02.setBorder(Rectangle.NO_BORDER);
+                    cPag02.setPaddingLeft(5);
+                    cPag02.setPaddingLeft(15);
+                        
+                    cPag03 = new PdfPCell(new Phrase("$ "+NumeroFormato.formatearNumeroPesos(aviso.getSubTotalPeriodo()),fCuerpoTabla));
+                    cPag03.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    cPag03.setHorizontalAlignment(Element.ALIGN_RIGHT);   
+                    cPag03.setBorder(Rectangle.NO_BORDER);
+                    cPag03.setPaddingRight(5);
+                        
+                    tablePagos.addCell(cPag02);                   
+                    tablePagos.addCell(cPag03); 
+                    
+                     //total periodo
+                    cPag02 = new PdfPCell(new Phrase("DESCUENTO PERIODO",fCuerpoTabla));
+                    cPag02.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    cPag02.setHorizontalAlignment(Element.ALIGN_LEFT); 
+                    cPag02.setBorder(Rectangle.NO_BORDER);
+                    cPag02.setPaddingLeft(5);
+                    cPag02.setPaddingLeft(15);
+                        
+                    cPag03 = new PdfPCell(new Phrase("$ "+NumeroFormato.formatearNumeroPesos(aviso.getDescuentoPeriodo()*-1),fCuerpoTabla));
+                    cPag03.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    cPag03.setHorizontalAlignment(Element.ALIGN_RIGHT);   
+                    cPag03.setBorder(Rectangle.NO_BORDER);
+                    cPag03.setPaddingRight(5);
+                        
+                    tablePagos.addCell(cPag02);                   
+                    tablePagos.addCell(cPag03);
+                    
                      //total periodo
                     cPag02 = new PdfPCell(new Phrase("TOTAL PERIODO",fCuerpoTabla));
                     cPag02.setVerticalAlignment(Element.ALIGN_MIDDLE);
