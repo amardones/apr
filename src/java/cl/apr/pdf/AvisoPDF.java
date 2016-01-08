@@ -302,7 +302,7 @@ public class AvisoPDF {
                         tablePagos.addCell(cPag02);
                         tablePagos.addCell(cPag03);
                     }
-                    int maxRow = 10;
+                    int maxRow = 12;
                     if(aviso.getDetalleAvisoCobroList().size() < maxRow){
                          //Espacios
                         for(int j=0; j <(maxRow-aviso.getDetalleAvisoCobroList().size()); ++j){
@@ -340,7 +340,7 @@ public class AvisoPDF {
                     }
                    
                 
-                    
+                    /*
                     cPag01 = new PdfPCell(new Phrase("Detalle de sus consumos",fCuerpoCabeceraTabla));
                     cPag01.setBorderColor(borderColor);
                     cPag01.setVerticalAlignment(Element.ALIGN_BOTTOM);
@@ -351,12 +351,12 @@ public class AvisoPDF {
                     tablePagos.addCell(cPag01);
                     tablePagos.addCell(new Phrase(" ",fCuerpoTabla));
                     tablePagos.addCell(new Phrase(" ",fCuerpoTabla));
-                    
+                    */
                     
                     PdfPCell cGrafico = new PdfPCell(imagen, true);
                     //cT03.setBackgroundColor(colorBlueLigth);
                     cGrafico.setBorderColor(borderColor);
-                    cGrafico.setBorder(Rectangle.BOX);
+                    cGrafico.setBorder(Rectangle.NO_BORDER);
                     cGrafico.setVerticalAlignment(Element.ALIGN_MIDDLE);
                     cGrafico.setHorizontalAlignment(Element.ALIGN_LEFT);
                     cGrafico.setRowspan(10); 
