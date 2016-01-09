@@ -5,6 +5,7 @@
  */
 package cl.apr.entity;
 
+import cl.apr.beans.BarChartItem;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -69,6 +70,8 @@ public class AvisoCobro implements Serializable {
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
+    
+    
     /*
     @JoinColumn(name = "id_cuenta", referencedColumnName = "id_cuenta", insertable = false, updatable = false)
     @ManyToOne(optional = false)
@@ -225,5 +228,7 @@ public class AvisoCobro implements Serializable {
     public String toString() {
         return "cl.apr.entity.AvisoCobro[ avisoCobroPK=" + avisoCobroPK + " ]";
     }
+
+    
     
 }

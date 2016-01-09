@@ -5,15 +5,19 @@
  */
 package cl.apr.pdf.chart;
 
+import cl.apr.beans.BarChartItem;
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Paint;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.List;
 import org.jfree.data.category.DefaultCategoryDataset; /* We will use this dataset class to populate data for our bar chart */
 import org.jfree.chart.ChartFactory; /* used to create a chart object */
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.JFreeChart; 
 import org.jfree.chart.ChartUtilities; /* We will use this class to convert the chart to a PNG image file */
+import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
@@ -28,20 +32,30 @@ public class BarChartAviso {
       Color.yellow, Color.orange, Color.cyan, 
       Color.magenta, Color.blue}; 
      
-   public static BufferedImage crearBarchart(){
+   public static BufferedImage crearBarchart(List<BarChartItem> barChartItems){
        BufferedImage bi  = null;
          try {
                 
+             ChartFactory.setChartTheme(StandardChartTheme.createJFreeTheme());
+             //ChartFactory.setChartTheme(StandardChartTheme.createDarknessTheme());
+
                 /* Step - 1: Define the data for the bar chart  */
                 DefaultCategoryDataset my_bar_chart_dataset = new DefaultCategoryDataset();
-                my_bar_chart_dataset.addValue(34, "mes", "Ene");
-                my_bar_chart_dataset.addValue(25, "mes", "Feb");
-                my_bar_chart_dataset.addValue(22, "mes", "Mar");
-                my_bar_chart_dataset.addValue(12, "mes", "Abr");
-                my_bar_chart_dataset.addValue(40, "mes", "May");
-                my_bar_chart_dataset.addValue(30, "mes", "jun");
-                my_bar_chart_dataset.addValue(2, "mes", "Jul");
-                my_bar_chart_dataset.addValue(15, "mes", "Ago");
+               int i=0;
+                for (BarChartItem barChartItem : barChartItems) {
+                    if(barChartItem.getNombre().equals("-")){
+                        my_bar_chart_dataset.addValue(barChartItem.getValor(), "serie", (++i)+"");
+                    }else
+                        my_bar_chart_dataset.addValue(barChartItem.getValor(), "serie", barChartItem.getNombre());
+                }
+//                my_bar_chart_dataset.addValue(34, "mes", "Ene");
+//                my_bar_chart_dataset.addValue(25, "mes", "Feb");
+//                my_bar_chart_dataset.addValue(22, "mes", "Mar");
+//                my_bar_chart_dataset.addValue(12, "mes", "Abr");
+//                my_bar_chart_dataset.addValue(40, "mes", "May");
+//                my_bar_chart_dataset.addValue(30, "mes", "jun");
+//                my_bar_chart_dataset.addValue(2, "mes", "Jul");
+//                my_bar_chart_dataset.addValue(15, "mes", "Ago");
                 
                 
                 
@@ -49,10 +63,15 @@ public class BarChartAviso {
                 JFreeChart chart=ChartFactory.createBarChart("Detalle de sus consumos","","MT3",my_bar_chart_dataset,PlotOrientation.VERTICAL,true,true,false);         
                
                 
+                
                 //chart.setBackgroundPaint(Color.lightGray);
                 // get a reference to the plot for further customisation... 
                 final CategoryPlot plot = chart.getCategoryPlot(); 
                 CategoryItemRenderer renderer = new CustomRenderer(); 
+        
+                renderer.setSeriesPaint(0, Color.gray );
+                   
+                   
                 plot.setRenderer(renderer);
                 plot.setBackgroundPaint(Color.white);
                
@@ -61,11 +80,11 @@ public class BarChartAviso {
                 chart.setBorderStroke(null);
                 chart.getLegend().visible = false;
                  /* Step -3: Write the output as PNG file with bar chart information */                
-                 int width=400; /* Width of the image */
+                 int width=450; /* Width of the image */
                  int height=250; /* Height of the image */    
                  bi = chart.createBufferedImage(width, height);
-                 
-                
+
+             
       
                  /*
                  
@@ -92,10 +111,11 @@ public class BarChartAviso {
           Color.yellow, Color.orange, Color.cyan, 
           Color.magenta, Color.blue}; 
      }
+     /*
      public Paint getItemPaint(final int row, final int column) 
      { 
         // returns color for each column 
         return Color.gray;
         //return (this.colors[column % this.colors.length]); 
-     } 
+     } */
     }

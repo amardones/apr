@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 package cl.apr.pdf.servlet;
+import cl.apr.beans.BarChartItem;
 import cl.apr.entity.AvisoCobro;
 import cl.apr.pdf.AvisoPDF;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -62,7 +64,14 @@ public class verAviso extends HttpServlet {
 //                list.add(new AvisoCobro());
 //                list.add(new AvisoCobro());
 //                list.add(new AvisoCobro());
-                baos =  AvisoPDF.crearPdf(list);
+                List<BarChartItem> barChartItems;
+                        
+                HashMap<Integer,List<BarChartItem>> hmapBarChartItems = new HashMap<Integer, List<BarChartItem> >();
+                for (AvisoCobro aviso : list) {
+                   barChartItems = ejbFacade.obtenerRegistroEstadoHistoricos(aviso.getAvisoCobroPK().getIdCuenta());
+                   hmapBarChartItems.put(aviso.getAvisoCobroPK().getIdCuenta(), barChartItems);
+                }
+                baos =  AvisoPDF.crearPdf(list, hmapBarChartItems);
 
                 if(baos != null)
                 {

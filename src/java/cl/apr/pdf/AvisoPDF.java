@@ -1,5 +1,6 @@
 package cl.apr.pdf;
 
+import cl.apr.beans.BarChartItem;
 import cl.apr.entity.AvisoCobro;
 import cl.apr.entity.DetalleAvisoCobro;
 import cl.apr.enums.EnumFormatoFechaHora;
@@ -29,6 +30,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -55,7 +57,7 @@ public class AvisoPDF {
 	private static Font fTextPlazo= new Font(Font.getFamily("ARIAL"),8,Font.BOLD | Font.UNDERLINE );
 	    
 	
-	static public ByteArrayOutputStream crearPdf(List<AvisoCobro> avisos){
+	static public ByteArrayOutputStream crearPdf(List<AvisoCobro> avisos, HashMap<Integer,List<BarChartItem>> hmapBarChartItems){
 		
 		Document document =new Document();
 		ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
@@ -85,7 +87,7 @@ public class AvisoPDF {
                                 tableDividePagina.setWidths(columnWidths2);
                             } catch (DocumentException e) {e.printStackTrace();}
                             
-                            PdfPCell pCell = crearAvisos(avisos.get(i));
+                            PdfPCell pCell = crearAvisos(avisos.get(i), hmapBarChartItems.get(avisos.get(i).getAvisoCobroPK().getIdCuenta()));
                             pCell.setBorder(Rectangle.RIGHT);
                             pCell.setFixedHeight(PageSize.LETTER.rotate().getHeight()-100);
                             pCell.setVerticalAlignment(Element.ALIGN_TOP);
@@ -93,7 +95,7 @@ public class AvisoPDF {
                             tableDividePagina.addCell(pCell);
                                  
                             if((i+1) < avisos.size()){                                  
-                                 pCell = crearAvisos(avisos.get(i+1));
+                                 pCell = crearAvisos(avisos.get(i+1), hmapBarChartItems.get(avisos.get(i).getAvisoCobroPK().getIdCuenta()));
                                  pCell.setFixedHeight(PageSize.LETTER.rotate().getHeight()-80);
                                  pCell.setBorder(Rectangle.LEFT);
                                  pCell.setPaddingLeft(30);
@@ -101,7 +103,7 @@ public class AvisoPDF {
                                  tableDividePagina.addCell(pCell);
                                 
                             }else{
-                                 tableDividePagina.addCell(crearAvisos(null));
+                                 tableDividePagina.addCell(crearAvisos(null,null));
                             }
                             
                             document.add(tableDividePagina);
@@ -128,7 +130,7 @@ public class AvisoPDF {
 		
 	}
 	
-	 static private PdfPCell crearAvisos(AvisoCobro aviso) {
+	 static private PdfPCell crearAvisos(AvisoCobro aviso, List<BarChartItem> barChartItem) {
             System.out.println("Creando aviso 2");
             PdfPCell pCell = null;
             try {
@@ -321,7 +323,7 @@ public class AvisoPDF {
                     URL urlImagen;
                     Image imagen = null;
                     try {
-                        BufferedImage bi = BarChartAviso.crearBarchart();
+                        BufferedImage bi = BarChartAviso.crearBarchart(barChartItem);
                                 
                         //urlImagen = new URL("http://localhost/APR/resources/images/default_barchart.png");
                         //imagen = Image.getInstance(urlImagen);

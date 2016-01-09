@@ -5,10 +5,14 @@
  */
 package cl.apr.facade;
 
+import cl.apr.beans.BarChartItem;
+import cl.apr.beans.ItemReporte;
 import cl.apr.entity.AvisoCobro;
 import cl.apr.entity.Medidor;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -73,38 +77,46 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
         return false;
     }
      
-       @TransactionAttribute(TransactionAttributeType.REQUIRED)
-     public void obtenerCursor(){
+      @TransactionAttribute(TransactionAttributeType.REQUIRED)
+     public List<BarChartItem> obtenerRegistroEstadoHistoricos(Integer idCuenta){
+         
+       List<BarChartItem> barChartItems = new ArrayList<BarChartItem>();
        try{
            if(em.isOpen()){
                 //em.getTransaction().begin();
-                StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("fn_reporte_libro_ingresos");
+                StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("fn_obtener_estados_historicos");
                 // set parameters
-                storedProcedure.registerStoredProcedureParameter(1, ResultSet.class, ParameterMode.REF_CURSOR);
-                storedProcedure.registerStoredProcedureParameter(2, java.sql.Date.class, ParameterMode.IN);
-                storedProcedure.registerStoredProcedureParameter(3, java.sql.Date.class, ParameterMode.IN);
-               
-                
-                storedProcedure.setParameter(2, new java.sql.Date(new Date().getTime()));
-                storedProcedure.setParameter(3, new java.sql.Date(new Date().getTime()));
-                
+                storedProcedure.registerStoredProcedureParameter(1,ResultSet.class, ParameterMode.REF_CURSOR);
+                storedProcedure.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
+              
+                storedProcedure.setParameter(2,  idCuenta);
+ 
                 // execute SP
                 storedProcedure.execute();
                 // get result
-               List result = storedProcedure.getResultList();
-//               while (rs.next()) {              
-//               
-//                System.out.println(rs.getString("nombre"));
-//               
-//                 }
-                System.out.println("result is: " + result.size());
+                @SuppressWarnings("unchecked")
+                List result=storedProcedure.getResultList();
+                //ItemReporte userRecords = new ItemReporte();
+                @SuppressWarnings("rawtypes")
+                Iterator it = result.iterator( );
+                BarChartItem bcItem;
+                while (it.hasNext( )) {
+                    Object[] resulta = (Object[])it.next(); // Iterating through array object 
+
+                bcItem = new BarChartItem();
+                bcItem.setNombre((String) resulta[1]);
+                bcItem.setValor((Integer) resulta[2]);
                
-              
+                barChartItems.add(bcItem);
+                
+                }   
+
            }
        } catch(Exception e){
-             e.printStackTrace();;
+             e.printStackTrace();
         }
 
+       return barChartItems;
     }
      
      public List<AvisoCobro> getAvisosPorPeriodo(int idPeriodo) {
@@ -122,7 +134,6 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
          query.setParameter("idPeriodo",idPeriodo);
          query.setParameter("idCuenta",idCuenta);
          return (AvisoCobro) query.getSingleResult();
-       
     }
 
     /* 
