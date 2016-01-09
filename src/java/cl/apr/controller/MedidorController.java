@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -49,16 +50,27 @@ public class MedidorController implements Serializable {
         return ejbFacade;
     }
 
-    public Medidor prepareCreate() {
+    public Medidor prepareCreate() {        
         selected = new Medidor();
         initializeEmbeddableKey();
+        System.out.println("Prepare Medidor");
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MedidorCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+        boolean rutEnBD=false;        
+        for (Medidor item : this.getItems()) {
+            if(item.getNumeroMedidor().equals(selected.getNumeroMedidor())){
+               rutEnBD=true;
+            }
+        }
+        if(!rutEnBD){
+            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MedidorCreated"));
+            if (!JsfUtil.isValidationFailed()) {
+                items = null;    // Invalidate list of items to trigger re-query.
+            }
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Medidor ya Existe",null));
         }
     }
 

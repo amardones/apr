@@ -6,6 +6,7 @@ import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.facade.SocioFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -55,14 +56,27 @@ public class SocioController implements Serializable {
     public Socio prepareCreate() {
         selected = new Socio();
         initializeEmbeddableKey();
+        System.out.println("Prepare Socio");
         return selected;
     }
 
-    public void create() {   
-            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SocioCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+    public void create() {
+        boolean rutEnBD=false;        
+        for (Socio socio : this.getItems()) {
+            if(socio.getRut().equals(selected.getRut())){
+               rutEnBD=true;
+            }
         }
+        if(!rutEnBD){
+                persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SocioCreated"));
+                if (!JsfUtil.isValidationFailed()) {
+                    items = null;    // Invalidate list of items to trigger re-query.
+                } 
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Rut ya existe",null));
+     
+        }
+            
         
     }
    
@@ -85,7 +99,30 @@ public class SocioController implements Serializable {
         }
         return items;
     }
+public List<Socio> completeSocio(String query) {
+        System.out.println("Entro complete");
+        List<Socio> filteredThemes = new ArrayList<Socio>();
+        try{
+            List<Socio> allThemes = getFacade().findAll();
 
+            Socio c = null;
+            String s = "";        
+            for (int i = 0; i < allThemes.size(); i++) {
+                 c = allThemes.get(i);
+                 if(c != null){
+                    s = c.getRut()+ c.getNombre() + c.getApellido() + c.getCelular();
+                    if(s.toLowerCase().contains(query)) {
+                        filteredThemes.add(c);
+                    }
+                 }
+            }
+        }catch(Exception e){
+            System.out.println("EXCEPTION");
+            e.printStackTrace();
+        }
+        System.out.println("Sale complete");
+        return filteredThemes;
+    }
     public boolean validarRut() {
         rut=null;
         boolean validacion = false;

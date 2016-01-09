@@ -1,6 +1,6 @@
 package cl.apr.controller;
 
-import cl.apr.beans.cuentaSubsidiada;
+
 import cl.apr.entity.Cuenta;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
@@ -26,7 +26,11 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.inject.Inject;
 
 @Named("cuentaController")
 @SessionScoped
@@ -34,6 +38,11 @@ public class CuentaController implements Serializable {
 
     @EJB
     private cl.apr.facade.CuentaFacade ejbFacade;
+    @Inject
+    private SocioController socioController;
+    
+    @Inject
+    private MedidorController medidorController;
     @EJB
     private cl.apr.facade.MedidorFacade ejbMedidorFacade;
     @EJB
@@ -85,7 +94,17 @@ public class CuentaController implements Serializable {
         
         return selected;
     }
-
+   /* public ActionListener createActionListener() {
+        return new ActionListener() {
+            @Override
+            public void processAction(ActionEvent event) throws AbortProcessingException {
+                   //cuentaController.prepareCreate();
+                   //medidorController.prepareCreate();
+                   socioController.prepareCreate();
+            }
+            
+        };
+    }*/
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -118,32 +137,7 @@ public class CuentaController implements Serializable {
          items = getFacade().findAll();
          return items;
     }
-    public List<cuentaSubsidiada> getCuentasSubsidiadas() {
-         List<cuentaSubsidiada> cc=new ArrayList<cuentaSubsidiada>();
-         cuentaSubsidiada cs= new cuentaSubsidiada();
-         int monto=0;
-         int porcentaje=0;
-         int m3Tope=0; 
-         int valorM3=0;
-         items = getFacade().findAll();
-         for (Cuenta item : items) {
-            if(item.getCuentaSubsidio()!=null){
-                cs.setIdCuenta(item.getIdCuenta());
-                cs.setDireccion(item.getDireccion());                
-                cs.setRut(item.getRut().getRut());
-                cs.setNombre(item.getRut().getNombre()+""+item.getRut().getApellido());
-                porcentaje=item.getCuentaSubsidio().getIdSubsidio().getPorcentaje().intValue();
-                valorM3=ejbParametricos.getLastValoresParametricos().getValorM3();
-                m3Tope=item.getCuentaSubsidio().getIdSubsidio().getMetrosCubicosTope();
-                monto=((m3Tope*valorM3*porcentaje)/100);
-                cs.setPorcentaje(porcentaje);
-                cs.setNombreSubsidio(item.getCuentaSubsidio().getIdSubsidio().getNombre());
-                cs.setMonto(monto);
-                cc.add(cs);
-            }
-         }return cc;
-    }
-    
+      
     public int getMontoSubsidio(){
         int monto=0;
         int porcentaje=0;

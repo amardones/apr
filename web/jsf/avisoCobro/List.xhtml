@@ -170,8 +170,8 @@
                             <f:facet name="header">
                                 <h:outputText value="Descuento"/>
                             </f:facet>
-                            <h:outputText value="$ #{item.descuentoPeriodo}" >
-                                 <f:convertNumber pattern="#0.000" locale="pt_CL"/>
+                            <h:outputText value=" $ #{item.descuentoPeriodo*(-1)}" >
+                                 <f:convertNumber pattern="0.000" locale="pt_CL"/>
                             </h:outputText>
                         </p:column>
                         <p:column>
