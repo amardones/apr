@@ -79,6 +79,7 @@ public class AvisoPDF {
 
                         //System.out.println("Creando aviso 0");
                         int i=0;
+                        AvisoCobro av;
                         while(i<avisos.size()){
                             PdfPTable tableDividePagina = new PdfPTable(2);
                             tableDividePagina.setWidthPercentage(100);
@@ -86,16 +87,17 @@ public class AvisoPDF {
                             try {
                                 tableDividePagina.setWidths(columnWidths2);
                             } catch (DocumentException e) {e.printStackTrace();}
-                            
-                            PdfPCell pCell = crearAvisos(avisos.get(i), hmapBarChartItems.get(avisos.get(i).getAvisoCobroPK().getIdCuenta()));
+                            av = avisos.get(i);
+                            PdfPCell pCell = crearAvisos(av, hmapBarChartItems.get(av.getAvisoCobroPK().getIdCuenta()));
                             pCell.setBorder(Rectangle.RIGHT);
                             pCell.setFixedHeight(PageSize.LETTER.rotate().getHeight()-100);
                             pCell.setVerticalAlignment(Element.ALIGN_TOP);
                             pCell.setPaddingRight(30);
                             tableDividePagina.addCell(pCell);
                                  
-                            if((i+1) < avisos.size()){                                  
-                                 pCell = crearAvisos(avisos.get(i+1), hmapBarChartItems.get(avisos.get(i).getAvisoCobroPK().getIdCuenta()));
+                            if((i+1) < avisos.size()){     
+                                av = avisos.get(i+1);
+                                 pCell = crearAvisos(av, hmapBarChartItems.get(av.getAvisoCobroPK().getIdCuenta()));
                                  pCell.setFixedHeight(PageSize.LETTER.rotate().getHeight()-80);
                                  pCell.setBorder(Rectangle.LEFT);
                                  pCell.setPaddingLeft(30);
