@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.faces.bean.ManagedProperty;
 import javax.inject.Inject;
 
@@ -55,6 +56,14 @@ public class AvisoCobroController implements Serializable {
         this.selected = selected;
     }
     
+    public boolean permiteRecalcular(){
+        if(periodoController.ultimoPeriodo(periodoController.getSelected()) ){
+            if(periodoController.getSelected().getFechaEmision().getTime() >= new Date().getTime()){
+                return true;
+            }
+        }
+        return false;
+    }
           
     public void generarTodosLosAvisoCobro() {
       if(periodoController.getSelected() != null && getFacade().crearAvisosDeCobro(periodoController.getSelected().getIdPeriodo(), -1)){
