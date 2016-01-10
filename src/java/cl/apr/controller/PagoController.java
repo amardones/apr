@@ -19,6 +19,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -112,19 +113,28 @@ public class PagoController implements Serializable {
     public void create() {
         selected.setIdCuenta(cuentaController.getSelected());
         selected.setDetalleAvisoCobroList(detalleAvisoPagos);
-        
-        for(int i=0;i<detalleAvisoPagos.size();i++){
-            detalleAvisoPagos.get(i).setPagado(true);
-            //detalleAvisoPagos.get(i).getCobroCuotaList().get(i).
-            ejbFacadeDetalleAviso.edit(detalleAvisoPagos.get(i));
-            
+        boolean nDocumentoEnBD=false;
+        for (Pago item : items) {
+            if(item.getNumeroDocumento().equals(selected.getNumeroDocumento())){
+            nDocumentoEnBD=true;
+            } 
         }
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PagoCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+        if(nDocumentoEnBD==false && selected.getSubtotal()>0){
+            for(int i=0;i<detalleAvisoPagos.size();i++){
+                detalleAvisoPagos.get(i).setPagado(true);
+                //detalleAvisoPagos.get(i).getCobroCuotaList().get(i).
+                ejbFacadeDetalleAviso.edit(detalleAvisoPagos.get(i));
+
+            }
+            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PagoCreated"));
+            if (!JsfUtil.isValidationFailed()) {
+                items = null;    // Invalidate list of items to trigger re-query.
+            }
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Debe elegir un Item o N° Documento ya Existe",null));
         }
     }
-
+    
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PagoUpdated"));
     }
@@ -143,7 +153,14 @@ public class PagoController implements Serializable {
         }
         return items;
     }
-    
+    public boolean permitePagar(){
+            if(periodoController.getUltimoPeriodo()!=null){
+                if(periodoController.getUltimoPeriodo().getFechaEmision().getTime() <= new Date().getTime()){
+                    return false;
+                } 
+            }
+        return true;
+    }
     public void limpiarDetalles(AjaxBehaviorEvent event){
         itemsDetalleAvisos = null;
         detalleAvisoPagos = null;

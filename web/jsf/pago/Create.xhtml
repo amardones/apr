@@ -30,7 +30,7 @@
                               <h:form id="DetalleAvisoCobroListForm">
                                   <p:dataTable id="datalist" value="#{pagoController.itemsDetalleAvisos}" var="item"
                                                 selection="#{pagoController.detalleAvisoPagos}"
-                                                     paginator="true"
+                                                     paginator="false"
                                                      rowKey="#{item.idDetalleAvisoCobro}"
                                                      rows="10"
                                                      rowsPerPageTemplate="10,20,30,40,50"

@@ -106,11 +106,21 @@ public class CuentaController implements Serializable {
         };
     }*/
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-             System.out.println("limpiando cuenta create");
-            items = null;    // Invalidate list of items to trigger re-query.
-            selected = null;
+        boolean nCuentaEnBD=false;        
+        for (Cuenta item : items) {
+            if(item.getIdCuenta().equals(selected.getIdCuenta())){
+            nCuentaEnBD=true;
+            }                
+        }
+        if(!nCuentaEnBD){
+            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
+            if (!JsfUtil.isValidationFailed()) {
+                 System.out.println("limpiando cuenta create");
+                items = null;    // Invalidate list of items to trigger re-query.
+                selected = null;
+            }
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: N° de Cuenta ya exixte",null));
         }
     }
 
