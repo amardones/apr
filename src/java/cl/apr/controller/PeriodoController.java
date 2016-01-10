@@ -51,6 +51,13 @@ public class PeriodoController implements Serializable {
         
         return  items;
     }
+
+    public Periodo getUltimoPeriodo() {
+        ultimoPeriodo = ejbFacade.getLastPeriodo();
+        return ultimoPeriodo;
+    }
+  
+    
     
     public boolean ultimoPeriodo(Periodo periodo){
         try{
