@@ -48,6 +48,30 @@ public class ReportesController implements Serializable {
     }
 
     public List<ItemReporte> getItems() {
+//        items= new ArrayList<>();
+//        itemResumen=new ItemReporte();
+//        if(fechaInicio!=null&&fechaFin==null){
+//            items= pagoFacade.reporteLibroIngreso(fechaInicio , fechaInicio);
+//        }
+//        if(fechaInicio!=null&&fechaFin!=null){
+//            System.out.println("Fecha: "+fechaInicio);
+//            items= pagoFacade.reporteLibroIngreso(fechaInicio , fechaFin);
+//        }  
+//        for (ItemReporte item : items) {
+//            itemResumen.setConsumoAgua(itemResumen.getConsumoAgua()+item.getConsumoAgua());
+//            itemResumen.setCorteReposicion(itemResumen.getCorteReposicion()+item.getCorteReposicion());
+//            itemResumen.setCuotaSocial(itemResumen.getCuotaSocial()+item.getCuotaSocial());
+//            itemResumen.setDerechoIncorporacion(itemResumen.getDerechoIncorporacion()+item.getDerechoIncorporacion());
+//            itemResumen.setInteres(itemResumen.getInteres()+item.getInteres());
+//            itemResumen.setMultas(itemResumen.getMultas()+item.getMultas());
+//            itemResumen.setOtrosCobros(itemResumen.getOtrosCobros()+item.getOtrosCobros());
+//            itemResumen.setTotalItem(itemResumen.getTotalItem()+item.getTotalItem());
+//        }
+        return items;
+    }
+
+    
+     public void buscarIngresos() {
         items= new ArrayList<>();
         itemResumen=new ItemReporte();
         if(fechaInicio!=null&&fechaFin==null){
@@ -67,9 +91,8 @@ public class ReportesController implements Serializable {
             itemResumen.setOtrosCobros(itemResumen.getOtrosCobros()+item.getOtrosCobros());
             itemResumen.setTotalItem(itemResumen.getTotalItem()+item.getTotalItem());
         }
-        return items;
     }
-
+     
      public List<ItemReporte> getItemsBusqueda() {
          return items;
      }
@@ -86,6 +109,13 @@ public class ReportesController implements Serializable {
         this.itemResumen = itemResumen;
     }
     
+    
+    public boolean permiteExportarExcel(){        
+        if( items != null &&  items.size()>0)
+            return true;
+        
+        return false;
+    }
     
 
     public ReportesController() {
@@ -188,7 +218,7 @@ public class ReportesController implements Serializable {
     
       public void verReporteIngresos() {
         try {
-            if(items != null){
+            if(items != null && items.size() > 0){
                 FacesContext ctx = FacesContext.getCurrentInstance();
                 ExternalContext ectx = ctx.getExternalContext();
                 HttpServletRequest request = (HttpServletRequest) ectx.getRequest();

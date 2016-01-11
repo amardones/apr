@@ -12,6 +12,13 @@
             <h:form id="RegistroEstadoEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{registroEstadoController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_periodo}" for="periodo" />
+                        <p:outputLabel id="periodo"  value="#{registroEstadoController.selected.periodo.nombre}" />
+                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_cuenta}" for="cuenta" />
+                        <p:outputLabel id="cuenta" value="#{registroEstadoController.selected.cuenta.idCuenta}: #{registroEstadoController.selected.cuenta.rut.nombre} #{registroEstadoController.selected.cuenta.rut.apellido}"  />
+                        <p:outputLabel value="#{bundle.EditMedidorLabel_numeroMedidor}" for="numeroMedidor" />
+                        <p:outputLabel id="numeroMedidor"  value="#{registroEstadoController.selected.cuenta.numeroMedidor.numeroMedidor}" />
+                        
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_estadoAnterior}" for="estadoAnterior" />
                         <p:inputText id="estadoAnterior" value="#{registroEstadoController.selected.estadoAnterior}" title="#{bundle.EditRegistroEstadoTitle_estadoAnterior}" required="true" disabled="true" requiredMessage="#{bundle.EditRegistroEstadoRequiredMessage_estadoAnterior}"/>
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_estadoActual}" for="estadoActual" />
@@ -22,18 +29,13 @@
                             <p:ajax event="change" update="metrosCubicos" listener="#{registroEstadoController.calculaM3()}"/>
                         </p:inputText>             
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_metrosCubicos}" for="metrosCubicos" />
-                        <p:inputText id="metrosCubicos" value="#{registroEstadoController.selected.metrosCubicos}" title="#{bundle.EditRegistroEstadoTitle_metrosCubicos}" required="true" disabled="true" requiredMessage="#{bundle.EditRegistroEstadoRequiredMessage_metrosCubicos}"/>
+                        <p:outputLabel id="metrosCubicos" value="#{registroEstadoController.selected.metrosCubicos}" title="#{bundle.EditRegistroEstadoTitle_metrosCubicos}" />
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{registroEstadoController.selected.descripcion}" title="#{bundle.EditRegistroEstadoTitle_descripcion}" />
-                        <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_cuenta}" for="cuenta" />
-                        <p:outputLabel id="cuenta" value="#{registroEstadoController.selected.cuenta.numeroMedidor.numeroMedidor}  #{registroEstadoController.selected.cuenta.rut.nombre} #{registroEstadoController.selected.cuenta.rut.apellido}"  />
 
-                        <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_periodo}" for="periodo" />
-                        <p:outputLabel id="periodo"  value="#{registroEstadoController.selected.periodo.nombre}" />
-                
                     </p:panelGrid>
                     <p:commandButton actionListener="#{registroEstadoController.update}" value="#{bundle.Save}" update="display,:RegistroEstadoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'RegistroEstadoEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="RegistroEstadoEditDialog.hide()"/>
+
                 </h:panelGroup>
             </h:form>
         </p:dialog>

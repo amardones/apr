@@ -188,7 +188,7 @@ public class AvisoPDF {
                     tableHeaderCuenta.addCell(new Phrase("Cliente",fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase(": "+aviso.getRegistroEstado().getCuenta().getRut().getNombre() +" "+aviso.getRegistroEstado().getCuenta().getRut().getApellido(),fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase("N° Aviso",fCuerpoTabla));
-                    tableHeaderCuenta.addCell(new Phrase(": ",fCuerpoTabla));   
+                    tableHeaderCuenta.addCell(new Phrase(": "+aviso.getAvisoCobroPK().getIdCuenta() +"-"+aviso.getAvisoCobroPK().getIdPeriodo(),fCuerpoTabla));   
                              
                     tableHeaderCuenta.addCell(new Phrase("N° Cliente",fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase(": "+aviso.getRegistroEstado().getCuenta().getRut().getRut(),fCuerpoTabla));
@@ -285,9 +285,9 @@ public class AvisoPDF {
                         if(det.getIdDetalleAvisoCobroAnt() > 0){
                             info += "Pendiente ";
                         }
-//                        if(det.getDescuento() > 0){
-//                            info += "SubTotal: "+det.getSubTotal() + " | Descuento: "+det.getDescuento();
-//                        }
+                        if(!det.getIdTipoCobro().getCodigoTipoCobro().equals("CONSDEAGUA")){
+                            info += det.getDescripcion();
+                        }
                         
                         cPag02 = new PdfPCell(new Phrase(info,fCuerpoTabla));
                         cPag02.setVerticalAlignment(Element.ALIGN_MIDDLE);

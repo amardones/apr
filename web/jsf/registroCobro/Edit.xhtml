@@ -21,7 +21,7 @@
                         <p:outputLabel value="#{bundle.EditRegistroCobroLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{registroCobroController.selected.descripcion}" title="#{bundle.EditRegistroCobroTitle_descripcion}" />
                         <p:outputLabel value="#{bundle.EditRegistroCobroLabel_fechaCreacion}" for="fechaCreacion" />
-                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy" value="#{registroCobroController.selected.fechaCreacion}" title="#{bundle.EditRegistroCobroTitle_fechaCreacion}"  showOn="button"/>
+                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy" value="#{registroCobroController.selected.fechaCreacion}" title="#{bundle.EditRegistroCobroTitle_fechaCreacion}"  showOn="button" locale="es"/>
                         <p:outputLabel value="#{bundle.EditRegistroCobroLabel_mesPrimeraCuota}" for="mesPrimeraCuota" />
                         <p:inputText id="mesPrimeraCuota" value="#{registroCobroController.selected.mesPrimeraCuota}" title="#{bundle.EditRegistroCobroTitle_mesPrimeraCuota}" required="true" requiredMessage="#{bundle.EditRegistroCobroRequiredMessage_mesPrimeraCuota}"/>
                         <p:outputLabel value="#{bundle.EditRegistroCobroLabel_idCuenta}" for="idCuenta" />

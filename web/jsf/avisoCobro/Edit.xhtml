@@ -19,7 +19,7 @@
                         <p:outputLabel value="#{bundle.EditAvisoCobroLabel_total}" for="total" />
                         <p:inputText id="total" value="#{avisoCobroController.selected.total}" title="#{bundle.EditAvisoCobroTitle_total}" required="true" requiredMessage="#{bundle.EditAvisoCobroRequiredMessage_total}"/>
                         <p:outputLabel value="#{bundle.EditAvisoCobroLabel_fechaCreacion}" for="fechaCreacion" />
-                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{avisoCobroController.selected.fechaCreacion}" title="#{bundle.EditAvisoCobroTitle_fechaCreacion}"  showOn="button"/>
+                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{avisoCobroController.selected.fechaCreacion}" title="#{bundle.EditAvisoCobroTitle_fechaCreacion}"  showOn="button" locale="es"/>
                         <p:outputLabel value="#{bundle.EditAvisoCobroLabel_cuenta}" for="cuenta" />
                         <p:selectOneMenu id="cuenta" value="#{avisoCobroController.selected.cuenta}" required="true" requiredMessage="#{bundle.EditAvisoCobroRequiredMessage_cuenta}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

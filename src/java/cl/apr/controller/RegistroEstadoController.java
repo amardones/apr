@@ -73,7 +73,12 @@ public class RegistroEstadoController implements Serializable {
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("RegistroEstadoUpdated"));
+        if(selected.getMetrosCubicos() >= 0){
+             persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("RegistroEstadoUpdated"));
+        }else{
+             JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("RegistroEstadosEditarMetrosCubicosError"));
+        }
+       
     }
 
     public void destroy() {

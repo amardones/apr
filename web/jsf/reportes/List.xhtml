@@ -19,43 +19,32 @@
             <h:form id="reportListForm">                
                 <p:fieldset legend="#{bundle.ListReporteTitle}" style="margin-bottom:20px"> 
                     <h:panelGroup id="panel">
-                        <p:panelGrid columns="6" id="panelReportes" >                        
+                        <p:panelGrid columns="7" id="panelReportes" >                        
                         <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaInicio}" for="fechaInicioReporte" />
-                        <p:calendar id="fechaInicioReporte" pattern="dd/MM/yyyy" value="#{reportesController.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaInicio}" showOn="button">
-                            <p:ajax event="dateSelect" process="fechaInicioReporte" update="fechaFinReporte datalist, btnVerReporte" listener="#{reportesController.limpiaFecha()}"/> 
+                        <p:calendar id="fechaInicioReporte" 
+                                    pattern="dd/MM/yyyy" value="#{reportesController.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" 
+                                    required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaInicio}" showOn="button" locale="es">
+                            <p:ajax event="dateSelect" process="fechaInicioReporte" update="fechaFinReporte" listener="#{reportesController.limpiaFecha()}"/> 
                         </p:calendar>
-                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaFin}" for="fechaInicioReporte" />
-                        <p:calendar id="fechaFinReporte" pattern="dd/MM/yyyy" value="#{reportesController.fechaFin}"  showOn="button">
-                            <p:ajax event="dateSelect" process="fechaFinReporte" update="datalist, btnVerReporte" /> 
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaFin}" for="fechaFinReporte" />
+                        <p:calendar id="fechaFinReporte" 
+                                    pattern="dd/MM/yyyy" value="#{reportesController.fechaFin}"  showOn="button" locale="es">
+                            <p:ajax event="dateSelect" process="fechaFinReporte"  /> 
                         </p:calendar>       
-                         
-                        <p:commandLink id="btnVerReporte" action="#{reportesController.verReporteIngresos()}"                                            
-                                           ajax="false" 
-                                           global="false" 
-                                           process="@this"
-                                           target="blank"
-                                           
-                                           >
-                                         <p:graphicImage styleClass="myButtonVer" /> 
-                                     </p:commandLink>
-                        
-                       <!--<h:commandLink>
-                            <p:graphicImage styleClass="myButtonVer" /> 
-                            <p:dataExporter type="xls" target="datalist" fileName="reporteXLS" pageOnly="true"  />
-                        </h:commandLink>
-                        <h:commandLink>
-                             <p:graphicImage styleClass="myButtonVer" /> 
-                            <p:dataExporter type="pdf" target="datalist" fileName="reportePDF" encoding="UTF-8" pageOnly="true"  />
-                        </h:commandLink>-->                       
-<!--                           <p:commandLink id="xls" ajax="false"  >  
-                            <p:graphicImage styleClass="myButtonVer" />  
-                            <f:setPropertyActionListener value="true" target="#{exporterController.customExporter}" />  
-                            <pe:exporter type="xlsx" target="datalist" fileName="MessagesTable"  
-                                            />  
+                        <p:commandButton id="btnBuscarIngresos" icon="ui-icon-search"   
+                                         value="Buscar" actionListener="#{reportesController.buscarIngresos()}" update="btnVerReporte datalist"/>
+                        <h:panelGroup id="btnVerReporte">                            
+                             <p:commandLink  action="#{reportesController.verReporteIngresos()}"                                            
+                                        ajax="false" 
+                                        global="false"                                           
+                                        target="blank"
+                                        rendered="#{reportesController.permiteExportarExcel()}"
+                                        >
+                                        <p:graphicImage styleClass="myButtonVerE" /> 
+                            </p:commandLink>
+                        </h:panelGroup>
+                       
 
-                         </p:commandLink>  
-  -->
-                  
                     </p:panelGrid>  
                         </h:panelGroup> 
                 </p:fieldset>

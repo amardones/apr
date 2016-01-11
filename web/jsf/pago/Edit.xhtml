@@ -17,7 +17,7 @@
                         <p:outputLabel value="#{bundle.EditPagoLabel_numeroDocumento}" for="numeroDocumento" />
                         <p:inputText id="numeroDocumento" value="#{pagoController.selected.numeroDocumento}" title="#{bundle.EditPagoTitle_numeroDocumento}" required="true" requiredMessage="#{bundle.EditPagoRequiredMessage_numeroDocumento}"/>
                         <p:outputLabel value="#{bundle.EditPagoLabel_fechaCreacion}" for="fechaCreacion" />
-                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{pagoController.selected.fechaCreacion}" title="#{bundle.EditPagoTitle_fechaCreacion}"  showOn="button"/>
+                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{pagoController.selected.fechaCreacion}" title="#{bundle.EditPagoTitle_fechaCreacion}"  showOn="button" locale="es"/>
                         <p:outputLabel value="#{bundle.EditPagoLabel_subtotal}" for="subtotal" />
                         <p:inputText id="subtotal" value="#{pagoController.selected.subtotal}" title="#{bundle.EditPagoTitle_subtotal}" required="true" requiredMessage="#{bundle.EditPagoRequiredMessage_subtotal}"/>
                         <p:outputLabel value="#{bundle.EditPagoLabel_interes}" for="interes" />
