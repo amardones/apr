@@ -56,74 +56,81 @@
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  paginatorPosition="bottom"
                                  >
-                    
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Cuenta"/>
-                            </f:facet>
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <p:column headerText="Cuenta"/>
+                                <p:column headerText="N° Documento"/>
+                                <p:column headerText="#{bundle.ListReportesTitle_tarifa}"/>
+                                <p:column headerText="#{bundle.ListReportesTitle_cuotaSocial}"/>
+                                <p:column headerText="#{bundle.ListReportesTitle_interes}"/>
+                                <p:column headerText="#{bundle.ListReportesTitle_multas}"/>
+                                <p:column headerText="#{bundle.ListReportesTitle_corteyreposicion}"/>
+                                <p:column headerText="#{bundle.ListReportesTitle_derechoIncorp}"/>
+                                <p:column headerText="#{bundle.ListReportesTitle_otras}"/>
+                                <p:column headerText="Total"/>
+                                </p:row>
+                        </p:columnGroup>
+                        <p:column> 
                             <h:outputText value="#{item.cuenta}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.numeroDocumento}"/>
                         </p:column>
           
                         <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReportesTitle_tarifa}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.consumoAgua}"/>
+                            <h:outputText value="#{item.consumoAgua}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                            </h:outputText>
                         </p:column>
                         <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReportesTitle_cuotaSocial}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.cuotaSocial}"/>
+                            <h:outputText value="#{item.cuotaSocial}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                            </h:outputText>
+                            
                         </p:column>
                         <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReportesTitle_interes}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.interes}"/>
+                            <h:outputText value="#{item.interes}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                            </h:outputText>
                         </p:column>
                         <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReportesTitle_multas}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.multas}"/>
+                            <h:outputText value="#{item.multas}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                            </h:outputText>
                         </p:column>
                         <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReportesTitle_corteyreposicion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.corteReposicion}"/>
+                            <h:outputText value="#{item.corteReposicion}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                            </h:outputText>
                         </p:column>
                         <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReportesTitle_derechoIncorp}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.derechoIncorporacion}"/>
+                            <h:outputText value="#{item.derechoIncorporacion}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                            </h:outputText>
                         </p:column>
                     <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReportesTitle_otras}"/>
-                            </f:facet>
-                        <h:outputText value="#{item.otrosCobros}"/>
+                        <h:outputText value="#{item.otrosCobros}">
+                        <f:convertNumber type="currency" currencySymbol="$"/>
+                        </h:outputText>
                         </p:column>
                     <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Total"/>
-                            </f:facet>
-                        <h:outputText value="#{item.totalItem}"/>
+                        <h:outputText value="#{item.totalItem}">
+                        <f:convertNumber type="currency" currencySymbol="$"/>
+                        </h:outputText>
                     </p:column>
+                            
                     <p:columnGroup type="footer">
                         <p:row>
-                            <p:column colspan="1" style="text-align:right" footerText="Totals:" />                           
-
-                            <p:column footerText="#{reportesController.itemResumen.consumoAgua}" />
-                            <p:column footerText="#{reportesController.itemResumen.cuotaSocial}" />
-                            <p:column footerText="#{reportesController.itemResumen.interes}" />
-                            <p:column footerText="#{reportesController.itemResumen.multas}" />
-                            <p:column footerText="#{reportesController.itemResumen.corteReposicion}" />
-                            <p:column footerText="#{reportesController.itemResumen.derechoIncorporacion}" />
-                            <p:column footerText="#{reportesController.itemResumen.otrosCobros}" />
-                            <p:column footerText="#{reportesController.itemResumen.totalItem}" />
+                            <p:column colspan="1" style="text-align:right" footerText="" />
+                            <p:column colspan="1" style="text-align:right" footerText="Totals:" />  
+                            <p:column footerText="$#{reportesController.itemResumen.consumoAgua}" />
+                            <p:column footerText="$#{reportesController.itemResumen.cuotaSocial}" />
+                            <p:column footerText="$#{reportesController.itemResumen.interes}" />
+                            <p:column footerText="$#{reportesController.itemResumen.multas}" />
+                            <p:column footerText="$#{reportesController.itemResumen.corteReposicion}" />
+                            <p:column footerText="$#{reportesController.itemResumen.derechoIncorporacion}" />
+                            <p:column footerText="$#{reportesController.itemResumen.otrosCobros}" />
+                            <p:column footerText="$#{reportesController.itemResumen.totalItem}" />
                         </p:row>
                     </p:columnGroup>
                 </p:dataTable>

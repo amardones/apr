@@ -56,14 +56,7 @@ public class AvisoCobroController implements Serializable {
         this.selected = selected;
     }
     
-    public boolean permiteRecalcular(){
-        if(periodoController.ultimoPeriodo(periodoController.getSelected()) ){
-            if(periodoController.getSelected().getFechaEmision().getTime() >= new Date().getTime()){
-                return true;
-            }
-        }
-        return false;
-    }
+   
           
     public void generarTodosLosAvisoCobro() {
       if(periodoController.getSelected() != null && getFacade().crearAvisosDeCobro(periodoController.getSelected().getIdPeriodo(), -1)){

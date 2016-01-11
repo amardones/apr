@@ -192,6 +192,14 @@ public class PeriodoController implements Serializable {
             }
         }
     }
+     public boolean permiteRecalcular(){
+        if(ultimoPeriodo(selected) ){
+            if(selected.getFechaEmision().getTime() >= new Date().getTime()){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public Periodo getPeriodo(java.lang.Integer id) {
         return getFacade().find(id);
