@@ -51,10 +51,7 @@
                 <p:fieldset legend="#{bundle.ListReportesTitle} #{ReportesController.Mes} #{bundle.CreateCobroCuotaTitle_anio} "  style="margin-bottom:20px">
                     <p:dataTable id="datalist" value="#{reportesController.items}" var="item"
                                  scrollable="true" scrollHeight="280"
-                                 paginator="false"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 paginatorPosition="bottom"
+                                
                                  >
                         <p:columnGroup type="header">
                             <p:row>
@@ -68,6 +65,7 @@
                                 <p:column headerText="#{bundle.ListReportesTitle_derechoIncorp}"/>
                                 <p:column headerText="#{bundle.ListReportesTitle_otras}"/>
                                 <p:column headerText="Total"/>
+                                <p:column headerText="Fecha Creación"/>
                                 </p:row>
                         </p:columnGroup>
                         <p:column> 
@@ -118,10 +116,13 @@
                         <f:convertNumber type="currency" currencySymbol="$"/>
                         </h:outputText>
                     </p:column>
+                    <p:column>
+                        <h:outputText value="#{item.fechaCreacion}"/>
+                    </p:column>
                             
                     <p:columnGroup type="footer">
                         <p:row>
-                            <p:column colspan="1" style="text-align:right" footerText="" />
+                            <p:column colspan="1" style="text-align:right" footerText="" />  
                             <p:column colspan="1" style="text-align:right" footerText="Totals:" />  
                             <p:column footerText="$#{reportesController.itemResumen.consumoAgua}" />
                             <p:column footerText="$#{reportesController.itemResumen.cuotaSocial}" />
@@ -131,6 +132,7 @@
                             <p:column footerText="$#{reportesController.itemResumen.derechoIncorporacion}" />
                             <p:column footerText="$#{reportesController.itemResumen.otrosCobros}" />
                             <p:column footerText="$#{reportesController.itemResumen.totalItem}" />
+                            <p:column footerText="" />
                         </p:row>
                     </p:columnGroup>
                 </p:dataTable>
