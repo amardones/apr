@@ -4,10 +4,14 @@ import cl.apr.entity.Pago;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.entity.DetalleAvisoCobro;
+import cl.apr.entity.PagoTipoCobro;
+import cl.apr.entity.PagoTipoCobroPK;
 import cl.apr.entity.Periodo;
+import cl.apr.entity.TipoCobro;
 import cl.apr.facade.PagoFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -39,9 +43,11 @@ public class PagoController implements Serializable {
     
      
     private List<Pago> items = null;
-    private Pago selected;    
+    private Pago selected;
+    private TipoCobro tipoCobroSelected;
     private List<DetalleAvisoCobro> itemsDetalleAvisos = null;
     private List<DetalleAvisoCobro> detalleAvisoPagos = null;
+    private List<PagoTipoCobro> pagoTipoCobro=null;
     private int total;
     
 
@@ -66,11 +72,17 @@ public class PagoController implements Serializable {
     public List<DetalleAvisoCobro> getItemsDetalleAvisos() {
         if(itemsDetalleAvisos == null){
             itemsDetalleAvisos= ejbFacadeDetalleAviso.getDetalleAvisoCobroDisponibles(cuentaController.getSelected().getIdCuenta());
-            for(int i=0;i<itemsDetalleAvisos.size();i++){
-                System.out.println("item  :"+itemsDetalleAvisos.get(i).getIdTipoCobro().getNombre());;
-            }
+            
         }
         return itemsDetalleAvisos;
+    }
+
+    public TipoCobro getTipoCobroSelected() {
+        return tipoCobroSelected;
+    }
+
+    public void setTipoCobroSelected(TipoCobro tipoCobroSelected) {
+        this.tipoCobroSelected = tipoCobroSelected;
     }
 
     public PagoController() {
@@ -104,6 +116,8 @@ public class PagoController implements Serializable {
 
     public Pago prepareCreate() {
         selected = new Pago();
+        pagoTipoCobro=new ArrayList<PagoTipoCobro>();
+        selected.setPagoTipoCobroList(new ArrayList<>());
         initializeEmbeddableKey();
         itemsDetalleAvisos = null;
         detalleAvisoPagos=null;
@@ -134,6 +148,39 @@ public class PagoController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Debe elegir un Item o N° Documento ya Existe",null));
         }
     }
+    public void agregarItem(){   
+        System.out.println("entrar agregar item");
+        PagoTipoCobro cc=new PagoTipoCobro();
+        PagoTipoCobroPK pk=new PagoTipoCobroPK();
+        pk.setIdTipoCobro(tipoCobroSelected.getIdTipoCobro());
+        cc.setTipoCobro(tipoCobroSelected);
+        cc.setPagoTipoCobroPK(pk);
+        cc.setTotal(2000);
+        pagoTipoCobro.add(cc); 
+        System.out.println("salir agregar item");
+        
+    }
+    
+    public void createPagoExtraordinario() {
+        selected.setInteres(0);
+        selected.setSubtotal(0);
+        
+        selected.setIdCuenta(cuentaController.getSelected());
+        boolean nDocumentoEnBD=false;
+        for (Pago item : items) {
+            if(item.getNumeroDocumento().equals(selected.getNumeroDocumento())){
+            nDocumentoEnBD=true;
+            } 
+        }
+        if(nDocumentoEnBD==false && selected.getTotal()>0){
+            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PagoCreated"));
+            if (!JsfUtil.isValidationFailed()) {
+                items = null;    // Invalidate list of items to trigger re-query.
+            }
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "N° Documento ya Existe",null));
+        }
+    }
     
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PagoUpdated"));
@@ -146,6 +193,16 @@ public class PagoController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
+
+    public List<PagoTipoCobro> getPagoTipoCobro() {
+        return pagoTipoCobro;
+    }
+
+    public void setPagoTipoCobro(List<PagoTipoCobro> pagoTipoCobro) {
+        this.pagoTipoCobro = pagoTipoCobro;
+    }
+
+
 
     public List<Pago> getItems() {
         if (items == null) {
@@ -260,9 +317,52 @@ public class PagoController implements Serializable {
     public List<Pago> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
+    
 
     @FacesConverter(forClass=Pago.class)
     public static class PagoControllerConverter implements Converter {
+
+        @Override
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            PagoController controller = (PagoController)facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "pagoController");
+            return controller.getPago(getKey(value));
+        }
+
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
+            return key;
+        }
+
+        String getStringKey(java.lang.Integer value) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        @Override
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof Pago) {
+                Pago o = (Pago) object;
+                return getStringKey(o.getIdPago());
+            } else {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Pago.class.getName()});
+                return null;
+            }
+        }
+
+    }
+    
+    
+     @FacesConverter(forClass=PagoTipoCobro.class)
+    public static class PagoTipoCobroControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {

@@ -26,7 +26,7 @@
                     </p:panelGrid>  
                     <div style="height: 500px; width: 600px">
                         <h:panelGroup id="display2" >                            
-                            <p:panelGrid  columns="1" rendered="#{cuentaController.selected != null}">
+                            <p:panelGrid  columns="2" rendered="#{cuentaController.selected != null}">
                               <h:form id="DetalleAvisoCobroListForm">
                                   <p:dataTable id="datalist" value="#{pagoController.itemsDetalleAvisos}" var="item"
                                                 selection="#{pagoController.detalleAvisoPagos}"
@@ -96,33 +96,8 @@
                         <p:commandButton actionListener="#{pagoController.create}" rendered="#{cuentaController.selected != null}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>
                                           
                     </h:panelGroup>
-                        
-                        
-                        
-                        
-                        
-                        <!--<p:outputLabel value="#{bundle.CreatePagoLabel_idPago}" for="idPago" />
-                        <p:inputText id="idPago" value="#{pagoController.selected.idPago}" title="#{bundle.CreatePagoTitle_idPago}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_idPago}"/>
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_numeroDocumento}" for="numeroDocumento" />
-                        <p:inputText id="numeroDocumento" value="#{pagoController.selected.numeroDocumento}" title="#{bundle.CreatePagoTitle_numeroDocumento}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_numeroDocumento}"/>
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_fechaCreacion}" for="fechaCreacion" />
-                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{pagoController.selected.fechaCreacion}" title="#{bundle.EditPagoTitle_fechaCreacion}"  showOn="button"/>
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_subtotal}" for="subtotal" />
-                        <p:inputText id="subtotal" value="#{pagoController.selected.subtotal}" title="#{bundle.CreatePagoTitle_subtotal}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_subtotal}"/>
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_interes}" for="interes" />
-                        <p:inputText id="interes" value="#{pagoController.selected.interes}" title="#{bundle.CreatePagoTitle_interes}" />
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_total}" for="total" />
-                        <p:inputText id="total" value="#{pagoController.selected.total}" title="#{bundle.CreatePagoTitle_total}" />
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_idCuenta}" for="idCuenta" />
-                        <p:selectOneMenu id="idCuenta" value="#{pagoController.selected.idCuenta}" >
-                            <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
-                                           var="idCuentaItem"
-                                           itemValue="#{idCuentaItem}"/>
-                        </p:selectOneMenu>-->
-                    
                 </h:panelGroup>
             </h:form>
         </p:dialog>
-
     </ui:composition>
 </html>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition> 
+        <p:dialog id="pagoExtraordinarioCreateDlg" widgetVar="pagoExtraordinarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="CREAR NUEVO PAGO">
+            <h:form id="pagoExtraordinarioCreateForm" >
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2">
+                        
+                        <p:outputLabel value="Buscar cuenta :" for="cuentaAuto" />
+                         
+                        <p:autoComplete id="cuentaAuto" value="#{cuentaController.selected}"
+                                completeMethod="#{cuentaController.completeCuenta}"
+                                var="idCuentaItem"
+                                itemValue="#{idCuentaItem}"
+                                itemLabel="#{idCuentaItem.idCuenta}-#{idCuentaItem.rut.nombre}-#{idCuentaItem.rut.apellido}" 
+                                forceSelection="true"
+                                >
+                            <p:ajax event="itemSelect" process="@form" update="display2 display4"/> 
+                        </p:autoComplete>
+                    </p:panelGrid>
+                    <h:panelGroup id="display2" >
+                            <p:panelGrid id="panelRegistroCobro" columns="3" rendered="#{cuentaController.selected != null}">
+                                <p:outputLabel value="#{bundle.CreatePagoLabel_numeroDocumento}" for="numeroDocumento" />
+                                <p:inputText id="numeroDocumento" value="#{pagoController.selected.numeroDocumento}" title="#{bundle.CreatePagoTitle_numeroDocumento}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_numeroDocumento}"/>
+                                 <p:outputLabel/>
+                                <p:outputLabel value="Tipo de Pago" for="idTipoCobro" />
+                                <p:selectOneMenu id="idTipoCobro" 
+                                                 value="#{pagoController.tipoCobroSelected}" 
+                                                 required="true" 
+                                                 requiredMessage=""                                                 
+                                                 >
+                                    <f:selectItems value="#{tipoCobroController.tiposCobroRegistranCobro}"
+                                                   var="idTipoCobroItem"
+                                                   itemValue="#{idTipoCobroItem}"
+                                                   itemLabel="#{idTipoCobroItem.nombre}"/>   
+                                   <p:ajax event="valueChange" process="idTipoCobro" update="agregarButton"/>
+
+                                </p:selectOneMenu>
+                                
+                                <p:commandButton id="agregarButton" icon="ui-icon-plus" actionListener="#{pagoController.agregarItem()}" 
+                                                 rendered="#{cuentaController.selected != null}" value="Agregar" update=":pagoExtraordinarioCreateForm:pagoListForm:datalist"/>
+                                
+                                <p:outputLabel value="#{bundle.CreatePagoLabel_subtotal}" for="total" />
+                                <p:inputText id="total" value="#{pagoController.selected.total}"  title="#{bundle.CreatePagoTitle_subtotal}" /> 
+                               
+                            </p:panelGrid>
+                        </h:panelGroup >
+                        <div style="height: 250px; width: 600px">
+                        <h:form id="pagoListForm" >
+                            <p:panelGrid columns="2" >
+                                <p:dataTable id="datalist" value="#{pagoController.pagoTipoCobro}" var="item"
+                                             selectionMode="single" 
+                                             rowKey="#{item}" scrollable="true" scrollHeight="150"
+                                             >
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Nombre"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.tipoCobro.nombre}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panelGrid>
+                        </h:form>
+                            </div>
+                       
+                                <h:panelGroup id="display4" >             
+                                    <p:panelGrid  columns="2" rendered="#{cuentaController.selected != null}">                                       
+                                        <p:commandButton actionListener="#{pagoController.createPagoExtraordinario}" 
+                                                         rendered="#{cuentaController.selected != null}" value="#{bundle.Save}" 
+                                                         update="display4,:PagoListForm:datalist,:growl" 
+                                                         oncomplete="handleSubmit(args,'pagoExtraordinarioCreateDialog');"/>
+                                    </p:panelGrid>
+                                    
+                                </h:panelGroup>
+                        </h:panelGroup>                 
+            </h:form>
+            
+        </p:dialog>
+
+    </ui:composition>
+</html>
