@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template2.xhtml">
+<!--                    xmlns:pe="http://primefaces.org/ui/extensions">-->
+                    
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListReporteTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="reportListForm">                
+                <p:fieldset legend="#{bundle.ListReporteTitle}" style="margin-bottom:20px"> 
+                    <h:panelGroup id="panel">
+                        <p:panelGrid columns="7" id="panelReportes" >                        
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaInicio}" for="fechaInicioReporte" />
+                        <p:calendar id="fechaInicioReporte" 
+                                    pattern="dd/MM/yyyy" value="#{reportesController.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" 
+                                    required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaInicio}" showOn="button" locale="es">
+                            <p:ajax event="dateSelect" process="fechaInicioReporte" update="fechaFinReporte" listener="#{reportesController.limpiaFecha()}"/> 
+                        </p:calendar>
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaFin}" for="fechaFinReporte" />
+                        <p:calendar id="fechaFinReporte" 
+                                    pattern="dd/MM/yyyy" value="#{reportesController.fechaFin}"  showOn="button" locale="es">
+                            <p:ajax event="dateSelect" process="fechaFinReporte"  /> 
+                        </p:calendar>       
+                        <p:commandButton id="btnBuscarIngresos" icon="ui-icon-search"   
+                                         value="Buscar" actionListener="#{reportesController.reporteSubsidios}" update="btnVerReporte datalist"/>
+                        <h:panelGroup id="btnVerReporte">                            
+                            <p:commandLink  action="#{reportesController.verReporteSubsidios()}"                                            
+                                        ajax="false" 
+                                        global="false"                                           
+                                        target="blank"
+                                        rendered="#{reportesController.permiteExportarExcelSubsidio()}"
+                                        >
+                                        <p:graphicImage styleClass="myButtonVerE" /> 
+                            </p:commandLink>
+                        </h:panelGroup>
+                       
+
+                    </p:panelGrid>  
+                        </h:panelGroup> 
+                </p:fieldset>
+                <p:fieldset legend="Reporte Subsidios"  style="margin-bottom:20px">
+                    <p:dataTable id="datalist" value="#{reportesController.itemsSubsudioReporte}" var="item"
+                                 scrollable="true" scrollHeight="280"
+                                
+                                 >
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <p:column headerText="Periodo"/>
+                                <p:column headerText="Cuenta"/>
+                                <p:column headerText="Fecha Creación"/>
+                                <p:column headerText="Descuento"/>
+                                </p:row>
+                        </p:columnGroup>
+                        <p:column> 
+                            <h:outputText value="#{reportesController.buscaIdPeriodo(item.idPeriodo)}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{reportesController.buscaIdCuenta(item.idcuenta)}"/>
+                        </p:column>
+          
+                        <p:column>
+                            <h:outputText value="#{item.fechaCreacion}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.descuento_periodo}"/>  
+                        </p:column>
+                        
+                    <p:columnGroup type="footer">
+                        <p:row> 
+                            <p:column colspan="4" style="text-align:right" footerText="Totals:" />  
+                            <p:column footerText="$#{reportesController.totalSubsidio}" />
+                            
+                            
+                        </p:row>
+                    </p:columnGroup>
+                </p:dataTable>
+                </p:fieldset>
+
+                
+            </h:form>
+
+<!--            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>-->
+        </ui:define>
+    </ui:composition>
+
+</html>
