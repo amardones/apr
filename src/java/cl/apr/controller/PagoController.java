@@ -116,7 +116,7 @@ public class PagoController implements Serializable {
 
     public Pago prepareCreate() {
         selected = new Pago();
-        pagoTipoCobro=new ArrayList<PagoTipoCobro>();
+        pagoTipoCobro=new ArrayList<>();
         selected.setPagoTipoCobroList(new ArrayList<>());
         initializeEmbeddableKey();
         itemsDetalleAvisos = null;
@@ -136,7 +136,6 @@ public class PagoController implements Serializable {
         if(nDocumentoEnBD==false && selected.getSubtotal()>0){
             for(int i=0;i<detalleAvisoPagos.size();i++){
                 detalleAvisoPagos.get(i).setPagado(true);
-                //detalleAvisoPagos.get(i).getCobroCuotaList().get(i).
                 ejbFacadeDetalleAviso.edit(detalleAvisoPagos.get(i));
 
             }
@@ -148,24 +147,40 @@ public class PagoController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Debe elegir un Item o N° Documento ya Existe",null));
         }
     }
-    public void agregarItem(){   
-        System.out.println("entrar agregar item");
+    public void getAgregarItem(){   
         PagoTipoCobro cc=new PagoTipoCobro();
         PagoTipoCobroPK pk=new PagoTipoCobroPK();
         pk.setIdTipoCobro(tipoCobroSelected.getIdTipoCobro());
         cc.setTipoCobro(tipoCobroSelected);
         cc.setPagoTipoCobroPK(pk);
-        cc.setTotal(2000);
-        pagoTipoCobro.add(cc); 
-        System.out.println("salir agregar item");
-        
-    }
-    
-    public void createPagoExtraordinario() {
-        selected.setInteres(0);
+        cc.setTotal(selected.getSubtotal());        
+        pagoTipoCobro.add(cc);
+        getTotalPagoTipoCobro();
         selected.setSubtotal(0);
         
+    }
+    public void getTotalPagoTipoCobro(){
+        selected.setTotal(0);
+        for (PagoTipoCobro itemT  : pagoTipoCobro) {
+            selected.setTotal(itemT.getTotal()+selected.getTotal());
+        }
+    }
+    public void eliminarItem(PagoTipoCobro cc){        
+        if(!pagoTipoCobro.isEmpty()){
+            selected.setTotal(selected.getTotal()-cc.getTotal());
+            pagoTipoCobro.remove(cc);
+        }
+    }
+          
+          
+    
+    
+    public void createPagoExtraordinario() {
+        selected.setInteres(0); 
+        selected.setSubtotal(0);
         selected.setIdCuenta(cuentaController.getSelected());
+        
+        
         boolean nDocumentoEnBD=false;
         for (Pago item : items) {
             if(item.getNumeroDocumento().equals(selected.getNumeroDocumento())){
@@ -178,7 +193,7 @@ public class PagoController implements Serializable {
                 items = null;    // Invalidate list of items to trigger re-query.
             }
         }else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "N° Documento ya Existe",null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "N° Documento ya Existe o valor total es 0",null));
         }
     }
     

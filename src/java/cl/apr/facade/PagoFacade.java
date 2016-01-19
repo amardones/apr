@@ -6,9 +6,12 @@
 package cl.apr.facade;
 
 import cl.apr.beans.ItemReporte;
+import cl.apr.beans.SubsidioReporte;
 import cl.apr.entity.Cuenta;
 import cl.apr.entity.DetalleAvisoCobro;
 import cl.apr.entity.Pago;
+import cl.apr.entity.PagoTipoCobro;
+import cl.apr.entity.Periodo;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -146,6 +149,54 @@ public class PagoFacade extends AbstractFacade<Pago> {
                 System.out.println("result is: " + result); 
                 
              return result;
+           }
+           
+       } catch(Exception e){
+             e.printStackTrace();;
+        }
+        return null;
+    }
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public List<SubsidioReporte> reporteLibroSubsidio(Date fechaInicio, Date fechaFin) {
+            List<SubsidioReporte> itemReporte=new ArrayList<SubsidioReporte>();
+       try{
+           if(em.isOpen()){
+                //em.getTransaction().begin();
+                StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("fn_reporte_libro_subsidio");
+                // set parameters
+                storedProcedure.registerStoredProcedureParameter(1,ResultSet.class, ParameterMode.REF_CURSOR);
+                storedProcedure.registerStoredProcedureParameter(2, java.sql.Date.class, ParameterMode.IN);
+                storedProcedure.registerStoredProcedureParameter(3, java.sql.Date.class, ParameterMode.IN);
+                
+                storedProcedure.setParameter(2,  new java.sql.Date(fechaInicio.getTime()));
+                storedProcedure.setParameter(3,  new java.sql.Date(fechaFin.getTime()));
+                // execute SP
+                storedProcedure.execute();
+                // get result
+                @SuppressWarnings("unchecked")
+                List result=storedProcedure.getResultList();
+                //ItemReporte userRecords = new ItemReporte();
+                @SuppressWarnings("rawtypes")
+                Iterator it = result.iterator( );
+                SubsidioReporte irep;
+                while (it.hasNext( )) {
+                    Object[] resulta = (Object[])it.next(); // Iterating through array object 
+//                    userRecords.se= result[0];
+//                    //userRecords.add(new ItemReporte(result[0], result[1], result[2], result[3], result[4], result[5], result[6], result[7]));               
+                    
+                    System.out.println("Cuenta"+(Integer) resulta[0]+"-periodo "+(Integer) resulta[1]+"-fecha"+(String) resulta[2]+"descuento"+(Integer) resulta[3]);
+                    System.out.print("");
+                irep = new SubsidioReporte();
+                irep.setIdcuenta((Integer) resulta[0]);
+                irep.setIdPeriodo((Integer) resulta[1]);
+                irep.setFechaCreacion((String) resulta[2]);
+                irep.setDescuento_periodo((Integer) resulta[3]);
+             
+                itemReporte.add(irep);
+                
+                }   
+                
+             return itemReporte;
            }
            
        } catch(Exception e){

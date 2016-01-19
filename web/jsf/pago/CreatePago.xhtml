@@ -21,7 +21,7 @@
                                 itemLabel="#{idCuentaItem.idCuenta}-#{idCuentaItem.rut.nombre}-#{idCuentaItem.rut.apellido}" 
                                 forceSelection="true"
                                 >
-                            <p:ajax event="itemSelect" process="@form" update="display2 display4"/> 
+                            <p:ajax event="itemSelect" process="@form" update="display2  display4"/> 
                         </p:autoComplete>
                     </p:panelGrid>
                     <h:panelGroup id="display2" >
@@ -42,16 +42,16 @@
                                    <p:ajax event="valueChange" process="idTipoCobro" update="agregarButton"/>
 
                                 </p:selectOneMenu>
+                                <p:commandButton id="agregarButton" icon="ui-icon-plus" actionListener="#{pagoController.getAgregarItem()}" 
+                                                 value="Agregar" update="pagoExtraordinarioCreateForm" />
+                                <p:outputLabel value="#{bundle.CreatePagoLabel_subtotal}" for="subtotal" />
                                 
-                                <p:commandButton id="agregarButton" icon="ui-icon-plus" actionListener="#{pagoController.agregarItem()}" 
-                                                 rendered="#{cuentaController.selected != null}" value="Agregar" update=":pagoExtraordinarioCreateForm:pagoListForm:datalist"/>
+                                <p:inputText id="subtotal" rendered="true" value="#{pagoController.selected.subtotal}"  title="#{bundle.CreatePagoTitle_subtotal}" />
                                 
-                                <p:outputLabel value="#{bundle.CreatePagoLabel_subtotal}" for="total" />
-                                <p:inputText id="total" value="#{pagoController.selected.total}"  title="#{bundle.CreatePagoTitle_subtotal}" /> 
-                               
                             </p:panelGrid>
                         </h:panelGroup >
-                        <div style="height: 250px; width: 600px">
+                        
+                        <div id="hola" style="height: 250px; width: 600px">
                         <h:form id="pagoListForm" >
                             <p:panelGrid columns="2" >
                                 <p:dataTable id="datalist" value="#{pagoController.pagoTipoCobro}" var="item"
@@ -64,13 +64,38 @@
                                         </f:facet>
                                         <h:outputText value="#{item.tipoCobro.nombre}"/>
                                     </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Subtotal"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.total}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Acción"/>
+                                        </f:facet>
+                                        <p:commandButton id="eliminarButton" value="Eliminar" actionListener="#{pagoController.eliminarItem(item)}"  
+                                                update="datalist">                                      
+                                                
+                                          </p:commandButton>  
+                                    </p:column>
+                                    <p:columnGroup type="footer">
+                                        <p:row> 
+                                            <p:column footerText="" />
+                                            <p:column colspan="1" style="text-align:right" footerText="Total:" /> 
+                                            
+                                            <p:column footerText="$#{pagoController.selected.total}" />
+                                            
+                                        </p:row>
+                                    </p:columnGroup>
                                 </p:dataTable>
                             </p:panelGrid>
                         </h:form>
                             </div>
                        
                                 <h:panelGroup id="display4" >             
-                                    <p:panelGrid  columns="2" rendered="#{cuentaController.selected != null}">                                       
+                                    <p:panelGrid  columns="2" rendered="#{cuentaController.selected != null}"> 
+                                       
                                         <p:commandButton actionListener="#{pagoController.createPagoExtraordinario}" 
                                                          rendered="#{cuentaController.selected != null}" value="#{bundle.Save}" 
                                                          update="display4,:PagoListForm:datalist,:growl" 

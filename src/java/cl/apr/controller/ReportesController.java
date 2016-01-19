@@ -5,6 +5,8 @@ import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.facade.DetalleAvisoCobroFacade;
 import cl.apr.beans.ItemReporte;
+import cl.apr.beans.SubsidioReporte;
+import cl.apr.entity.Cuenta;
 import com.sun.jmx.remote.internal.ArrayQueue;
 import java.io.IOException;
 
@@ -36,16 +38,56 @@ public class ReportesController implements Serializable {
     @EJB
     private cl.apr.facade.DetalleAvisoCobroFacade ejbFacade;
     @EJB
+    private cl.apr.facade.PeriodoFacade pFacade;
+    @EJB
+    private cl.apr.facade.CuentaFacade cFacade;
+    @EJB
     private cl.apr.facade.PagoFacade pagoFacade;
     private List<ItemReporte> items = null;
     private ItemReporte itemResumen=new ItemReporte();
+    private List<SubsidioReporte> itemsSubsudioReporte=null;
+    private SubsidioReporte subsidioReporte=new SubsidioReporte();
     private Date fechaInicio;
     private Date fechaFin;
+    private int totalSubsidio;
     
     
     public void limpiaFecha(){
         fechaFin=null;
     }
+    public String buscaIdCuenta(Integer id){  
+        return cFacade.find(id).getIdCuenta()+":"+
+        cFacade.find(id).getRut().getNombre()+" "+
+        cFacade.find(id).getRut().getApellido();
+    }
+    public String buscaIdPeriodo(Integer id){
+        return pFacade.find(id).getNombre();
+    }
+
+    public List<SubsidioReporte> getItemsSubsudioReporte() {
+        return itemsSubsudioReporte;
+    }
+
+    public void setItemsSubsudioReporte(List<SubsidioReporte> itemsSubsudioReporte) {
+        this.itemsSubsudioReporte = itemsSubsudioReporte;
+    }
+
+    public SubsidioReporte getSubsidioReporte() {
+        return subsidioReporte;
+    }
+
+    public void setSubsidioReporte(SubsidioReporte subsidioReporte) {
+        this.subsidioReporte = subsidioReporte;
+    }
+
+    public int getTotalSubsidio() {
+        return totalSubsidio;
+    }
+
+    public void setTotalSubsidio(int totalSubsidio) {
+        this.totalSubsidio = totalSubsidio;
+    }
+    
 
     public List<ItemReporte> getItems() {
 //        items= new ArrayList<>();
@@ -91,7 +133,31 @@ public class ReportesController implements Serializable {
             itemResumen.setOtrosCobros(itemResumen.getOtrosCobros()+item.getOtrosCobros());
             itemResumen.setTotalItem(itemResumen.getTotalItem()+item.getTotalItem());
         }
+        fechaFin=null;
+        fechaInicio=null;
     }
+     public void reporteSubsidios(){
+        itemsSubsudioReporte= new ArrayList<>();
+        totalSubsidio=0;
+        if(fechaInicio!=null&&fechaFin==null){
+            itemsSubsudioReporte= pagoFacade.reporteLibroSubsidio(fechaInicio , fechaInicio);
+        }
+        if(fechaInicio!=null&&fechaFin!=null){
+            System.out.println("Fecha: "+fechaInicio);
+            itemsSubsudioReporte= pagoFacade.reporteLibroSubsidio(fechaInicio , fechaFin);
+        }
+        for (SubsidioReporte item : itemsSubsudioReporte) {
+            totalSubsidio=totalSubsidio+item.getDescuento_periodo();
+        }
+        fechaFin=null;
+        fechaInicio=null;
+     }
+     /*public Integer totalSubsidio(){
+         for (SubsidioReporte item : itemsSubsudioReporte) {
+            subsidioReporte.setDescuento_periodo(subsidioReporte.getDescuento_periodo()+item.getDescuento_periodo());
+        }
+         return subsidioReporte.getDescuento_periodo();
+     }*/
      
      public List<ItemReporte> getItemsBusqueda() {
          return items;
@@ -117,7 +183,12 @@ public class ReportesController implements Serializable {
         return false;
     }
     
-
+    public boolean permiteExportarExcelSubsidio(){        
+        if( itemsSubsudioReporte != null &&  itemsSubsudioReporte.size()>0)
+            return true;
+        
+        return false;
+    }
     public ReportesController() {
     }
 
@@ -224,6 +295,26 @@ public class ReportesController implements Serializable {
                 HttpServletRequest request = (HttpServletRequest) ectx.getRequest();
                 HttpServletResponse response = (HttpServletResponse) ectx.getResponse();
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/verReporteIngresos");
+               // request.setAttribute("idPeriodo", periodoController.getSelected().getIdPeriodo());
+                dispatcher.forward(request, response);
+                ctx.responseComplete();
+                System.out.println("call servlet");
+            }
+        } catch (ServletException ex) {
+            Logger.getLogger(AvisoCobroController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AvisoCobroController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+      
+      public void verReporteSubsidios() {
+        try {
+            if(itemsSubsudioReporte != null && itemsSubsudioReporte.size() > 0){
+                FacesContext ctx = FacesContext.getCurrentInstance();
+                ExternalContext ectx = ctx.getExternalContext();
+                HttpServletRequest request = (HttpServletRequest) ectx.getRequest();
+                HttpServletResponse response = (HttpServletResponse) ectx.getResponse();
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/verReporteSubsidios");
                // request.setAttribute("idPeriodo", periodoController.getSelected().getIdPeriodo());
                 dispatcher.forward(request, response);
                 ctx.responseComplete();
