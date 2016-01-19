@@ -14,6 +14,8 @@ create table AVISO_COBRO (
    TOTAL_PENDIENTE      INT4                 not null,
    TOTAL                INT4                 not null,
    FECHA_CREACION       TIMESTAMP WITH TIME ZONE null,
+   SUB_TOTAL_PERIODO integer NOT NULL DEFAULT 0,
+   DESCUENTO_PERIODO integer NOT NULL DEFAULT 0,
    constraint PK_AVISO_COBRO primary key (ID_PERIODO, ID_CUENTA)
 );
 
