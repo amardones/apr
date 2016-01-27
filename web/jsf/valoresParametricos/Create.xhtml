@@ -32,7 +32,7 @@
                         <p:inputText id="diaEmision" value="#{valoresParametricosController.selected.diaEmision}" title="#{bundle.CreateValoresParametricosTitle_diaEmision}" required="true" requiredMessage="#{bundle.CreateValoresParametricosRequiredMessage_diaEmision}"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{valoresParametricosController.create}" value="#{bundle.Save}" update="display,:ValoresParametricosListForm:datalist,:growl" oncomplete="handleSubmit(args,'ValoresParametricosCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="ValoresParametricosCreateDialog.hide()"/>
+                    
                 </h:panelGroup>
             </h:form>
         </p:dialog>

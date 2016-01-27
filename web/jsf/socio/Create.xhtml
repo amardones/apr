@@ -26,7 +26,7 @@
                         <p:inputText id="direccion" value="#{socioController.selected.direccion}" title="#{bundle.CreateSocioTitle_direccion}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{socioController.create}" value="#{bundle.Save}" update="display,:SocioListForm:datalist,:growl" oncomplete="handleSubmit(args,'SocioCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="SocioCreateDialog.hide()"/>
+               
                 </h:panelGroup>
             </h:form>
         </p:dialog>

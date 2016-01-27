@@ -121,7 +121,7 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
      
      public List<AvisoCobro> getAvisosPorPeriodo(int idPeriodo) {
          Query query = em.createQuery(""
-                                        + "SELECT DISTINCT a FROM AvisoCobro a WHERE a.registroEstado.periodo.idPeriodo = :idPeriodo ", AvisoCobro.class);
+                                        + "SELECT DISTINCT a FROM AvisoCobro a WHERE a.registroEstado.periodo.idPeriodo = :idPeriodo order by  a.avisoCobroPK.idCuenta", AvisoCobro.class);
          query.setParameter("idPeriodo",idPeriodo);
          return query.getResultList();
        

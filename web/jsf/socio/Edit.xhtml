@@ -24,7 +24,7 @@
                         <p:inputText id="direccion" value="#{socioController.selected.direccion}" title="#{bundle.EditSocioTitle_direccion}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{socioController.update}" value="#{bundle.Save}" update="display,:SocioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SocioEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="SocioEditDialog.hide()"/>
+                    
                 </h:panelGroup>
             </h:form>
         </p:dialog>

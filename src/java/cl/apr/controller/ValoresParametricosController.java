@@ -3,6 +3,7 @@ package cl.apr.controller;
 import cl.apr.entity.ValoresParametricos;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
+import cl.apr.entity.ValorTramoM3;
 import cl.apr.facade.ValoresParametricosFacade;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("valoresParametricosController")
 @SessionScoped
@@ -29,6 +31,9 @@ public class ValoresParametricosController implements Serializable {
     private List<ValoresParametricos> items = null;
     private ValoresParametricos selected;
     private ValoresParametricos ultimoValoresParametricos;
+    
+    @Inject
+    private ValorTramoM3Controller valorTramoM3Controller;
 
     public ValoresParametricos getUltimoValoresParametricos() {
         ultimoValoresParametricos = ejbFacade.getLastValoresParametricos();
@@ -74,6 +79,14 @@ public class ValoresParametricosController implements Serializable {
     }
 
     public void create() {
+        List<ValorTramoM3> list = valorTramoM3Controller.getItems();
+        if(list!=null && list.size() > 0){
+            int m3Inicio = list.get(0).getM3Inicio();
+            if(this.selected.getM3Fijos() != m3Inicio){
+                JsfUtil.addErrorMessage("No es posible actualizar valor MT3 fijos, valor debe coincidir con el valor inicial del primer tramo.");
+                return;
+            }
+        }
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ValoresParametricosCreated"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; 

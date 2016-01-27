@@ -29,7 +29,6 @@
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cobroCuotaController.create}" value="#{bundle.Save}" update="display,:CobroCuotaListForm:datalist,:growl" oncomplete="handleSubmit(args,'CobroCuotaCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="CobroCuotaCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

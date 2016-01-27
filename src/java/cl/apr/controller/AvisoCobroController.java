@@ -253,7 +253,7 @@ public class AvisoCobroController implements Serializable {
                 ExternalContext ectx = ctx.getExternalContext();
                 HttpServletRequest request = (HttpServletRequest) ectx.getRequest();
                 HttpServletResponse response = (HttpServletResponse) ectx.getResponse();
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/verAviso");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/verAviso?id="+new Date().getTime());
                 request.setAttribute("idPeriodo", periodoController.getSelected().getIdPeriodo());
                 dispatcher.forward(request, response);
                 ctx.responseComplete();
@@ -274,7 +274,7 @@ public class AvisoCobroController implements Serializable {
                 
                 HttpServletRequest request = (HttpServletRequest) ectx.getRequest();
                 HttpServletResponse response = (HttpServletResponse) ectx.getResponse();
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/verAviso");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/verAviso?id="+new Date().getTime());
                 request.setAttribute("idCuenta", aviso.getAvisoCobroPK().getIdCuenta());
                 request.setAttribute("idPeriodo", aviso.getAvisoCobroPK().getIdPeriodo());
                 dispatcher.forward(request, response);

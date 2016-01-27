@@ -18,7 +18,7 @@
                 <p:fieldset legend="#{bundle.ListValoresParametricosTitle}" style="margin-bottom:20px">
                     <p:dataTable id="datalist" value="#{valoresParametricosController.items}" var="item"
                                  selectionMode="single" selection="#{valoresParametricosController.selected}"
-                                 paginator="true"
+                                 paginator="false"
                                  rowKey="#{item.idValoresParametricos}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"

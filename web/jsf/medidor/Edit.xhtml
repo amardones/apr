@@ -18,7 +18,7 @@
                         <p:inputText id="descripcion" value="#{medidorController.selected.descripcion}" title="#{bundle.EditMedidorTitle_descripcion}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{medidorController.update}" value="#{bundle.Save}" update="display,:MedidorListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MedidorEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="MedidorEditDialog.hide()"/>
+                
                 </h:panelGroup>
             </h:form>
         </p:dialog>

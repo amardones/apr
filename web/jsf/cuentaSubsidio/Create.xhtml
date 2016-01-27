@@ -28,7 +28,7 @@
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cuentaSubsidioController.create}" value="#{bundle.Save}" update="display,:CuentaSubsidioListForm:datalist,:growl" oncomplete="handleSubmit(args,'CuentaSubsidioCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="CuentaSubsidioCreateDialog.hide()"/>
+                   
                 </h:panelGroup>
             </h:form>
         </p:dialog>

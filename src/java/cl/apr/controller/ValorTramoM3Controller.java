@@ -108,9 +108,8 @@ public class ValorTramoM3Controller implements Serializable {
     }
 
     public List<ValorTramoM3> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
+        items = getFacade().findAll();
+  
         return items;
     }
 

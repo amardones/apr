@@ -75,24 +75,17 @@
                              <p:column style="width: 100px;">
                                  <p:panelGrid columns="2"  >                                 
                                      
-                                     <p:commandLink                                         
-                                        actionListener="#{avisoCobroController.generarTodosLosAvisoCobro()}"  
-                                        update=":growl,datalist"
-                                        ajax="false" 
-                                        global="false" 
-                                        process="@this"
-                                        target="blank"
-                                        rendered="#{periodoController.permiteRecalcular()}"
-                                    >
-                                        <p:confirm header="Confirmación" message="Esta seguro de calcular todos los avisos?" icon="ui-icon-alert" />
-                                        <p:graphicImage styleClass="myButtonCalcular" />    
-                                    </p:commandLink>
-                                    
-                                     
-                                     <p:commandLink  action="#{avisoCobroController.verAvisos()}"                                            
+                                      <p:commandButton  icon="fa fa-refresh"
+                                                    actionListener="#{avisoCobroController.generarTodosLosAvisoCobro()}"  
+                                                     update=":growl,datalist"
+                                                    value="Crear" 
+                                                    >
+                                        <p:confirm header="Confirmación" message="Va a calcular aviso, desea  continuar?" icon="ui-icon-alert" />
+                                  </p:commandButton>                 
+                                    <p:commandLink  
+                                          action="#{avisoCobroController.verAvisos()}"                                            
                                            ajax="false" 
                                            global="false" 
-                                           process="@this"
                                            target="blank">
                                          <p:graphicImage styleClass="myButtonVer" /> 
                                      </p:commandLink>
@@ -194,27 +187,23 @@
                             </f:facet>
                             <h:outputText value="$ #{item.total}"/>
                         </p:column>    
-                        <p:column style=" width: 100px;">                        
-                             <p:panelGrid columns="2"  >
-                                  <p:commandLink                                        
-                                        actionListener="#{avisoCobroController.generarAvisoCobro(item)}"  
-                                        update=":growl,datalist"
-                                        ajax="false" 
-                                        global="false" 
-                                        process="@this"
-                                        target="blank"
-                                        rendered="#{periodoController.permiteRecalcular()}"
-                                    >
+                        <p:column style=" width: 80px; text-align: center;" >                        
+                             <p:panelGrid columns="1"  >                                 
+                                 <p:commandButton  icon="fa fa-refresh"
+                                                    actionListener="#{avisoCobroController.generarAvisoCobro(item)}"  
+                                                    update=":growl,datalist"
+                                                    value="Crear" 
+                                                    >
                                         <p:confirm header="Confirmación" message="Va a calcular aviso, desea  continuar?" icon="ui-icon-alert" />
-                                        <p:graphicImage styleClass="myButtonCalcular" />  
-                                    </p:commandLink>
-                                 
+                                  </p:commandButton>
+                                </p:panelGrid>
+                        </p:column> 
+                        <p:column style=" width: 50px; text-align: center;">                        
+                             <p:panelGrid columns="1"  >    
                                     <p:commandLink  
                                         action="#{avisoCobroController.verAviso(item)}" 
-
                                         ajax="false" 
                                         global="false" 
-                                        process="@this"
                                         target="blank"
                                         >
                                         <p:graphicImage styleClass="myButtonVer" /> 

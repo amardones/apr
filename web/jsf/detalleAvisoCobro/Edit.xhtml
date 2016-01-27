@@ -42,7 +42,7 @@
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{detalleAvisoCobroController.update}" value="#{bundle.Save}" update="display,:DetalleAvisoCobroListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DetalleAvisoCobroEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="DetalleAvisoCobroEditDialog.hide()"/>
+                
                 </h:panelGroup>
             </h:form>
         </p:dialog>

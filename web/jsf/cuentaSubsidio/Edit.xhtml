@@ -30,7 +30,7 @@
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cuentaSubsidioController.update}" value="#{bundle.Save}" update="display,:CuentaSubsidioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CuentaSubsidioEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="CuentaSubsidioEditDialog.hide()"/>
+                
                 </h:panelGroup>
             </h:form>
         </p:dialog>

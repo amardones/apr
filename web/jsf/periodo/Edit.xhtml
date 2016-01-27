@@ -30,7 +30,7 @@
                         </p:outputLabel>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{periodoController.update}" value="#{bundle.Save}" update="display,:PeriodoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PeriodoEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="PeriodoEditDialog.hide()"/>
+       
                 </h:panelGroup>
             </h:form>
         </p:dialog>

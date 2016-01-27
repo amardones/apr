@@ -65,6 +65,7 @@ BEGIN
 	FROM subsidio s 
 	INNER JOIN cuenta_subsidio cs ON s.id_subsidio =  cs.id_subsidio AND cs.id_cuenta = id_cuenta$;
 
+	existen_tramos$ := false;
 	monto_descuento_sub$ := 0;
 	monto_descuento_int$ := 0;
 	sub_total$ 	     := 0;
