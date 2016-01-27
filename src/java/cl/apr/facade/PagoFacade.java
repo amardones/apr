@@ -184,14 +184,17 @@ public class PagoFacade extends AbstractFacade<Pago> {
 //                    userRecords.se= result[0];
 //                    //userRecords.add(new ItemReporte(result[0], result[1], result[2], result[3], result[4], result[5], result[6], result[7]));               
                     
-                    System.out.println("Cuenta"+(Integer) resulta[0]+"-periodo "+(Integer) resulta[1]+"-fecha"+(String) resulta[2]+"descuento"+(Integer) resulta[3]);
+                    //System.out.println("Cuenta"+(Integer) resulta[0]+"-periodo "+(Integer) resulta[1]+"-fecha"+(String) resulta[2]+"descuento"+(Integer) resulta[3]);
                     System.out.print("");
                 irep = new SubsidioReporte();
-                irep.setIdcuenta((Integer) resulta[0]);
-                irep.setIdPeriodo((Integer) resulta[1]);
+                int idC=(Integer) resulta[0];
+                int idP=(Integer) resulta[1];
+                
+                irep.setIdcuenta(Integer.toString(idC));
+                irep.setIdPeriodo(Integer.toString(idP));
                 irep.setFechaCreacion((String) resulta[2]);
                 irep.setDescuento_periodo((Integer) resulta[3]);
-             
+                
                 itemReporte.add(irep);
                 
                 }   

@@ -129,10 +129,10 @@ public class ReporteLibroSubsidioXLS extends HttpServlet {
                     label = new Label(k, 1+i,""+(i+1),formatoTexto); 
                     sheet.addCell(label);
 
-                    label = new Label(++k, 1+i,reportesController.buscaIdPeriodo(ir.getIdPeriodo()),formatoTexto); 
+                    label = new Label(++k, 1+i,ir.getIdPeriodo(),formatoTexto); 
                     sheet.addCell(label);
                     
-                    label = new Label(++k, 1+i,reportesController.buscaIdCuenta(ir.getIdcuenta()),formatoTexto); 
+                    label = new Label(++k, 1+i,ir.getIdcuenta(),formatoTexto); 
                     sheet.addCell(label);
                     
 //                     label = new Label(++k, 1+i,ir.getIdPago().toString(),formatoTexto); 

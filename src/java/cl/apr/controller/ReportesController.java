@@ -7,7 +7,6 @@ import cl.apr.facade.DetalleAvisoCobroFacade;
 import cl.apr.beans.ItemReporte;
 import cl.apr.beans.SubsidioReporte;
 import cl.apr.entity.Cuenta;
-import com.sun.jmx.remote.internal.ArrayQueue;
 import java.io.IOException;
 
 import java.io.Serializable;
@@ -55,13 +54,15 @@ public class ReportesController implements Serializable {
     public void limpiaFecha(){
         fechaFin=null;
     }
-    public String buscaIdCuenta(Integer id){  
-        return cFacade.find(id).getIdCuenta()+":"+
-        cFacade.find(id).getRut().getNombre()+" "+
-        cFacade.find(id).getRut().getApellido();
+    public String buscaIdCuenta(String id){
+        int idC=Integer.parseInt(id);
+        return cFacade.find(idC).getIdCuenta()+":"+
+        cFacade.find(idC).getRut().getNombre()+" "+
+        cFacade.find(idC).getRut().getApellido();
     }
-    public String buscaIdPeriodo(Integer id){
-        return pFacade.find(id).getNombre();
+    public String buscaIdPeriodo(String id){
+        int idP=Integer.parseInt(id);
+        return pFacade.find(idP).getNombre();
     }
 
     public List<SubsidioReporte> getItemsSubsudioReporte() {
@@ -141,10 +142,20 @@ public class ReportesController implements Serializable {
         totalSubsidio=0;
         if(fechaInicio!=null&&fechaFin==null){
             itemsSubsudioReporte= pagoFacade.reporteLibroSubsidio(fechaInicio , fechaInicio);
+            for(int i=0;i<itemsSubsudioReporte.size();i++){
+                itemsSubsudioReporte.get(i).setIdPeriodo(buscaIdPeriodo(itemsSubsudioReporte.get(i).getIdPeriodo()));
+                itemsSubsudioReporte.get(i).setIdcuenta(buscaIdCuenta(itemsSubsudioReporte.get(i).getIdcuenta()));
+            }
         }
         if(fechaInicio!=null&&fechaFin!=null){
             System.out.println("Fecha: "+fechaInicio);
             itemsSubsudioReporte= pagoFacade.reporteLibroSubsidio(fechaInicio , fechaFin);
+            for(int i=0;i<itemsSubsudioReporte.size();i++){
+                
+                itemsSubsudioReporte.get(i).setIdPeriodo(buscaIdPeriodo(itemsSubsudioReporte.get(i).getIdPeriodo()));
+                itemsSubsudioReporte.get(i).setIdcuenta(buscaIdCuenta(itemsSubsudioReporte.get(i).getIdcuenta()));
+                
+            }
         }
         for (SubsidioReporte item : itemsSubsudioReporte) {
             totalSubsidio=totalSubsidio+item.getDescuento_periodo();
@@ -158,7 +169,43 @@ public class ReportesController implements Serializable {
         }
          return subsidioReporte.getDescuento_periodo();
      }*/
-     
+    public void verReporteSubsidioPDF() {
+        try {
+            
+                FacesContext ctx = FacesContext.getCurrentInstance();
+                ExternalContext ectx = ctx.getExternalContext();
+                HttpServletRequest request = (HttpServletRequest) ectx.getRequest();
+                HttpServletResponse response = (HttpServletResponse) ectx.getResponse();
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/verReporteSubsidio");
+                dispatcher.forward(request, response);
+                ctx.responseComplete();
+                System.out.println("call servlet");
+            
+        } catch (ServletException ex) {
+            Logger.getLogger(ReportesController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RegistroCobroController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+        public void verReporteIngresoPDF() {
+        try {
+            
+                FacesContext ctx = FacesContext.getCurrentInstance();
+                ExternalContext ectx = ctx.getExternalContext();
+                HttpServletRequest request = (HttpServletRequest) ectx.getRequest();
+                HttpServletResponse response = (HttpServletResponse) ectx.getResponse();
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/verReporteIngresosPDF");
+                dispatcher.forward(request, response);
+                ctx.responseComplete();
+                System.out.println("call servlet");
+            
+        } catch (ServletException ex) {
+            Logger.getLogger(ReportesController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RegistroCobroController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
      public List<ItemReporte> getItemsBusqueda() {
          return items;
      }

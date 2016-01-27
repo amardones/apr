@@ -19,7 +19,7 @@
             <h:form id="reportListForm">                
                 <p:fieldset legend="#{bundle.ListReporteTitle}" style="margin-bottom:20px"> 
                     <h:panelGroup id="panel">
-                        <p:panelGrid columns="7" id="panelReportes" >                        
+                        <p:panelGrid columns="8" id="panelReportes" >                        
                         <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaInicio}" for="fechaInicioReporte" />
                         <p:calendar id="fechaInicioReporte" 
                                     pattern="dd/MM/yyyy" value="#{reportesController.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" 
@@ -32,8 +32,8 @@
                             <p:ajax event="dateSelect" process="fechaFinReporte"  /> 
                         </p:calendar>       
                         <p:commandButton id="btnBuscarIngresos" icon="ui-icon-search"   
-                                         value="Buscar" actionListener="#{reportesController.reporteSubsidios}" update="btnVerReporte datalist"/>
-                        <h:panelGroup id="btnVerReporte">                            
+                                         value="Buscar" actionListener="#{reportesController.reporteSubsidios}" update="btnVerReporte btnVerReporteSubsidio datalist"/>
+                        <h:panelGroup id="btnVerReporte" >                            
                             <p:commandLink  action="#{reportesController.verReporteSubsidios()}"                                            
                                         ajax="false" 
                                         global="false"                                           
@@ -41,6 +41,16 @@
                                         rendered="#{reportesController.permiteExportarExcelSubsidio()}"
                                         >
                                         <p:graphicImage styleClass="myButtonVerE" /> 
+                            </p:commandLink>
+                            
+                        </h:panelGroup>
+                        <h:panelGroup id="btnVerReporteSubsidio">
+                            <p:commandLink  action="#{reportesController.verReporteSubsidioPDF()}"                                            
+                                           ajax="false" 
+                                           global="false" 
+                                           target="blank"
+                                           rendered="#{reportesController.permiteExportarExcelSubsidio()}">
+                                         <p:graphicImage styleClass="myButtonVer" /> 
                             </p:commandLink>
                         </h:panelGroup>
                        
@@ -62,10 +72,10 @@
                                 </p:row>
                         </p:columnGroup>
                         <p:column> 
-                            <h:outputText value="#{reportesController.buscaIdPeriodo(item.idPeriodo)}"/>
+                            <h:outputText value="#{item.idPeriodo}"/>
                         </p:column>
                         <p:column>
-                            <h:outputText value="#{reportesController.buscaIdCuenta(item.idcuenta)}"/>
+                            <h:outputText value="#{item.idcuenta}"/>
                         </p:column>
           
                         <p:column>

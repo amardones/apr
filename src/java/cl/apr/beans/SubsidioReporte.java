@@ -15,8 +15,8 @@ import cl.apr.entity.Periodo;
 public class SubsidioReporte {  
 
 
-    private Integer idPeriodo;
-    private Integer idcuenta;   
+    private String idPeriodo;
+    private String idcuenta;   
     private String fechaCreacion;
     private Integer descuento_periodo;
     
@@ -24,29 +24,22 @@ public class SubsidioReporte {
         
     }
 
-    public Integer getIdPeriodo() {
+    public String getIdPeriodo() {
         return idPeriodo;
     }
 
-    public void setIdPeriodo(Integer idPeriodo) {
+    public void setIdPeriodo(String idPeriodo) {
         this.idPeriodo = idPeriodo;
     }
 
-    public Integer getIdcuenta() {
+    public String getIdcuenta() {
         return idcuenta;
     }
 
-    public void setIdcuenta(Integer idcuenta) {
+    public void setIdcuenta(String idcuenta) {
         this.idcuenta = idcuenta;
     }
 
-  
-    
-
-   
-    
-
-   
 
     public String getFechaCreacion() {
         return fechaCreacion;

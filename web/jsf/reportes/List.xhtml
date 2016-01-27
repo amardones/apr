@@ -19,7 +19,7 @@
             <h:form id="reportListForm">                
                 <p:fieldset legend="#{bundle.ListReporteTitle}" style="margin-bottom:20px"> 
                     <h:panelGroup id="panel">
-                        <p:panelGrid columns="7" id="panelReportes" >                        
+                        <p:panelGrid columns="8" id="panelReportes" >                        
                         <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaInicio}" for="fechaInicioReporte" />
                         <p:calendar id="fechaInicioReporte" 
                                     pattern="dd/MM/yyyy" value="#{reportesController.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" 
@@ -32,7 +32,7 @@
                             <p:ajax event="dateSelect" process="fechaFinReporte"  /> 
                         </p:calendar>       
                         <p:commandButton id="btnBuscarIngresos" icon="ui-icon-search"   
-                                         value="Buscar" actionListener="#{reportesController.buscarIngresos()}" update="btnVerReporte datalist"/>
+                                         value="Buscar" actionListener="#{reportesController.buscarIngresos()}" update="btnVerReporte btnVerReporteIngreso datalist"/>
                         <h:panelGroup id="btnVerReporte">                            
                              <p:commandLink  action="#{reportesController.verReporteIngresos()}"                                            
                                         ajax="false" 
@@ -41,6 +41,15 @@
                                         rendered="#{reportesController.permiteExportarExcel()}"
                                         >
                                         <p:graphicImage styleClass="myButtonVerE" /> 
+                            </p:commandLink>
+                        </h:panelGroup>
+                        <h:panelGroup id="btnVerReporteIngreso">
+                            <p:commandLink  action="#{reportesController.verReporteIngresoPDF()}"                                            
+                                           ajax="false" 
+                                           global="false" 
+                                           target="blank"
+                                           rendered="#{reportesController.permiteExportarExcel()}">
+                                         <p:graphicImage styleClass="myButtonVer" /> 
                             </p:commandLink>
                         </h:panelGroup>
                        
