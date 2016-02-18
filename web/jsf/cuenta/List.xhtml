@@ -17,35 +17,25 @@
             <h:form id="CuentaListForm">
                 <p:fieldset legend="#{bundle.ListCuentaTitle}" style="margin-bottom:20px">
                
-                    <p:dataTable id="datalist" value="#{cuentaController.items}" var="item"
-                                 selectionMode="single" selection="#{cuentaController.selected}"
+                    <p:dataTable id="datalist" value="#{cuentaController.items}" var="item" widgetVar="itemTabla"
+                                 selectionMode="single" selection="#{cuentaController.selected}"                                 
                                  paginator="true"
                                  rowKey="#{item.idCuenta}"
                                  rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
                                  paginatorPosition="bottom"
                                  >
 
                         
                         <p:ajax event="rowSelect"   update="createButton  editButton "/>
                         <p:ajax event="rowUnselect" update="createButton  editButton "/>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCuentaTitle_idCuenta}"/>
-                            </f:facet>
+                        
+                        <p:column filterBy="#{item.idCuenta}" headerText="N° Cuenta" filterMatchMode="contains" filterStyle="width:40px;" style="width: 58px">
                             <h:outputText value="#{item.idCuenta}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCuentaTitle_rut}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.rut}" headerText="#{bundle.ListCuentaTitle_rut}" filterMatchMode="contains" filterStyle="width:65px;" style="width: 70px">                             
                             <h:outputText value="#{item.rut}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CreateSocioTitle_nombre}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.rut.apellido}" headerText="#{bundle.CreateSocioTitle_nombre}" filterMatchMode="contains" filterStyle="width:65px;" style="width: 70px">
                             <h:outputText value="#{item.rut.nombre} #{item.rut.apellido}"/>
                         </p:column>
                         <p:column>
@@ -74,9 +64,9 @@
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column >
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCuentaTitle_activa}"/>
+                                 <h:outputText value="#{bundle.ListCuentaTitle_activa}"/>
                             </f:facet>
                             <p:selectBooleanCheckbox value="#{item.activa}" disabled="true"/>
                         </p:column>
@@ -92,11 +82,8 @@
                             </f:facet>
                             <h:outputText value="#{item.cuentaSubsidio.idSubsidio.nombre}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCuentaTitle_numeroMedidor}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.numeroMedidor}"/>
+                        <p:column filterBy="#{item.numeroMedidor}" headerText="#{bundle.ListCuentaTitle_numeroMedidor}" filterMatchMode="contains" filterStyle="width:65px;" style="width: 70px">
+                             <h:outputText value="#{item.numeroMedidor}"/>
                         </p:column>                        
                         <f:facet name="header">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{cuentaController.prepareCreate}" update=":CuentaCreateForm" oncomplete="PF('CuentaCreateDialog').show()"/>

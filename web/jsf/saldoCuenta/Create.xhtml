@@ -8,7 +8,7 @@
 
     <ui:composition>
 
-        <p:dialog id="SaldoCuentaCreateDlg" widgetVar="SaldoCuentaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSaldoCuentaTitle}">
+        <p:dialog id="SaldoCuentaCreateDlg" widgetVar="SaldoCuentaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="CREAR NUEVA SALDO CUENTA">
             <h:form id="SaldoCuentaCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{saldoCuentaController.selected != null}">
@@ -16,7 +16,7 @@
                         <p:inputText id="descripcion" value="#{saldoCuentaController.selected.descripcion}" title="#{bundle.CreateSaldoCuentaTitle_descripcion}" />
                         <p:outputLabel value="#{bundle.CreateSaldoCuentaLabel_monto}" for="monto" />
                         <p:inputText id="monto" value="#{saldoCuentaController.selected.monto}" title="#{bundle.CreateSaldoCuentaTitle_monto}" required="true" requiredMessage="#{bundle.CreateSaldoCuentaRequiredMessage_monto}"/>
-                        <p:outputLabel value="#{bundle.CreateSaldoCuentaLabel_idCuenta}" for="idCuenta" />
+                        <p:outputLabel value="Cuenta" for="idCuenta" />
                         <p:selectOneMenu id="idCuenta" value="#{saldoCuentaController.selected.idCuenta}" required="true" requiredMessage="#{bundle.EditSaldoCuentaRequiredMessage_idCuenta}">
                             <f:selectItems value="#{cuentaController.itemsAvailableSelectOne}"
                                            var="idCuentaItem"

@@ -133,7 +133,7 @@ public class PagoController implements Serializable {
             nDocumentoEnBD=true;
             } 
         }
-        if(nDocumentoEnBD==false && selected.getSubtotal()>0){
+        if(nDocumentoEnBD==false && selected.getSubtotal()>=0){
             for(int i=0;i<detalleAvisoPagos.size();i++){
                 detalleAvisoPagos.get(i).setPagado(true);
                 ejbFacadeDetalleAviso.edit(detalleAvisoPagos.get(i));
@@ -187,13 +187,13 @@ public class PagoController implements Serializable {
             nDocumentoEnBD=true;
             } 
         }
-        if(nDocumentoEnBD==false && selected.getTotal()>0){
+        if(nDocumentoEnBD==false && selected.getTotal()>=0){
             persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PagoCreated"));
             if (!JsfUtil.isValidationFailed()) {
                 items = null;    // Invalidate list of items to trigger re-query.
             }
         }else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "N° Documento ya Existe o valor total es 0",null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "N° Documento ya Existe",null));
         }
     }
     

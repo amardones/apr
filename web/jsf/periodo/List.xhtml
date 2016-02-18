@@ -39,10 +39,7 @@
                             </f:facet>
                             <h:outputText value="#{item.idPeriodo}"/>
                         </p:column>-->
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPeriodoTitle_nombre}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.nombre}" headerText="#{bundle.ListPeriodoTitle_nombre}" filterMatchMode="contains">                             
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
                         <p:column>

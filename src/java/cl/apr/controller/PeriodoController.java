@@ -182,7 +182,7 @@ public class PeriodoController implements Serializable {
                     msg = cause.getLocalizedMessage();
                 }
                 if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Periodo ya tiene pagos ","Hola3"));
                 } else {
                     JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
                 }
@@ -194,9 +194,9 @@ public class PeriodoController implements Serializable {
     }
      public boolean permiteRecalcular(){
         if(ultimoPeriodo(selected) ){
-            if(selected.getFechaEmision().getTime() >= new Date().getTime()){
+            //if(selected.getFechaEmision().getTime() >= new Date().getTime()){
                 return true;
-            }
+            
         }
         return false;
     }

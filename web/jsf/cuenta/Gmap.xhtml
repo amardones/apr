@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template2.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="Geolocalización"></h:outputText>
+        </ui:define>
+        
+
+        <ui:define name="body">
+            <h:form id="GmapForm">
+                <p:fieldset legend="Gmap" style="margin-bottom:20px">
+                    <p:growl id="messages" showDetail="true" />
+                    
+                    <p:gmap id="gmap" center="-36.5001987,-71.9627197,643" zoom="15" type="HYBRID" style="width:100%;height:400px"
+                            model="#{cuentaController.emptyModel}" onPointClick="handlePointClick(event);"  widgetVar="map" />
+                    
+                    
+                    <p:dialog widgetVar="dlg" showEffect="fade">
+                        <h:form prependId="false">
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Buscar cuenta :" for="cuentaAuto" />
+
+                                <p:autoComplete id="cuentaAuto" value="#{cuentaController.selected}"
+                                        completeMethod="#{cuentaController.completeCuenta}"
+                                        var="idCuentaItem"
+                                        itemValue="#{idCuentaItem}"
+                                        itemLabel="#{idCuentaItem.idCuenta}-#{idCuentaItem.rut.nombre}-#{idCuentaItem.rut.apellido}" 
+                                        forceSelection="true"
+                                        >
+                                    <p:ajax event="itemSelect"  listener="#{pagoController.limpiarDetalles}" process="@form" update=":GmapForm:messages display3"/> 
+                                </p:autoComplete>
+                                
+                                <h:panelGroup id="display3" >
+                                    <p:commandButton value="Agregar" actionListener="#{cuentaController.addMarker}" oncomplete="markerAddComplete()" />
+                                    
+                                </h:panelGroup>
+                                <p:commandButton value="Cancelar" onclick="return cancel()" />
+                            </p:panelGrid> 
+
+                            <h:inputHidden id="lat" value="#{cuentaController.lat}" />
+                            <h:inputHidden id="lng" value="#{cuentaController.lng}" />
+                        </h:form>
+                    </p:dialog>
+                    <script type="text/javascript">
+    var currentMarker = null;
+ 
+    function handlePointClick(event) {
+        if(currentMarker === null) {
+            document.getElementById('lat').value = event.latLng.lat();
+            document.getElementById('lng').value = event.latLng.lng();
+ 
+            currentMarker = new google.maps.Marker({
+                position:new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())
+            });
+ 
+            PF('map').addOverlay(currentMarker);
+ 
+            PF('dlg').show();
+        }   
+    }
+ 
+    function markerAddComplete() {
+        var title = document.getElementById('title');
+        currentMarker.setTitle(title.value);
+        title.value = "";
+ 
+        currentMarker = null;
+        PF('dlg').hide();
+    }
+ 
+    function cancel() {
+        PF('dlg').hide();
+        currentMarker.setMap(null);
+        currentMarker = null;
+ 
+        return false;
+    }
+</script>
+
+                </p:fieldset>
+            </h:form>
+            
+
+            <!-- <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+           <ui:include src="TabCreate.xhtml"/>-->
+        </ui:define>
+    </ui:composition>
+
+</html>

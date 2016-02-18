@@ -11,19 +11,22 @@
         <p:dialog id="CuentaEditDlg" widgetVar="CuentaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCuentaTitle}">
             <h:form id="CuentaEditForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{cuentaController.selected != null?cuentaController.selected.cuentaSubsidio != null: false}">
+                    <p:panelGrid columns="3" rendered="#{cuentaController.selected != null?cuentaController.selected.cuentaSubsidio != null: false}">
                         <p:outputLabel value="#{bundle.EditCuentaLabel_direccion}" for="direccion" />
                         <p:inputText id="direccion" value="#{cuentaController.selected.direccion}" title="#{bundle.EditCuentaTitle_direccion}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_direccion}"/>
-                        <p:outputLabel value="#{bundle.EditCuentaLabel_gpsLatitud}" for="gpsLatitud" />
+                        
+                        <!--<p:outputLabel value="#{bundle.EditCuentaLabel_gpsLatitud}" for="gpsLatitud" />
                         <p:inputText id="gpsLatitud" value="#{cuentaController.selected.gpsLatitud}" title="#{bundle.EditCuentaTitle_gpsLatitud}" />
+                        <p:outputLabel />
                         <p:outputLabel value="#{bundle.EditCuentaLabel_gpsLongitud}" for="gpsLongitud" />
                         <p:inputText id="gpsLongitud" value="#{cuentaController.selected.gpsLongitud}" title="#{bundle.EditCuentaTitle_gpsLongitud}" />
+                        <p:outputLabel />-->
                         <p:outputLabel value="#{bundle.EditCuentaLabel_activa}" for="activa" />
                         <p:selectBooleanCheckbox id="activa" value="#{cuentaController.selected.activa}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_activa}"/>
-
+                        <p:outputLabel />
                         <p:outputLabel value="#{bundle.EditCuentaLabel_esInstitucion}" for="esInstitucion" />
                         <p:selectBooleanCheckbox id="esInstitucion" value="#{cuentaController.selected.esInstitucion}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_esInstitucion}"/>
-
+                        <p:outputLabel />
                         <p:outputLabel value="#{bundle.EditCuentaLabel_cuentaSubsidio}" for="cuentaSubsidio" />
                         <p:selectOneMenu id="cuentaSubsidio" value="#{cuentaController.selected.cuentaSubsidio.idSubsidio}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
@@ -35,27 +38,68 @@
                             
                              <p:ajax event="valueChange" process="cuentaSubsidio"  />
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditCuentaLabel_numeroMedidor}" for="numeroMedidor" />
-                        <p:selectOneMenu id="numeroMedidor" value="#{cuentaController.selected.numeroMedidor}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_numeroMedidor}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{cuentaController.medidoresDisponiblesEditar}"
+                        <p:outputLabel />
+                        <p:outputLabel value="#{bundle.CreateCuentaLabel_numeroMedidor}" for="numeroMedidor" />
+                        <p:selectOneMenu style="width:150px" id="numeroMedidor" value="#{cuentaController.selected.numeroMedidor}" required="true" requiredMessage="El N° de medidor es requerido">
+                            <f:selectItems  value="#{cuentaController.medidoresDisponiblesEditar}"
                                            var="numeroMedidorItem"
                                            itemValue="#{numeroMedidorItem}"
                                            itemLabel="#{numeroMedidorItem.numeroMedidor}"
                                            />
                         </p:selectOneMenu>
+                        <p:commandButton style="width: 130px" id="createMedidor" icon="ui-icon-plus"  process=":MedidorCreateForm @this" value="Crear Medidor" actionListener="#{medidorController.prepareCreate}" update=":MedidorEditForm" onclick="PF('MedidorEditDialog').show();PF('CuentaEditDialog').hide();" />
                         <p:outputLabel value="#{bundle.CuentaLabel_Socio}" for="rut" />
-                        <p:selectOneMenu id="rut" value="#{cuentaController.selected.rut}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_rut}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{socioController.itemsAvailableSelectOne}"
-                                           var="rutItem"
-                                           itemValue="#{rutItem}"
-                                           itemLabel="#{rutItem.nombre} #{rutItem.apellido} "
-                                           />
-                        </p:selectOneMenu>
+                        <p:autoComplete style="width: 130px" id="rut" value="#{cuentaController.selected.rut}"
+                                        completeMethod="#{socioController.completeSocio}"
+                                        var="idSocioItem"
+                                        itemValue="#{idSocioItem}"
+                                        itemLabel="#{idSocioItem.rut}-#{idSocioItem.nombre}-#{idSocioItem.apellido}" 
+                                        forceSelection="true"
+                                        required="true"
+                                >
+                        </p:autoComplete>
+                        <p:commandButton style="width: 130px" id="createSocio" icon="ui-icon-plus"  process=":SocioEditForm @this" value="Crear Socio" actionListener="#{socioController.prepareCreate}" update=":SocioEditForm" onclick="PF('SocioEditDialog').show();PF('CuentaEditDialog').hide();" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cuentaController.update}" value="#{bundle.Save}" update="display,:CuentaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CuentaEditDialog');"/>
                     
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+        
+        <p:dialog id="SocioEditDlg"  widgetVar="SocioEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSocioTitle}">
+            <h:form id="SocioEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{socioController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_rut}" for="rut" />
+                        <p:inputText  id="rut" value="#{socioController.selected.rut}" title="#{bundle.CreateSocioTitle_rut}" required="true" requiredMessage="#{bundle.CreateSocioRequiredMessage_rut}"/>                           
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{socioController.selected.nombre}" title="#{bundle.CreateSocioTitle_nombre}" required="true" requiredMessage="#{bundle.CreateSocioRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_apellido}" for="apellido" />
+                        <p:inputText id="apellido" value="#{socioController.selected.apellido}" title="#{bundle.CreateSocioTitle_apellido}" required="true" requiredMessage="#{bundle.CreateSocioRequiredMessage_apellido}"/>
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_celular}" for="celular" />
+                        <p:inputText id="celular" value="#{socioController.selected.celular}" title="#{bundle.CreateSocioTitle_celular}" />
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{socioController.selected.direccion}" title="#{bundle.CreateSocioTitle_direccion}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{socioController.create}" value="#{bundle.Save}" update="display,:CuentaEditForm,:growl" oncomplete="handleSubmit(args,'SocioEditDialog');" onclick="PF('CuentaEditDialog').show();PF('SocioEditDialog').hide();"/>
+                    <p:commandButton  value="Volver"  onclick="PF('CuentaEditDialog').show();PF('SocioEditDialog').hide();"/>
+
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+        
+          <p:dialog id="MedidorEditDlg" widgetVar="MedidorEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMedidorTitle}">
+            <h:form id="MedidorEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{medidorController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateMedidorLabel_numeroMedidor}" for="numeroMedidor" />
+                        <p:inputText id="numeroMedidor" value="#{medidorController.selected.numeroMedidor}" title="#{bundle.CreateMedidorTitle_numeroMedidor}" required="true" requiredMessage="#{bundle.CreateMedidorRequiredMessage_numeroMedidor}"/>
+                        <p:outputLabel value="#{bundle.CreateMedidorLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{medidorController.selected.descripcion}" title="#{bundle.CreateMedidorTitle_descripcion}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{medidorController.create}" value="#{bundle.Save}" update="display,:CuentaEditForm,:growl" oncomplete="handleSubmit(args,'MedidorEditDialog');" onclick="PF('CuentaEditDialog').show();PF('MedidorEditDialog').hide();"/>
+                    <p:commandButton  value="Volver"  onclick="PF('CuentaEditDialog').show();PF('MedidorEditDialog').hide();"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

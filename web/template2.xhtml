@@ -17,7 +17,8 @@
 
     <h:body>
          <p:growl id="growl" life="3000" />
-       
+        <script src="http://maps.google.com/maps/api/js?sensor=false" 
+          type="text/javascript"></script>
            
         <div id="contenidodiv">
             <div id="contenidodiv_center">
@@ -41,8 +42,9 @@
                         <p:submenu label="Cuentas">
                             <p:menuitem value="1.- Socios" outcome="/jsf/socio/List" />
                             <p:menuitem value="2.- Medidores" outcome="/jsf/medidor/List" /> 
-                            <p:menuitem value="3.- Cuentas" outcome="/jsf/cuenta/List" />                                                  
-                            <p:menuitem value="4.- Saldo Cuenta" outcome="/jsf/saldocuenta/List"/>                                
+                            <p:menuitem value="3.- Cuentas" outcome="/jsf/cuenta/List" />
+                            <p:menuitem value="4.- Geolocalización" outcome="/jsf/cuenta/Gmap" /> 
+                            <p:menuitem value="5.- Saldo Cuenta" outcome="/jsf/saldocuenta/List"/>                                
                         </p:submenu>
                         <p:submenu label="Proceso de calculo">
                             <p:menuitem value="1.- Periodos de cobro" outcome="/jsf/periodo/List" />

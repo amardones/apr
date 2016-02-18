@@ -29,16 +29,10 @@
                         <p:ajax event="rowSelect"   update="createButton  editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton  editButton deleteButton"/>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMedidorTitle_numeroMedidor}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.numeroMedidor}" headerText="#{bundle.ListMedidorTitle_numeroMedidor}" filterMatchMode="contains" >
                             <h:outputText value="#{item.numeroMedidor}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMedidorTitle_descripcion}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.descripcion}" headerText="#{bundle.ListMedidorTitle_descripcion}" filterMatchMode="contains" >
                             <h:outputText value="#{item.descripcion}"/>
                         </p:column>
                         <f:facet name="header">

@@ -40,34 +40,19 @@
                             </f:facet>
                             <h:outputText value="#{item.idRegistroCobro}"/>
                         </p:column>-->
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListRegistroCobroTitle_idCuenta}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.idCuenta.rut.apellido}" headerText="Cuenta" filterMatchMode="contains" filterStyle="width:110px;" style="width: 140px">
                             <h:outputText value="#{item.idCuenta.idCuenta}: #{item.idCuenta.rut.nombre}  #{item.idCuenta.rut.apellido}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListRegistroCobroTitle_cuotas}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.cuotas}" headerText="#{bundle.ListRegistroCobroTitle_cuotas}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 85px">
                             <h:outputText value="#{item.cuotas}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListRegistroCobroTitle_monto}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.monto}" headerText="#{bundle.ListRegistroCobroTitle_monto}" filterMatchMode="contains" filterStyle="width:90px;" style="width: 110px">
                             <h:outputText value="$ #{item.monto}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListRegistroCobroTitle_descripcion}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.descripcion}" headerText="#{bundle.ListRegistroCobroTitle_descripcion}" filterMatchMode="contains" filterStyle="width:90px;" style="width: 120px">
                             <h:outputText value="#{item.descripcion}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListRegistroCobroTitle_fechaCreacion}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.fechaCreacion}" headerText="#{bundle.ListRegistroCobroTitle_fechaCreacion}" filterMatchMode="contains" filterStyle="width:90px;" style="width: 120px">
                             <h:outputText value="#{item.fechaCreacion}">
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
@@ -79,10 +64,7 @@
                             <h:outputText value="#{registroCobroController.mesPago(item)}"/>
                         </p:column>
                         
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListRegistroCobroTitle_idTipoCobro}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.idTipoCobro.nombre}" headerText="Tipo de Cobro" filterMatchMode="contains" filterStyle="width:120px;" style="width: 140px">
                             <h:outputText value="#{item.idTipoCobro.nombre}"/>
                         </p:column>
                         <f:facet name="header">

@@ -170,13 +170,16 @@ public List<Socio> completeSocio(String query) {
                     msg = cause.getLocalizedMessage();
                 }
                 if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Usuario está asignado",null));
+
                 } else {
                     JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+
             }
         }
     }

@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-
+        
         <p:dialog id="CuentaCreateDlg" widgetVar="CuentaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCuentaTitle}">
             <h:form id="CuentaCreateForm">
                 <h:panelGroup id="display">
@@ -17,13 +17,13 @@
                         <p:outputLabel />
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_direccion}" for="direccion" />
                         <p:inputText id="direccion" value="#{cuentaController.selected.direccion}" title="#{bundle.CreateCuentaTitle_direccion}" required="true" requiredMessage="Campo de dirección es requerida"/>
-                        <p:outputLabel />
-                        <p:outputLabel value="#{bundle.CreateCuentaLabel_gpsLatitud}" for="gpsLatitud" />
+                        
+                        <!--<p:outputLabel value="#{bundle.CreateCuentaLabel_gpsLatitud}" for="gpsLatitud" />
                         <p:inputText id="gpsLatitud" value="#{cuentaController.selected.gpsLatitud}" title="#{bundle.CreateCuentaTitle_gpsLatitud}" />
                         <p:outputLabel />
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_gpsLongitud}" for="gpsLongitud" />
                         <p:inputText id="gpsLongitud" value="#{cuentaController.selected.gpsLongitud}" title="#{bundle.CreateCuentaTitle_gpsLongitud}" />
-                        <p:outputLabel />
+                        <p:outputLabel />-->
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_activa}" for="activa" />
                         <p:selectBooleanCheckbox id="activa" value="#{cuentaController.selected.activa}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_activa}"/>
                         <p:outputLabel />
@@ -110,6 +110,5 @@
                 </h:panelGroup>
             </h:form>
         </p:dialog>
-          
     </ui:composition>
 </html>

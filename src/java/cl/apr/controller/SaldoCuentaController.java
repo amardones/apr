@@ -6,6 +6,7 @@ import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.facade.SaldoCuentaFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -51,6 +52,7 @@ public class SaldoCuentaController implements Serializable {
 
     public SaldoCuenta prepareCreate() {
         selected = new SaldoCuenta();
+        selected.setFecha(new Date());
         initializeEmbeddableKey();
         return selected;
     }
@@ -86,6 +88,7 @@ public class SaldoCuentaController implements Serializable {
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
+                    selected.setFecha(new Date());
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);

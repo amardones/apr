@@ -29,34 +29,19 @@
                         <p:ajax event="rowSelect"   update="createButton  editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton  editButton deleteButton"/>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSocioTitle_rut}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.rut}" headerText="#{bundle.ListSocioTitle_rut}" filterMatchMode="contains" >
                             <h:outputText value="#{item.rut}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSocioTitle_nombre}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.nombre}" headerText="#{bundle.ListSocioTitle_nombre}" filterMatchMode="contains" >
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSocioTitle_apellido}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.apellido}" headerText="#{bundle.ListSocioTitle_apellido}" filterMatchMode="contains" >
                             <h:outputText value="#{item.apellido}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSocioTitle_celular}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.celular}" headerText="#{bundle.ListSocioTitle_celular}" filterMatchMode="contains" >
                             <h:outputText value="#{item.celular}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSocioTitle_direccion}"/>
-                            </f:facet>
+                        <p:column filterBy="#{item.direccion}" headerText="#{bundle.ListSocioTitle_direccion}" filterMatchMode="contains" >
                             <h:outputText value="#{item.direccion}"/>
                         </p:column>
                         <f:facet name="header">

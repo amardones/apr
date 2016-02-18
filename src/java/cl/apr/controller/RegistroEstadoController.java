@@ -95,9 +95,14 @@ public class RegistroEstadoController implements Serializable {
         }
         return items;*/
         items = null;
-        if(periodoController.getSelected() != null)
-              items = getFacade().getRegistroEstadoPorPeriodo(periodoController.getSelected().getIdPeriodo());  
-        
+        if(periodoController.getSelected() != null){
+                if(periodoController.getSelected().getIdPeriodo()==null){            
+                items = getFacade().getRegistroEstadoPorPeriodo(periodoController.getUltimoPeriodo().getIdPeriodo());
+                periodoController.setSelected(periodoController.getUltimoPeriodo());
+                }
+                if(periodoController.getSelected().getIdPeriodo()!=null)
+                items = getFacade().getRegistroEstadoPorPeriodo(periodoController.getSelected().getIdPeriodo()); 
+        }
         return items;
     }
    

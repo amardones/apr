@@ -2,6 +2,7 @@ package cl.apr.controller;
 
 
 import cl.apr.entity.Cuenta;
+import org.primefaces.model.map.Marker;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.entity.CuentaSubsidio;
@@ -11,12 +12,12 @@ import cl.apr.facade.CuentaFacade;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -31,6 +32,11 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
+import org.primefaces.event.map.PointSelectEvent;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+
 
 @Named("cuentaController")
 @SessionScoped
@@ -50,7 +56,15 @@ public class CuentaController implements Serializable {
     @EJB
     private cl.apr.facade.CuentaSubsidioFacade ejbCuentaSubsidio;
     private List<Cuenta> items = null;
+    private List<Cuenta> filtereditems =null;
     private Cuenta selected;
+    
+    
+    private MapModel emptyModel;
+    
+    private String title;
+    private double lat;      
+    private double lng;
     //private Subsidio subsidio;
 
 //    public Subsidio getSubsidio() {
@@ -63,7 +77,48 @@ public class CuentaController implements Serializable {
 
     public CuentaController() {
     }
+    @PostConstruct
+    public void init() {
+        emptyModel = new DefaultMapModel();
+        LatLng coord1 = new LatLng(-36.5001987,-71.9627197);
+        emptyModel.addOverlay(new Marker(coord1, ""));
+    }
+    public MapModel getEmptyModel() {
+        return emptyModel;
+    }
 
+    public void setEmptyModel(MapModel emptyModel) {
+        this.emptyModel = emptyModel;
+    }
+    public void addMarker() {
+        Marker marker = new Marker(new LatLng(lat, lng), title);
+        emptyModel.addOverlay(marker);
+        /*selected.setGpsLatitud(lat);
+        selected.setGpsLatitud(lng);*/
+        this.update();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marca agregada", "Lat:" + lat + ", Lng:" + lng));
+    }
+    
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+    
+    
+    
+   
     public Cuenta getSelected() {
         return selected;
     }
@@ -147,7 +202,16 @@ public class CuentaController implements Serializable {
          items = getFacade().findAll();
          return items;
     }
-      
+
+    public List<Cuenta> getFiltereditems() {
+        return filtereditems;
+    }
+
+    public void setFiltereditems(List<Cuenta> filtereditems) {
+        this.filtereditems = filtereditems;
+    }
+     
+    
     public int getMontoSubsidio(){
         int monto=0;
         int porcentaje=0;
