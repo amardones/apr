@@ -18,39 +18,54 @@
             <h:form id="GmapForm">
                 <p:fieldset legend="Gmap" style="margin-bottom:20px">
                     <p:growl id="messages" showDetail="true" />
-                    
-                    <p:gmap id="gmap" center="-36.5001987,-71.9627197,643" zoom="15" type="HYBRID" style="width:100%;height:400px"
-                            model="#{cuentaController.emptyModel}" onPointClick="handlePointClick(event);"  widgetVar="map" />
-                    
-                    
-                    <p:dialog widgetVar="dlg" showEffect="fade">
-                        <h:form prependId="false">
-                            <p:panelGrid columns="2">
-                                <p:outputLabel value="Buscar cuenta :" for="cuentaAuto" />
+ 
+                                <p:gmap id="gmap" center="-36.5001987,-71.9627197" zoom="15" type="HYBRID" style="width:100%;height:400px"
+                                        model="#{cuentaController.emptyModel}" onPointClick="handlePointClick(event);" widgetVar="map" >
+                                    <p:ajax event="overlaySelect" listener="#{cuentaController.onMarkerSelect}" update="GmapForm:messages" />
+                                </p:gmap>
 
-                                <p:autoComplete id="cuentaAuto" value="#{cuentaController.selected}"
-                                        completeMethod="#{cuentaController.completeCuenta}"
-                                        var="idCuentaItem"
-                                        itemValue="#{idCuentaItem}"
-                                        itemLabel="#{idCuentaItem.idCuenta}-#{idCuentaItem.rut.nombre}-#{idCuentaItem.rut.apellido}" 
-                                        forceSelection="true"
-                                        >
-                                    <p:ajax event="itemSelect"  listener="#{pagoController.limpiarDetalles}" process="@form" update=":GmapForm:messages display3"/> 
-                                </p:autoComplete>
-                                
-                                <h:panelGroup id="display3" >
-                                    <p:commandButton value="Agregar" actionListener="#{cuentaController.addMarker}" oncomplete="markerAddComplete()" />
-                                    
-                                </h:panelGroup>
-                                <p:commandButton value="Cancelar" onclick="return cancel()" />
-                            </p:panelGrid> 
+                    <p:dialog widgetVar="dlg" showEffect="fade" >
+                                    <h:form prependId="false">
+                                        <h:panelGroup id="display">
+                                                            <p:panelGrid columns="2">
+                                                                <p:outputLabel value="Cuenta :" for="cuentaAuto" />
 
-                            <h:inputHidden id="lat" value="#{cuentaController.lat}" />
-                            <h:inputHidden id="lng" value="#{cuentaController.lng}" />
-                        </h:form>
-                    </p:dialog>
-                    <script type="text/javascript">
-    var currentMarker = null;
+                                                                <p:autoComplete id="cuentaAuto" value="#{cuentaController.selected}"
+                                                                        completeMethod="#{cuentaController.completeCuenta}"
+                                                                        var="idCuentaItem"
+                                                                        itemValue="#{idCuentaItem}"
+                                                                        itemLabel="#{idCuentaItem.idCuenta}-#{idCuentaItem.rut.nombre}-#{idCuentaItem.rut.apellido}" 
+                                                                        forceSelection="true"
+                                                                        >
+                                                                    <p:ajax event="itemSelect" listener="#{cuentaController.tituloCuenta}" process="@form" update="display3"/>
+                                                                    
+
+                                                                </p:autoComplete>
+                                                                </p:panelGrid>
+                                                                <input type="text" id="lat" disabled="true" value="#{cuentaController.lat}"/>
+                                                                <input type="text" id="lng"  disabled="true" value="#{cuentaController.lng}"/>
+                                        </h:panelGroup>                         
+                                                                <h:panelGroup id="display3" >
+                                                                    <p:panelGrid  columns="2" rendered="#{cuentaController.selected != null}">
+                                                                        <p:commandButton value="Agregar" actionListener="#{cuentaController.addMarker}" update="display,:GmapForm:messages" oncomplete="markerAddComplete()" />
+                                                                        <p:commandButton value="Cancelar" onclick="return cancel()" />
+                                                                        <input type="hidden" id="title" value="#{cuentaController.selected.idCuenta.toString()} #{cuentaController.selected.rut.nombre} #{cuentaController.selected.rut.apellido}"/>
+                                                                        
+                                                                    </p:panelGrid>
+                                                                    
+                                                                </h:panelGroup>
+                                        
+                                        
+
+                                       <!-- <h:inputHidden id="lat" value="#{cuentaController.lat}" />
+                                        <h:inputHidden id="lng" value="#{cuentaController.lng}" />-->
+                                                                        
+                                       
+                                    </h:form>
+                                </p:dialog>
+
+<script type="text/javascript">
+     var currentMarker = null;
  
     function handlePointClick(event) {
         if(currentMarker === null) {
@@ -84,7 +99,6 @@
         return false;
     }
 </script>
-
                 </p:fieldset>
             </h:form>
             

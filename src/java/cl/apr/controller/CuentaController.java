@@ -12,6 +12,8 @@ import cl.apr.facade.CuentaFacade;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -32,6 +34,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
+import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.event.map.PointSelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
@@ -56,12 +59,14 @@ public class CuentaController implements Serializable {
     @EJB
     private cl.apr.facade.CuentaSubsidioFacade ejbCuentaSubsidio;
     private List<Cuenta> items = null;
+    private List<LatLng> itemsLatLng = null;
+    private LatLng itemGmap=null;
     private List<Cuenta> filtereditems =null;
     private Cuenta selected;
     
-    
+    //google maps
     private MapModel emptyModel;
-    
+    private Marker marker;
     private String title;
     private double lat;      
     private double lng;
@@ -80,23 +85,28 @@ public class CuentaController implements Serializable {
     @PostConstruct
     public void init() {
         emptyModel = new DefaultMapModel();
-        LatLng coord1 = new LatLng(-36.5001987,-71.9627197);
-        emptyModel.addOverlay(new Marker(coord1, ""));
     }
     public MapModel getEmptyModel() {
+        for(Cuenta item : items) {
+                if(item.getGpsLatitud()!=null&&item.getGpsLongitud()!=null){
+                itemGmap= new LatLng(item.getGpsLatitud(), item.getGpsLatitud());                
+                emptyModel.addOverlay(new Marker(itemGmap,item.getIdCuenta().toString()+" "+item.getRut().getNombre()+" "+item.getRut().getApellido()));
+                }
+            }
         return emptyModel;
     }
+   
 
     public void setEmptyModel(MapModel emptyModel) {
         this.emptyModel = emptyModel;
     }
     public void addMarker() {
-        Marker marker = new Marker(new LatLng(lat, lng), title);
-        emptyModel.addOverlay(marker);
-        /*selected.setGpsLatitud(lat);
-        selected.setGpsLatitud(lng);*/
-        this.update();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marca agregada", "Lat:" + lat + ", Lng:" + lng));
+        marker = new Marker(new LatLng(lat, lng), title);
+        emptyModel.addOverlay(marker);       
+        selected.setGpsLatitud(lat);
+        selected.setGpsLongitud(lng);
+        update();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marca agregada","Cuenta :"+title+ ", Lat:" + lat + ", Lng:" + lng));
     }
     
 
@@ -115,10 +125,29 @@ public class CuentaController implements Serializable {
     public void setLng(double lng) {
         this.lng = lng;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+   public void onMarkerSelect(OverlaySelectEvent event) {       
+        marker = (Marker) event.getOverlay();
+        
+        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marca Seleccionada", marker.getTitle()));
+    }
+      
+    public Marker getMarker() {
+        return marker;
+    }
     
     
-    
-   
+   public void tituloCuenta(){
+       setTitle(selected.getIdCuenta().toString()+" "+selected.getRut().getNombre()+" "+selected.getRut().getApellido());
+   }
     public Cuenta getSelected() {
         return selected;
     }

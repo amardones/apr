@@ -13,13 +13,13 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{subsidioController.selected != null}">
                         <p:outputLabel value="#{bundle.EditSubsidioLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{subsidioController.selected.nombre}" title="#{bundle.EditSubsidioTitle_nombre}" required="true" requiredMessage="#{bundle.EditSubsidioRequiredMessage_nombre}"/>
+                        <p:inputText id="nombre" value="#{subsidioController.selected.nombre}" title="#{bundle.EditSubsidioTitle_nombre}" required="true" requiredMessage="#{bundle.CreateSubsidioRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.EditSubsidioLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{subsidioController.selected.descripcion}" title="#{bundle.EditSubsidioTitle_descripcion}" />
                         <p:outputLabel value="#{bundle.EditSubsidioLabel_porcentaje}" for="porcentaje" />
-                        <p:inputText id="porcentaje" value="#{subsidioController.selected.porcentaje}" title="#{bundle.EditSubsidioTitle_porcentaje}" required="true" requiredMessage="#{bundle.EditSubsidioRequiredMessage_porcentaje}"/>
+                        <p:inputText id="porcentaje" value="#{subsidioController.selected.porcentaje}" title="#{bundle.EditSubsidioTitle_porcentaje}" required="true" requiredMessage="#{bundle.CreateSubsidioRequiredMessage_porcentaje}"/>
                         <p:outputLabel value="#{bundle.EditSubsidioLabel_metrosCubicosTope}" for="metrosCubicosTope" />
-                        <p:inputText id="metrosCubicosTope" value="#{subsidioController.selected.metrosCubicosTope}" title="#{bundle.EditSubsidioTitle_metrosCubicosTope}" required="true" requiredMessage="#{bundle.EditSubsidioRequiredMessage_metrosCubicosTope}"/>
+                        <p:inputText id="metrosCubicosTope" value="#{subsidioController.selected.metrosCubicosTope}" title="#{bundle.EditSubsidioTitle_metrosCubicosTope}" required="true" requiredMessage="#{bundle.CreateSubsidioRequiredMessage_metrosCubicosTope}"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{subsidioController.update}" value="#{bundle.Save}" update="display,:SubsidioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SubsidioEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="SubsidioEditDialog.hide()"/>

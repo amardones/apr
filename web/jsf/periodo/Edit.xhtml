@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{periodoController.selected != null}">
                         <p:outputLabel value="#{bundle.EditPeriodoLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{periodoController.selected.nombre}" title="#{bundle.EditPeriodoTitle_nombre}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_nombre}"/>
+                        <p:inputText id="nombre" value="#{periodoController.selected.nombre}" title="#{bundle.EditPeriodoTitle_nombre}" required="true" requiredMessage="#{bundle.CreatePeriodoRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaInicio}" for="fechaInicio" />
                         <p:calendar id="fechaInicio" pattern="dd/MM/yyyy" value="#{periodoController.selected.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" required="true" requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaInicio}" showOn="button" locale="es"/>
                         <p:outputLabel value="#{bundle.EditPeriodoLabel_fechaFin}" for="fechaFin" />
