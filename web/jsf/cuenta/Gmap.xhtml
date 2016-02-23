@@ -47,7 +47,7 @@
                                                                
                                                 <h:panelGroup id="display3" >
                                                     <p:panelGrid  columns="2" rendered="#{cuentaController.selected != null}">
-                                                        <p:commandButton value="Agregar" actionListener="#{cuentaController.addMarker}" update="display,:GmapForm:messages" rendered="#{cuentaController.selected != null}" oncomplete="markerAddComplete()" />
+                                                        <p:commandButton value="Agregar" actionListener="#{cuentaController.addMarker}" update=":GmapForm:gmap,display,:GmapForm:messages" rendered="#{cuentaController.selected != null}" oncomplete="markerAddComplete()" />
                                                         <p:commandButton value="Cancelar" update="display,:GmapForm:messages" onclick="return cancel()" />
                                                         <input type="hidden" id="title" value="#{cuentaController.selected.idCuenta.toString()} #{cuentaController.selected.rut.nombre} #{cuentaController.selected.rut.apellido}"/>
 
