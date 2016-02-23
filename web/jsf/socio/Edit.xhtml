@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{socioController.selected != null}">
                         <p:outputLabel value="#{bundle.EditSocioLabel_rut}" for="rut" />
-                        <p:inputText id="rut" value="#{socioController.selected.rut}" title="#{bundle.EditSocioTitle_rut}" required="true" requiredMessage="#{bundle.EditSocioRequiredMessage_rut}"/>
+                        <p:inputText id="rut" disabled="true" value="#{socioController.selected.rut}" title="#{bundle.EditSocioTitle_rut}" required="true" requiredMessage="#{bundle.EditSocioRequiredMessage_rut}"/>
                         <p:outputLabel value="#{bundle.EditSocioLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{socioController.selected.nombre}" title="#{bundle.EditSocioTitle_nombre}" required="true" requiredMessage="#{bundle.EditSocioRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.EditSocioLabel_apellido}" for="apellido" />

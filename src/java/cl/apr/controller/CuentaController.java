@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -59,17 +60,16 @@ public class CuentaController implements Serializable {
     @EJB
     private cl.apr.facade.CuentaSubsidioFacade ejbCuentaSubsidio;
     private List<Cuenta> items = null;
-    private List<LatLng> itemsLatLng = null;
     private LatLng itemGmap=null;
-    private List<Cuenta> filtereditems =null;
     private Cuenta selected;
     
     //google maps
     private MapModel emptyModel;
     private Marker marker;
     private String title;
-    private double lat;      
-    private double lng;
+    private double lat=0;      
+    private double lng=0;
+   
     //private Subsidio subsidio;
 
 //    public Subsidio getSubsidio() {
@@ -87,12 +87,16 @@ public class CuentaController implements Serializable {
         emptyModel = new DefaultMapModel();
     }
     public MapModel getEmptyModel() {
-        for(Cuenta item : items) {
-                if(item.getGpsLatitud()!=null&&item.getGpsLongitud()!=null){
-                itemGmap= new LatLng(item.getGpsLatitud(), item.getGpsLatitud());                
-                emptyModel.addOverlay(new Marker(itemGmap,item.getIdCuenta().toString()+" "+item.getRut().getNombre()+" "+item.getRut().getApellido()));
-                }
+        emptyModel = new DefaultMapModel();
+        getItems();
+            for(Cuenta item : items) {
+                    
+                    if(item.getGpsLatitud()!=null&&item.getGpsLongitud()!=null){
+                    itemGmap= new LatLng(Double.parseDouble(item.getGpsLatitud()),Double.parseDouble(item.getGpsLongitud()));                
+                    emptyModel.addOverlay(new Marker(itemGmap,item.getIdCuenta().toString()+" "+item.getRut().getNombre()+" "+item.getRut().getApellido()));
+                    }
             }
+        
         return emptyModel;
     }
    
@@ -103,8 +107,8 @@ public class CuentaController implements Serializable {
     public void addMarker() {
         marker = new Marker(new LatLng(lat, lng), title);
         emptyModel.addOverlay(marker);       
-        selected.setGpsLatitud(lat);
-        selected.setGpsLongitud(lng);
+        selected.setGpsLatitud(String.valueOf(lat));
+        selected.setGpsLongitud(String.valueOf(lng));
         update();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marca agregada","Cuenta :"+title+ ", Lat:" + lat + ", Lng:" + lng));
     }
@@ -197,6 +201,7 @@ public class CuentaController implements Serializable {
             }                
         }
         if(!nCuentaEnBD){
+            selected.setFechaCreacion(new Date());
             persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CuentaCreated"));
             if (!JsfUtil.isValidationFailed()) {
                  System.out.println("limpiando cuenta create");
@@ -231,15 +236,6 @@ public class CuentaController implements Serializable {
          items = getFacade().findAll();
          return items;
     }
-
-    public List<Cuenta> getFiltereditems() {
-        return filtereditems;
-    }
-
-    public void setFiltereditems(List<Cuenta> filtereditems) {
-        this.filtereditems = filtereditems;
-    }
-     
     
     public int getMontoSubsidio(){
         int monto=0;
@@ -266,6 +262,7 @@ public class CuentaController implements Serializable {
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
+            
             try {
                 if (persistAction != PersistAction.DELETE) {
                     if(selected.getCuentaSubsidio() != null && selected.getCuentaSubsidio().getIdSubsidio() != null){                        

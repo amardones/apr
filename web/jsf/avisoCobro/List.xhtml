@@ -75,10 +75,10 @@
                              <p:column style="width: 100px;">
                                  <p:panelGrid columns="2"  >                                 
                                      
-                                      <p:commandButton  icon="fa fa-refresh"
+                                      <p:commandButton  
                                                     actionListener="#{avisoCobroController.generarTodosLosAvisoCobro()}"  
                                                      update=":growl,datalist"
-                                                    value="Crear" 
+                                                    value="Calcular" 
                                                     disabled="#{!periodoController.permiteRecalcular()}"
                                                     >
                                         <p:confirm header="Confirmación" message="Va a calcular aviso, desea  continuar?" icon="ui-icon-alert" />
@@ -179,15 +179,18 @@
                             </f:facet>
                             <h:outputText value="$ #{item.totalPendiente}" />
                         </p:column>
-                        <p:column  filterBy="#{item.total}" headerText="#{bundle.ListAvisoCobroTitle_total}" filterMatchMode="contains" filterStyle="width:65px;" style="width: 70px">
+                        <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAvisoCobroTitle_total}"/>
+                            </f:facet>
                             <h:outputText value="$ #{item.total}"/>
                         </p:column>    
                         <p:column style=" width: 80px; text-align: center;" >                        
                              <p:panelGrid columns="1"  >                                 
-                                 <p:commandButton  icon="fa fa-refresh"
+                                 <p:commandButton  
                                                     actionListener="#{avisoCobroController.generarAvisoCobro(item)}"  
                                                     update=":growl,datalist"
-                                                    value="Crear" 
+                                                    value="Calcular" 
                                                     disabled="#{!periodoController.permiteRecalcular()}"
                                                     >
                                         <p:confirm header="Confirmación" message="Va a calcular aviso, desea  continuar?" icon="ui-icon-alert" />

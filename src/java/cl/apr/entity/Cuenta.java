@@ -59,9 +59,9 @@ public class Cuenta implements Serializable {
     @Column(name = "direccion")
     private String direccion;
     @Column(name = "gps_latitud")
-    private Double gpsLatitud;
+    private String gpsLatitud;
     @Column(name = "gps_longitud")
-    private Double gpsLongitud;
+    private String gpsLongitud;
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
@@ -124,19 +124,19 @@ public class Cuenta implements Serializable {
         this.direccion = direccion;
     }
 
-    public Double getGpsLatitud() {
+    public String getGpsLatitud() {
         return gpsLatitud;
     }
 
-    public void setGpsLatitud(Double gpsLatitud) {
+    public void setGpsLatitud(String gpsLatitud) {
         this.gpsLatitud = gpsLatitud;
     }
 
-    public Double getGpsLongitud() {
+    public String getGpsLongitud() {
         return gpsLongitud;
     }
 
-    public void setGpsLongitud(Double gpsLongitud) {
+    public void setGpsLongitud(String gpsLongitud) {
         this.gpsLongitud = gpsLongitud;
     }
 
