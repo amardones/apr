@@ -11,22 +11,20 @@
         <p:dialog id="CuentaEditDlg" widgetVar="CuentaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCuentaTitle}">
             <h:form id="CuentaEditForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="3" rendered="#{cuentaController.selected != null?cuentaController.selected.cuentaSubsidio != null: false}">
+                    <p:panelGrid columns="2" rendered="#{cuentaController.selected != null?cuentaController.selected.cuentaSubsidio != null: false}">
+                        <p:outputLabel value="Medidor" for="createMedidor" />
+                        <p:commandButton style="width: 130px" id="createMedidor" icon="ui-icon-plus"  process=":MedidorCreateForm @this" value="Crear Medidor" actionListener="#{medidorController.prepareCreate}" update=":MedidorEditForm" onclick="PF('MedidorEditDialog').show();PF('CuentaEditDialog').hide();" />
+                        <p:outputLabel value="Socios" for="createSocio" />
+                        <p:commandButton style="width: 130px" id="createSocio" icon="ui-icon-plus"  process=":SocioEditForm @this" value="Crear Socio" actionListener="#{socioController.prepareCreate}" update=":SocioEditForm" onclick="PF('SocioEditDialog').show();PF('CuentaEditDialog').hide();" />
                         <p:outputLabel value="#{bundle.EditCuentaLabel_direccion}" for="direccion" />
                         <p:inputText id="direccion" value="#{cuentaController.selected.direccion}" title="#{bundle.EditCuentaTitle_direccion}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_direccion}"/>
                         
-                        <!--<p:outputLabel value="#{bundle.EditCuentaLabel_gpsLatitud}" for="gpsLatitud" />
-                        <p:inputText id="gpsLatitud" value="#{cuentaController.selected.gpsLatitud}" title="#{bundle.EditCuentaTitle_gpsLatitud}" />
-                        <p:outputLabel />
-                        <p:outputLabel value="#{bundle.EditCuentaLabel_gpsLongitud}" for="gpsLongitud" />
-                        <p:inputText id="gpsLongitud" value="#{cuentaController.selected.gpsLongitud}" title="#{bundle.EditCuentaTitle_gpsLongitud}" />
-                        <p:outputLabel />-->
                         <p:outputLabel value="#{bundle.EditCuentaLabel_activa}" for="activa" />
                         <p:selectBooleanCheckbox id="activa" value="#{cuentaController.selected.activa}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_activa}"/>
-                        <p:outputLabel />
+                        
                         <p:outputLabel value="#{bundle.EditCuentaLabel_esInstitucion}" for="esInstitucion" />
                         <p:selectBooleanCheckbox id="esInstitucion" value="#{cuentaController.selected.esInstitucion}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_esInstitucion}"/>
-                        <p:outputLabel />
+                        
                         <p:outputLabel value="#{bundle.EditCuentaLabel_cuentaSubsidio}" for="cuentaSubsidio" />
                         <p:selectOneMenu id="cuentaSubsidio" value="#{cuentaController.selected.cuentaSubsidio.idSubsidio}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
@@ -38,7 +36,7 @@
                             
                              <p:ajax event="valueChange" process="cuentaSubsidio"  />
                         </p:selectOneMenu>
-                        <p:outputLabel />
+                        
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_numeroMedidor}" for="numeroMedidor" />
                         <p:selectOneMenu style="width:150px" id="numeroMedidor" value="#{cuentaController.selected.numeroMedidor}" required="true" requiredMessage="El N° de medidor es requerido">
                             <f:selectItems  value="#{cuentaController.medidoresDisponiblesEditar}"
@@ -47,7 +45,6 @@
                                            itemLabel="#{numeroMedidorItem.numeroMedidor}"
                                            />
                         </p:selectOneMenu>
-                        <p:commandButton style="width: 130px" id="createMedidor" icon="ui-icon-plus"  process=":MedidorCreateForm @this" value="Crear Medidor" actionListener="#{medidorController.prepareCreate}" update=":MedidorEditForm" onclick="PF('MedidorEditDialog').show();PF('CuentaEditDialog').hide();" />
                         <p:outputLabel value="#{bundle.CuentaLabel_Socio}" for="rut" />
                         <p:autoComplete style="width: 130px" id="rut" value="#{cuentaController.selected.rut}"
                                         completeMethod="#{socioController.completeSocio}"
@@ -58,7 +55,6 @@
                                         required="true"
                                 >
                         </p:autoComplete>
-                        <p:commandButton style="width: 130px" id="createSocio" icon="ui-icon-plus"  process=":SocioEditForm @this" value="Crear Socio" actionListener="#{socioController.prepareCreate}" update=":SocioEditForm" onclick="PF('SocioEditDialog').show();PF('CuentaEditDialog').hide();" />
 
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cuentaController.update}" value="#{bundle.Save}" update="display,:CuentaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CuentaEditDialog');"/>
