@@ -1,9 +1,8 @@
--- Function: fn_calcular_avisos_de_cobro(integer,integer)
+-- Function: fn_calcular_avisos_de_cobro(integer, integer)
 
--- DROP FUNCTION fn_calcular_avisos_de_cobro(integer,integer);
+-- DROP FUNCTION fn_calcular_avisos_de_cobro(integer, integer);
 
---SI id_cuenta$ > 0 considera el valor y solo calcula el aviso para esa cuenta, sino calcula todos los indicadores de todos los documentos
-CREATE OR REPLACE FUNCTION fn_calcular_avisos_de_cobro("id_periodo$" integer,  "id_cuenta_in$" integer)
+CREATE OR REPLACE FUNCTION fn_calcular_avisos_de_cobro("id_periodo$" integer, "id_cuenta_in$" integer)
   RETURNS character varying AS
 $BODY$
 DECLARE
@@ -39,9 +38,15 @@ BEGIN
       
 	--SE RECORRE LISTADO DE CUENTAS PARA CALCULAR AVISO DE COBRO
 	OPEN f_cuentas$ FOR    
-		SELECT c.id_cuenta FROM cuenta c
+		SELECT c.id_cuenta FROM cuenta c		
 		WHERE c.activa = true
-		and case when id_cuenta_in$ > 0 then c.id_cuenta = id_cuenta_in$ else true end ;
+		AND
+		(
+		select count(a.id_cuenta) from aviso_cobro a 
+		INNER JOIN detalle_aviso_cobro  dac on a.id_cuenta = dac.id_cuenta and a.id_periodo = dac.id_periodo and dac.pagado = true
+		where a.id_cuenta = c.id_cuenta and a.id_periodo = id_periodo$
+		) = 0
+		AND case when id_cuenta_in$ > 0 then c.id_cuenta = id_cuenta_in$ else true end ;
 
 	--seleccionamos datos ultimo periodo
 	SELECT id_valores_parametricos, fecha_emision INTO id_valores_parametricos$, fecha_emision$ FROM periodo WHERE id_periodo = id_periodo$;
@@ -227,31 +232,5 @@ END
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION fn_calcular_avisos_de_cobro(integer,integer)
+ALTER FUNCTION fn_calcular_avisos_de_cobro(integer, integer)
   OWNER TO postgres;
-
--- select fn_calcular_avisos_de_cobro(2,-1);
--- select * from detalle_aviso_cobro;
-
- /*
-	--1. PRIMERO CREAMOS TABLA TEMPORAL VALOR OPERANDO MANUAL 
-	DROP TABLE IF EXISTS calculo_operando_tmp;
-	CREATE TEMPORARY TABLE calculo_operando_tmp  AS 
-	select distinct ;
-	
-	--2.- CALCULAR TODOS LOS OPERANDO MANUAL
-	INSERT INTO valor_operando_manual(id_operando_manual, valor) 
-		(
-		SELECT  co.id_operando_manual
-			,(
-				case when co.es_grilla then 
-					(select fn_calcula_operando_manual_condicion_grilla(co.id_operando_manual,co.id_formulario,co.ID_BLOQUE,co.ID_METADATO,co.operador,co.fecha_desde_periodo, co.fecha_hasta_periodo)) 
-				else 
-					(select fn_calcula_operando_manual_condicion_metadato(co.id_operando_manual,co.id_formulario,co.ID_BLOQUE,co.ID_METADATO,co.operador,co.fecha_desde_periodo, co.fecha_hasta_periodo))
-				end
-			) as resultado
-
-		FROM calculo_operando_tmp  co 
-		);
-	
-	*/
