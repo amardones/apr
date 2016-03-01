@@ -276,6 +276,10 @@ public class AvisoPDF {
                     for(int i=0; i<aviso.getDetalleAvisoCobroList().size(); ++i){
                         info = "";
                         det = aviso.getDetalleAvisoCobroList().get(i);
+                        if(det.getPagado()){
+                            info = "(P) ";
+                        }
+                        
                         cPag01 = new PdfPCell(new Phrase(det.getIdTipoCobro().getNombre(),fCuerpoTabla));
                         cPag01.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         cPag01.setHorizontalAlignment(Element.ALIGN_LEFT);   
@@ -283,7 +287,7 @@ public class AvisoPDF {
                         //cPag01.setPadding(5);
                         
                         if(det.getIdDetalleAvisoCobroAnt() > 0){
-                            info += "Pendiente ";
+                            info += "Periodo Ant. ";
                         }
                         if(!det.getIdTipoCobro().getCodigoTipoCobro().equals("CONSDEAGUA")){
                             info += det.getDescripcion();
