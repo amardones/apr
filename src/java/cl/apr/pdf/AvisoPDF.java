@@ -90,7 +90,7 @@ public class AvisoPDF {
                             av = avisos.get(i);
                             PdfPCell pCell = crearAvisos(av, hmapBarChartItems.get(av.getAvisoCobroPK().getIdCuenta()));
                             pCell.setBorder(Rectangle.RIGHT);
-                            pCell.setFixedHeight(PageSize.LETTER.rotate().getHeight()-100);
+                            pCell.setFixedHeight(PageSize.LETTER.rotate().getHeight()-80);
                             pCell.setVerticalAlignment(Element.ALIGN_TOP);
                             pCell.setPaddingRight(30);
                             tableDividePagina.addCell(pCell);
