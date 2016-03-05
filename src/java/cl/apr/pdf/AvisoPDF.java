@@ -2,6 +2,7 @@ package cl.apr.pdf;
 
 import cl.apr.beans.BarChartItem;
 import cl.apr.entity.AvisoCobro;
+import cl.apr.entity.DatosComite;
 import cl.apr.entity.DetalleAvisoCobro;
 import cl.apr.enums.EnumFormatoFechaHora;
 import cl.apr.pdf.chart.BarChartAviso;
@@ -57,11 +58,29 @@ public class AvisoPDF {
 	private static Font fTextPlazo= new Font(Font.getFamily("ARIAL"),8,Font.BOLD | Font.UNDERLINE );
 	    
 	
-	static public ByteArrayOutputStream crearPdf(List<AvisoCobro> avisos, HashMap<Integer,List<BarChartItem>> hmapBarChartItems){
+	static public ByteArrayOutputStream crearPdf(List<AvisoCobro> avisos, List<DatosComite> datosComite,HashMap<Integer,List<BarChartItem>> hmapBarChartItems){
 		
 		Document document =new Document();
 		ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
 		PdfContentByte pdfcb = null;
+                String titulo="";
+                String telefono="";
+                String atencion="";
+                String email="";
+                 for (DatosComite item : datosComite) {
+                     if(item.getCodigo().equalsIgnoreCase("ATC")){
+                         atencion=item.getDato();
+                     }
+                     if(item.getCodigo().equalsIgnoreCase("CAP")){
+                         titulo=item.getDato();
+                     }
+                     if(item.getCodigo().equalsIgnoreCase("EMAIL")){
+                          email=item.getDato();
+                     }
+                     if(item.getCodigo().equalsIgnoreCase("TLF")){
+                          telefono=item.getDato();
+                     }
+                 }
 
 		try {			
                         //System.out.println("System.out.println(PageSize.A4.getHeight()): "+PageSize.A4.getHeight());
@@ -88,7 +107,7 @@ public class AvisoPDF {
                                 tableDividePagina.setWidths(columnWidths2);
                             } catch (DocumentException e) {e.printStackTrace();}
                             av = avisos.get(i);
-                            PdfPCell pCell = crearAvisos(av, hmapBarChartItems.get(av.getAvisoCobroPK().getIdCuenta()));
+                            PdfPCell pCell = crearAvisos(av,titulo,atencion,telefono, hmapBarChartItems.get(av.getAvisoCobroPK().getIdCuenta()));
                             pCell.setBorder(Rectangle.RIGHT);
                             pCell.setFixedHeight(PageSize.LETTER.rotate().getHeight()-80);
                             pCell.setVerticalAlignment(Element.ALIGN_TOP);
@@ -97,7 +116,7 @@ public class AvisoPDF {
                                  
                             if((i+1) < avisos.size()){     
                                 av = avisos.get(i+1);
-                                 pCell = crearAvisos(av, hmapBarChartItems.get(av.getAvisoCobroPK().getIdCuenta()));
+                                 pCell = crearAvisos(av,titulo,atencion,telefono, hmapBarChartItems.get(av.getAvisoCobroPK().getIdCuenta()));
                                  pCell.setFixedHeight(PageSize.LETTER.rotate().getHeight()-80);
                                  pCell.setBorder(Rectangle.LEFT);
                                  pCell.setPaddingLeft(30);
@@ -105,7 +124,7 @@ public class AvisoPDF {
                                  tableDividePagina.addCell(pCell);
                                 
                             }else{
-                                 tableDividePagina.addCell(crearAvisos(null,null));
+                                 tableDividePagina.addCell(crearAvisos(null,null,null,null,null));
                             }
                             
                             document.add(tableDividePagina);
@@ -132,9 +151,10 @@ public class AvisoPDF {
 		
 	}
 	
-	 static private PdfPCell crearAvisos(AvisoCobro aviso, List<BarChartItem> barChartItem) {
+	 static private PdfPCell crearAvisos(AvisoCobro aviso,String titulo,String atencion,String telefono, List<BarChartItem> barChartItem) {
             System.out.println("Creando aviso 2");
             PdfPCell pCell = null;
+            
             try {
                
                 if(aviso!=null){
@@ -171,7 +191,9 @@ public class AvisoPDF {
                     tableTitulo.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
                     tableTitulo.getDefaultCell().setFixedHeight(40);
                     tableTitulo.addCell(new Phrase("APR",fTitulo1));
-                    tableTitulo.addCell(new Phrase("COMITE AGUA POTABLE QUILELTO EL MANZANAL",fTitulo2));
+                    
+                    
+                    tableTitulo.addCell(new Phrase(titulo,fTitulo2));
                     
                     //Cuenta
                     PdfPTable tableHeaderCuenta   = new PdfPTable(4);
@@ -496,10 +518,10 @@ public class AvisoPDF {
                     //table.addCell(tableResumen); 
                                         
                     table.addCell(new Phrase(" ",fCuerpoCabeceraTabla));                   
-                    table.addCell(new Phrase("Fono Consultas 76310437 - 97667763 ",fCuerpoTabla));
+                    table.addCell(new Phrase("Fono Consultas "+telefono,fCuerpoTabla));
                     table.addCell(new Phrase("Recuerde mantener sus cuentas al día para brindarle un mejor servicio",fCuerpoTabla));
-                    table.addCell(new Phrase("COMITÉ AGUA RURAL QUILELTO EL MANZANAL ",fCuerpoTabla));
-                    table.addCell(new Phrase("ATENCIÓN: LUNES, MIERCOLES Y VIERNES DE 09:00 a 13:00 HRS.",fCuerpoTablaBold));
+                    table.addCell(new Phrase(titulo,fCuerpoTabla));
+                    table.addCell(new Phrase("ATENCIÓN: "+atencion,fCuerpoTablaBold));
                     table.addCell(new Phrase("RECUERDE PROTEGER SU MEDIDOR DE LAS HELADAS",fCuerpoTablaBold));
                     table.addCell(new Phrase("",fCuerpoTablaBold));
                                        //  

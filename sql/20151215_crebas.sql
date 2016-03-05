@@ -269,6 +269,17 @@ create table VALOR_TRAMO_M3 (
    PORCENTAJE_RECARGO   NUMERIC              not null,
    constraint PK_VALOR_TRAMO_M3 primary key (ID_VALOR_TRAMO)
 );
+/*==============================================================*/
+/* Table: datos_comite                                        */
+/*==============================================================*/
+CREATE TABLE datos_comite
+(
+  nombre character varying(80) NOT NULL,
+  codigo character varying(10) NOT NULL,
+  dato character varying(80) NOT NULL,
+  CONSTRAINT datos_comite_pkey PRIMARY KEY (codigo)
+);
+
 
 alter table AVISO_COBRO
    add constraint FK_AVISO_CO_REFERENCE_REGISTRO foreign key (ID_PERIODO, ID_CUENTA)

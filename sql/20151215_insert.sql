@@ -35,6 +35,18 @@ INSERT INTO valores_parametricos(
     VALUES ('10', '3300', '330', '10', 
             '1','50','2015-12-20 23:53:19.418-03', 
             '', '20','3', '5');
+INSERT INTO datos_comite(
+            nombre, codigo, dato)
+    VALUES ('NOMBRE COMITE','CAP','COMITE AGUA POTABLE QUILELTO EL MANZANAL');
+INSERT INTO datos_comite(
+            nombre, codigo, dato)
+    VALUES ('TELFONO','TLF','76310437 - 97667763');
+INSERT INTO datos_comite(
+            nombre, codigo, dato)
+    VALUES ('EMAIL','EMAIL','mail@comite.cl');
+INSERT INTO datos_comite(
+            nombre, codigo, dato)
+    VALUES ('ATENCIÓN','ATC','LUNES, MIERCOLES Y VIERNES DE 09:00 a 13:00 HRS.');
 /*
 CONSUMO AGUA POTABLE
 CUOTA SOCIAL

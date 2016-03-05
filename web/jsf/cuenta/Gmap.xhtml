@@ -21,10 +21,10 @@
  
                                 <p:gmap id="gmap" center="-36.5001987,-71.9627197" zoom="15" type="HYBRID" style="width:100%;height:400px"
                                         model="#{cuentaController.emptyModel}" onPointClick="handlePointClick(event);" widgetVar="map" >
-                                    <!--<p:ajax event="overlaySelect" listener="#{cuentaController.onMarkerSelect}" update=":GmapForm:messages" />-->
+                                    <p:ajax event="overlaySelect" listener="#{cuentaController.onMarkerSelect}" update=":GmapForm:messages" />
                                 </p:gmap>
 
-                    <p:dialog widgetVar="dlg" showEffect="fade" >
+                    <p:dialog widgetVar="dlg" showEffect="fade" closable="false" >
                         <h:form  prependId="false">
                                         
                                                             <p:panelGrid columns="2">

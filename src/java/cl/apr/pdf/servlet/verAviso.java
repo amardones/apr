@@ -6,10 +6,12 @@
 package cl.apr.pdf.servlet;
 import cl.apr.beans.BarChartItem;
 import cl.apr.entity.AvisoCobro;
+import cl.apr.entity.DatosComite;
 import cl.apr.pdf.AvisoPDF;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +31,8 @@ public class verAviso extends HttpServlet {
 
     @EJB
     private cl.apr.facade.AvisoCobroFacade ejbFacade;
-    
+    @EJB
+    private cl.apr.facade.DatosComiteFacade comiteFacade; 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -59,6 +62,10 @@ public class verAviso extends HttpServlet {
                         list = ejbFacade.getAvisosPorPeriodo(idPeriodo);
                     }
                 }
+                List<DatosComite> datosList=new ArrayList<>();
+                if(comiteFacade != null){
+                    datosList=comiteFacade.findAll();
+                }
 //                list.add(new AvisoCobro());
 //                list.add(new AvisoCobro());
 //                list.add(new AvisoCobro());
@@ -71,7 +78,7 @@ public class verAviso extends HttpServlet {
                    barChartItems = ejbFacade.obtenerRegistroEstadoHistoricos(aviso.getAvisoCobroPK().getIdCuenta());
                    hmapBarChartItems.put(aviso.getAvisoCobroPK().getIdCuenta(), barChartItems);
                 }
-                baos =  AvisoPDF.crearPdf(list, hmapBarChartItems);
+                baos =  AvisoPDF.crearPdf(list,datosList, hmapBarChartItems);
 
                 if(baos != null)
                 {

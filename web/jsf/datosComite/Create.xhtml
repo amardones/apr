@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DatosComiteCreateDlg" widgetVar="DatosComiteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDatosComiteTitle}">
+            <h:form id="DatosComiteCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{datosComiteController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDatosComiteLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{datosComiteController.selected.nombre}" title="#{bundle.CreateDatosComiteTitle_nombre}" required="true" requiredMessage="#{bundle.CreateDatosComiteRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.CreateDatosComiteLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{datosComiteController.selected.codigo}" title="#{bundle.CreateDatosComiteTitle_codigo}" required="true" requiredMessage="#{bundle.CreateDatosComiteRequiredMessage_codigo}"/>
+                        <p:outputLabel value="#{bundle.CreateDatosComiteLabel_dato}" for="dato" />
+                        <p:inputText id="dato" value="#{datosComiteController.selected.dato}" title="#{bundle.CreateDatosComiteTitle_dato}" required="true" requiredMessage="#{bundle.CreateDatosComiteRequiredMessage_dato}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{datosComiteController.create}" value="#{bundle.Save}" update="display,:DatosComiteListForm:datalist,:growl" oncomplete="handleSubmit(args,'DatosComiteCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DatosComiteCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
