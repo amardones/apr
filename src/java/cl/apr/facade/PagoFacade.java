@@ -13,6 +13,7 @@ import cl.apr.entity.Pago;
 import cl.apr.entity.PagoTipoCobro;
 import cl.apr.entity.Periodo;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
@@ -208,5 +209,12 @@ public class PagoFacade extends AbstractFacade<Pago> {
         return null;
     }
     
+    
+   
+     public BigInteger getNextIdPago() {
+         BigInteger result = null; 
+         result = (BigInteger) em.createNativeQuery("select nextval('pago_id_pago_seq') ").getSingleResult();
+        return result;
+    }
     
 }

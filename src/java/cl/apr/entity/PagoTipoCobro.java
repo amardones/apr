@@ -34,9 +34,12 @@ public class PagoTipoCobro implements Serializable {
     protected PagoTipoCobroPK pagoTipoCobroPK;
     @Column(name = "total")
     private Integer total;
+    
     @JoinColumn(name = "id_pago", referencedColumnName = "id_pago", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Pago pago;
+    
+    
     @JoinColumn(name = "id_tipo_cobro", referencedColumnName = "id_tipo_cobro", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private TipoCobro tipoCobro;
@@ -76,6 +79,7 @@ public class PagoTipoCobro implements Serializable {
         this.pago = pago;
     }
 
+    
     public TipoCobro getTipoCobro() {
         return tipoCobro;
     }

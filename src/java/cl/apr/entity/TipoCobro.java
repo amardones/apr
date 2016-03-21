@@ -37,8 +37,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TipoCobro.findByAceptaPagoCuotas", query = "SELECT t FROM TipoCobro t WHERE t.aceptaPagoCuotas = :aceptaPagoCuotas"),
     @NamedQuery(name = "TipoCobro.findByAceptaRegistroCobro", query = "SELECT t FROM TipoCobro t WHERE t.aceptaRegistroCobro = :aceptaRegistroCobro")})
 public class TipoCobro implements Serializable {
+    /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoCobro")
     private List<PagoTipoCobro> pagoTipoCobroList;
+    */
     @Min(0)
     @Column(name = "valor")
     private Integer valor;
@@ -176,7 +178,7 @@ public class TipoCobro implements Serializable {
     public void setValor(Integer valor) {
         this.valor = valor;
     }
-
+/*
     @XmlTransient
     public List<PagoTipoCobro> getPagoTipoCobroList() {
         return pagoTipoCobroList;
@@ -185,5 +187,5 @@ public class TipoCobro implements Serializable {
     public void setPagoTipoCobroList(List<PagoTipoCobro> pagoTipoCobroList) {
         this.pagoTipoCobroList = pagoTipoCobroList;
     }
-    
+    */
 }

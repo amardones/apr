@@ -54,7 +54,7 @@
                         </p:column>                        
                         <f:facet name="header">
                             <p:commandButton  id="createButton" icon="ui-icon-plus" value="CREAR PAGO AVISO DE COBRO" actionListener="#{pagoController.prepareCreate}" update=":PagoCreateForm" oncomplete="PF('PagoCreateDialog').show()"/>
-
+                            <p:commandButton  id="createButtonExt" icon="ui-icon-plus" value="CREAR OTRO PAGO" actionListener="#{pagoController.prepareCreate}" update=":pagoExtraordinarioCreateForm" oncomplete="PF('pagoExtraordinarioCreateDialog').show()"/>
 <!--<p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PagoViewForm" oncomplete="PF('PagoViewDialog').show()" disabled="#{empty pagoController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PagoEditForm" oncomplete="PF('PagoEditDialog').show()" disabled="#{empty pagoController.selected}"/>-->
                         </f:facet>
@@ -62,6 +62,7 @@
                 </p:fieldset>
             </h:form>
             <ui:include src="Create.xhtml"/>
+            <ui:include src="CreatePago.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
         </ui:define>

@@ -51,12 +51,13 @@ public class Pago implements Serializable {
         @JoinColumn(name = "id_detalle_aviso_cobro", referencedColumnName = "id_detalle_aviso_cobro")})
     @ManyToMany
     private List<DetalleAvisoCobro> detalleAvisoCobroList;
-    
+  
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pago")
     private List<PagoTipoCobro> pagoTipoCobroList;
+    
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_pago")
     private Integer idPago;

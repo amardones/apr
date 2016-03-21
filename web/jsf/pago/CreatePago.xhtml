@@ -35,7 +35,7 @@
                                                  required="true" 
                                                  requiredMessage=""                                                 
                                                  >
-                                    <f:selectItems value="#{tipoCobroController.tiposCobroRegistranCobro}"
+                                    <f:selectItems value="#{pagoController.listaTipoCobros}"
                                                    var="idTipoCobroItem"
                                                    itemValue="#{idTipoCobroItem}"
                                                    itemLabel="#{idTipoCobroItem.nombre}"/>   
@@ -75,7 +75,7 @@
                                             <h:outputText value="Acción"/>
                                         </f:facet>
                                         <p:commandButton id="eliminarButton" value="Eliminar" actionListener="#{pagoController.eliminarItem(item)}"  
-                                                update="datalist">                                      
+                                                update="datalist :pagoExtraordinarioCreateForm:display2">                                      
                                                 
                                           </p:commandButton>  
                                     </p:column>

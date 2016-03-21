@@ -11,8 +11,12 @@ import cl.apr.entity.TipoCobro;
 import cl.apr.facade.PagoFacade;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -48,8 +52,9 @@ public class PagoController implements Serializable {
     private List<DetalleAvisoCobro> itemsDetalleAvisos = null;
     private List<DetalleAvisoCobro> detalleAvisoPagos = null;
     private List<PagoTipoCobro> pagoTipoCobro=null;
+    private List<TipoCobro> listaTipoCobros = null;
     private int total;
-    
+   
 
     @Inject
     private CuentaController cuentaController;
@@ -67,6 +72,14 @@ public class PagoController implements Serializable {
     }
 
     final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
+
+    public List<TipoCobro> getListaTipoCobros() {
+        if(listaTipoCobros == null){
+            listaTipoCobros = tipoCobroController.getTiposCobroRegistranCobro();
+        }
+        Collections.sort(listaTipoCobros, Comparator.comparing(TipoCobro::getNombre));
+        return listaTipoCobros;
+    }
    
    
     public List<DetalleAvisoCobro> getItemsDetalleAvisos() {
@@ -92,6 +105,7 @@ public class PagoController implements Serializable {
         return selected;
     }
 
+    
     public void setSelected(Pago selected) {
         this.selected = selected;
     }
@@ -106,6 +120,7 @@ public class PagoController implements Serializable {
     }
     
 
+    
     private PagoFacade getFacade() {
         return ejbFacade;
     }
@@ -117,7 +132,7 @@ public class PagoController implements Serializable {
     public Pago prepareCreate() {
         selected = new Pago();
         pagoTipoCobro=new ArrayList<>();
-        selected.setPagoTipoCobroList(new ArrayList<>());
+        listaTipoCobros = null;
         initializeEmbeddableKey();
         itemsDetalleAvisos = null;
         detalleAvisoPagos=null;
@@ -157,6 +172,7 @@ public class PagoController implements Serializable {
         pagoTipoCobro.add(cc);
         getTotalPagoTipoCobro();
         selected.setSubtotal(0);
+        listaTipoCobros.remove(tipoCobroSelected);
         
     }
     public void getTotalPagoTipoCobro(){
@@ -165,11 +181,19 @@ public class PagoController implements Serializable {
             selected.setTotal(itemT.getTotal()+selected.getTotal());
         }
     }
-    public void eliminarItem(PagoTipoCobro cc){        
+    public void eliminarItem(PagoTipoCobro cc){ 
+        System.out.println("Eliminar : "+cc.getTotal());
         if(!pagoTipoCobro.isEmpty()){
-            selected.setTotal(selected.getTotal()-cc.getTotal());
-            pagoTipoCobro.remove(cc);
-        }
+           
+            for (PagoTipoCobro pTipoCobro : pagoTipoCobro) {
+                if(pTipoCobro.getTipoCobro().getIdTipoCobro() == cc.getTipoCobro().getIdTipoCobro()){
+                     selected.setTotal(selected.getTotal()-cc.getTotal());
+                     pagoTipoCobro.remove(pTipoCobro);
+                     listaTipoCobros.add(cc.getTipoCobro());
+                     break;
+                }                
+            }
+        }        
     }
           
           
@@ -188,10 +212,26 @@ public class PagoController implements Serializable {
             } 
         }
         if(nDocumentoEnBD==false && selected.getTotal()>=0){
+            BigInteger idPago = getFacade().getNextIdPago();
+            if(idPago != null){
+                int idpagoInt = idPago.intValue();
+                selected.setIdPago(idpagoInt);                
+                
+               // List <PagoTipoCobro> listaPagoTipoCobro = selected.getPagoTipoCobroList();
+               // selected.setPagoTipoCobroList(new ArrayList<>());
+                /*
+                for (PagoTipoCobro item : selected.getPagoTipoCobroList()) {
+                    item.getPagoTipoCobroPK().setIdPago(idPago.intValue());
+                }
+                */        
+
             persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PagoCreated"));
+             
             if (!JsfUtil.isValidationFailed()) {
                 items = null;    // Invalidate list of items to trigger re-query.
             }
+            
+          }          
         }else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "N° Documento ya Existe",null));
         }
@@ -298,6 +338,10 @@ public class PagoController implements Serializable {
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
+                    for (PagoTipoCobro item : pagoTipoCobro) {
+                           item.getPagoTipoCobroPK().setIdPago(selected.getIdPago());
+                    }
+                    selected.setPagoTipoCobroList(pagoTipoCobro);
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
@@ -315,6 +359,7 @@ public class PagoController implements Serializable {
                     JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
                 }
             } catch (Exception ex) {
+                ex.printStackTrace();
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             }
