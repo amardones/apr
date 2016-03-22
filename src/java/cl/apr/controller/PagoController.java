@@ -142,12 +142,14 @@ public class PagoController implements Serializable {
     public void create() {
         selected.setIdCuenta(cuentaController.getSelected());
         selected.setDetalleAvisoCobroList(detalleAvisoPagos);
-        boolean nDocumentoEnBD=false;
+        boolean nDocumentoEnBD=getFacade().existeNumeroDocumento(selected.getNumeroDocumento());
+        /*
         for (Pago item : items) {
             if(item.getNumeroDocumento().equals(selected.getNumeroDocumento())){
             nDocumentoEnBD=true;
             } 
         }
+        */
         if(nDocumentoEnBD==false && selected.getSubtotal()>=0){
             for(int i=0;i<detalleAvisoPagos.size();i++){
                 detalleAvisoPagos.get(i).setPagado(true);
@@ -205,12 +207,14 @@ public class PagoController implements Serializable {
         selected.setIdCuenta(cuentaController.getSelected());
         
         
-        boolean nDocumentoEnBD=false;
+        boolean nDocumentoEnBD=getFacade().existeNumeroDocumento(selected.getNumeroDocumento());
+        /*
         for (Pago item : items) {
             if(item.getNumeroDocumento().equals(selected.getNumeroDocumento())){
             nDocumentoEnBD=true;
             } 
         }
+        */
         if(nDocumentoEnBD==false && selected.getTotal()>=0){
             BigInteger idPago = getFacade().getNextIdPago();
             if(idPago != null){

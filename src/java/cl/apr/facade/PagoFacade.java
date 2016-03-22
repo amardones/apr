@@ -216,5 +216,15 @@ public class PagoFacade extends AbstractFacade<Pago> {
          result = (BigInteger) em.createNativeQuery("select nextval('pago_id_pago_seq') ").getSingleResult();
         return result;
     }
+     
+      public boolean existeNumeroDocumento(String numDocumento) {        
+         
+             Query query = em.createQuery("SELECT DISTINCT COUNT(p) FROM Pago p WHERE p.numeroDocumento  = :numDocumento ");
+    
+            query.setMaxResults(1);
+            query.setParameter("numDocumento",numDocumento);
+            return (Long) query.getSingleResult() > 0;       
+     }
+      
     
 }
