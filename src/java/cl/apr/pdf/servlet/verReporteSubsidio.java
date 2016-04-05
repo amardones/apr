@@ -53,8 +53,8 @@ public class verReporteSubsidio extends HttpServlet {
                 java.io.ByteArrayOutputStream baos=null;
 
                 List<SubsidioReporte> list = reportesController.getItemsSubsudioReporte();
-               
-                baos =  ReporteSubsidioPDF.crearPdf(list);
+                int totalSubsidio=reportesController.getTotalSubsidio();
+                baos =  ReporteSubsidioPDF.crearPdf(list,totalSubsidio);
 
                 if(baos != null)
                 {

@@ -55,8 +55,10 @@ public class verReporteIngresosPDF extends HttpServlet {
                 java.io.ByteArrayOutputStream baos=null;
 
                 List<ItemReporte> list = reportesController.getItems();
+                ItemReporte totalIngreso = new ItemReporte();
+                totalIngreso=reportesController.getItemResumen();
                
-                baos =  ReporteIngresosPDF.crearPdf(list);
+                baos =  ReporteIngresosPDF.crearPdf(list,totalIngreso);
 
                 if(baos != null)
                 {

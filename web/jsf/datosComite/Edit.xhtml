@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{datosComiteController.selected != null}">
                         <p:outputLabel value="#{bundle.EditDatosComiteLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{datosComiteController.selected.nombre}" title="#{bundle.EditDatosComiteTitle_nombre}" required="true" requiredMessage="#{bundle.EditDatosComiteRequiredMessage_nombre}"/>
+                        <p:inputText  disabled="true" id="nombre" value="#{datosComiteController.selected.nombre}" title="#{bundle.EditDatosComiteTitle_nombre}" required="true" requiredMessage="#{bundle.EditDatosComiteRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.EditDatosComiteLabel_dato}" for="dato" />
                         <p:inputTextarea maxlength="80" id="dato" value="#{datosComiteController.selected.dato}" title="#{bundle.EditDatosComiteTitle_dato}" required="true"  requiredMessage="#{bundle.EditDatosComiteRequiredMessage_dato} "/>
                     </p:panelGrid>

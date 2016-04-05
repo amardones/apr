@@ -58,7 +58,7 @@ public class ReporteSubsidioPDF {
 	private static Font fTextPlazo= new Font(Font.getFamily("ARIAL"),8,Font.BOLD | Font.UNDERLINE );
 	    
 	
-	static public ByteArrayOutputStream crearPdf(List<SubsidioReporte> list){
+	static public ByteArrayOutputStream crearPdf(List<SubsidioReporte> list,int total){
 		
 		Document document =new Document();
 		ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
@@ -158,6 +158,10 @@ public class ReporteSubsidioPDF {
                             tabla.addCell(new Phrase(av.getFechaCreacion(),fCuerpoTabla));
                             tabla.addCell(new Phrase(""+av.getDescuento_periodo(),fCuerpoTabla));
                         }
+                            tabla.addCell(new Phrase("",fCuerpoTabla));
+                            tabla.addCell(new Phrase("",fCuerpoTabla));
+                            tabla.addCell(new Phrase("TOTAL :",fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(""+total,fCuerpoTablaBold));
                         document.add(tablaTitulo);
                         document.add(tabla);
                        

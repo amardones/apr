@@ -119,10 +119,11 @@ public class ReporteLibroSubsidioXLS extends HttpServlet {
            int k=0;
            
            List<SubsidioReporte> items = this.reportesController.getItemsSubsudioReporte();
-            
+           int totalSubsidio=reportesController.getTotalSubsidio();
 
             if(items != null){  
-                SubsidioReporte ir;            
+                SubsidioReporte ir; 
+                int total=items.size();
                 for (int i = 0; i < items.size(); i++) {
                   ir = items.get(i);
                     k=0;
@@ -142,10 +143,27 @@ public class ReporteLibroSubsidioXLS extends HttpServlet {
                     sheet.addCell(label);
                     
                     label = new Label(++k, 1+i,ir.getDescuento_periodo().toString(),formatoTexto); 
-                    sheet.addCell(label);
-                    
+                    sheet.addCell(label);                   
                     
                 }
+                k=0;
+                    label = new Label(k, 1+total,"",formatoTexto); 
+                    sheet.addCell(label);
+
+                    label = new Label(++k, 1+total,"",formatoTexto); 
+                    sheet.addCell(label);
+                    
+                    label = new Label(++k, 1+total,"",formatoTexto); 
+                    sheet.addCell(label);
+                    
+//                     label = new Label(++k, 1+i,ir.getIdPago().toString(),formatoTexto); 
+//                    sheet.addCell(label);
+                    
+                    label = new Label(++k, 1+total,"TOTAL :",formatoTexto); 
+                    sheet.addCell(label);
+                    
+                    label = new Label(++k, 1+total,""+totalSubsidio,formatoTexto); 
+                    sheet.addCell(label);
             }
            
             copy.write();

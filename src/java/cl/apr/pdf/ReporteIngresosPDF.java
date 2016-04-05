@@ -59,7 +59,7 @@ public class ReporteIngresosPDF {
 	private static Font fTextPlazo= new Font(Font.getFamily("ARIAL"),8,Font.BOLD | Font.UNDERLINE );
 	    
 	
-	static public ByteArrayOutputStream crearPdf(List<ItemReporte> list){
+	static public ByteArrayOutputStream crearPdf(List<ItemReporte> list, ItemReporte totalIngreso){
 		
 		Document document =new Document();
 		ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
@@ -222,6 +222,17 @@ public class ReporteIngresosPDF {
                             tabla.addCell(new Phrase(""+av.getTotalItem(),fCuerpoTabla));
                             tabla.addCell(new Phrase(av.getFechaCreacion(),fCuerpoTabla));
                         }
+                            tabla.addCell(new Phrase("",fCuerpoTablaBold));
+                            tabla.addCell(new Phrase("TOTAL: ",fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(""+totalIngreso.getConsumoAgua(),fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(""+totalIngreso.getCuotaSocial(),fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(""+totalIngreso.getInteres(),fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(""+totalIngreso.getMultas(),fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(""+totalIngreso.getCorteReposicion(),fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(""+totalIngreso.getDerechoIncorporacion(),fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(""+totalIngreso.getOtrosCobros(),fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(""+totalIngreso.getTotalItem(),fCuerpoTablaBold));
+                            tabla.addCell(new Phrase("",fCuerpoTablaBold));
                         document.add(tablaTitulo);
                         document.add(tabla);
                        

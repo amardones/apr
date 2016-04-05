@@ -96,6 +96,12 @@ public class ReporteLibroIngresoXLS extends HttpServlet {
             formatoTexto.setBackground(Colour.WHITE);
             formatoTexto.setAlignment(Alignment.CENTRE);
             formatoTexto.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
+            
+            WritableCellFormat formatoTextoNegro = new WritableCellFormat(fuente);
+            formatoTexto.setBackground(Colour.WHITE);
+            formatoTexto.setAlignment(Alignment.CENTRE);
+            formatoTexto.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
+            
 
             //formato encabezado             
             WritableCellFormat formatoEnc = new WritableCellFormat(fuenteEnc);
@@ -119,10 +125,11 @@ public class ReporteLibroIngresoXLS extends HttpServlet {
            int k=0;
            
            List<ItemReporte> items = this.reportesController.getItemsBusqueda();
-            
+           ItemReporte totalIngreso = this.reportesController.getItemResumen();
 
             if(items != null){  
-                ItemReporte ir;            
+                ItemReporte ir;
+                int posicion=items.size();
                 for (int i = 0; i < items.size(); i++) {
                   ir = items.get(i);
                     k=0;
@@ -171,6 +178,44 @@ public class ReporteLibroIngresoXLS extends HttpServlet {
                     sheet.addCell(label);
                     
                 }
+                k=0;
+                    label = new Label(k, 1+posicion,"",formatoTexto); 
+                    sheet.addCell(label);
+
+                    label = new Label(++k, 1+posicion,"",formatoTexto); 
+                    sheet.addCell(label);
+                    
+                    label = new Label(++k, 1+posicion,"",formatoTexto); 
+                    sheet.addCell(label);
+                                        
+                    label = new Label(++k, 1+posicion,totalIngreso.getConsumoAgua().toString(),formatoTexto); 
+                    sheet.addCell(label);
+                    
+                    label = new Label(++k, 1+posicion,totalIngreso.getCuotaSocial().toString(),formatoTexto); 
+                    sheet.addCell(label);
+                    
+                    label = new Label(++k, 1+posicion,totalIngreso.getInteres().toString(),formatoTexto); 
+                    sheet.addCell(label);
+                    
+                    label = new Label(++k, 1+posicion,totalIngreso.getMultas().toString(),formatoTexto); 
+                    sheet.addCell(label);
+                    
+                    label = new Label(++k, 1+posicion,totalIngreso.getCorteReposicion().toString(),formatoTexto); 
+                    sheet.addCell(label);
+                    
+                    label = new Label(++k, 1+posicion,totalIngreso.getDerechoIncorporacion().toString(),formatoTexto); 
+                    sheet.addCell(label);
+                    
+                    label = new Label(++k, 1+posicion,totalIngreso.getOtrosCobros().toString(),formatoTexto); 
+                    sheet.addCell(label);
+                    
+                    
+                    label = new Label(++k, 1+posicion,totalIngreso.getTotalItem().toString(),formatoTexto); 
+                    sheet.addCell(label);
+                    
+                    label = new Label(++k, 1+posicion,"",formatoTexto); 
+                    sheet.addCell(label);
+                
             }
            
             copy.write();
