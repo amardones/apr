@@ -174,4 +174,11 @@ public class TipoCobroController implements Serializable {
     public void seleccionarItem(TipoCobro tipoCobro){
         selected = tipoCobro;
     }
+    public boolean tipoDeCobroEditable(TipoCobro item){
+        if(item.getCodigoTipoCobro().equals("CUOTSOCIAL")||item.getCodigoTipoCobro().equals("INTERES")){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

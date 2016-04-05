@@ -57,6 +57,7 @@
                             <p:commandButton   
                                          icon="ui-icon-pencil" 
                                          value="#{bundle.Edit}" 
+                                         disabled="#{tipoCobroController.tipoDeCobroEditable(item)}"
                                          actionListener="#{tipoCobroController.seleccionarItem(item)}" 
                                          update=":TipoCobroEditForm" oncomplete="PF('TipoCobroEditDialog').show()" 
       
