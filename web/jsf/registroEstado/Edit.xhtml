@@ -20,7 +20,11 @@
                         <p:outputLabel id="numeroMedidor"  value="#{registroEstadoController.selected.cuenta.numeroMedidor.numeroMedidor}" />
                         
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_estadoAnterior}" for="estadoAnterior" />
-                        <p:inputText id="estadoAnterior" value="#{registroEstadoController.selected.estadoAnterior}" title="#{bundle.EditRegistroEstadoTitle_estadoAnterior}" required="true" requiredMessage="#{bundle.EditRegistroEstadoRequiredMessage_estadoAnterior}"/>
+                        <p:inputText id="estadoAnterior" value="#{registroEstadoController.selected.estadoAnterior}" title="#{bundle.EditRegistroEstadoTitle_estadoAnterior}" 
+                                     required="true" 
+                                     requiredMessage="#{bundle.EditRegistroEstadoRequiredMessage_estadoAnterior}">
+                            <p:ajax event="change" update="metrosCubicos" listener="#{registroEstadoController.calculaM3()}"/>
+                        </p:inputText>
                         <p:outputLabel value="#{bundle.EditRegistroEstadoLabel_estadoActual}" for="estadoActual" />
                         <p:inputText id="estadoActual" value="#{registroEstadoController.selected.estadoActual}" 
                                      title="#{bundle.EditRegistroEstadoTitle_estadoActual}" 

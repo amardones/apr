@@ -272,7 +272,7 @@ public class ReporteSubsidioPDF {
                     tablePeriodo.addCell(new Phrase(": $ "+NumeroFormato.formatearNumeroPesos(aviso.getRegistroEstado().getPeriodo().getIdValoresParametricos().getValorM3()),fCuerpoTabla));
                     int m3Adicionales = 0;
                     if(aviso.getRegistroEstado().getMetrosCubicos() > aviso.getRegistroEstado().getPeriodo().getIdValoresParametricos().getM3Fijos()){
-                        m3Adicionales = aviso.getRegistroEstado().getMetrosCubicos() - aviso.getRegistroEstado().getPeriodo().getIdValoresParametricos().getM3Fijos();
+                        m3Adicionales = (int)aviso.getRegistroEstado().getMetrosCubicos() - aviso.getRegistroEstado().getPeriodo().getIdValoresParametricos().getM3Fijos();
                     }
                     tablePeriodo.addCell(new Phrase("Consumo (MT3)",fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase(": "+aviso.getRegistroEstado().getMetrosCubicos(),fCuerpoTabla));

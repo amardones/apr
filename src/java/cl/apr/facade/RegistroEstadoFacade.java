@@ -32,7 +32,7 @@ public class RegistroEstadoFacade extends AbstractFacade<RegistroEstado> {
     }
     public List<RegistroEstado> getRegistroEstadoPorPeriodo(int idPeriodo) {
          Query query = em.createQuery(""
-                                        + "SELECT DISTINCT a FROM RegistroEstado a WHERE a.periodo.idPeriodo = :idPeriodo ", RegistroEstado.class);
+                                        + "SELECT DISTINCT a FROM RegistroEstado a WHERE a.periodo.idPeriodo = :idPeriodo ORDER BY a.cuenta.idCuenta", RegistroEstado.class);
          query.setParameter("idPeriodo",idPeriodo);
          return query.getResultList();
        

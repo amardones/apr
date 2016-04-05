@@ -1,8 +1,8 @@
--- Function: fn_obtener_estados_historicos(integer)
+-- Function: fn_obtener_estados_historicos(integer, integer)
 
--- DROP FUNCTION fn_obtener_estados_historicos(integer);
+-- DROP FUNCTION fn_obtener_estados_historicos(integer, integer);
 
-CREATE OR REPLACE FUNCTION fn_obtener_estados_historicos("id_cuenta$" integer)
+CREATE OR REPLACE FUNCTION fn_obtener_estados_historicos("id_cuenta$" integer, "id_periodo$" integer)
   RETURNS refcursor AS
 $BODY$
 	DECLARE
@@ -34,9 +34,9 @@ $BODY$
 			SELECT 
 				r.id_periodo, 			
 				to_char(p.fecha_emision, 'MM') as num_mes,
-				r.metros_cubicos
+				r.metros_cubicos::Integer
 			from registro_estado r
-			JOIN periodo p on r.id_periodo = p.id_periodo
+			JOIN periodo p on r.id_periodo = p.id_periodo AND  p.id_periodo <=  id_periodo$
 			where r.id_cuenta = id_cuenta$ 
 			UNION ALL SELECT 0::Integer as id_periodo, ''::TEXT as num_mes, 0::Integer as metros_cubicos
 			UNION ALL SELECT 0::Integer as id_periodo, ''::TEXT as num_mes, 0::Integer as metros_cubicos
@@ -65,5 +65,5 @@ $BODY$
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION fn_obtener_estados_historicos(integer)
+ALTER FUNCTION fn_obtener_estados_historicos(integer,integer)
   OWNER TO postgres;

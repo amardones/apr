@@ -162,9 +162,9 @@ create table REGISTRO_COBRO_CUOTA (
 create table REGISTRO_ESTADO (
    ID_PERIODO           INT4                 not null,
    ID_CUENTA            INT4                 not null,
-   ESTADO_ANTERIOR      INT4                 not null,
-   ESTADO_ACTUAL        INT4                 not null,
-   METROS_CUBICOS       INT4                 not null,
+   ESTADO_ANTERIOR      NUMERIC              not null,
+   ESTADO_ACTUAL        NUMERIC              not null,
+   METROS_CUBICOS       NUMERIC              not null,
    FECHA_REGISTRO       TIMESTAMP WITH TIME ZONE null,
    DESCRIPCION          VARCHAR(100)         null,
    constraint PK_REGISTRO_ESTADO primary key (ID_PERIODO, ID_CUENTA)
@@ -248,7 +248,7 @@ create table VALORES_PARAMETRICOS (
    VALOR_CARGO_FIJO     INT4                 not null,
    VALOR_M3             INT4                 not null,
    M3_FIJOS             INT4                 not null,
-   M3_LIMITE_DCTO_INTERNO INT4                 not null,
+   M3_LIMITE_DCTO_INTERNO NUMERIC            not null,
    PORCENTAJE_DCTO_INTERNO NUMERIC              not null,
    FECHA_ACTUALIZACION  TIMESTAMP WITH TIME ZONE null,
    DESCRIPCION_CAMBIOS  VARCHAR(50)          null,

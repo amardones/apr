@@ -56,17 +56,17 @@ public class RegistroEstado implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "estado_anterior")
-    private int estadoAnterior;
+    private double estadoAnterior;
     @Basic(optional = false)
     @NotNull
     @Min(0)
     @Column(name = "estado_actual")
-    private int estadoActual;
+    private double estadoActual;
     @Basic(optional = false)
     @NotNull
     @Min(0)
     @Column(name = "metros_cubicos")
-    private int metrosCubicos;
+    private double metrosCubicos;
     @Column(name = "fecha_registro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaRegistro;
@@ -81,7 +81,7 @@ public class RegistroEstado implements Serializable {
         this.registroEstadoPK = registroEstadoPK;
     }
 
-    public RegistroEstado(RegistroEstadoPK registroEstadoPK, int estadoAnterior, int estadoActual, int metrosCubicos) {
+    public RegistroEstado(RegistroEstadoPK registroEstadoPK, double estadoAnterior, double estadoActual, double metrosCubicos) {
         this.registroEstadoPK = registroEstadoPK;
         this.estadoAnterior = estadoAnterior;
         this.estadoActual = estadoActual;
@@ -100,27 +100,27 @@ public class RegistroEstado implements Serializable {
         this.registroEstadoPK = registroEstadoPK;
     }
 
-    public int getEstadoAnterior() {
+    public double getEstadoAnterior() {
         return estadoAnterior;
     }
 
-    public void setEstadoAnterior(int estadoAnterior) {
+    public void setEstadoAnterior(double estadoAnterior) {
         this.estadoAnterior = estadoAnterior;
     }
 
-    public int getEstadoActual() {
+    public double getEstadoActual() {
         return estadoActual;
     }
 
-    public void setEstadoActual(int estadoActual) {
+    public void setEstadoActual(double estadoActual) {
         this.estadoActual = estadoActual;
     }
 
-    public int getMetrosCubicos() {
+    public double getMetrosCubicos() {
         return metrosCubicos;
     }
 
-    public void setMetrosCubicos(int metrosCubicos) {
+    public void setMetrosCubicos(double metrosCubicos) {
         this.metrosCubicos = metrosCubicos;
     }
 

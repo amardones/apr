@@ -71,7 +71,7 @@ public class ValoresParametricos implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "m3_limite_dcto_interno")
-    private int m3LimiteDctoInterno;
+    private double m3LimiteDctoInterno;
     @Basic(optional = false)
     @NotNull
     @Column(name = "porcentaje_dcto_interno")
@@ -146,11 +146,11 @@ public class ValoresParametricos implements Serializable {
         this.m3Fijos = m3Fijos;
     }
 
-    public int getM3LimiteDctoInterno() {
+    public double getM3LimiteDctoInterno() {
         return m3LimiteDctoInterno;
     }
 
-    public void setM3LimiteDctoInterno(int m3LimiteDctoInterno) {
+    public void setM3LimiteDctoInterno(double m3LimiteDctoInterno) {
         this.m3LimiteDctoInterno = m3LimiteDctoInterno;
     }
 

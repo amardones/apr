@@ -90,15 +90,21 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>-->
 
-                        <p:column >
+<!--                        <p:column >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRegistroEstadoTitle_periodo}"/>
                             </f:facet>
                             <h:outputText value="#{item.periodo.idPeriodo}: #{item.periodo.nombre}"/>
-                        </p:column>
-                        <p:column filterBy="#{item.cuenta.rut.apellido}" headerText="#{bundle.ListRegistroEstadoTitle_cuenta}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
-                            <h:outputText value="#{item.cuenta.idCuenta}: #{item.cuenta.rut.nombre} #{item.cuenta.rut.apellido}"/>
-                        </p:column>                        
+                        </p:column>-->
+                        <p:column filterBy="#{item.cuenta.idCuenta}" headerText="#{bundle.ListRegistroEstadoTitle_cuenta}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
+                             <h:outputText value="#{item.cuenta.idCuenta}"/>
+                        </p:column> 
+                        <p:column filterBy="#{item.cuenta.rut.nombre}" headerText="#{bundle.ListSocioTitle_nombre}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
+                            <h:outputText value="#{item.cuenta.rut.nombre}"/>
+                        </p:column>     
+                        <p:column filterBy="#{item.cuenta.rut.apellido}" headerText="#{bundle.ListSocioTitle_apellido}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
+                            <h:outputText value="#{item.cuenta.rut.apellido}"/>
+                        </p:column> 
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Número Medidor"/>

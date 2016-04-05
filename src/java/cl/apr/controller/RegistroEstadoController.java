@@ -29,7 +29,7 @@ public class RegistroEstadoController implements Serializable {
     private cl.apr.facade.RegistroEstadoFacade ejbFacade;
     private List<RegistroEstado> items = null;
     private RegistroEstado selected;
-    private int metrosCalculados;
+    private double metrosCalculados;
    
     @Inject
     private PeriodoController periodoController;
@@ -106,7 +106,7 @@ public class RegistroEstadoController implements Serializable {
         return items;
     }
    
-    public int getMetros() {
+    public double getMetros() {
         return  metrosCalculados;
     }
     public void calculaM3(){

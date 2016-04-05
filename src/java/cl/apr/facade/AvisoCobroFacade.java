@@ -78,7 +78,7 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
     }
      
       @TransactionAttribute(TransactionAttributeType.REQUIRED)
-     public List<BarChartItem> obtenerRegistroEstadoHistoricos(Integer idCuenta){
+     public List<BarChartItem> obtenerRegistroEstadoHistoricos(Integer idCuenta, Integer idPeriodo){
          
        List<BarChartItem> barChartItems = new ArrayList<BarChartItem>();
        try{
@@ -88,8 +88,11 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
                 // set parameters
                 storedProcedure.registerStoredProcedureParameter(1,ResultSet.class, ParameterMode.REF_CURSOR);
                 storedProcedure.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
+                storedProcedure.registerStoredProcedureParameter(3, Integer.class, ParameterMode.IN);
               
                 storedProcedure.setParameter(2,  idCuenta);
+                storedProcedure.setParameter(3,  idPeriodo);
+                
  
                 // execute SP
                 storedProcedure.execute();

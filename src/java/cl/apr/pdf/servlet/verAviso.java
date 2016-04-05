@@ -75,7 +75,7 @@ public class verAviso extends HttpServlet {
                         
                 HashMap<Integer,List<BarChartItem>> hmapBarChartItems = new HashMap<Integer, List<BarChartItem> >();
                 for (AvisoCobro aviso : list) {
-                   barChartItems = ejbFacade.obtenerRegistroEstadoHistoricos(aviso.getAvisoCobroPK().getIdCuenta());
+                   barChartItems = ejbFacade.obtenerRegistroEstadoHistoricos(aviso.getAvisoCobroPK().getIdCuenta(), idPeriodo);
                    hmapBarChartItems.put(aviso.getAvisoCobroPK().getIdCuenta(), barChartItems);
                 }
                 baos =  AvisoPDF.crearPdf(list,datosList, hmapBarChartItems);
