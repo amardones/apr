@@ -1,10 +1,9 @@
--- Function: fn_calcular_valor_agua_potable(integer,integer)
+-- Function: fn_calcular_valor_agua_potable(integer, integer)
 
--- DROP FUNCTION fn_calcular_valor_agua_potable(integer,integer);
+-- DROP FUNCTION fn_calcular_valor_agua_potable(integer, integer);
 
-
-CREATE OR REPLACE FUNCTION fn_calcular_valor_agua_potable("id_periodo$" integer,  "id_cuenta$" integer)
- RETURNS TABLE (sub_total integer, descuento integer, total integer, descripcion text, monto_descuento_sub integer, monto_descuento_int integer ) AS
+CREATE OR REPLACE FUNCTION fn_calcular_valor_agua_potable(IN "id_periodo$" integer, IN "id_cuenta$" integer)
+  RETURNS TABLE(sub_total integer, descuento integer, total integer, descripcion text, monto_descuento_sub integer, monto_descuento_int integer) AS
 $BODY$
 DECLARE
     --integer
@@ -35,6 +34,7 @@ DECLARE
      
     --cuanta 
     metros_cubicos_med$ integer;
+    metros_cubicos_med_decimal$ numeric;
 
     --subsidio
     nombre_sub$ character varying; 
@@ -60,6 +60,8 @@ BEGIN
 	FROM valores_parametricos WHERE id_valores_parametricos = (SELECT id_valores_parametricos FROM periodo WHERE id_periodo = id_periodo$);
 	--OBTENEMOS METROS CUBICOS EL PERIODO
 	SELECT metros_cubicos INTO metros_cubicos_med$ FROM registro_estado WHERE id_periodo = id_periodo$ AND  id_cuenta = id_cuenta$;
+	SELECT metros_cubicos INTO metros_cubicos_med_decimal$ FROM registro_estado WHERE id_periodo = id_periodo$ AND  id_cuenta = id_cuenta$;
+	
 	--OBTENEMOS SUBSIDIO SI APLICA
 	SELECT nombre, porcentaje, metros_cubicos_tope INTO nombre_sub$, porcentaje_sub$, metros_cubicos_tope_sub$ 
 	FROM subsidio s 
@@ -76,7 +78,7 @@ BEGIN
 		descripcion$ := ' # CALCULO AGUA ->'||metros_cubicos_med$ ||'m3';
 		descripcion$ :=  descripcion$  || ' # Aplica cargo fijo '||m3_fijos$||'m3 -> $'||valor_cargo_fijo$;
 		--raise info 'descripcion: %', descripcion$;
-		IF metros_cubicos_med$ <= m3_fijos$	 THEN	     
+		IF metros_cubicos_med_decimal$ <= m3_fijos$	 THEN	     
 		     --CALCULO SUBSIDIO
 		     IF nombre_sub$ IS NOT NULL THEN
 			descripcion$ :=  descripcion$ || ' # CALCULO SUBSIDIO';
@@ -85,7 +87,7 @@ BEGIN
 			
 		     ELSE
 			--CALCULO REGLA INTERNA
-			IF metros_cubicos_med$ <= m3_limite_dcto_interno$ THEN
+			IF metros_cubicos_med_decimal$ <= m3_limite_dcto_interno$ THEN
 				descripcion$ :=  descripcion$ || ' # CALCULO REGLA INTERNA';
 				monto_descuento_int$ 	:= round(sub_total$*(porcentaje_dcto_interno$/100));
 				descripcion$ 		:= descripcion$ ||' # Aplica descuento interno -> '||porcentaje_dcto_interno$ ||'% descuento ->$'||monto_descuento_int$;
@@ -202,9 +204,8 @@ BEGIN
 			--return f_return$;
 END
 $BODY$
-  LANGUAGE plpgsql IMMUTABLE;
-ALTER FUNCTION fn_calcular_valor_agua_potable(integer,integer)
+  LANGUAGE plpgsql IMMUTABLE
+  COST 100
+  ROWS 1000;
+ALTER FUNCTION fn_calcular_valor_agua_potable(integer, integer)
   OWNER TO postgres;
-
---select * from fn_calcular_valor_agua_potable(1,1);
---select * from fn_calcular_valor_agua_potable(1,2);

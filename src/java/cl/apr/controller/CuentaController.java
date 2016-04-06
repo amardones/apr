@@ -172,6 +172,7 @@ public class CuentaController implements Serializable {
 
     public Cuenta prepareCreate() {
         selected = new Cuenta();
+        selected.setFechaCreacion(new Date());
         selected.setCuentaSubsidio(new CuentaSubsidio());
         initializeEmbeddableKey();
         return selected;

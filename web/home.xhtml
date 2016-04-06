@@ -19,7 +19,9 @@
          <p:growl id="growl" life="3000" />
        <div id="contenidodiv">
             <div id="contenidodiv_center" >
-               <h:form >
+                <div id="contenidodiv_center_menu">
+                    
+                <h:form >
                      <h:panelGrid id="panel1" columns="3" border="0" cellpadding="10"  cellspacing="0"  rowClasses="alignmentCenter">
                         <p:commandLink  styleClass="myButtonCuenta"
                         ajax="false"
@@ -33,10 +35,9 @@
                         ajax="false"
                         action="/jsf/pago/List?faces-redirect=true"    
                         />                        
-                        <h:link outcome="/jsf/cuenta/List" value="CUENTAS"/>
-                        <h:link outcome="/jsf/avisoCobro/List" value="AVISO DE COBROS"/>
-                        <h:link outcome="/jsf/pago/List" value="PAGOS"
-                        />                        
+                         <h:link outcome="/jsf/cuenta/List" value="CUENTAS" styleClass="alignmentCenterHome"/>
+                         <h:link outcome="/jsf/avisoCobro/List" value="AVISO DE COBROS" styleClass="alignmentCenterHome"/>
+                         <h:link outcome="/jsf/pago/List" value="PAGOS" styleClass="alignmentCenterHome"/>                        
                     </h:panelGrid>
                        <h:panelGrid id="panel3" columns="3" border="0" cellpadding="10" cellspacing="0" rowClasses="alignmentCenter">
                          <p:commandLink  styleClass="myButtonregistroEstado"
@@ -52,15 +53,18 @@
                         action="/jsf/reportes/List?faces-redirect=true"                  
                         />
                                                 
-                        <h:link outcome="/jsf/registroEstado/List" value="REGISTROS DE ESTADOS"/>
-                        <h:link outcome="/jsf/valoresParametricos/List" value="CONFIGURAR"/>
-                        <h:link outcome="/jsf/reportes/List" value="REPORTES"/>
+                        <h:link outcome="/jsf/registroEstado/List" value="REGISTROS DE ESTADOS" styleClass="alignmentCenterHome"/>
+                        <h:link outcome="/jsf/valoresParametricos/List" value="CONFIGURAR" styleClass="alignmentCenterHome"/>
+                        <h:link outcome="/jsf/reportes/List" value="REPORTES" styleClass="alignmentCenterHome"/>
                     </h:panelGrid>
                 </h:form>
+                </div>
             </div>           
         </div>  
         <div id="topdiv">            
-            <p:graphicImage styleClass="logoInterior" />
+            <div style="width: 200px">
+                 <div id="divImagen" class="logoInterior"/> 
+            </div>  
             <div id="divCerrar">
                        <h:form>
                            <p:outputLabel value="Iniciado por : #{UsuarioController.email==null ? 'Anónimo' : UsuarioController.email}  " styleClass="formLabel"/>
