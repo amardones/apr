@@ -150,7 +150,7 @@
                                          value="#{bundle.Edit}" 
                                          actionListener="#{registroEstadoController.estadoActual(item)}" 
                                          update=":RegistroEstadoEditForm" oncomplete="PF('RegistroEstadoEditDialog').show()" 
-                                         disabled ="#{!periodoController.permiteRecalcular()}"
+                                             disabled ="#{!registroEstadoController.permiteRecalcular(item)}"
                                          />                         
                         </p:column> 
                         <!--<p:column>

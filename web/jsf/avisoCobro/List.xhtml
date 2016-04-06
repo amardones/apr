@@ -79,7 +79,7 @@
                                                     actionListener="#{avisoCobroController.generarTodosLosAvisoCobro()}"  
                                                      update=":growl,datalist"
                                                     value="Calcular" 
-                                                    disabled="#{!periodoController.permiteRecalcular()}"
+                                                    disabled="#{!periodoController.permiteRecalcularTodo()}"
                                                     >
                                         <p:confirm header="Confirmación" message="Va a calcular aviso, desea  continuar?" icon="ui-icon-alert" />
                                   </p:commandButton>                 
@@ -191,7 +191,7 @@
                                                     actionListener="#{avisoCobroController.generarAvisoCobro(item)}"  
                                                     update=":growl,datalist"
                                                     value="Calcular" 
-                                                    disabled="#{!periodoController.permiteRecalcular()}"
+                                                    disabled="#{!avisoCobroController.permiteRecalcular(item)}"
                                                     >
                                         <p:confirm header="Confirmación" message="Va a calcular aviso, desea  continuar?" icon="ui-icon-alert" />
                                   </p:commandButton>

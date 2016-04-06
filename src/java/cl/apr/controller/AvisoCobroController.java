@@ -41,6 +41,8 @@ public class AvisoCobroController implements Serializable {
     
     @EJB
     private cl.apr.facade.AvisoCobroFacade ejbFacade;
+    @EJB
+    private cl.apr.facade.CuentaFacade ejbCuentaFacade;
          
     private List<AvisoCobro> items = null;
     private AvisoCobro selected;
@@ -300,4 +302,13 @@ public class AvisoCobroController implements Serializable {
          return false;
      }
 */
+     
+     public boolean permiteRecalcular(AvisoCobro item) {
+         if(item != null){
+            if(periodoController.getSelected() != null && periodoController.ultimoPeriodo(periodoController.getSelected())){
+                return ejbCuentaFacade.permiteRecalcular(item.getAvisoCobroPK().getIdPeriodo(), item.getAvisoCobroPK().getIdCuenta());
+            }
+        }
+        return false;
+    }
 }

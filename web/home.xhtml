@@ -26,24 +26,27 @@
                         <p:commandLink  styleClass="myButtonCuenta"
                         ajax="false"
                         action="/jsf/cuenta/List?faces-redirect=true"                         
-                        />                        
+                        />  
+                         <p:commandLink  styleClass="myButtonregistroEstado"
+                        ajax="false"
+                        action="/jsf/registroEstado/List?faces-redirect=true" 
+                        />   
+                        
                         <p:commandLink  styleClass="myButtonavisoCobro"
                         ajax="false"
                         action="/jsf/avisoCobro/List?faces-redirect=true"
                         />                        
+                                          
+                         <h:link outcome="/jsf/cuenta/List" value="CUENTAS" styleClass="alignmentCenterHome"/>
+                         <h:link outcome="/jsf/registroEstado/List" value="REGISTROS DE ESTADOS" styleClass="alignmentCenterHome"/>
+                         <h:link outcome="/jsf/avisoCobro/List" value="AVISO DE COBROS" styleClass="alignmentCenterHome"/>
+                                               
+                    </h:panelGrid>
+                       <h:panelGrid id="panel3" columns="3" border="0" cellpadding="10" cellspacing="0" rowClasses="alignmentCenter">
                          <p:commandLink  styleClass="myButtonBoleta"
                         ajax="false"
                         action="/jsf/pago/List?faces-redirect=true"    
-                        />                        
-                         <h:link outcome="/jsf/cuenta/List" value="CUENTAS" styleClass="alignmentCenterHome"/>
-                         <h:link outcome="/jsf/avisoCobro/List" value="AVISO DE COBROS" styleClass="alignmentCenterHome"/>
-                         <h:link outcome="/jsf/pago/List" value="PAGOS" styleClass="alignmentCenterHome"/>                        
-                    </h:panelGrid>
-                       <h:panelGrid id="panel3" columns="3" border="0" cellpadding="10" cellspacing="0" rowClasses="alignmentCenter">
-                         <p:commandLink  styleClass="myButtonregistroEstado"
-                        ajax="false"
-                        action="/jsf/registroEstado/List?faces-redirect=true" 
-                        />                        
+                        />                           
                         <p:commandLink  styleClass="myButtonConfiguracion"
                         ajax="false"
                         action="/jsf/valoresParametricos/List?faces-redirect=true"    
@@ -53,7 +56,7 @@
                         action="/jsf/reportes/List?faces-redirect=true"                  
                         />
                                                 
-                        <h:link outcome="/jsf/registroEstado/List" value="REGISTROS DE ESTADOS" styleClass="alignmentCenterHome"/>
+                        <h:link outcome="/jsf/pago/List" value="PAGOS" styleClass="alignmentCenterHome"/>  
                         <h:link outcome="/jsf/valoresParametricos/List" value="CONFIGURAR" styleClass="alignmentCenterHome"/>
                         <h:link outcome="/jsf/reportes/List" value="REPORTES" styleClass="alignmentCenterHome"/>
                     </h:panelGrid>

@@ -27,6 +27,8 @@ public class RegistroEstadoController implements Serializable {
 
     @EJB
     private cl.apr.facade.RegistroEstadoFacade ejbFacade;
+    @EJB
+    private cl.apr.facade.CuentaFacade ejbCuentaFacade;
     private List<RegistroEstado> items = null;
     private RegistroEstado selected;
     private double metrosCalculados;
@@ -160,6 +162,18 @@ public class RegistroEstadoController implements Serializable {
                 this.selected = item;
             }
         }
+    }
+     public boolean permiteRecalcular(RegistroEstado item) {
+         if(item != null){
+            if(periodoController.getSelected() != null && periodoController.ultimoPeriodo(periodoController.getSelected())){
+                boolean r   = ejbCuentaFacade.permiteRecalcular(item.getPeriodo().getIdPeriodo(),item.getCuenta().getIdCuenta());
+                //System.out.println("item.getCuenta().getIdCuenta():"+item.getCuenta().getIdCuenta());
+                //System.out.println("item.getPeriodo().getIdPeriodo():"+item.getPeriodo().getIdPeriodo());
+                //System.out.println("permiteRecalcular:"+r);
+                return r;
+            }
+        }
+        return false;
     }
 
     @FacesConverter(forClass = RegistroEstado.class)
