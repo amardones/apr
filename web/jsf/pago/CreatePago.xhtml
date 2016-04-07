@@ -39,7 +39,7 @@
                                                    var="idTipoCobroItem"
                                                    itemValue="#{idTipoCobroItem}"
                                                    itemLabel="#{idTipoCobroItem.nombre}"/>   
-                                   <p:ajax event="valueChange" process="idTipoCobro" update="agregarButton"/>
+                                   <p:ajax event="valueChange" process="idTipoCobro" update="agregarButton,:pagoExtraordinarioCreateForm subtotal" listener="#{pagoController.cambioEnDatos()}"/>
 
                                 </p:selectOneMenu>
                                 <p:commandButton id="agregarButton" icon="ui-icon-plus" actionListener="#{pagoController.getAgregarItem()}" 

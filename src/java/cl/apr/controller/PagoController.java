@@ -54,6 +54,7 @@ public class PagoController implements Serializable {
     private List<PagoTipoCobro> pagoTipoCobro=null;
     private List<TipoCobro> listaTipoCobros = null;
     private int total;
+    int valorCodigo;
    
 
     @Inject
@@ -95,6 +96,7 @@ public class PagoController implements Serializable {
     }
 
     public void setTipoCobroSelected(TipoCobro tipoCobroSelected) {
+        //selected.setSubtotal(tipoCobroSelected.getValor());
         this.tipoCobroSelected = tipoCobroSelected;
     }
 
@@ -173,8 +175,10 @@ public class PagoController implements Serializable {
         cc.setTotal(selected.getSubtotal());        
         pagoTipoCobro.add(cc);
         getTotalPagoTipoCobro();
-        selected.setSubtotal(0);
+        //selected.setSubtotal(0);
+        
         listaTipoCobros.remove(tipoCobroSelected);
+        
         
     }
     public void getTotalPagoTipoCobro(){
@@ -182,6 +186,9 @@ public class PagoController implements Serializable {
         for (PagoTipoCobro itemT  : pagoTipoCobro) {
             selected.setTotal(itemT.getTotal()+selected.getTotal());
         }
+    }
+    public void cambioEnDatos(){
+        selected.setSubtotal(tipoCobroSelected.getValor());
     }
     public void eliminarItem(PagoTipoCobro cc){ 
         System.out.println("Eliminar : "+cc.getTotal());
@@ -282,29 +289,26 @@ public class PagoController implements Serializable {
         detalleAvisoPagos = null;
     }
     public void calculaInteresManual(){
-        total=(selected.getSubtotal()+selected.getInteres());
-        selected.setTotal(total);
+        if(!cuentaController.getSelected().getEsInstitucion()){
+            total=(selected.getSubtotal()+selected.getInteres());
+            selected.setTotal(total);
+        }       
     }
     public void calculaItems(){ 
-//        Calendar cal1 = Calendar.getInstance();
-//        Calendar cal2 = Calendar.getInstance();
-//        long diffDays=0;     
-//        int valorCodigo=0;
-        System.out.println("Entro"); 
+
         int subtotal=0; 
         int total=0;
         int interes=0;
         selected.setFechaCreacion(new Date());
         selected.setSubtotal(subtotal);
         selected.setInteres(interes);
-        selected.setTotal(total);
-        System.out.println(total+"-"+interes+"-"+subtotal);      
+        selected.setTotal(total);      
         
         if(!detalleAvisoPagos.isEmpty()){
         int id_periodo=detalleAvisoPagos.get(0).getAvisoCobro().getAvisoCobroPK().getIdPeriodo(); 
-        System.out.println(id_periodo);
+        
         Periodo periodo=periodoController.getPeriodo(id_periodo);
-        System.out.println(periodo.getFechaVencimiento());
+        
 //        cal2.setTime(selected.getFechaCreacion());
 //        cal1.setTime(periodo.getFechaVencimiento());
 //        if(selected.getFechaCreacion().getTime()>periodoController.getPeriodo(id_periodo).getFechaVencimiento().getTime()){
@@ -314,19 +318,23 @@ public class PagoController implements Serializable {
 //            diffDays = diff / (24 * 60 * 60 * 1000);
 //            System.out.println("En dias: " + diffDays + " dias.");
 //        }
-//        for(int e=0;e<tipoCobroController.getItems().size();e++){
-//            if(tipoCobroController.getItems().get(e).getCodigoTipoCobro().equalsIgnoreCase("INTERES")){
-//                valorCodigo=tipoCobroController.getItems().get(e).getValor();
-//            }
-//        }
+            for(int e=0;e<tipoCobroController.getItems().size();e++){
+              if(tipoCobroController.getItems().get(e).getCodigoTipoCobro().equalsIgnoreCase("INTERES")){
+                   valorCodigo=tipoCobroController.getItems().get(e).getValor();
+               }
+            }
 
-            for(int i=0;i< detalleAvisoPagos.size();i++){                
-                System.out.println("estado :"+ detalleAvisoPagos.get(i).getPagado()+"de :"+ detalleAvisoPagos.get(i).getIdTipoCobro().getNombre());                
+            for(int i=0;i< detalleAvisoPagos.size();i++){                                
                 subtotal=subtotal+detalleAvisoPagos.get(i).getTotal();             
+            } 
+            
+            if(!cuentaController.getSelected().getEsInstitucion()){
+                interes=(ejbFacade.obtenerInteres(cuentaController.getSelected().getIdCuenta(),new Date()))*valorCodigo;
+                System.out.println("EL INTERES ES : "+interes+" FECHA :"+new Date());
+            }else{
+                interes=0;
             }
             
-        System.out.println("total: "+total+"  interes :"+interes+" subtotal: "+subtotal); 
-        interes=ejbFacade.obtenerInteres(1,new Date());
         }
         //System.out.println(ejbFacade.obtenerInteres(1,new Date()));
         

@@ -6,6 +6,7 @@ import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.entity.CobroCuota;
 import cl.apr.entity.Pago;
 import cl.apr.entity.CobroCuotaPK;
+import cl.apr.entity.TipoCobro;
 import cl.apr.enums.EnumFormatoFechaHora;
 import cl.apr.facade.RegistroCobroFacade;
 
@@ -105,7 +106,7 @@ public class RegistroCobroController implements Serializable {
                 valorCuota.add(valor); 
             }
         }
-        System.out.println(valorCuota.size());
+        
         return valorCuota;
     }
     
@@ -226,10 +227,13 @@ public class RegistroCobroController implements Serializable {
     
      public void cambioEnDatos(){
        if(selected.getIdTipoCobro() != null){
+           selected.setMonto(selected.getIdTipoCobro().getValor());
            //System.out.println("selected.getNombre():"+selected.getIdTipoCobro().getNombre());
            if(!selected.getIdTipoCobro().getAceptaPagoCuotas()){
                selected.setCuotas(1);
-           }       
+               
+           }   
+           
            //System.out.println("selected.getIdTipoCobro():"+selected.getIdTipoCobro().getAceptaPagoCuotas());
              
         }

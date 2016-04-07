@@ -38,13 +38,13 @@
                                                    var="idTipoCobroItem"
                                                    itemValue="#{idTipoCobroItem}"
                                                    itemLabel="#{idTipoCobroItem.nombre}"/>   
-                                    <p:ajax event="valueChange" process="idTipoCobro" update=":RegistroCobroCreateForm:CobroCuotaListForm:datalist cuotas" 
+                                    <p:ajax event="valueChange" process="idTipoCobro" update=":RegistroCobroCreateForm:CobroCuotaListForm:datalist monto cuotas" 
                                             listener="#{registroCobroController.cambioEnDatos()}" />
 
                                 </p:selectOneMenu> 
                                 <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_monto}" for="monto" />
                                 <p:inputText id="monto" value="#{registroCobroController.selected.monto}" title="#{bundle.CreateRegistroCobroTitle_monto}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_monto}">
-                                    <p:ajax event="change" process="monto" update=":RegistroCobroCreateForm:CobroCuotaListForm:datalist" listener="#{registroCobroController.cambioEnDatos()}"/>
+                                    <p:ajax event="change" process="monto" update=":RegistroCobroCreateForm:CobroCuotaListForm:datalist" listener="#{registroCobroController.calcularCuotas()}"/>
                                 </p:inputText>
                                 <p:outputLabel value="#{bundle.CreateRegistroCobroLabel_descripcion}" for="descripcion" />
                                 <p:inputText id="descripcion" value="#{registroCobroController.selected.descripcion}" title="#{bundle.CreateRegistroCobroTitle_descripcion}" />
@@ -52,7 +52,7 @@
                                 <p:inputText id="cuotas" value="#{registroCobroController.selected.cuotas}" title="#{bundle.CreateRegistroCobroTitle_cuotas}" required="true" requiredMessage="#{bundle.CreateRegistroCobroRequiredMessage_cuotas}"
                                              disabled="#{registroCobroController.deshabilitarCuotas()}"
                                              >
-                                     <p:ajax event="change" process="cuotas" update=":RegistroCobroCreateForm:CobroCuotaListForm:datalist" listener="#{registroCobroController.cambioEnDatos()}"/>
+                                    <p:ajax event="change" process="cuotas" update=":RegistroCobroCreateForm:CobroCuotaListForm:datalist" listener="#{registroCobroController.calcularCuotas()}"/>
                                 </p:inputText>
 <!--                                <p:commandButton value="Visualizar Cuotas" id="ajax" update="RegistroCobroCreateForm" actionListener="#{registroCobroController.calcularCuotas()}" styleClass="ui-priority-primary" />-->
                              </p:panelGrid>  

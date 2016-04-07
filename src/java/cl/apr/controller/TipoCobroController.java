@@ -175,10 +175,10 @@ public class TipoCobroController implements Serializable {
         selected = tipoCobro;
     }
     public boolean tipoDeCobroEditable(TipoCobro item){
-        if(item.getCodigoTipoCobro().equals("CUOTSOCIAL")||item.getCodigoTipoCobro().equals("INTERES")){
-            return false;
-        }else{
+        if(item.getCodigoTipoCobro().equals("CONSDEAGUA")||item.getCodigoTipoCobro().equals("OTROCOBRO")){
             return true;
+        }else{
+            return false;
         }
     }
 }
