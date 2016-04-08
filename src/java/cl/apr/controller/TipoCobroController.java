@@ -177,6 +177,7 @@ public class TipoCobroController implements Serializable {
     public boolean tipoDeCobroEditable(TipoCobro item){
         if(item.getCodigoTipoCobro().equals("CONSDEAGUA")||item.getCodigoTipoCobro().equals("OTROCOBRO")){
             return true;
+            //cambio
         }else{
             return false;
         }
