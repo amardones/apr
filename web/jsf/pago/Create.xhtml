@@ -41,8 +41,9 @@
                                             <p:ajax event="rowUnselect" listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4" />
                                             <p:ajax event="rowSelectCheckbox"  listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4" />
                                             <p:ajax event="rowUnselectCheckbox" listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4" />
-                                         
-                                           <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                            <p:ajax event="toggleSelect" update=":PagoCreateForm:display4" listener="#{pagoController.calculaItems}" />
+                                            
+                                            <p:column selectionMode="multiple" style="width:16px;text-align:center" />
                                            <p:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Tipo de Cobro"/>
@@ -75,7 +76,7 @@
                         <h:panelGroup id="display4" >
                             <p:panelGrid  columns="2" rendered="#{cuentaController.selected != null}">
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_subtotal}" for="subtotal" />
-                                <p:inputText id="subtotal" value="#{pagoController.selected.subtotal}"  disabled="true" title="#{bundle.CreatePagoTitle_subtotal}" /> 
+                                <p:outputLabel  id="subtotal" value="#{pagoController.selected.subtotal}"   title="#{bundle.CreatePagoTitle_subtotal}" /> 
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_numeroDocumento}" for="numeroDocumento" />
                                 <p:inputText id="numeroDocumento" value="#{pagoController.selected.numeroDocumento}" title="#{bundle.CreatePagoTitle_numeroDocumento}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_numeroDocumento}"/>
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_interes}" for="interes" />
@@ -84,7 +85,7 @@
 
                                 </p:inputText>
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_total}" for="total" />
-                                <p:inputText id="total" value="#{pagoController.selected.total}"  disabled="true" title="#{bundle.CreatePagoTitle_total}" /> 
+                                <p:outputLabel  id="total" value="#{pagoController.selected.total}"   title="#{bundle.CreatePagoTitle_total}" /> 
                                
                             </p:panelGrid>
                           
