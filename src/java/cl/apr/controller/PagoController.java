@@ -101,9 +101,10 @@ public class PagoController implements Serializable {
         }
         Collections.sort(listaTipoCobros, Comparator.comparing(TipoCobro::getNombre));
         
-        if(!esSeleccionTipo && listaTipoCobros != null && listaTipoCobros.size() > 0){
-             selected.setSubtotal( listaTipoCobros.get(0).getValor()); 
+        if(!esSeleccionTipo && listaTipoCobros != null && listaTipoCobros.size() > 0 && selected!=null){
+             selected.setSubtotal( listaTipoCobros.get(0).getValor());             
         }
+        
         
         esSeleccionTipo = false;
         return listaTipoCobros;

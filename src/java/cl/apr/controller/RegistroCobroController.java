@@ -233,7 +233,7 @@ public class RegistroCobroController implements Serializable {
                selected.setCuotas(1);
                
            }   
-           
+         //comento  
            //System.out.println("selected.getIdTipoCobro():"+selected.getIdTipoCobro().getAceptaPagoCuotas());
              
         }
