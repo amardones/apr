@@ -46,6 +46,7 @@ public class RegistroCobroController implements Serializable {
     private int anio;
     private int total;
     private List<Integer> valorCuota;
+    private List<TipoCobro> listaTipoCobro;
     @Inject
     private CuentaController cuentaController;
     
@@ -69,6 +70,19 @@ public class RegistroCobroController implements Serializable {
         return cuotas;
     }
 
+    public List<TipoCobro> getListaTipoCobro() {
+        listaTipoCobro=tipoCobroController.getTiposCobroRegistranCobro();
+        if(listaTipoCobro!=null && listaTipoCobro.size()>0){
+            selected.setMonto(listaTipoCobro.get(0).getValor());
+        }
+        return listaTipoCobro;
+    }
+
+    public void setListaTipoCobro(List<TipoCobro> listaTipoCobro) {
+        this.listaTipoCobro = listaTipoCobro;
+    }
+
+    
     public void setCuotas(List<CobroCuota> cuotas) {
         this.cuotas = cuotas;
     }
@@ -352,6 +366,10 @@ public class RegistroCobroController implements Serializable {
         mes = EnumFormatoFechaHora.formatoMesTexto.format(d).toUpperCase();
                 
         return mes;
+    }
+    public boolean tienePago(){
+        
+        return true;
     }
     
 }
