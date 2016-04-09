@@ -32,22 +32,23 @@
                                 <p:outputLabel value="Tipo de Pago" for="idTipoCobro" />
                                 <p:selectOneMenu id="idTipoCobro" 
                                                  value="#{pagoController.tipoCobroSelected}" 
-                                                 required="true" 
+                                                 
                                                  requiredMessage=""                                                 
                                                  >
                                     <f:selectItems value="#{pagoController.listaTipoCobros}"
                                                    var="idTipoCobroItem"
                                                    itemValue="#{idTipoCobroItem}"
                                                    itemLabel="#{idTipoCobroItem.nombre}"/>   
-                                   <p:ajax event="valueChange" process="idTipoCobro" update="agregarButton,:pagoExtraordinarioCreateForm subtotal" listener="#{pagoController.cambioEnDatos()}"/>
-
+                                   <p:ajax event="valueChange" process="idTipoCobro" update=":pagoExtraordinarioCreateForm subtotal" listener="#{pagoController.cambioEnDatos()}"/>
+                               
                                 </p:selectOneMenu>
-                                <p:commandButton id="agregarButton" icon="ui-icon-plus" actionListener="#{pagoController.getAgregarItem()}" 
-                                                 value="Agregar" update="pagoExtraordinarioCreateForm" />
+                              
+                                <p:outputLabel value=""  />
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_subtotal}" for="subtotal" />
                                 
                                 <p:inputText id="subtotal" rendered="true" value="#{pagoController.selected.subtotal}"  title="#{bundle.CreatePagoTitle_subtotal}" />
-                                
+                                <p:commandButton id="agregarButton" icon="ui-icon-plus" actionListener="#{pagoController.getAgregarItem()}" 
+                                                 value="Agregar" update="pagoExtraordinarioCreateForm" />
                             </p:panelGrid>
                         </h:panelGroup >
                         
@@ -75,7 +76,7 @@
                                             <h:outputText value="Acción"/>
                                         </f:facet>
                                         <p:commandButton id="eliminarButton" value="Eliminar" actionListener="#{pagoController.eliminarItem(item)}"  
-                                                update="datalist :pagoExtraordinarioCreateForm:display2">                                      
+                                                update="datalist :pagoExtraordinarioCreateForm:display2, :pagoExtraordinarioCreateForm:display4">                                      
                                                 
                                           </p:commandButton>  
                                     </p:column>
@@ -97,7 +98,7 @@
                                     <p:panelGrid  columns="2" rendered="#{cuentaController.selected != null}"> 
                                        
                                         <p:commandButton actionListener="#{pagoController.createPagoExtraordinario}" 
-                                                         rendered="#{cuentaController.selected != null}" value="#{bundle.Save}" 
+                                                         rendered="#{pagoController.selected.total > 0}" value="#{bundle.Save}" 
                                                          update="display4,:PagoListForm:datalist,:growl" 
                                                          oncomplete="handleSubmit(args,'pagoExtraordinarioCreateDialog');"/>
                                     </p:panelGrid>

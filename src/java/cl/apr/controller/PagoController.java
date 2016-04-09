@@ -45,7 +45,7 @@ public class PagoController implements Serializable {
     @EJB private cl.apr.facade.DetalleAvisoCobroFacade ejbFacadeDetalleAviso;
     
     
-     
+    private boolean esSeleccionTipo = false;
     private List<Pago> items = null;
     private Pago selected;
     private TipoCobro tipoCobroSelected;
@@ -97,9 +97,15 @@ public class PagoController implements Serializable {
 
     public List<TipoCobro> getListaTipoCobros() {
         if(listaTipoCobros == null){
-            listaTipoCobros = tipoCobroController.getTiposCobroRegistranCobro();
+            listaTipoCobros = tipoCobroController.getTiposCobroRegistranCobro();       
         }
         Collections.sort(listaTipoCobros, Comparator.comparing(TipoCobro::getNombre));
+        
+        if(!esSeleccionTipo && listaTipoCobros != null && listaTipoCobros.size() > 0){
+             selected.setSubtotal( listaTipoCobros.get(0).getValor()); 
+        }
+        
+        esSeleccionTipo = false;
         return listaTipoCobros;
     }
    
@@ -155,6 +161,7 @@ public class PagoController implements Serializable {
     public Pago prepareCreate() {
         selected = new Pago();
         pagoTipoCobro=new ArrayList<>();
+        tipoCobroSelected = null;
         listaTipoCobros = null;
         initializeEmbeddableKey();
         itemsDetalleAvisos = null;
@@ -174,12 +181,13 @@ public class PagoController implements Serializable {
         }
         */
         if(nDocumentoEnBD==false && selected.getSubtotal()>=0){
+           
+            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PagoCreated"));
             for(int i=0;i<detalleAvisoPagos.size();i++){
                 detalleAvisoPagos.get(i).setPagado(true);
                 ejbFacadeDetalleAviso.edit(detalleAvisoPagos.get(i));
-
             }
-            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PagoCreated"));
+            
             if (!JsfUtil.isValidationFailed()) {
                 items = null;    // Invalidate list of items to trigger re-query.
             }
@@ -209,7 +217,9 @@ public class PagoController implements Serializable {
         }
     }
     public void cambioEnDatos(){
+        //System.out.println("Actualizar valor: "+ tipoCobroSelected.getNombre());
         selected.setSubtotal(tipoCobroSelected.getValor());
+        esSeleccionTipo = true;
     }
     public void eliminarItem(PagoTipoCobro cc){ 
         System.out.println("Eliminar : "+cc.getTotal());

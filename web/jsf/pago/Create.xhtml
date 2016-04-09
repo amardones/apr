@@ -37,11 +37,11 @@
                                                      paginatorPosition="bottom"
                                                      >
 
-                                            <p:ajax event="rowSelect"  listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4" />
-                                            <p:ajax event="rowUnselect" listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4" />
-                                            <p:ajax event="rowSelectCheckbox"  listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4" />
-                                            <p:ajax event="rowUnselectCheckbox" listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4" />
-                                            <p:ajax event="toggleSelect" update=":PagoCreateForm:display4" listener="#{pagoController.calculaItems}" />
+                                            <p:ajax event="rowSelect"  listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
+                                            <p:ajax event="rowUnselect" listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
+                                            <p:ajax event="rowSelectCheckbox"  listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
+                                            <p:ajax event="rowUnselectCheckbox" listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
+                                            <p:ajax event="toggleSelect"  listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
                                             
                                             <p:column selectionMode="multiple" style="width:16px;text-align:center" />
                                            <p:column>
@@ -80,7 +80,7 @@
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_numeroDocumento}" for="numeroDocumento" />
                                 <p:inputText id="numeroDocumento" value="#{pagoController.selected.numeroDocumento}" title="#{bundle.CreatePagoTitle_numeroDocumento}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_numeroDocumento}"/>
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_interes}" for="interes" />
-                                <p:inputText id="interes" value="#{pagoController.selected.interes}" title="#{bundle.CreatePagoTitle_interes}" >
+                                <p:inputText id="interes" required="true" value="#{pagoController.selected.interes}" title="#{bundle.CreatePagoTitle_interes}" >
                                                             <p:ajax event="change" update="total" listener="#{pagoController.calculaInteresManual()}"/>
 
                                 </p:inputText>
@@ -94,7 +94,7 @@
                                       
                           
                     <h:panelGroup id="display3" >                               
-                        <p:commandButton actionListener="#{pagoController.create}" rendered="#{cuentaController.selected != null}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>
+                        <p:commandButton actionListener="#{pagoController.create}" rendered="#{pagoController.selected.subtotal > 0}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>
                                           
                     </h:panelGroup>
                 </h:panelGroup>

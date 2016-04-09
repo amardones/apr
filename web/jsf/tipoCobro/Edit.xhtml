@@ -14,11 +14,12 @@
                     <p:panelGrid columns="2" rendered="#{tipoCobroController.selected != null}">
                         <p:outputLabel value="#{bundle.EditTipoCobroLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{tipoCobroController.selected.nombre}" title="#{bundle.EditTipoCobroTitle_nombre}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_nombre}"/>
-                        <p:outputLabel value="#{bundle.EditTipoCobroLabel_aceptaPagoCuotas}" for="aceptaPagoCuotas" />
-                        <p:selectBooleanCheckbox id="aceptaPagoCuotas" value="#{tipoCobroController.selected.aceptaPagoCuotas}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_aceptaPagoCuotas}"/>
                         <p:outputLabel value="#{bundle.EditTipoCobroLabel_aceptaRegistroCobro}" for="aceptaRegistroCobro" />
                         <p:selectBooleanCheckbox id="aceptaRegistroCobro" value="#{tipoCobroController.selected.aceptaRegistroCobro}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_aceptaRegistroCobro}"/>
-                    
+                        
+                        <p:outputLabel value="#{bundle.EditTipoCobroLabel_aceptaPagoCuotas}" for="aceptaPagoCuotas" />
+                        <p:selectBooleanCheckbox id="aceptaPagoCuotas" value="#{tipoCobroController.selected.aceptaPagoCuotas}" required="true" requiredMessage="#{bundle.EditTipoCobroRequiredMessage_aceptaPagoCuotas}"/>
+                        
                         <p:outputLabel value="#{bundle.EditTipoCobroLabel_valor}" for="valor" />
                         <p:inputText id="valor" value="#{tipoCobroController.selected.valor}" title="#{bundle.EditSaldoCuentaTitle_valor}" />
                         
