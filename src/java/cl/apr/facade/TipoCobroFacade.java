@@ -33,7 +33,7 @@ public class TipoCobroFacade extends AbstractFacade<TipoCobro> {
     
        public List<TipoCobro> getTiposCobroRegistranCobro() {
          Query query = em.createQuery(""
-                                        + "SELECT  tc FROM TipoCobro tc WHERE tc.aceptaRegistroCobro = true ", TipoCobro.class);
+                                        + "SELECT  tc FROM TipoCobro tc WHERE tc.aceptaRegistroCobro = true order by tc.nombre", TipoCobro.class);
         // query.setParameter("idPeriodo",idPeriodo);
          return query.getResultList();
        
