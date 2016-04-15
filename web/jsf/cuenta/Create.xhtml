@@ -53,7 +53,7 @@
                                         completeMethod="#{socioController.completeSocio}"
                                         var="idSocioItem"
                                         itemValue="#{idSocioItem}"
-                                        itemLabel="#{idSocioItem.rut}-#{idSocioItem.nombre}-#{idSocioItem.apellido}" 
+                                        itemLabel="#{idSocioItem.rut}#{idSocioItem.rut==null?'':'-'}#{idSocioItem.nombre}#{idSocioItem.rut==null?'':'-'}#{idSocioItem.apellido}" 
                                         forceSelection="true"
                                         required="true"
                                 >

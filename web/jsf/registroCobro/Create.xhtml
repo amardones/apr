@@ -11,15 +11,14 @@
         <p:dialog id="RegistroCobroCreateDlg" widgetVar="RegistroCobroCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRegistroCobroTitle}">
             <h:form id="RegistroCobroCreateForm" >
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{registroCobroController.selected != null}">
-                        
+                    <p:panelGrid columns="2" rendered="#{registroCobroController.selected != null}">           
                         <p:outputLabel value="Buscar cuenta :" for="cuentaAuto" />
                          
                         <p:autoComplete id="cuentaAuto" value="#{cuentaController.selected}"
                                 completeMethod="#{cuentaController.completeCuenta}"
                                 var="idCuentaItem"
                                 itemValue="#{idCuentaItem}"
-                                itemLabel="#{idCuentaItem.idCuenta}-#{idCuentaItem.rut.nombre}-#{idCuentaItem.rut.apellido}" 
+                                 itemLabel="#{idCuentaItem.idCuenta}#{idCuentaItem.idCuenta==null?'':'-'}#{idCuentaItem.rut.nombre}#{idCuentaItem.idCuenta==null?'':'-'}#{idCuentaItem.rut.apellido}" 
                                 forceSelection="true"
                                 >
                             <p:ajax event="itemSelect"  listener="#{registroCobroController.resetDatosNuevaCuentaSeleccionada()}" process="@form" update=":RegistroCobroCreateForm:CobroCuotaListForm:datalist display2 display3 "/> 

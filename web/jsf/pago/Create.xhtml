@@ -18,7 +18,7 @@
                                 completeMethod="#{cuentaController.completeCuenta}"
                                 var="idCuentaItem"
                                 itemValue="#{idCuentaItem}"
-                                itemLabel="#{idCuentaItem.idCuenta}-#{idCuentaItem.rut.nombre}-#{idCuentaItem.rut.apellido}" 
+                                itemLabel="#{idCuentaItem.idCuenta}#{idCuentaItem.idCuenta==null?'':'-'}#{idCuentaItem.rut.nombre}#{idCuentaItem.idCuenta==null?'':'-'}#{idCuentaItem.rut.apellido}" 
                                 forceSelection="true"
                                 >
                             <p:ajax event="itemSelect"  listener="#{pagoController.limpiarDetalles}" process="@form" update="display2 display3"/> 
