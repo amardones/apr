@@ -362,7 +362,7 @@ public class PagoController implements Serializable {
             }else{
                 setDias(0);
                 setInteres(0);
-            }
+            }            
         }else{
             setDias(0);
             setInteres(0);

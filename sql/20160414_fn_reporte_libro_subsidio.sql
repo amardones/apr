@@ -11,16 +11,16 @@ $BODY$
       
 	OPEN p_return FOR
 			SELECT 
-			id_cuenta AS CUENTA
-			,id_periodo AS PERIODO
-			,to_char(fecha_creacion, 'dd/MM/yyyy')
+			DISTINCT 
+			a.id_cuenta AS CUENTA
+			,a.id_periodo AS PERIODO
+			,to_char(a.fecha_creacion, 'dd/MM/yyyy')
 			,descuento_periodo AS DESCUENTO
-					FROM aviso_cobro
-					WHERE descuento_periodo!=0 AND
+					FROM aviso_cobro a INNER JOIN detalle_aviso_cobro d ON a.id_periodo=d.id_periodo AND a.id_cuenta=d.id_cuenta 
+					AND d.descripcion like '%SUBSIDIO%'
+					WHERE descuento_periodo <> 0 AND
 						fecha_creacion::DATE >= fecha_inicio$ AND  
 						fecha_creacion::DATE <= fecha_fin$;
-
-			
 			
 	RETURN p_return;
 	END;	
