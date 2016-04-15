@@ -79,9 +79,14 @@
                                 <p:outputLabel  id="subtotal" value="#{pagoController.selected.subtotal}"   title="#{bundle.CreatePagoTitle_subtotal}" /> 
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_numeroDocumento}" for="numeroDocumento" />
                                 <p:inputText id="numeroDocumento" value="#{pagoController.selected.numeroDocumento}" title="#{bundle.CreatePagoTitle_numeroDocumento}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_numeroDocumento}"/>
+                                
+                                <p:outputLabel value="Días de interes" for="dias" />
+                                <p:inputText id="dias" required="true" value="#{pagoController.dias}" title="Días de interes" >
+                                                            <p:ajax event="change" update="dias total interes" listener="#{pagoController.calculaInteresManual()}"/>
+                                </p:inputText>            
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_interes}" for="interes" />
-                                <p:inputText id="interes" required="true" value="#{pagoController.selected.interes}" title="#{bundle.CreatePagoTitle_interes}" >
-                                                            <p:ajax event="change" update="total" listener="#{pagoController.calculaInteresManual()}"/>
+                                <p:inputText id="interes" disabled="true"  value="#{pagoController.selected.interes}" title="#{bundle.CreatePagoTitle_interes}" >
+                                                            <!--<p:ajax event="change" update="total" listener="#{pagoController.calculaInteresManual()}"/>-->
 
                                 </p:inputText>
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_total}" for="total" />

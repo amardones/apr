@@ -54,7 +54,8 @@ public class PagoController implements Serializable {
     private List<PagoTipoCobro> pagoTipoCobro=null;
     private List<TipoCobro> listaTipoCobros = null;
     private int total;
-    int valorCodigo;
+    private int dias;
+    private int valorCodigo;
    
 
     @Inject
@@ -64,8 +65,8 @@ public class PagoController implements Serializable {
     @Inject
     private TipoCobroController tipoCobroController;
     
-    int interes;
-    int subtotal;
+    private int interes;
+    private int subtotal;
 
     public int getSubtotal() {
         return subtotal;
@@ -82,6 +83,14 @@ public class PagoController implements Serializable {
 
     public void setInteres(int interes) {
         this.interes = interes;
+    }
+
+    public int getDias() {
+        return dias;
+    }
+
+    public void setDias(int dias) {
+        this.dias = dias;
     }
     
 
@@ -167,10 +176,12 @@ public class PagoController implements Serializable {
         initializeEmbeddableKey();
         itemsDetalleAvisos = null;
         detalleAvisoPagos=null;
+        setDias(0);
         return selected;
     }
 
     public void create() {
+        
         selected.setIdCuenta(cuentaController.getSelected());
         selected.setDetalleAvisoCobroList(detalleAvisoPagos);
         boolean nDocumentoEnBD=getFacade().existeNumeroDocumento(selected.getNumeroDocumento());
@@ -331,18 +342,31 @@ public class PagoController implements Serializable {
             
             
             if(!cuentaController.getSelected().getEsInstitucion()){
-                setInteres((ejbFacade.obtenerInteres(cuentaController.getSelected().getIdCuenta(),new Date()))*valorCodigo);
+                //setInteres((ejbFacade.obtenerInteres(cuentaController.getSelected().getIdCuenta(),new Date()))*valorCodigo);
+                setDias(ejbFacade.obtenerInteres(cuentaController.getSelected().getIdCuenta(),new Date()));
+                setInteres((getDias()*valorCodigo));
                 System.out.println("EL INTERES ES : "+interes+" FECHA :"+new Date());
             }else{
+                setDias(0);
                 setInteres(0);
             }
         
     }
     public void calculaInteresManual(){
         if(!cuentaController.getSelected().getEsInstitucion()){
-            total=(selected.getSubtotal()+selected.getInteres());
-            selected.setTotal(total);
-        }       
+            //total=(selected.getSubtotal()+selected.getInteres()); 
+            if(getDias()>=0){
+                total=(selected.getSubtotal()+getDias()*valorCodigo);
+                selected.setInteres(getDias()*valorCodigo);
+                selected.setTotal(total);
+            }else{
+                setDias(0);
+                setInteres(0);
+            }
+        }else{
+            setDias(0);
+            setInteres(0);
+        }
     }
     public void calculaItems(){ 
 

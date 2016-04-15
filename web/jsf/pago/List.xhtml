@@ -29,27 +29,33 @@
                         <p:ajax event="rowSelect"   update="createButton  "/>
                         <p:ajax event="rowUnselect" update="createButton  "/>
 
-                        <p:column filterBy="#{item.idPago}" headerText="#{bundle.ListPagoTitle_idPago}" filterMatchMode="contains" filterStyle="width:110px;" style="width: 120px">
+                        <!--<p:column filterBy="#{item.idPago}" headerText="#{bundle.ListPagoTitle_idPago}" filterMatchMode="contains" filterStyle="width:110px;" style="width: 120px">
                             <h:outputText value="#{item.idPago}"/>
-                        </p:column>
-                        <p:column filterBy="#{item.numeroDocumento}" headerText="#{bundle.ListPagoTitle_numeroDocumento}" filterMatchMode="contains" filterStyle="width:110px;" style="width: 120px">
+                        </p:column>-->
+                        <p:column filterBy="#{item.numeroDocumento}" headerText="#{bundle.ListPagoTitle_numeroDocumento}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 120px">
                             <h:outputText value="#{item.numeroDocumento}"/>
                         </p:column>
-                        <p:column filterBy="#{item.idCuenta.rut.apellido}" headerText="#{bundle.ListPagoTitle_idCuenta}" filterMatchMode="contains" filterStyle="width:110px;" style="width: 120px">
-                            <h:outputText value="#{item.idCuenta.idCuenta} :#{item.idCuenta.rut.nombre} #{item.idCuenta.rut.apellido} "/>
+                        <p:column filterBy="#{item.idCuenta.idCuenta}" headerText="#{bundle.ListRegistroEstadoTitle_cuenta}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
+                            <h:outputText value="#{item.idCuenta.idCuenta}"/>
                         </p:column>
-                        <p:column filterBy="#{item.fechaCreacion}" headerText="#{bundle.ListPagoTitle_fechaCreacion}" filterMatchMode="contains" filterStyle="width:110px;" style="width: 120px">
+                        <p:column filterBy="#{item.idCuenta.rut.nombre}" headerText="#{bundle.ListSocioTitle_nombre}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
+                            <h:outputText value="#{item.idCuenta.rut.nombre}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.idCuenta.rut.apellido}" headerText="#{bundle.ListSocioTitle_apellido}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
+                            <h:outputText value="#{item.idCuenta.rut.apellido} "/>
+                        </p:column>
+                        <p:column filterBy="#{item.fechaCreacion}" headerText="#{bundle.ListPagoTitle_fechaCreacion}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
                             <h:outputText value="#{item.fechaCreacion}">
                                 <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                             </h:outputText>
                         </p:column>
-                        <p:column filterBy="#{item.subtotal}" headerText="#{bundle.ListPagoTitle_subtotal}" filterMatchMode="contains" filterStyle="width:90px;" style="width: 110px">
+                        <p:column filterBy="#{item.subtotal}" headerText="#{bundle.ListPagoTitle_subtotal}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
                             <h:outputText value="#{item.subtotal}"/>
                         </p:column>
-                        <p:column filterBy="#{item.interes}" headerText="#{bundle.ListPagoTitle_interes}" filterMatchMode="contains" filterStyle="width:90px;" style="width: 100px">
+                        <p:column filterBy="#{item.interes}" headerText="#{bundle.ListPagoTitle_interes}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
                             <h:outputText value="#{item.interes}"/>
                         </p:column>
-                        <p:column filterBy="#{item.total}" headerText="#{bundle.ListPagoTitle_total}" filterMatchMode="contains" filterStyle="width:110px;" style="width: 120px">
+                        <p:column filterBy="#{item.total}" headerText="#{bundle.ListPagoTitle_total}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
                             <h:outputText value="#{item.total}"/>
                         </p:column>                        
                         <f:facet name="header">
