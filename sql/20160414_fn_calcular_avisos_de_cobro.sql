@@ -30,6 +30,9 @@ DECLARE
     monto_descuento_int$ integer;
 
     valor_cuota_social$ integer;
+    valor_interes$ integer;
+    total_interes$ integer;
+    es_institucion$ boolean;
     
 BEGIN
   
@@ -50,13 +53,14 @@ BEGIN
 
 	--seleccionamos datos ultimo periodo
 	SELECT id_valores_parametricos, fecha_emision INTO id_valores_parametricos$, fecha_emision$ FROM periodo WHERE id_periodo = id_periodo$;
-	
+	SELECT tp.valor INTO valor_interes$ FROM tipo_cobro tp WHERE tp.codigo_tipo_cobro = 'INTERES';	
 					
       LOOP
         FETCH f_cuentas$ INTO id_cuenta$;    
         EXIT WHEN NOT FOUND;	
 	raise info 'cal id_cuenta$: % ', id_cuenta$;
 
+	SELECT c.es_institucion INTO es_institucion$ FROM cuenta c WHERE c.id_cuenta = id_cuenta$;
 	--1.- Obtenemos aviso de cobro anterior
 	--SELECT id_periodo INTO id_periodo_ant$ FROM aviso_cobro WHERE id_cuenta = id_cuenta$;
 	SELECT id_periodo INTO id_periodo_ant$ FROM periodo WHERE id_periodo < id_periodo$ ORDER BY id_periodo desc limit 1;
@@ -188,9 +192,28 @@ BEGIN
 							,'' 
 							,false
 						);
-		--7.- CALCULAR UNTERES
+		--7.- CALCULAR INTERES
+		IF es_institucion$ = false THEN
+			SELECT fn_calcular_interes(id_periodo_ant$, id_cuenta$, p_date$::DATE)*valor_interes$ INTO total_interes$;
+			raise info 'cal total_interes$: % ', total_interes$;
 
-		
+			IF total_interes$ > 0 THEN
+				INSERT INTO detalle_aviso_cobro
+							(id_detalle_aviso_cobro_ant, id_periodo, id_cuenta, id_tipo_cobro, sub_total, descuento, total, descripcion, pagado)
+							VALUES
+							(
+								-1
+								,id_periodo$
+								,id_cuenta$
+								,(SELECT ID_TIPO_COBRO FROM TIPO_COBRO WHERE CODIGO_TIPO_COBRO = 'INTERES')
+								,total_interes$
+								,0 
+								,total_interes$
+								,'' 
+								,false
+							);
+			END IF;
+		END IF;	
 		--UPDATE VALRES AVISO COBRO
 		SELECT sum (sub_total) INTO sub_total_periodo$ FROM detalle_aviso_cobro WHERE id_periodo = id_periodo$ AND id_cuenta = id_cuenta$ AND (id_detalle_aviso_cobro_ant IS NULL OR id_detalle_aviso_cobro_ant <= 0);
 		SELECT sum (descuento) INTO descuento_periodo$ FROM detalle_aviso_cobro WHERE id_periodo = id_periodo$ AND id_cuenta = id_cuenta$ AND (id_detalle_aviso_cobro_ant IS NULL OR id_detalle_aviso_cobro_ant <= 0);

@@ -136,9 +136,12 @@ public class PagoFacade extends AbstractFacade<Pago> {
                 //em.getTransaction().begin();
                 StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("fn_calcular_interes");
                 // set parameters
+                storedProcedure.registerStoredProcedureParameter("idPeriodo", Integer.class, ParameterMode.IN);
                 storedProcedure.registerStoredProcedureParameter("idCuenta", Integer.class, ParameterMode.IN);
                 storedProcedure.registerStoredProcedureParameter("fecha",java.sql.Date.class, ParameterMode.IN);
                 storedProcedure.registerStoredProcedureParameter("result", Integer.class, ParameterMode.OUT);
+               
+                storedProcedure.setParameter("idPeriodo", -1);
                 storedProcedure.setParameter("idCuenta", idCuenta);
                 storedProcedure.setParameter("fecha", new java.sql.Date(fecha.getTime()));   
                 

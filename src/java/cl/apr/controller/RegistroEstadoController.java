@@ -29,6 +29,9 @@ public class RegistroEstadoController implements Serializable {
     private cl.apr.facade.RegistroEstadoFacade ejbFacade;
     @EJB
     private cl.apr.facade.CuentaFacade ejbCuentaFacade;
+    @EJB
+    private cl.apr.facade.AvisoCobroFacade ejbAvisoCobroFacade;
+    
     private List<RegistroEstado> items = null;
     private RegistroEstado selected;
     private double metrosCalculados;
@@ -122,6 +125,7 @@ public class RegistroEstadoController implements Serializable {
             try {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
+                    ejbAvisoCobroFacade.crearAvisosDeCobro(selected.getRegistroEstadoPK().getIdPeriodo(), selected.getRegistroEstadoPK().getIdCuenta());
                 } else {
                     getFacade().remove(selected);
                 }
