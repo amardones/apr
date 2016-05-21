@@ -11,6 +11,7 @@
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputStylesheet library="css" name="login.css"/>        
         <h:outputStylesheet library="css" name="portal.css"/>
+         <h:outputStylesheet library="css" name="estilo_menu.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
         <h:outputScript library="js" name="calendar-localization.js"/>
     </h:head>
@@ -36,8 +37,73 @@
                        </h:form>
                 </div>
         
-            <div id="menudiv">                      
-                <h:form id="menuForm"> 
+            <div id="menudiv">  
+                <header>
+                    
+                
+                    <nav>
+                              <ul>
+                                    <li><a href="/APR/faces/home.xhtml">HOME</a></li>			
+                                    <li class="submenu">
+                                            <a href="#">
+                                                CUENTAS
+                                            </a>
+                                            <ul class="children">
+                                                    <li><a href="/APR/faces/jsf/socio/List.xhtml">Socios</a></li>
+                                                    <li><a href="/APR/faces/jsf/medidor/List.xhtml">Medidores</a></li>
+                                                    <li><a href="/APR/faces/jsf/cuenta/List.xhtml">Cuentas</a></li>
+                                                    <li><a href="/APR/faces/jsf/cuenta/Gmap.xhtml">Geolocalización</a></li>
+                                            </ul> 
+                                    </li>
+
+                                    <li class="submenu">
+                                            <a href="#">
+                                                    PROCESO DE CALCULO
+                                            </a>
+                                            <ul class="children">
+                                                    <li><a href="/APR/faces/jsf/periodo/List.xhtml">Periodos de cobro</a></li>
+                                                    <li><a href="/APR/faces/jsf/registroestado/List.xhtml">Registro de medición</a></li>
+                                                    <li><a href="/APR/faces/jsf/avisocobro/List.xhtml">Avisos de cobro</a></li>                                   
+                                            </ul> 
+                                    </li>
+
+                                    <li class="submenu">
+                                            <a href="#">
+                                                    COBROS Y PAGOS
+                                            </a>
+                                            <ul class="children">
+                                                    <li><a href="/APR/faces/jsf/registrocobro/List.xhtml">Registro de cobros</a></li>
+                                                    <li><a href="/APR/faces/jsf/pago/List.xhtml">Pagos</a></li>      
+                                            </ul> 
+                                    </li>
+
+                                    <li class="submenu">
+                                            <a href="#">
+                                                   PARAMETROS
+                                            </a>
+                                            <ul class="children">
+                                                    <li><a href="/APR/faces/jsf/valoresParametricos/List.xhtml">Valores parametricos</a></li>
+                                                    <li><a href="/APR/faces/jsf/subsidio/List.xhtml">Subsidios</a></li> 
+                                                     <li><a href="/APR/faces/jsf/valorTramoM3/List.xhtml">Tramos</a></li>
+                                                    <li><a href="/APR/faces/jsf/tipoCobro/List.xhtml">Tipos de Cobro</a></li> 
+                                                    <li><a href="/APR/faces/jsf/datosComite/List.xhtml">Datos Comité</a></li> 
+                                            </ul> 
+                                    </li>
+                                    <li class="submenu">
+                                            <a href="#">
+                                                   REPORTES
+                                            </a>
+                                            <ul class="children">
+                                                    <li><a href="/APR/faces/jsf/reportes/List.xhtml">Reporte Ingresos</a></li>
+                                                    <li><a href="/APR/faces/jsf/reportes/ListSubsidios.xhtml">Reporte Subsidio</a></li> 
+                                            </ul> 
+                                    </li>
+
+                              </ul>
+                      </nav>
+                
+                </header>
+<!--                <h:form id="menuForm"> 
                     <p:menubar>
                         <p:menuitem value="#{bundle.Home}" outcome="/home" icon="ui-icon-home"/>
                         <p:submenu label="Cuentas">
@@ -67,7 +133,7 @@
                              <p:menuitem value="Reporte Subsidio" outcome="/jsf/reportes/ListSubsidios" />
                         </p:submenu>
                     </p:menubar>  
-                </h:form>
+                </h:form>-->
             </div>
         </div>  
         <div id="bottomdiv">

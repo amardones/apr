@@ -2,7 +2,9 @@
 
 -- DROP FUNCTION fn_calcular_valor_agua_potable(integer, integer);
 
-CREATE OR REPLACE FUNCTION fn_calcular_valor_agua_potable(IN "id_periodo$" integer, IN "id_cuenta$" integer)
+CREATE OR REPLACE FUNCTION fn_calcular_valor_agua_potable(
+    IN "id_periodo$" integer,
+    IN "id_cuenta$" integer)
   RETURNS TABLE(sub_total integer, descuento integer, total integer, descripcion text, monto_descuento_sub integer, monto_descuento_int integer) AS
 $BODY$
 DECLARE
@@ -23,7 +25,7 @@ DECLARE
     valor_cargo_fijo$ integer;
     valor_m3$ integer;
     m3_fijos$ integer;
-    m3_limite_dcto_interno$ integer;
+    m3_limite_dcto_interno$ numeric;
     porcentaje_dcto_interno$ numeric;
 
     --tramo
@@ -48,6 +50,8 @@ DECLARE
 
     
 BEGIN
+
+
   
         p_date$:= CURRENT_TIMESTAMP;
    
@@ -59,9 +63,13 @@ BEGIN
 	INTO  valor_cargo_fijo$, valor_m3$, m3_fijos$, m3_limite_dcto_interno$, porcentaje_dcto_interno$
 	FROM valores_parametricos WHERE id_valores_parametricos = (SELECT id_valores_parametricos FROM periodo WHERE id_periodo = id_periodo$);
 	--OBTENEMOS METROS CUBICOS EL PERIODO
-	SELECT metros_cubicos INTO metros_cubicos_med$ FROM registro_estado WHERE id_periodo = id_periodo$ AND  id_cuenta = id_cuenta$;
+	SELECT metros_cubicos::Integer INTO metros_cubicos_med$ FROM registro_estado WHERE id_periodo = id_periodo$ AND  id_cuenta = id_cuenta$;
+
+	--raise info '-AGUA3-';
 	SELECT metros_cubicos INTO metros_cubicos_med_decimal$ FROM registro_estado WHERE id_periodo = id_periodo$ AND  id_cuenta = id_cuenta$;
-	
+
+	 
+	  
 	--OBTENEMOS SUBSIDIO SI APLICA
 	SELECT nombre, porcentaje, metros_cubicos_tope INTO nombre_sub$, porcentaje_sub$, metros_cubicos_tope_sub$ 
 	FROM subsidio s 
@@ -72,6 +80,9 @@ BEGIN
 	monto_descuento_int$ := 0;
 	sub_total$ 	     := 0;
 	descripcion$ := '';
+	
+	
+	
 	IF metros_cubicos_med$ IS NOT NULL THEN
 		--APLICA CARGO FIJO
 		sub_total$ := valor_cargo_fijo$;

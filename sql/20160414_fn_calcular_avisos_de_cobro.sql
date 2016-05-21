@@ -49,7 +49,7 @@ BEGIN
 		INNER JOIN detalle_aviso_cobro  dac on a.id_cuenta = dac.id_cuenta and a.id_periodo = dac.id_periodo and dac.pagado = true
 		where a.id_cuenta = c.id_cuenta and a.id_periodo = id_periodo$
 		) = 0
-		AND case when id_cuenta_in$ > 0 then c.id_cuenta = id_cuenta_in$ else true end ;
+		AND case when id_cuenta_in$ >= 0 then c.id_cuenta = id_cuenta_in$ else true end ;
 
 	--seleccionamos datos ultimo periodo
 	SELECT id_valores_parametricos, fecha_emision INTO id_valores_parametricos$, fecha_emision$ FROM periodo WHERE id_periodo = id_periodo$;

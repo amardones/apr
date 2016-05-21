@@ -38,7 +38,7 @@ public class ValorTramoM3Facade extends AbstractFacade<ValorTramoM3> {
             return (ValorTramoM3) query.getSingleResult();
         } 
         catch(Exception e){
-            e.printStackTrace();
+           // e.printStackTrace();
             return null;
         }
        
