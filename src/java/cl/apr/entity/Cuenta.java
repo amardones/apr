@@ -69,10 +69,10 @@ public class Cuenta implements Serializable {
     @NotNull
     @Column(name = "activa")
     private boolean activa;
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "cuenta")
+    /*@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "cuenta")
     private List<RegistroEstado> registroEstadoList;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "idCuenta")
-    private List<SaldoCuenta> saldoCuentaList;
+    private List<SaldoCuenta> saldoCuentaList;*/
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "cuenta", orphanRemoval=true)
     private CuentaSubsidio cuentaSubsidio;
     @JoinColumn(name = "numero_medidor", referencedColumnName = "numero_medidor")
@@ -81,8 +81,8 @@ public class Cuenta implements Serializable {
     @JoinColumn(name = "rut", referencedColumnName = "rut")
     @ManyToOne(optional = false)
     private Socio rut;
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "idCuenta")
-    private List<RegistroCobro> registroCobroList;
+    /*@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "idCuenta")
+    private List<RegistroCobro> registroCobroList;*/
 
     @Column(name = "es_institucion")
     private Boolean esInstitucion;
@@ -159,7 +159,7 @@ public class Cuenta implements Serializable {
     
 
     
-    @XmlTransient
+    /*@XmlTransient
     public List<RegistroEstado> getRegistroEstadoList() {
         return registroEstadoList;
     }
@@ -176,7 +176,7 @@ public class Cuenta implements Serializable {
     public void setSaldoCuentaList(List<SaldoCuenta> saldoCuentaList) {
         this.saldoCuentaList = saldoCuentaList;
     }
-
+*/
     public CuentaSubsidio getCuentaSubsidio() {
         return cuentaSubsidio;
     }
@@ -209,7 +209,7 @@ public class Cuenta implements Serializable {
     public void setRut(Socio rut) {
         this.rut = rut;
     }
-
+/*
     @XmlTransient
     public List<RegistroCobro> getRegistroCobroList() {
         return registroCobroList;
@@ -218,7 +218,7 @@ public class Cuenta implements Serializable {
     public void setRegistroCobroList(List<RegistroCobro> registroCobroList) {
         this.registroCobroList = registroCobroList;
     }
-
+*/
     @Override
     public int hashCode() {
         int hash = 0;

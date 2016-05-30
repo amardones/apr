@@ -19,11 +19,9 @@
                 
                     <p:dataTable id="datalist" value="#{socioController.items}" var="item"
                                  selectionMode="single" selection="#{socioController.selected}"
-                                 paginator="true"
+                                 
                                  rowKey="#{item.rut}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 paginatorPosition="bottom"
+                                 scrollable="true" scrollHeight="500"                                 
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton  editButton deleteButton"/>

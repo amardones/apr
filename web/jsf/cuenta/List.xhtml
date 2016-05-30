@@ -19,10 +19,9 @@
                
                     <p:dataTable id="datalist" value="#{cuentaController.items}" var="item" widgetVar="itemTabla"
                                  selectionMode="single" selection="#{cuentaController.selected}"                                 
-                                 paginator="true"
+                                 
                                  rowKey="#{item.idCuenta}"
-                                 rows="10"
-                                 paginatorPosition="bottom"
+                                 scrollable="true" scrollHeight="500"
                                  >
 
                         
