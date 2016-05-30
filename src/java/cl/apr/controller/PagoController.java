@@ -192,16 +192,24 @@ public class PagoController implements Serializable {
             } 
         }
         */
+         
+                
         if(nDocumentoEnBD==false && selected.getSubtotal()>=0){
-           
-            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PagoCreated"));
-            for(int i=0;i<detalleAvisoPagos.size();i++){
-                detalleAvisoPagos.get(i).setPagado(true);
-                ejbFacadeDetalleAviso.edit(detalleAvisoPagos.get(i));
-            }
-            
-            if (!JsfUtil.isValidationFailed()) {
-                items = null;    // Invalidate list of items to trigger re-query.
+            BigInteger idPago = getFacade().getNextIdPago();
+            if(idPago != null){
+                int idpagoInt = idPago.intValue();
+                selected.setIdPago(idpagoInt);                 
+                persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PagoCreated"));
+                for(int i=0;i<detalleAvisoPagos.size();i++){
+                    detalleAvisoPagos.get(i).setPagado(true);
+                    ejbFacadeDetalleAviso.edit(detalleAvisoPagos.get(i));
+                }
+
+                if (!JsfUtil.isValidationFailed()) {
+                    items = null;    // Invalidate list of items to trigger re-query.
+                }
+            }else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al generar pago.",null));
             }
         }else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Debe elegir un Item o N° Documento ya Existe",null));
