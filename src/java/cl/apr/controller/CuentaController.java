@@ -17,6 +17,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -232,9 +233,11 @@ public class CuentaController implements Serializable {
         }
     }
 
-    public List<Cuenta> getItems() {
-        
-         items = getFacade().findAll();
+    public List<Cuenta> getItems() {        
+        if(items == null){
+         items = getFacade().findAllCuentas();
+         System.out.println("cuentas.size(): "+items.size());
+        }
          return items;
     }
     
@@ -300,15 +303,15 @@ public class CuentaController implements Serializable {
     public Cuenta getCuenta(java.lang.Integer id) {
         return getFacade().find(id);
     }
-
+/*
     public List<Cuenta> getItemsAvailableSelectMany() {
-        return getFacade().findAll();
+        return getFacade().findAllCuentas();
     }
 
     public List<Cuenta> getItemsAvailableSelectOne() {
-        return getFacade().findAll();
+        return getFacade().findAllCuentas();
     }
-
+*/
     @FacesConverter(forClass = Cuenta.class)
     //@FacesConverter("cuentaControllerConverter")
     public static class CuentaControllerConverter implements Converter {
@@ -379,5 +382,7 @@ public class CuentaController implements Serializable {
              System.out.println("cuenta subsidio reset");
          }
      }
+     
+    
 
 }

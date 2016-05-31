@@ -7,8 +7,10 @@ package cl.apr.facade;
 
 import cl.apr.entity.Cuenta;
 import cl.apr.entity.Medidor;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.OrderBy;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -41,5 +43,11 @@ public class CuentaFacade extends AbstractFacade<Cuenta> {
             //System.out.println("Count:"+r);
             return r == 0;       
      }
+    
+  
+    @OrderBy("id DESC") 
+     public List<Cuenta> findAllCuentas() {
+         return this.findAll();
+    }
     
 }

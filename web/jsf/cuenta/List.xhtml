@@ -34,10 +34,12 @@
                         <p:column filterBy="#{item.rut}" headerText="#{bundle.ListCuentaTitle_rut}" filterMatchMode="contains" filterStyle="width:65px;" style="width: 70px">                             
                             <h:outputText value="#{item.rut}"/>
                         </p:column>
-                        <p:column filterBy="#{item.rut.nombre}" headerText="#{bundle.CreateSocioTitle_nombre}" filterMatchMode="contains" filterStyle="width:120px;" style="width: 140px">
+                        <p:column filterBy="#{item.rut.nombre}" headerText="#{bundle.CreateSocioTitle_nombre}"  filterStyle="width:120px;" style="width: 140px"
+                                  filterFunction="#{utilController.filterByText}" >
                             <h:outputText value="#{item.rut.nombre}"/>
                         </p:column>
-                        <p:column filterBy="#{item.rut.apellido}" headerText="#{bundle.CreateSocioTitle_apellido}" filterMatchMode="contains" filterStyle="width:120px;" style="width: 140px">
+                        <p:column filterBy="#{item.rut.apellido}" headerText="#{bundle.CreateSocioTitle_apellido}"  filterStyle="width:120px;" style="width: 140px"
+                                   filterFunction="#{utilController.filterByText}">
                              <h:outputText value="#{item.rut.apellido}"/>
                         </p:column>
                         <p:column>
