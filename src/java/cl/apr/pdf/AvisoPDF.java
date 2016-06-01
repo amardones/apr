@@ -209,8 +209,8 @@ public class AvisoPDF {
                     
                     tableHeaderCuenta.addCell(new Phrase("Cliente",fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase(": "+aviso.getRegistroEstado().getCuenta().getRut().getNombre() +" "+aviso.getRegistroEstado().getCuenta().getRut().getApellido(),fCuerpoTabla));
-                    tableHeaderCuenta.addCell(new Phrase("N° Aviso",fCuerpoTabla));
-                    tableHeaderCuenta.addCell(new Phrase(": "+aviso.getAvisoCobroPK().getIdCuenta() +"-"+aviso.getAvisoCobroPK().getIdPeriodo(),fCuerpoTabla));   
+                    tableHeaderCuenta.addCell(new Phrase("N° Celular",fCuerpoTabla));
+                    tableHeaderCuenta.addCell(new Phrase(": "+aviso.getRegistroEstado().getCuenta().getRut().getCelular(),fCuerpoTabla));   
                              
                     tableHeaderCuenta.addCell(new Phrase("N° Cliente",fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase(": "+aviso.getRegistroEstado().getCuenta().getRut().getRut(),fCuerpoTabla));
@@ -230,7 +230,7 @@ public class AvisoPDF {
                     tablePeriodo.getDefaultCell().setFixedHeight(13);
                    
                     tablePeriodo.addCell(new Phrase("F. Periodo",fCuerpoTabla));
-                    tablePeriodo.addCell(new Phrase(": "+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getRegistroEstado().getPeriodo().getFechaInicio()).toUpperCase() +" al "+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getRegistroEstado().getPeriodo().getFechaInicio()).toUpperCase(),fCuerpoTabla));
+                    tablePeriodo.addCell(new Phrase(": "+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getRegistroEstado().getPeriodo().getFechaInicio()).toUpperCase() +" al "+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getRegistroEstado().getPeriodo().getFechaFin()).toUpperCase(),fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase("Valor cargo fijo",fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase(": $ "+NumeroFormato.formatearNumeroPesos(aviso.getRegistroEstado().getPeriodo().getIdValoresParametricos().getValorCargoFijo()),fCuerpoTabla));
                     
