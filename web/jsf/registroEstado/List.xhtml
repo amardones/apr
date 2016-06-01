@@ -26,7 +26,8 @@
                                 <p:column >#{bundle.ListPeriodoTitle_fechaFin}</p:column>
                                 <p:column >#{bundle.ListPeriodoTitle_fechaTomaLectura}</p:column>
                                 <p:column >#{bundle.ListPeriodoTitle_fechaEmision}</p:column>
-                                <p:column >#{bundle.ListPeriodoTitle_fechaVencimiento}</p:column>   
+                                <p:column >#{bundle.ListPeriodoTitle_fechaVencimiento}</p:column>
+                                <p:column >#{bundle.ListPeriodoTitle_reporte}</p:column> 
                                 <p:column ></p:column>                                                     
                             </p:row>
                         </f:facet>                      
@@ -67,7 +68,16 @@
                                 <p:outputLabel id="fechaVencimiento" value="#{periodoController.selected.fechaVencimiento}" >
                                     <f:convertDateTime pattern="dd/MM/yyyy" />
                                </p:outputLabel>  
-                            </p:column>    
+                            </p:column> 
+                             <p:column styleClass="fontCellEncabezado">
+                                 <p:commandLink  action="#{registroEstadoController.verReporteRegistro()}"                                            
+                                              ajax="false" 
+                                              global="false" 
+                                              target="blank"
+                                              rendered="#{registroEstadoController.permiteExportarPDF()}">
+                                            <p:graphicImage styleClass="myButtonVer" /> 
+                               </p:commandLink>
+                            </p:column>
                               <p:column styleClass="fontCellEncabezado">
                                
                             </p:column>    

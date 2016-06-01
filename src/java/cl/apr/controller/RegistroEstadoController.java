@@ -1,12 +1,15 @@
 package cl.apr.controller;
 
+import cl.apr.beans.RegistroEstadoReporte;
 import cl.apr.entity.RegistroEstado;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.entity.Periodo;
 import cl.apr.facade.RegistroEstadoFacade;
+import java.io.IOException;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -16,10 +19,15 @@ import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Named("registroEstadoController")
 @SessionScoped
@@ -31,10 +39,13 @@ public class RegistroEstadoController implements Serializable {
     private cl.apr.facade.CuentaFacade ejbCuentaFacade;
     @EJB
     private cl.apr.facade.AvisoCobroFacade ejbAvisoCobroFacade;
+
+    
     
     private List<RegistroEstado> items = null;
     private RegistroEstado selected;
     private double metrosCalculados;
+    private Integer periodo;
    
     @Inject
     private PeriodoController periodoController;
@@ -99,7 +110,7 @@ public class RegistroEstadoController implements Serializable {
             items = getFacade().findAll();
         }
         return items;*/
-        items = null;
+        if (items == null) {
         if(periodoController.getSelected() != null){
                 if(periodoController.getSelected().getIdPeriodo()==null){            
                 items = getFacade().getRegistroEstadoPorPeriodo(periodoController.getUltimoPeriodo().getIdPeriodo());
@@ -107,8 +118,8 @@ public class RegistroEstadoController implements Serializable {
                 }
                 if(periodoController.getSelected().getIdPeriodo()!=null)
                 items = getFacade().getRegistroEstadoPorPeriodo(periodoController.getSelected().getIdPeriodo()); 
-        }
-        return items;
+        }}
+        return items;        
     }
    
     public double getMetros() {
@@ -117,6 +128,35 @@ public class RegistroEstadoController implements Serializable {
     public void calculaM3(){
         metrosCalculados=(selected.getEstadoActual()-selected.getEstadoAnterior());
         selected.setMetrosCubicos(metrosCalculados);
+    }
+    public boolean permiteExportarPDF(){        
+        if( items!= null &&  items.size()>0){
+            System.out.println("si");
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+    
+     
+    public void verReporteRegistro() {
+        try {
+            
+                FacesContext ctx = FacesContext.getCurrentInstance();
+                ExternalContext ectx = ctx.getExternalContext();
+                HttpServletRequest request = (HttpServletRequest) ectx.getRequest();
+                HttpServletResponse response = (HttpServletResponse) ectx.getResponse();
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/verReporteRegistro");
+                dispatcher.forward(request, response);
+                ctx.responseComplete();
+                System.out.println("call servlet");
+            
+        } catch (ServletException ex) {
+            Logger.getLogger(RegistroCobroController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RegistroCobroController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -154,8 +194,16 @@ public class RegistroEstadoController implements Serializable {
 
     public List<RegistroEstado> getItemsAvailableSelectMany() {
         return getFacade().findAll();
+    } 
+
+    public Integer getPeriodo() {
+        return periodo;
     }
 
+    public void setPeriodo(Integer periodo) {
+        this.periodo = periodo;
+    }
+    
     public List<RegistroEstado> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
@@ -228,5 +276,6 @@ public class RegistroEstadoController implements Serializable {
         }
 
     }
+    
 
 }

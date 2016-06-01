@@ -6,6 +6,7 @@ import cl.apr.controller.util.JsfUtil.PersistAction;
 import cl.apr.facade.DetalleAvisoCobroFacade;
 import cl.apr.beans.ItemReporte;
 import cl.apr.beans.SubsidioReporte;
+import cl.apr.beans.RegistroEstadoReporte;
 import cl.apr.entity.Cuenta;
 import java.io.IOException;
 
@@ -42,13 +43,19 @@ public class ReportesController implements Serializable {
     private cl.apr.facade.CuentaFacade cFacade;
     @EJB
     private cl.apr.facade.PagoFacade pagoFacade;
+    
     private List<ItemReporte> items = null;
     private ItemReporte itemResumen=new ItemReporte();
+    
     private List<SubsidioReporte> itemsSubsudioReporte=null;
     private SubsidioReporte subsidioReporte=new SubsidioReporte();
+    
+    
+    
     private Date fechaInicio;
     private Date fechaFin;
     private int totalSubsidio;
+    
     
     
     public void limpiaFecha(){
@@ -64,7 +71,7 @@ public class ReportesController implements Serializable {
         int idP=Integer.parseInt(id);
         return pFacade.find(idP).getNombre();
     }
-
+  
     public List<SubsidioReporte> getItemsSubsudioReporte() {
         return itemsSubsudioReporte;
     }
@@ -169,6 +176,8 @@ public class ReportesController implements Serializable {
         }
          return subsidioReporte.getDescuento_periodo();
      }*/
+     
+     
     public void verReporteSubsidioPDF() {
         try {
             
