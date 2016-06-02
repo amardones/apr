@@ -115,7 +115,7 @@ BEGIN
 				cc.valor_cuota as sub_total, 
 				0 as descuento,
 				cc.valor_cuota as total,
-				(rc.descripcion || ' cuota '||cc.numero_cuota||'/'||rc.cuotas) as descripcion, 
+				('cuota '||cc.numero_cuota||'/'||rc.cuotas) as descripcion, 
 				false as pagado,
 				cc.id_registro_cobro,
 				cc.numero_cuota
