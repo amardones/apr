@@ -19,7 +19,7 @@
                     <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                     <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                 </p:confirmDialog>
-                <p:fieldset legend="#{bundle.SeleccionarPeriodo}" style="margin-bottom:20px">                    
+                <p:fieldset legend="#{bundle.SeleccionarPeriodo}" style="margin-bottom:20px; " >                    
                 
                     
                      <p:panelGrid  rendered="#{periodoController.itemsAvailableSelectOne != null}" styleClass="panelGridNoBorder">
@@ -37,7 +37,7 @@
                      
                          <p:row>
                              <p:column styleClass="fontCellEncabezado">
-                                  <p:selectOneMenu id="periodo" value="#{periodoController.selected}" >
+                                  <p:selectOneMenu id="periodo" value="#{periodoController.selected}"  style="width: 180px">
 <!--                                <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>-->
                                     <f:selectItems value="#{periodoController.periodos}"
                                                    var="periodoItem"
