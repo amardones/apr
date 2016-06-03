@@ -33,12 +33,13 @@ DECLARE
     valor_interes$ integer;
     total_interes$ integer;
     es_institucion$ boolean;
+    aplica_cuota_social$ boolean;
     
 BEGIN
   
        p_date$:= CURRENT_TIMESTAMP;
        raise info 'FECHA CALCULO: % ', p_date$;
-      
+       
 	--SE RECORRE LISTADO DE CUENTAS PARA CALCULAR AVISO DE COBRO
 	OPEN f_cuentas$ FOR    
 		SELECT c.id_cuenta FROM cuenta c		
@@ -60,7 +61,7 @@ BEGIN
         EXIT WHEN NOT FOUND;	
 	raise info 'cal id_cuenta$: % ', id_cuenta$;
 
-	SELECT c.es_institucion INTO es_institucion$ FROM cuenta c WHERE c.id_cuenta = id_cuenta$;
+	SELECT c.es_institucion, c.aplica_cuota_social INTO es_institucion$, aplica_cuota_social$ FROM cuenta c WHERE c.id_cuenta = id_cuenta$;
 	--1.- Obtenemos aviso de cobro anterior
 	--SELECT id_periodo INTO id_periodo_ant$ FROM aviso_cobro WHERE id_cuenta = id_cuenta$;
 	SELECT id_periodo INTO id_periodo_ant$ FROM periodo WHERE id_periodo < id_periodo$ ORDER BY id_periodo desc limit 1;
@@ -176,9 +177,11 @@ BEGIN
 		--6.- AGREGAR CUOTA SOCIAL
 		
 		--SELECT VALOR_CUOTA_SOCIAL INTO valor_cuota_social$ FROM valores_parametricos WHERE id_valores_parametricos = id_valores_parametricos$;
-		SELECT VALOR INTO valor_cuota_social$ FROM TIPO_COBRO WHERE CODIGO_TIPO_COBRO = 'CUOTSOCIAL';
+		IF aplica_cuota_social$ = true THEN
+			SELECT VALOR INTO valor_cuota_social$ FROM TIPO_COBRO WHERE CODIGO_TIPO_COBRO = 'CUOTSOCIAL';
 		
-		INSERT INTO detalle_aviso_cobro
+		
+			INSERT INTO detalle_aviso_cobro
 						(id_detalle_aviso_cobro_ant, id_periodo, id_cuenta, id_tipo_cobro, sub_total, descuento, total, descripcion, pagado)
 						VALUES
 						(
@@ -192,6 +195,7 @@ BEGIN
 							,'' 
 							,false
 						);
+		END IF;
 		--7.- CALCULAR INTERES
 		IF es_institucion$ = false THEN
 			SELECT fn_calcular_interes(id_periodo_ant$, id_cuenta$, p_date$::DATE)*valor_interes$ INTO total_interes$;

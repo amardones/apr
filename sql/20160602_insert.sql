@@ -47,6 +47,10 @@ INSERT INTO datos_comite(
 INSERT INTO datos_comite(
             nombre, codigo, dato)
     VALUES ('ATENCIÓN','ATC','LUNES, MIERCOLES Y VIERNES DE 09:00 a 13:00 HRS.');
+INSERT INTO datos_comite(
+            nombre, codigo, dato)
+    VALUES ('IFORMACIÓN GENERAL','INFGEN','RECUERDE PROTEGER SU MEDIDOR DE LAS HELADAS');
+
 /*
 CONSUMO AGUA POTABLE
 CUOTA SOCIAL

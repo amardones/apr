@@ -35,7 +35,7 @@ DECLARE
     existen_tramos$ boolean;
      
     --cuanta 
-    metros_cubicos_med$ integer;
+    --metros_cubicos_med$ integer;
     metros_cubicos_med_decimal$ numeric;
 
     --subsidio
@@ -45,7 +45,7 @@ DECLARE
     metros_cubicos_aplica_sub$ integer;
      
     --calculo
-    m3_tramo$ integer;
+    m3_tramo$ numeric;
     valor_tramo$ integer;
 
     
@@ -63,7 +63,7 @@ BEGIN
 	INTO  valor_cargo_fijo$, valor_m3$, m3_fijos$, m3_limite_dcto_interno$, porcentaje_dcto_interno$
 	FROM valores_parametricos WHERE id_valores_parametricos = (SELECT id_valores_parametricos FROM periodo WHERE id_periodo = id_periodo$);
 	--OBTENEMOS METROS CUBICOS EL PERIODO
-	SELECT metros_cubicos::Integer INTO metros_cubicos_med$ FROM registro_estado WHERE id_periodo = id_periodo$ AND  id_cuenta = id_cuenta$;
+	--SELECT metros_cubicos::Integer INTO metros_cubicos_med$ FROM registro_estado WHERE id_periodo = id_periodo$ AND  id_cuenta = id_cuenta$;
 
 	--raise info '-AGUA3-';
 	SELECT metros_cubicos INTO metros_cubicos_med_decimal$ FROM registro_estado WHERE id_periodo = id_periodo$ AND  id_cuenta = id_cuenta$;
@@ -83,10 +83,10 @@ BEGIN
 	
 	
 	
-	IF metros_cubicos_med$ IS NOT NULL THEN
+	IF metros_cubicos_med_decimal$ IS NOT NULL THEN
 		--APLICA CARGO FIJO
 		sub_total$ := valor_cargo_fijo$;
-		descripcion$ := ' # CALCULO AGUA ->'||metros_cubicos_med$ ||'m3';
+		descripcion$ := ' # CALCULO AGUA ->'||metros_cubicos_med_decimal$ ||'m3';
 		descripcion$ :=  descripcion$  || ' # Aplica cargo fijo '||m3_fijos$||'m3 -> $'||valor_cargo_fijo$;
 		--raise info 'descripcion: %', descripcion$;
 		IF metros_cubicos_med_decimal$ <= m3_fijos$	 THEN	     
@@ -94,7 +94,7 @@ BEGIN
 		     IF nombre_sub$ IS NOT NULL THEN
 			descripcion$ :=  descripcion$ || ' # CALCULO SUBSIDIO';
 			monto_descuento_sub$ 	:= round(sub_total$*(porcentaje_sub$/100));
-			descripcion$ 		:= descripcion$ ||' # Aplica subsidio '||nombre_sub$||' ('||metros_cubicos_tope_sub$ ||'m3 , ' ||porcentaje_sub$ ||'%)  para '|| metros_cubicos_med$ ||'m3 -> $'||monto_descuento_sub$;
+			descripcion$ 		:= descripcion$ ||' # Aplica subsidio '||nombre_sub$||' ('||metros_cubicos_tope_sub$ ||'m3 , ' ||porcentaje_sub$ ||'%)  para '|| metros_cubicos_med_decimal$ ||'m3 -> $'||monto_descuento_sub$;
 			
 		     ELSE
 			--CALCULO REGLA INTERNA
@@ -111,17 +111,17 @@ BEGIN
 				EXIT WHEN NOT FOUND;	
 				--raise info 'cal id_cuenta$: % ', id_cuenta$;
 				existen_tramos$ := true;
-				IF metros_cubicos_med$ > m3_inicio$ THEN
+				IF metros_cubicos_med_decimal$ > m3_inicio$ THEN
 					valor_tramo$ 	:= round((valor_m3$*(1+porcentaje_recargo$/100)));
-					IF metros_cubicos_med$ >= m3_final$ THEN
+					IF metros_cubicos_med_decimal$ >= m3_final$ THEN
 						m3_tramo$ 	:=  m3_final$ - m3_inicio$;
 					ELSE
-						m3_tramo$ 	:= metros_cubicos_med$ - m3_inicio$;					
+						m3_tramo$ 	:= metros_cubicos_med_decimal$ - m3_inicio$;					
 					END IF;
-					sub_total$ 		:= sub_total$ + m3_tramo$ * valor_tramo$;
+					sub_total$ 		:= sub_total$ + round(m3_tramo$ * valor_tramo$);
 					/*
 					raise info '-AGUA-';
-					raise info 'metros_cubicos_med$: % ', metros_cubicos_med$;
+					raise info 'metros_cubicos_med_decimal$: % ', metros_cubicos_med_decimal$;
 					raise info 'm3_inicio$: % ', m3_inicio$;
 					raise info 'm3_final$: % ', m3_final$;
 					raise info 'm3_tramo$: % ', m3_tramo$;
@@ -134,8 +134,8 @@ BEGIN
 						
 			--EN EL CASO QUE NO EXISTAN TRAMOS, SE CALCULA EL RESTO EN BASE AL VALOR METRO CUBICO FIJO
 			IF existen_tramos$ = false  THEN
-				m3_tramo$ 	:= metros_cubicos_med$ - m3_fijos$;
-				sub_total$ 	:= sub_total$ + m3_tramo$ * valor_m3$;
+				m3_tramo$ 	:= metros_cubicos_med_decimal$ - m3_fijos$;
+				sub_total$ 	:= sub_total$ + round(m3_tramo$ * valor_m3$);
 				descripcion$ 	:= descripcion$ || ' # Aplica valor por tramo ('||m3_tramo$||'m3 * $'||valor_m3$||') -> $'||(m3_tramo$ * valor_m3$);
 			END IF;	
 
@@ -148,10 +148,10 @@ BEGIN
 			IF nombre_sub$ IS NOT NULL THEN
 				--VERIFICAMSO QUE CANTIDAD DE m3 DEEBN SER CALCULADOS COMO SUBSIDIO
 				descripcion$ :=  descripcion$ || ' # CALCULO SUBSIDIO';
-				IF metros_cubicos_med$ >=  metros_cubicos_tope_sub$ THEN
+				IF metros_cubicos_med_decimal$ >=  metros_cubicos_tope_sub$ THEN
 					metros_cubicos_aplica_sub$ := metros_cubicos_tope_sub$;
 				ELSE
-					metros_cubicos_aplica_sub$ := metros_cubicos_med$;
+					metros_cubicos_aplica_sub$ := metros_cubicos_med_decimal$;
 				END IF;
 				--raise info 'cal metros_cubicos_aplica_sub$: % ', metros_cubicos_aplica_sub$;
 				--CALCULAMOS MONTO SUBSIDIO A m3 DENTRO DEL TOPE

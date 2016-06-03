@@ -23,10 +23,17 @@
                         <p:inputText id="direccion" value="#{cuentaController.selected.direccion}" title="#{bundle.CreateCuentaTitle_direccion}" required="true" requiredMessage="Campo de dirección es requerida"/>
                         
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_activa}" for="activa" />
-                        <p:selectBooleanCheckbox id="activa" value="#{cuentaController.selected.activa}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_activa}"/>
+                        <p:selectBooleanCheckbox id="activa" value="#{cuentaController.selected.activa}" required="true" requiredMessage="Información requerida"/>
                         
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_esInstitucion}" for="esInstitucion" />
-                        <p:selectBooleanCheckbox id="esInstitucion" value="#{cuentaController.selected.esInstitucion}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_esInstitucion}"/>
+                        <p:selectBooleanCheckbox id="esInstitucion" value="#{cuentaController.selected.esInstitucion}" required="true" requiredMessage="Información requerida"/>
+                        
+                        <p:outputLabel value="#{bundle.CreateCuentaLabel_AplicaCuotaSocial}" for="aplicaCuotaSocial" />
+                        <p:selectBooleanCheckbox id="aplicaCuotaSocial" value="#{cuentaController.selected.aplicaCuotaSocial}" required="true" requiredMessage="Información requerida"/>
+                        
+                        <p:outputLabel value="#{bundle.CreateCuentaLabel_informacionAviso}" for="infoAviso" />
+                        <p:inputText id="infoAviso" value="#{cuentaController.selected.informacionAviso}" title="#{bundle.CreateCuentaTitle_informacionAviso}" />
+                        
                         
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_cuentaSubsidio}" for="cuentaSubsidio" />
                         <p:selectOneMenu style="width:150px" id="cuentaSubsidio" value="#{cuentaController.selected.cuentaSubsidio.idSubsidio}" >

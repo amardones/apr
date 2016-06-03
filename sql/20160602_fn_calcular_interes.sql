@@ -10,6 +10,7 @@ $BODY$
 		p_id_periodo_actual$ integer;
 		--p_id_periodo_anterior$ integer;
 		p_count_pagos$ integer;
+		p_count_detalles$ integer;
 		p_count_interes$ integer;
 		p_fecha_incio_interes$ date;
 		
@@ -24,12 +25,18 @@ $BODY$
 		raise info 'CALCULO INTERES p_id_periodo_actual$: % ', p_id_periodo_actual$;
 		
 		IF p_id_periodo_actual$ IS NOT NULL THEN
+
+			SELECT count(*) INTO p_count_detalles$  from aviso_cobro ac 
+			where ac.id_periodo = p_id_periodo_actual$ and ac.id_cuenta = id_cuenta$;
+		
 			SELECT count(*) INTO p_count_pagos$ from aviso_cobro ac 
 			join detalle_aviso_cobro dac on ac.id_periodo =dac.id_periodo and ac.id_cuenta = dac.id_cuenta and dac.pagado = true
 			where ac.id_periodo = p_id_periodo_actual$ and ac.id_cuenta = id_cuenta$;
 
+			
+
 			raise info 'p_count_pagos$: % ', p_count_pagos$;
-			IF p_count_pagos$ = 0 THEN
+			IF p_count_detalles$ > 0 && p_count_pagos$ = 0 THEN
 				--se obtiene cantidad para identificar si existen intereses anteriores asociados al aviso
 				SELECT count(*)  INTO p_count_interes$ from aviso_cobro ac 
 				join detalle_aviso_cobro dac on ac.id_periodo =dac.id_periodo and ac.id_cuenta = dac.id_cuenta 
