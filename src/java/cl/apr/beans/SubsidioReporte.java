@@ -19,6 +19,7 @@ public class SubsidioReporte {
     private String idcuenta;   
     private String fechaCreacion;
     private Integer descuento_periodo;
+    private String subsidio;
     
     public SubsidioReporte(){
         
@@ -55,6 +56,14 @@ public class SubsidioReporte {
 
     public void setDescuento_periodo(Integer descuento_periodo) {
         this.descuento_periodo = descuento_periodo;
+    }
+
+    public String getSubsidio() {
+        return subsidio;
+    }
+
+    public void setSubsidio(String subsidio) {
+        this.subsidio = subsidio;
     }
     
 }

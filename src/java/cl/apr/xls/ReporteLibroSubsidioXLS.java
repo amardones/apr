@@ -142,6 +142,9 @@ public class ReporteLibroSubsidioXLS extends HttpServlet {
                     label = new Label(++k, 1+i,ir.getFechaCreacion().toString(),formatoTexto); 
                     sheet.addCell(label);
                     
+                    label = new Label(++k, 1+i,ir.getSubsidio().toString(),formatoTexto); 
+                    sheet.addCell(label);   
+                    
                     label = new Label(++k, 1+i,ir.getDescuento_periodo().toString(),formatoTexto); 
                     sheet.addCell(label);                   
                     
@@ -150,6 +153,9 @@ public class ReporteLibroSubsidioXLS extends HttpServlet {
                     label = new Label(k, 1+total,"",formatoTexto); 
                     sheet.addCell(label);
 
+                    label = new Label(++k, 1+total,"",formatoTexto); 
+                    sheet.addCell(label);
+                    
                     label = new Label(++k, 1+total,"",formatoTexto); 
                     sheet.addCell(label);
                     
@@ -170,7 +176,7 @@ public class ReporteLibroSubsidioXLS extends HttpServlet {
             copy.close();
             workbook.close();
 
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH_mm");
+            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH_mm");
 
             String reportDate = df.format(new Date());
 

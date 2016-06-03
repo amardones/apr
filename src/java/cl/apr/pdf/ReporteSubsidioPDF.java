@@ -106,8 +106,8 @@ public class ReporteSubsidioPDF {
                         tablaTitulo.addCell(new Phrase("Reporte Subsidios",fTitulo1));
                         tablaTitulo.addCell(new Phrase(" ",fTitulo1));
                         
-                        PdfPTable tabla   = new PdfPTable(4);
-                        tabla.setWidths(new float[] {15f, 50f, 15f, 20f}); 
+                        PdfPTable tabla   = new PdfPTable(5);
+                        tabla.setWidths(new float[] {15f, 30f, 15f, 20f,20f}); 
                         tabla.getDefaultCell().setBorder(Rectangle.BOX);
                         tabla.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
                         tabla.getDefaultCell().setFixedHeight(14);
@@ -136,6 +136,14 @@ public class ReporteSubsidioPDF {
                         c.setPadding(5);
                         tabla.addCell(c);
                         
+                        c = new PdfPCell(new Phrase("Subsidio",fCuerpoTablaBold));
+                        c.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                        c.setHorizontalAlignment(Element.ALIGN_CENTER); 
+                        c.setBorder(Rectangle.BOX);
+                        c.setBackgroundColor(borderColor);
+                        c.setPadding(5);
+                        tabla.addCell(c);
+                        
                          c = new PdfPCell(new Phrase("Valor Subsidiado",fCuerpoTablaBold));
                         c.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         c.setHorizontalAlignment(Element.ALIGN_CENTER); 
@@ -143,6 +151,8 @@ public class ReporteSubsidioPDF {
                         c.setBackgroundColor(borderColor);
                         c.setPadding(5);
                         tabla.addCell(c);
+                        
+                        
                     
                     /*
                         tabla.addCell(new Phrase("Periodo",fCuerpoTablaBold));
@@ -156,8 +166,11 @@ public class ReporteSubsidioPDF {
                             tabla.addCell(new Phrase(av.getIdPeriodo(),fCuerpoTabla));
                             tabla.addCell(new Phrase(av.getIdcuenta(),fCuerpoTabla));
                             tabla.addCell(new Phrase(av.getFechaCreacion(),fCuerpoTabla));
+                            tabla.addCell(new Phrase(av.getSubsidio(),fCuerpoTabla));
                             tabla.addCell(new Phrase(""+av.getDescuento_periodo(),fCuerpoTabla));
+                            
                         }
+                            tabla.addCell(new Phrase("",fCuerpoTabla));
                             tabla.addCell(new Phrase("",fCuerpoTabla));
                             tabla.addCell(new Phrase("",fCuerpoTabla));
                             tabla.addCell(new Phrase("TOTAL :",fCuerpoTablaBold));

@@ -67,7 +67,8 @@
                             <p:row>
                                 <p:column headerText="Periodo"/>
                                 <p:column headerText="Cuenta"/>
-                                <p:column headerText="Fecha Creación"/>
+                                <p:column headerText="Fecha Creación"/>                                
+                                <p:column headerText="Subsidio"/>
                                 <p:column headerText="Descuento"/>
                                 </p:row>
                         </p:columnGroup>
@@ -84,13 +85,20 @@
                             </h:outputText>
                         </p:column>
                         <p:column>
+                            <h:outputText value="#{item.subsidio}"/>  
+                        </p:column>
+                        <p:column>
                             <h:outputText value="#{item.descuento_periodo}"/>  
                         </p:column>
                         
+                        
                     <p:columnGroup type="footer">
                         <p:row> 
-                            <p:column colspan="4" style="text-align:right" footerText="Total:" />  
-                            <p:column footerText="$#{reportesController.totalSubsidio}" />
+                            <p:column colspan="1" style="text-align:right" footerText="" /> 
+                            <p:column colspan="1" style="text-align:right" footerText="" />
+                            <p:column colspan="1" style="text-align:right" footerText="" /> 
+                            <p:column colspan="1" style="text-align:right" footerText="Total:" />  
+                            <p:column colspan="1" footerText="$#{reportesController.totalSubsidio}" />
                             
                             
                         </p:row>

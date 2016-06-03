@@ -200,6 +200,7 @@ public class PagoFacade extends AbstractFacade<Pago> {
                 irep.setIdPeriodo(Integer.toString(idP));
                 irep.setFechaCreacion((String) resulta[2]);
                 irep.setDescuento_periodo((Integer) resulta[3]);
+                irep.setSubsidio((String) resulta[4]);
                 
                 itemReporte.add(irep);
                 
