@@ -268,7 +268,7 @@ public class AvisoPDF {
                     
                      DecimalFormat df = new DecimalFormat("#.##");      
                     tablePeriodo.addCell(new Phrase("Consumo (MT3)",fCuerpoTabla));
-                    tablePeriodo.addCell(new Phrase(": "+m3Adicionales,fCuerpoTabla));
+                    tablePeriodo.addCell(new Phrase(": "+m3Calculados,fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase("MT3 adicionales",fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase(": "+m3Adicionales,fCuerpoTabla));
                     

@@ -303,7 +303,7 @@ public class CuentaController implements Serializable {
     public Cuenta getCuenta(java.lang.Integer id) {
         return getFacade().find(id);
     }
-/*
+
     public List<Cuenta> getItemsAvailableSelectMany() {
         return getFacade().findAllCuentas();
     }
@@ -311,7 +311,7 @@ public class CuentaController implements Serializable {
     public List<Cuenta> getItemsAvailableSelectOne() {
         return getFacade().findAllCuentas();
     }
-*/
+
     @FacesConverter(forClass = Cuenta.class)
     //@FacesConverter("cuentaControllerConverter")
     public static class CuentaControllerConverter implements Converter {

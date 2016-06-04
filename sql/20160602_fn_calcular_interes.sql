@@ -36,7 +36,7 @@ $BODY$
 			
 
 			raise info 'p_count_pagos$: % ', p_count_pagos$;
-			IF p_count_detalles$ > 0 && p_count_pagos$ = 0 THEN
+			IF p_count_detalles$ > 0 AND p_count_pagos$ = 0 THEN
 				--se obtiene cantidad para identificar si existen intereses anteriores asociados al aviso
 				SELECT count(*)  INTO p_count_interes$ from aviso_cobro ac 
 				join detalle_aviso_cobro dac on ac.id_periodo =dac.id_periodo and ac.id_cuenta = dac.id_cuenta 
