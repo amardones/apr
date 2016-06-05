@@ -8,6 +8,7 @@ package cl.apr.facade;
 import cl.apr.entity.CobroCuota;
 import cl.apr.entity.RegistroCobro;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -72,6 +73,16 @@ public class RegistroCobroFacade extends AbstractFacade<RegistroCobro> {
               return false;
           }
         return true;
+    }
+      
+    public List<RegistroCobro> findByRange(Date fechaInicio,Date fechaFin) {
+        // return this.findAll();
+          Query query = em.createQuery(""
+                                        + "SELECT  r FROM RegistroCobro r  where r.fechaCreacion >= :fechaInicio and r.fechaCreacion <= :fechaFin order by r.fechaCreacion DESC", RegistroCobro.class);
+        
+          query.setParameter("fechaInicio",fechaInicio);
+          query.setParameter("fechaFin",fechaFin);
+          return query.getResultList();
     }
    
 }

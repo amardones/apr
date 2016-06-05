@@ -232,5 +232,15 @@ public class PagoFacade extends AbstractFacade<Pago> {
             return (Long) query.getSingleResult() > 0;       
      }
       
+      public List<Pago> findByRange(Date fechaInicio,Date fechaFin) {
+        // return this.findAll();
+          Query query = em.createQuery(""
+                                        + "SELECT  p FROM Pago p  where p.fechaCreacion >= :fechaInicio and p.fechaCreacion <= :fechaFin order by r.fechaCreacion DESC", Pago.class);
+        
+          query.setParameter("fechaInicio",fechaInicio);
+          query.setParameter("fechaFin",fechaFin);
+          return query.getResultList();
+    }
+      
     
 }

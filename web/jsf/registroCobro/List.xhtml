@@ -19,6 +19,31 @@
                     <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                     <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                 </p:confirmDialog>
+                
+                
+                <p:fieldset legend="Filtro Cobros" style="margin-bottom:20px"> 
+                    <h:panelGroup id="panel">
+                        <p:panelGrid columns="5" id="panelReportes" >                        
+                            
+                            <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaInicio}" for="fechaInicioReporte" />
+                            <p:calendar id="fechaInicioReporte" 
+                                        pattern="dd/MM/yyyy" value="#{registroCobroController.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" 
+                                         requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaInicio}" showOn="button" locale="es">
+                                <p:ajax event="dateSelect" process="fechaInicioReporte" update="fechaFinReporte" listener="#{registroCobroController.limpiaFecha()}"/> 
+                            </p:calendar>
+                            
+                            <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaFin}" for="fechaFinReporte" />
+                            <p:calendar id="fechaFinReporte" 
+                                        pattern="dd/MM/yyyy" value="#{registroCobroController.fechaFin}"  showOn="button" locale="es">
+                                <p:ajax event="dateSelect" process="fechaFinReporte"  /> 
+                            </p:calendar>       
+                            <p:commandButton id="btnBuscarIngresos" icon="ui-icon-search"   
+                                             value="Buscar" actionListener="#{registroCobroController.buscarPorRangoFechas()}" update="datalist"/>
+
+                    </p:panelGrid>  
+                        </h:panelGroup> 
+                </p:fieldset>
+                
                 <p:fieldset legend="#{bundle.ListRegistroCobroTitle}" style="margin-bottom:20px">
 
                     <p:dataTable id="datalist" value="#{registroCobroController.items}" var="item"
@@ -54,7 +79,7 @@
                         </p:column>
                         <p:column filterBy="#{item.fechaCreacion}" headerText="#{bundle.ListRegistroCobroTitle_fechaCreacion}" filterMatchMode="contains" filterStyle="width:90px;" style="width: 120px">
                             <h:outputText value="#{item.fechaCreacion}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
                         <p:column>

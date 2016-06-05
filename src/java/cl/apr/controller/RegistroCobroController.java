@@ -40,7 +40,8 @@ public class RegistroCobroController implements Serializable {
     private List<RegistroCobro> items = null;
     private RegistroCobro selected;
     private List<CobroCuota> cuotas;
-
+    private Date fechaInicio;
+    private Date fechaFin;
     
     private int mes;
     private int anio;
@@ -52,7 +53,25 @@ public class RegistroCobroController implements Serializable {
     
     @Inject
     TipoCobroController tipoCobroController;
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
      
+    
+    
     public RegistroCobroController() {
     }
 
@@ -225,9 +244,7 @@ public class RegistroCobroController implements Serializable {
     }
 
     public List<RegistroCobro> getItems() {
-        
-            items = getFacade().findAll();
-        
+            //items = getFacade().findAll();  
         return items;
     }
 
@@ -372,4 +389,22 @@ public class RegistroCobroController implements Serializable {
         return true;
     }
     
+     public void limpiaFecha(){
+        fechaFin=null;
+    }
+    
+      public void buscarPorRangoFechas() {
+        items= new ArrayList<>();
+
+        if(fechaInicio!=null&&fechaFin==null){
+            items= ejbFacade.findByRange(fechaInicio, fechaInicio); //reporteLibroIngreso(fechaInicio , fechaInicio);
+        }
+        if(fechaInicio!=null&&fechaFin!=null){
+            System.out.println("Fecha: "+fechaInicio);
+            items=  ejbFacade.findByRange(fechaInicio, fechaFin); //pagoFacade.reporteLibroIngreso(fechaInicio , fechaFin);
+        }         
+        
+        fechaFin=null;
+        fechaInicio=null;
+    }
 }
