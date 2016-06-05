@@ -106,7 +106,7 @@ public class PagoController implements Serializable {
 
     public List<TipoCobro> getListaTipoCobros() {
         if(listaTipoCobros == null){
-            listaTipoCobros = tipoCobroController.getTiposCobroRegistranCobro();       
+            listaTipoCobros = tipoCobroController.getItems();       
         }
         Collections.sort(listaTipoCobros, Comparator.comparing(TipoCobro::getNombre));
         
