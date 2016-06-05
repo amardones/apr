@@ -56,6 +56,8 @@ public class PagoController implements Serializable {
     private int total;
     private int dias;
     private int valorCodigo;
+    private Date fechaInicio;
+    private Date fechaFin;
    
 
     @Inject
@@ -68,6 +70,38 @@ public class PagoController implements Serializable {
     private int interes;
     private int subtotal;
 
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+    
+    public void limpiaFecha(){
+        fechaFin=null;
+    }
+    
+    public void filtroRango(){
+        items= new ArrayList<>();
+        if(fechaInicio!=null&&fechaFin==null){
+            items=ejbFacade.findByRange(fechaInicio, fechaInicio);
+        }   
+        if(fechaInicio!=null&&fechaFin!=null){
+            items=ejbFacade.findByRange(fechaInicio, fechaFin);
+        }
+        fechaFin=null;
+        fechaInicio=null;
+     }
+    
     public int getSubtotal() {
         return subtotal;
     }
@@ -322,9 +356,9 @@ public class PagoController implements Serializable {
 
 
     public List<Pago> getItems() {
-        if (items == null) {
+        /*if (items == null) {
             items = getFacade().findAll();
-        }
+        }*/
         return items;
     }
     public boolean permitePagar(){

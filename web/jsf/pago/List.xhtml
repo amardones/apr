@@ -15,6 +15,33 @@
 
         <ui:define name="body">
             <h:form id="PagoListForm">
+                
+                <p:fieldset legend="Filtro Pagos" style="margin-bottom:20px"> 
+                    <h:panelGroup id="panel">
+                        <p:panelGrid columns="8" id="panelFecha" >                        
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaInicio}" for="fechaInicio" />
+                        <p:calendar id="fechaInicio" 
+                                    pattern="dd/MM/yyyy" value="#{pagoController.fechaInicio}" title="#{bundle.EditPeriodoTitle_fechaInicio}" 
+                                    requiredMessage="#{bundle.EditPeriodoRequiredMessage_fechaInicio}" showOn="button" locale="es">
+                            <p:ajax event="dateSelect" process="fechaInicio" update="fechaFin" listener="#{pagoController.limpiaFecha()}"/> 
+                        </p:calendar>
+                        
+                        <p:outputLabel value="#{bundle.CreatePeriodoLabel_fechaFin}" for="fechaFin" />
+                        <p:calendar id="fechaFin" 
+                                    pattern="dd/MM/yyyy" value="#{pagoController.fechaFin}"  showOn="button" locale="es">
+                            <p:ajax event="dateSelect" process="fechaFin"  /> 
+                        </p:calendar>
+                        
+                        <p:commandButton id="btnBuscarIngresos" icon="ui-icon-search"   
+                                         value="Buscar" actionListener="#{pagoController.filtroRango()}" update="datalist"/>
+                        
+                        
+                       
+
+                    </p:panelGrid>  
+                        </h:panelGroup> 
+                </p:fieldset>
+                
                 <p:fieldset legend="#{bundle.ListPagoTitle}" style="margin-bottom:20px">
                 
                     <p:dataTable id="datalist" value="#{pagoController.items}" var="item"
@@ -46,7 +73,7 @@
                         </p:column>
                         <p:column filterBy="#{item.fechaCreacion}" headerText="#{bundle.ListPagoTitle_fechaCreacion}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
                             <h:outputText value="#{item.fechaCreacion}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                             </h:outputText>
                         </p:column>
                         <p:column filterBy="#{item.subtotal}" headerText="#{bundle.ListPagoTitle_subtotal}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
