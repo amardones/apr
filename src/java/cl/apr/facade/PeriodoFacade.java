@@ -53,6 +53,18 @@ public class PeriodoFacade extends AbstractFacade<Periodo> {
         }    
     }
     
+    public Periodo getPeriodoAnterior(Integer idPeriodo) {
+        try{
+            Query query = em.createQuery(""
+                                        + "SELECT p FROM Periodo p WHERE p.idPeriodo <> :idPeriodo by p.idPeriodo desc ", Periodo.class);
+            query.setMaxResults(1);
+            query.setParameter("idPeriodo",idPeriodo);
+            return (Periodo) query.getSingleResult();
+        }catch(Exception e){
+           return null; 
+        }    
+    }
+    
      @TransactionAttribute(TransactionAttributeType.REQUIRED)
      public boolean crearRegistrosEstados(int periodo){
        try{

@@ -4,6 +4,7 @@ import cl.apr.beans.BarChartItem;
 import cl.apr.entity.AvisoCobro;
 import cl.apr.entity.DatosComite;
 import cl.apr.entity.DetalleAvisoCobro;
+import cl.apr.entity.Periodo;
 import cl.apr.enums.EnumFormatoFechaHora;
 import cl.apr.pdf.chart.BarChartAviso;
 import cl.apr.util.NumeroFormato;
@@ -60,7 +61,7 @@ public class AvisoPDF {
 	private static Font fTextPlazo= new Font(Font.getFamily("ARIAL"),8,Font.BOLD | Font.UNDERLINE );
 	    
 	
-	static public ByteArrayOutputStream crearPdf(List<AvisoCobro> avisos, List<DatosComite> datosComite,HashMap<Integer,List<BarChartItem>> hmapBarChartItems){
+	static public ByteArrayOutputStream crearPdf(List<AvisoCobro> avisos, List<DatosComite> datosComite, Periodo periodoAnteriro, HashMap<Integer,List<BarChartItem>> hmapBarChartItems){
 		
 		Document document =new Document();
 		ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
@@ -113,7 +114,7 @@ public class AvisoPDF {
                                 tableDividePagina.setWidths(columnWidths2);
                             } catch (DocumentException e) {e.printStackTrace();}
                             av = avisos.get(i);
-                            PdfPCell pCell = crearAvisos(av,titulo,atencion,telefono, infoGeneral, hmapBarChartItems.get(av.getAvisoCobroPK().getIdCuenta()));
+                            PdfPCell pCell = crearAvisos(av,titulo,atencion,telefono, infoGeneral, hmapBarChartItems.get(av.getAvisoCobroPK().getIdCuenta()), periodoAnteriro);
                             pCell.setBorder(Rectangle.RIGHT);
                             pCell.setFixedHeight(PageSize.LETTER.rotate().getHeight()-80);
                             pCell.setVerticalAlignment(Element.ALIGN_TOP);
@@ -122,7 +123,7 @@ public class AvisoPDF {
                                  
                             if((i+1) < avisos.size()){     
                                 av = avisos.get(i+1);
-                                 pCell = crearAvisos(av,titulo,atencion,telefono, infoGeneral, hmapBarChartItems.get(av.getAvisoCobroPK().getIdCuenta()));
+                                 pCell = crearAvisos(av,titulo,atencion,telefono, infoGeneral, hmapBarChartItems.get(av.getAvisoCobroPK().getIdCuenta()), periodoAnteriro);
                                  pCell.setFixedHeight(PageSize.LETTER.rotate().getHeight()-80);
                                  pCell.setBorder(Rectangle.LEFT);
                                  pCell.setPaddingLeft(30);
@@ -130,7 +131,7 @@ public class AvisoPDF {
                                  tableDividePagina.addCell(pCell);
                                 
                             }else{
-                                 tableDividePagina.addCell(crearAvisos(null,null,null,null,null,null));
+                                 tableDividePagina.addCell(crearAvisos(null,null,null,null,null,null, null));
                             }
                             
                             document.add(tableDividePagina);
@@ -157,7 +158,7 @@ public class AvisoPDF {
 		
 	}
 	
-	 static private PdfPCell crearAvisos(AvisoCobro aviso,String titulo,String atencion,String telefono, String infoGeneral, List<BarChartItem> barChartItem) {
+	 static private PdfPCell crearAvisos(AvisoCobro aviso,String titulo,String atencion,String telefono, String infoGeneral, List<BarChartItem> barChartItem, Periodo periodoAnterior) {
             System.out.println("Creando aviso 2");
             PdfPCell pCell = null;
             
@@ -172,8 +173,12 @@ public class AvisoPDF {
                     cTituloCuenta.setHorizontalAlignment(Element.ALIGN_LEFT);                    
                     cTituloCuenta.setFixedHeight(20);
                     cTituloCuenta.setPaddingBottom(4);
+                    String periodoStr = "";
+                    if(periodoAnterior != null ){
+                        periodoStr = ": "+periodoAnterior.getNombre();
+                    }
                     
-                    PdfPCell cTituloPeriodo = new PdfPCell(new Phrase("Detalle de sus lecturas periodo: "+aviso.getRegistroEstado().getPeriodo().getNombre(),fCuerpoCabeceraTabla));
+                    PdfPCell cTituloPeriodo = new PdfPCell(new Phrase("Detalle de sus lecturas periodo "+periodoStr,fCuerpoCabeceraTabla));
                     //cTituloLecturas.setBackgroundColor(colorBlueLigth);
                     cTituloPeriodo.setBorderColor(borderColor);
                     cTituloPeriodo.setBorder(Rectangle.LEFT | Rectangle.BOTTOM);
@@ -238,12 +243,17 @@ public class AvisoPDF {
                     tablePeriodo.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
                     tablePeriodo.getDefaultCell().setFixedHeight(13);
                    
-                    tablePeriodo.addCell(new Phrase("F. Periodo",fCuerpoTabla));
-                    tablePeriodo.addCell(new Phrase(": "+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getRegistroEstado().getPeriodo().getFechaInicio()).toLowerCase() +" al "+EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getRegistroEstado().getPeriodo().getFechaFin()).toLowerCase(),fCuerpoTabla));
+                    String fechaPeriodoStr = "hasta ";
+                    if(periodoAnterior != null){
+                        fechaPeriodoStr =  EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(periodoAnterior.getFechaTomaLectura()).toLowerCase() + " al ";
+                    }
+                    fechaPeriodoStr += EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getRegistroEstado().getPeriodo().getFechaTomaLectura()).toLowerCase();
+                    tablePeriodo.addCell(new Phrase("Periodo de lectura",fCuerpoTabla));
+                    tablePeriodo.addCell(new Phrase(": "+fechaPeriodoStr,fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase("Valor cargo fijo",fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase(": $ "+NumeroFormato.formatearNumeroPesos(aviso.getRegistroEstado().getPeriodo().getIdValoresParametricos().getValorCargoFijo()),fCuerpoTabla));
                     
-                    tablePeriodo.addCell(new Phrase("Lectura actual",fCuerpoTabla));
+                    tablePeriodo.addCell(new Phrase("Fecha lectura",fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase(": "+aviso.getRegistroEstado().getEstadoActual(),fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase("MT3 fijos",fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase(": "+m3Fijos,fCuerpoTabla));   
