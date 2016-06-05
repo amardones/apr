@@ -223,7 +223,7 @@ public class AvisoPDF {
                     tableHeaderCuenta.addCell(new Phrase("N° Celular",fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase(": "+aviso.getRegistroEstado().getCuenta().getRut().getCelular(),fCuerpoTabla));   
                              
-                    tableHeaderCuenta.addCell(new Phrase("N° Cliente",fCuerpoTabla));
+                    tableHeaderCuenta.addCell(new Phrase("RUT Cliente",fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase(": "+aviso.getRegistroEstado().getCuenta().getRut().getRut(),fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase("N° Medidor",fCuerpoTabla));
                     tableHeaderCuenta.addCell(new Phrase(": "+aviso.getRegistroEstado().getCuenta().getNumeroMedidor().getNumeroMedidor(),fCuerpoTabla));

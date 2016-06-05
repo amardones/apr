@@ -28,17 +28,17 @@
                         <p:ajax event="rowSelect"   update="createButton  editButton "/>
                         <p:ajax event="rowUnselect" update="createButton  editButton "/>
                         
-                        <p:column filterBy="#{item.idCuenta}" headerText="N° Cuenta" filterMatchMode="contains" filterStyle="width:40px;" style="width: 58px">
+                        <p:column filterBy="#{item.idCuenta}" headerText="N°" filterMatchMode="contains" filterStyle="width:25px;" style="width: 30px">
                             <h:outputText value="#{item.idCuenta}"/>
                         </p:column>
-                        <p:column filterBy="#{item.rut}" headerText="#{bundle.ListCuentaTitle_rut}" filterMatchMode="contains" filterStyle="width:65px;" style="width: 70px">                             
+                        <p:column filterBy="#{item.rut}" headerText="#{bundle.ListCuentaTitle_rut}" filterMatchMode="contains" filterStyle="width:62px;" style="width: 70px">                             
                             <h:outputText value="#{item.rut}"/>
                         </p:column>
-                        <p:column filterBy="#{item.rut.nombre}" headerText="#{bundle.CreateSocioTitle_nombre}"  filterStyle="width:120px;" style="width: 140px"
+                        <p:column filterBy="#{item.rut.nombre}" headerText="#{bundle.CreateSocioTitle_nombre}"  filterStyle="width:85px;" style="width: 90px"
                                   filterFunction="#{utilController.filterByText}" >
                             <h:outputText value="#{item.rut.nombre}"/>
                         </p:column>
-                        <p:column filterBy="#{item.rut.apellido}" headerText="#{bundle.CreateSocioTitle_apellido}"  filterStyle="width:120px;" style="width: 140px"
+                        <p:column filterBy="#{item.rut.apellido}" headerText="#{bundle.CreateSocioTitle_apellido}"  filterStyle="width:100px;" style="width: 110px"
                                    filterFunction="#{utilController.filterByText}">
                              <h:outputText value="#{item.rut.apellido}"/>
                         </p:column>
@@ -56,13 +56,13 @@
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column >
+                        <p:column style="width: 40px">
                             <f:facet name="header">
-                                 <h:outputText value="#{bundle.ListCuentaTitle_activa}"/>
+                                 <h:outputText value="#{bundle.ListCuentaTitle_activa}" style="width: 65px"/>
                             </f:facet>
                             <p:selectBooleanCheckbox value="#{item.activa}" disabled="true"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="width: 70px">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCuentaTitle_esInstitucion}"/>
                             </f:facet>
@@ -70,11 +70,17 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCuentaTitle_cuotaSocial}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.aplicaCuotaSocial}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCuentaTitle_cuentaSubsidio}"/>
                             </f:facet>
                             <h:outputText value="#{item.cuentaSubsidio.idSubsidio.nombre}"/>
                         </p:column>
-                        <p:column filterBy="#{item.numeroMedidor}" headerText="#{bundle.ListCuentaTitle_numeroMedidor}" filterMatchMode="contains" filterStyle="width:65px;" style="width: 70px">
+                        <p:column filterBy="#{item.numeroMedidor}" headerText="Medidor" filterMatchMode="contains" filterStyle="width:65px;" style="width: 70px">
                              <h:outputText value="#{item.numeroMedidor}"/>
                         </p:column>                        
                         <f:facet name="header">

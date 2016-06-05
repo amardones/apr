@@ -135,10 +135,13 @@ public class AvisoCobroController implements Serializable {
     public List<AvisoCobro> getItems() {
         items = new ArrayList<>();
         try{  
-            if(periodoController.getSelected() != null){
+            if(periodoController.getSelected().getIdPeriodo()!=null && periodoController.getSelected() != null){
                   items = getFacade().getAvisosPorPeriodo(periodoController.getSelected().getIdPeriodo());
                   System.out.println("Buscar avisos: "+items.size());
                  return  items;
+            }else{           
+                  items = getFacade().getAvisosPorPeriodo(periodoController.getUltimoPeriodo().getIdPeriodo());
+                  return  items;
             }
          }catch(Exception e){
               items = new ArrayList<>();

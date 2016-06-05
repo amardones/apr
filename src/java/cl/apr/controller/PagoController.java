@@ -361,7 +361,8 @@ public class PagoController implements Serializable {
         
     }
     public void calculaInteresManual(){
-        if(!cuentaController.getSelected().getEsInstitucion()){
+        
+        if(cuentaController.getSelected().getIdCuenta()!=null && !cuentaController.getSelected().getEsInstitucion() ){
             //total=(selected.getSubtotal()+selected.getInteres()); 
             
             if(getDias()>=0 && selected!=null){
