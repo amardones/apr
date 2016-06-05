@@ -42,6 +42,9 @@
                                    filterFunction="#{utilController.filterByText}">
                              <h:outputText value="#{item.rut.apellido}"/>
                         </p:column>
+                        <p:column filterBy="#{item.numeroMedidor}" headerText="Medidor" filterMatchMode="contains" filterStyle="width:65px;" style="width: 70px">
+                             <h:outputText value="#{item.numeroMedidor}"/>
+                        </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCuentaTitle_direccion}"/>
@@ -56,19 +59,19 @@
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column style="width: 40px">
+                        <p:column style="width: 35px">
                             <f:facet name="header">
                                  <h:outputText value="#{bundle.ListCuentaTitle_activa}" style="width: 65px"/>
                             </f:facet>
                             <p:selectBooleanCheckbox value="#{item.activa}" disabled="true"/>
                         </p:column>
-                        <p:column style="width: 70px">
+                        <p:column style="width: 35px">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCuentaTitle_esInstitucion}"/>
+                                <h:outputText value="Inst."/>
                             </f:facet>
                             <p:selectBooleanCheckbox value="#{item.esInstitucion}" disabled="true"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="width: 35px">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCuentaTitle_cuotaSocial}"/>
                             </f:facet>
@@ -79,10 +82,13 @@
                                 <h:outputText value="#{bundle.ListCuentaTitle_cuentaSubsidio}"/>
                             </f:facet>
                             <h:outputText value="#{item.cuentaSubsidio.idSubsidio.nombre}"/>
-                        </p:column>
-                        <p:column filterBy="#{item.numeroMedidor}" headerText="Medidor" filterMatchMode="contains" filterStyle="width:65px;" style="width: 70px">
-                             <h:outputText value="#{item.numeroMedidor}"/>
                         </p:column>                        
+                        <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="Info Aviso"/>
+                            </f:facet>
+                            <h:outputText value="#{item.informacionAviso}"/>
+                        </p:column>
                         <f:facet name="header">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{cuentaController.prepareCreate}" update=":CuentaCreateForm" oncomplete="PF('CuentaCreateDialog').show()"/>
 
