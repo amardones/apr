@@ -45,9 +45,11 @@ public class CuentaFacade extends AbstractFacade<Cuenta> {
      }
     
   
-    @OrderBy("id DESC") 
      public List<Cuenta> findAllCuentas() {
-         return this.findAll();
+        // return this.findAll();
+          Query query = em.createQuery(""
+                                        + "SELECT  c FROM Cuenta c order by c.idCuenta ASC", Cuenta.class);
+         return query.getResultList();
     }
     
 }

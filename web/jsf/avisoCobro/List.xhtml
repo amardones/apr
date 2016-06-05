@@ -115,10 +115,20 @@
 <!--                        <p:ajax event="rowSelect"   update="verAvisoItem calcularAvisoItem datalist"/>
                         <p:ajax event="rowUnselect" update="verAvisoItem calcularAvisoItem datalist"/>-->
                         
-                        <p:column  filterBy="#{item.registroEstado.cuenta.rut.apellido}" headerText="#{bundle.ListAvisoCobroTitle_cuenta}" filterMatchMode="contains" filterStyle="width:65px;" style="width: 70px">
-                            <h:outputText value="#{item.registroEstado.cuenta.idCuenta}: #{item.registroEstado.cuenta.rut.nombre} #{item.registroEstado.cuenta.rut.apellido}"/>
-                        </p:column> 
-                        <p:column>
+            
+                         <p:column filterBy="#{item.registroEstado.cuenta.idCuenta}" headerText="N°" filterMatchMode="contains" filterStyle="width:25px;" style="width: 30px">
+                            <h:outputText value="#{item.registroEstado.cuenta.idCuenta}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.registroEstado.cuenta.rut.nombre}" headerText="#{bundle.CreateSocioTitle_nombre}"  filterStyle="width:45px;" style="width: 60px"
+                                  filterFunction="#{utilController.filterByText}" >
+                            <h:outputText value="#{item.registroEstado.cuenta.rut.nombre}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.registroEstado.cuenta.rut.apellido}" headerText="#{bundle.CreateSocioTitle_apellido}"  filterStyle="width:45px;" style="width: 60px"
+                                   filterFunction="#{utilController.filterByText}">
+                             <h:outputText value="#{item.registroEstado.cuenta.rut.apellido}"/>
+                        </p:column>
+
+                        <p:column style="width: 55px">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAvisoCobroTitle_fechaCreacion}"/>
                             </f:facet>
@@ -126,7 +136,7 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                             </h:outputText>
                         </p:column>   
-                        <p:column>
+                        <p:column style="width: 60px">
                              <f:facet name="header">
                                 <h:outputText value="#{bundle.ListMedidorTitle_numeroMedidor}" />
                             </f:facet>
@@ -148,13 +158,13 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRegistroEstadoTitle_metrosCubicos}"/>
                             </f:facet>
-                            <h:outputText value="#{item.registroEstado.metrosCubicos} MT3" />
+                            <h:outputText value="#{item.registroEstado.metrosCubicos}" />
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Sub-Total Periodo"/>
+                                <h:outputText value="Sub-Total"/>
                             </f:facet>
-                            <h:outputText value="$ #{item.subTotalPeriodo}" >
+                            <h:outputText value=" #{item.subTotalPeriodo + item.totalPendiente}" >
                                  <f:convertNumber pattern="#0.000" locale="pt_CL"/>
                             </h:outputText>
                         </p:column>
@@ -162,29 +172,15 @@
                             <f:facet name="header">
                                 <h:outputText value="Descuento"/>
                             </f:facet>
-                            <h:outputText value=" $ #{item.descuentoPeriodo*(-1)}" >
+                            <h:outputText value="  #{item.descuentoPeriodo*(-1)}" >
                                  <f:convertNumber pattern="0.000" locale="pt_CL"/>
                             </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAvisoCobroTitle_totalPeriodo}"/>
-                            </f:facet>
-                            <h:outputText value="$ #{item.totalPeriodo}" >
-                                 <f:convertNumber pattern="#0.000" locale="pt_CL"/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAvisoCobroTitle_totalPendiente}"/>
-                            </f:facet>
-                            <h:outputText value="$ #{item.totalPendiente}" />
                         </p:column>
                         <p:column >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAvisoCobroTitle_total}"/>
                             </f:facet>
-                            <h:outputText value="$ #{item.total}"/>
+                            <h:outputText value="#{item.total}"/>
                         </p:column>    
                         <p:column style=" width: 80px; text-align: center;" >                        
                              <p:panelGrid columns="1"  >                                 

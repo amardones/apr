@@ -91,6 +91,9 @@ public class RegistroEstadoController implements Serializable {
     public void update() {
         if(selected.getMetrosCubicos() >= 0){
              persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("RegistroEstadoUpdated"));
+             if (!JsfUtil.isValidationFailed()) {
+                items = null;    // Invalidate list of items to trigger re-query.
+             }
         }else{
              JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("RegistroEstadosEditarMetrosCubicosError"));
         }
@@ -111,14 +114,16 @@ public class RegistroEstadoController implements Serializable {
         }
         return items;*/
         if (items == null) {
-        if(periodoController.getSelected() != null){
-                if(periodoController.getSelected().getIdPeriodo()==null){            
-                items = getFacade().getRegistroEstadoPorPeriodo(periodoController.getUltimoPeriodo().getIdPeriodo());
-                periodoController.setSelected(periodoController.getUltimoPeriodo());
-                }
-                if(periodoController.getSelected().getIdPeriodo()!=null)
-                items = getFacade().getRegistroEstadoPorPeriodo(periodoController.getSelected().getIdPeriodo()); 
-        }}
+            if(periodoController.getSelected() != null){
+                    if(periodoController.getSelected().getIdPeriodo()==null){            
+                    items = getFacade().getRegistroEstadoPorPeriodo(periodoController.getUltimoPeriodo().getIdPeriodo());
+                    periodoController.setSelected(periodoController.getUltimoPeriodo());
+                    }
+                    if(periodoController.getSelected().getIdPeriodo()!=null)
+                    items = getFacade().getRegistroEstadoPorPeriodo(periodoController.getSelected().getIdPeriodo()); 
+                    System.out.println("Registros de estado: "+items.size());
+            }
+        }
         return items;        
     }
    
