@@ -73,7 +73,7 @@
                         </p:column>
                         <p:column filterBy="#{item.fechaCreacion}" headerText="#{bundle.ListPagoTitle_fechaCreacion}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
                             <h:outputText value="#{item.fechaCreacion}">
-                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </h:outputText>
                         </p:column>
                         <p:column filterBy="#{item.subtotal}" headerText="#{bundle.ListPagoTitle_subtotal}" filterMatchMode="contains" filterStyle="width:75px;" style="width: 80px">
