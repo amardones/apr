@@ -80,7 +80,7 @@ public class BarChartAviso {
                 chart.setBorderStroke(null);
                 chart.getLegend().visible = false;
                  /* Step -3: Write the output as PNG file with bar chart information */                
-                 int width=450; /* Width of the image */
+                 int width=480; /* Width of the image */
                  int height=250; /* Height of the image */    
                  bi = chart.createBufferedImage(width, height);
 

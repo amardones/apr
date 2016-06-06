@@ -173,12 +173,14 @@ public class AvisoPDF {
                     cTituloCuenta.setHorizontalAlignment(Element.ALIGN_LEFT);                    
                     cTituloCuenta.setFixedHeight(20);
                     cTituloCuenta.setPaddingBottom(4);
+                    
                     String periodoStr = "";
                     if(periodoAnterior != null ){
                         periodoStr = ": "+periodoAnterior.getNombre();
+                        System.out.println("eriodoAnterior.getNombre(): "+periodoAnterior.getNombre());
                     }
                     
-                    PdfPCell cTituloPeriodo = new PdfPCell(new Phrase("Detalle de sus lecturas periodo "+periodoStr,fCuerpoCabeceraTabla));
+                    PdfPCell cTituloPeriodo = new PdfPCell(new Phrase("Detalle de sus lecturas ",fCuerpoCabeceraTabla));
                     //cTituloLecturas.setBackgroundColor(colorBlueLigth);
                     cTituloPeriodo.setBorderColor(borderColor);
                     cTituloPeriodo.setBorder(Rectangle.LEFT | Rectangle.BOTTOM);
@@ -243,17 +245,13 @@ public class AvisoPDF {
                     tablePeriodo.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
                     tablePeriodo.getDefaultCell().setFixedHeight(13);
                    
-                    String fechaPeriodoStr = "hasta ";
-                    if(periodoAnterior != null){
-                        fechaPeriodoStr =  EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(periodoAnterior.getFechaTomaLectura()).toLowerCase() + " al ";
-                    }
-                    fechaPeriodoStr += EnumFormatoFechaHora.formatoDiaMesTextoCortoAnio.format(aviso.getRegistroEstado().getPeriodo().getFechaTomaLectura()).toLowerCase();
-                    tablePeriodo.addCell(new Phrase("Periodo de lectura",fCuerpoTabla));
-                    tablePeriodo.addCell(new Phrase(": "+fechaPeriodoStr,fCuerpoTabla));
+                  
+                    tablePeriodo.addCell(new Phrase("Consumo periodo",fCuerpoTabla));
+                    tablePeriodo.addCell(new Phrase(": "+periodoStr,fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase("Valor cargo fijo",fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase(": $ "+NumeroFormato.formatearNumeroPesos(aviso.getRegistroEstado().getPeriodo().getIdValoresParametricos().getValorCargoFijo()),fCuerpoTabla));
                     
-                    tablePeriodo.addCell(new Phrase("Fecha lectura",fCuerpoTabla));
+                    tablePeriodo.addCell(new Phrase("Lectura actual",fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase(": "+aviso.getRegistroEstado().getEstadoActual(),fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase("MT3 fijos",fCuerpoTabla));
                     tablePeriodo.addCell(new Phrase(": "+m3Fijos,fCuerpoTabla));   
@@ -379,7 +377,7 @@ public class AvisoPDF {
                         cPag02.setHorizontalAlignment(Element.ALIGN_LEFT); 
                         cPag02.setBorder(Rectangle.NO_BORDER);
   
-                        cPag03 = new PdfPCell(new Phrase("$ "+NumeroFormato.formatearNumeroPesos(aviso.getDescuentoPeriodo()*-1),fCuerpoTabla));
+                        cPag03 = new PdfPCell(new Phrase(NumeroFormato.formatearNumeroPesos(aviso.getDescuentoPeriodo()*-1),fCuerpoTabla));
                         cPag03.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         cPag03.setHorizontalAlignment(Element.ALIGN_RIGHT);   
                         cPag03.setBorder(Rectangle.NO_BORDER);

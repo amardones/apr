@@ -96,6 +96,7 @@ public class RegistroEstadoController implements Serializable {
              }
         }else{
              JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("RegistroEstadosEditarMetrosCubicosError"));
+              items = null; 
         }
        
     }
