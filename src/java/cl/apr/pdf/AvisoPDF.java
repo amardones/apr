@@ -176,7 +176,7 @@ public class AvisoPDF {
                     
                     String periodoStr = "";
                     if(periodoAnterior != null ){
-                        periodoStr = ": "+periodoAnterior.getNombre();
+                        periodoStr = periodoAnterior.getNombre();
                         System.out.println("eriodoAnterior.getNombre(): "+periodoAnterior.getNombre());
                     }
                     
