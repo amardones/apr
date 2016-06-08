@@ -42,7 +42,7 @@ DECLARE
     nombre_sub$ character varying; 
     porcentaje_sub$ numeric; 
     metros_cubicos_tope_sub$ integer;
-    metros_cubicos_aplica_sub$ integer;
+    metros_cubicos_aplica_sub$ numeric;
      
     --calculo
     m3_tramo$ numeric;
@@ -88,7 +88,7 @@ BEGIN
 		sub_total$ := valor_cargo_fijo$;
 		descripcion$ := ' # CALCULO AGUA ->'||metros_cubicos_med_decimal$ ||'m3';
 		descripcion$ :=  descripcion$  || ' # Aplica cargo fijo '||m3_fijos$||'m3 -> $'||valor_cargo_fijo$;
-		--raise info 'descripcion: %', descripcion$;
+		raise info 'descripcion: %', descripcion$;
 		IF metros_cubicos_med_decimal$ <= m3_fijos$	 THEN	     
 		     --CALCULO SUBSIDIO
 		     IF nombre_sub$ IS NOT NULL THEN
@@ -166,11 +166,11 @@ BEGIN
 						IF metros_cubicos_aplica_sub$ >= m3_final$ THEN
 							m3_tramo$ 		:=  m3_final$ - m3_inicio$;
 							valor_tramo$ 		:= round((valor_m3$*(1+porcentaje_recargo$/100)));
-							monto_descuento_sub$ 	:= monto_descuento_sub$ + m3_tramo$ * valor_tramo$;
+							monto_descuento_sub$ 	:= round( monto_descuento_sub$ + m3_tramo$ * valor_tramo$ );
 						ELSE
 							m3_tramo$ 		:= metros_cubicos_aplica_sub$ - m3_inicio$;
 							valor_tramo$ 		:= round((valor_m3$*(1+porcentaje_recargo$/100)));
-							monto_descuento_sub$	:= monto_descuento_sub$ + m3_tramo$ * valor_tramo$;					
+							monto_descuento_sub$	:= round( monto_descuento_sub$ + m3_tramo$ * valor_tramo$ );					
 						END IF;
 						/*
 						raise info '-SUBSIDIO-';
@@ -188,7 +188,7 @@ BEGIN
 				--EN EL CASO QUE NO EXISTAN TRAMOS, SE CALCULA EL RESTO EN BASE AL VALOR METRO CUBICO FIJO
 				IF existen_tramos$ = false  THEN
 					m3_tramo$ 		:= metros_cubicos_aplica_sub$ - m3_fijos$; 
-					monto_descuento_sub$ 	:= monto_descuento_sub$ + m3_tramo$ * valor_m3$;
+					monto_descuento_sub$ 	:= round( monto_descuento_sub$ + m3_tramo$ * valor_m3$ );
 					--descripcion$ 	:= '- Aplica valor por tramo '||m3_tramo$||'m3 -> $'||valor_m3$||' tramo -> '||(m3_tramo$ * valor_m3$);
 				END IF;	
 				monto_descuento_sub$ := round(monto_descuento_sub$*(porcentaje_sub$/100));	
@@ -206,7 +206,7 @@ BEGIN
 	total$ 		:= sub_total$ - descuento$;
 
 	--RETORAN VALORES CALCULADOS
-	RETURN QUERY VALUES (sub_total$, descuento$, total$, descripcion$, monto_descuento_sub$, monto_descuento_int$);
+	RETURN QUERY VALUES (sub_total$, descuento$, total$, descripcion$, monto_descuento_sub$, monto_descuento_int$ );
 	
 	EXCEPTION
 			WHEN OTHERS THEN
