@@ -28,10 +28,7 @@
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_AplicaCuotaSocial}" for="aplicaCuotaSocial" />
                         <p:selectBooleanCheckbox id="aplicaCuotaSocial" value="#{cuentaController.selected.aplicaCuotaSocial}" required="true" requiredMessage="Información requerida"/>
                         
-                        <p:outputLabel value="#{bundle.CreateCuentaLabel_informacionAviso}" for="infoAviso" />
-                        <p:inputText id="infoAviso" value="#{cuentaController.selected.informacionAviso}" title="#{bundle.CreateCuentaTitle_informacionAviso}" />
-                        
-                        
+
                         <p:outputLabel value="#{bundle.EditCuentaLabel_cuentaSubsidio}" for="cuentaSubsidio" />
                         <p:selectOneMenu id="cuentaSubsidio" value="#{cuentaController.selected.cuentaSubsidio.idSubsidio}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

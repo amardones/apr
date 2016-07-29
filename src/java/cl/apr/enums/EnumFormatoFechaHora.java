@@ -26,6 +26,7 @@ public class EnumFormatoFechaHora {
         static public SimpleDateFormat formatoMesTextoAnio= new SimpleDateFormat("MMMM yyyy");
         static public SimpleDateFormat formatoMesTexto= new SimpleDateFormat("MMMM");
 	static public SimpleDateFormat formatoAnoMesDia= new SimpleDateFormat("yyyy/MM/dd");
+        static public SimpleDateFormat formatoAnoMesDiaSinSeparador= new SimpleDateFormat("yyyyMMdd");
         
         
         static public  Date getDateBy(int day){

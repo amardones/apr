@@ -109,9 +109,10 @@
                                  rowKey="#{item.avisoCobroPK}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
-                                 paginatorPosition="bottom"
+                                 
                                  >
-
+                        <p:ajax event="rowSelect"   update="editButton "/>
+                        <p:ajax event="rowUnselect" update="editButton "/>
 <!--                        <p:ajax event="rowSelect"   update="verAvisoItem calcularAvisoItem datalist"/>
                         <p:ajax event="rowUnselect" update="verAvisoItem calcularAvisoItem datalist"/>-->
                         
@@ -181,7 +182,19 @@
                                 <h:outputText value="#{bundle.ListAvisoCobroTitle_total}"/>
                             </f:facet>
                             <h:outputText value="#{item.total}"/>
-                        </p:column>    
+                        </p:column>
+                         <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="Info Aviso"/>
+                            </f:facet>
+                            <h:outputText value="#{item.informacionAviso}"/>
+                        </p:column>
+                        <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="Pagado"/>
+                            </f:facet>
+                            <h:outputText value="#{avisoCobroController.contienePagos(item)?'SI':'NO'}"/>
+                        </p:column>
                         <p:column style=" width: 80px; text-align: center;" >                        
                              <p:panelGrid columns="1"  >                                 
                                  <p:commandButton  
@@ -206,11 +219,15 @@
                                     </p:commandLink>
                                 </p:panelGrid>
                         </p:column> 
-                        
+                       
+
+                         <f:facet name="header">
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":AvisoCobroEditForm" oncomplete="PF('AvisoCobroEditDialog').show()" disabled="#{!avisoCobroController.permiteRecalcular(avisoCobroController.selected)}"/>
+                        </f:facet>
                     </p:dataTable>
                 </p:fieldset>
             </h:form>
-
+            <ui:include src="Edit.xhtml"/>
 <!--            <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>-->

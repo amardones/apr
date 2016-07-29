@@ -3,6 +3,7 @@ package cl.apr.controller;
 import cl.apr.entity.AvisoCobro;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
+import cl.apr.entity.DetalleAvisoCobro;
 import cl.apr.facade.AvisoCobroFacade;
 
 import java.io.Serializable;
@@ -105,6 +106,10 @@ public class AvisoCobroController implements Serializable {
         return selected;
     }
 
+    public AvisoCobro prepareUpdate() {       
+        return selected;
+    }
+    
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AvisoCobroCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -132,23 +137,29 @@ public class AvisoCobroController implements Serializable {
         }
     }
 
+     public void setItems(List<AvisoCobro> items) {
+         this.items = items;
+     }
+     
     public List<AvisoCobro> getItems() {
-        items = new ArrayList<>();
-        try{  
-            if(periodoController.getSelected().getIdPeriodo()!=null && periodoController.getSelected() != null){
-                  items = getFacade().getAvisosPorPeriodo(periodoController.getSelected().getIdPeriodo());
-                  System.out.println("Buscar avisos: "+items.size());
-                 return  items;
-            }else{           
-                  items = getFacade().getAvisosPorPeriodo(periodoController.getUltimoPeriodo().getIdPeriodo());
-                  return  items;
-            }
-         }catch(Exception e){
-              items = new ArrayList<>();
-         }
-        
+       // items = new ArrayList<>();
+        if(items == null){
+            try{  
+                if(periodoController.getSelected().getIdPeriodo()!=null && periodoController.getSelected() != null){
+                      items = getFacade().getAvisosPorPeriodo(periodoController.getSelected().getIdPeriodo());
+                      System.out.println("Buscar avisos: "+items.size());
+                     return  items;
+                }else{           
+                      items = getFacade().getAvisosPorPeriodo(periodoController.getUltimoPeriodo().getIdPeriodo());
+                      return  items;
+                }
+             }catch(Exception e){
+                  items = new ArrayList<>();
+             }
+        }
         return items;
     }
+    
     
       private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
@@ -160,6 +171,7 @@ public class AvisoCobroController implements Serializable {
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
+                items = null;
             } catch (EJBException ex) {
                 String msg = "";
                 Throwable cause = ex.getCause();
@@ -182,6 +194,10 @@ public class AvisoCobroController implements Serializable {
         return getFacade().find(id);
     }
 
+     public AvisoCobro getUltimoAvisoCobroPorCuenta(Integer idCuenta) {
+        return getFacade().getUltimoAvisoCobroPorCuenta(idCuenta);
+    }
+     
     public List<AvisoCobro> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
@@ -309,9 +325,20 @@ public class AvisoCobroController implements Serializable {
      public boolean permiteRecalcular(AvisoCobro item) {
          if(item != null){
             if(periodoController.getSelected() != null && periodoController.ultimoPeriodo(periodoController.getSelected())){
-                return ejbCuentaFacade.permiteRecalcular(item.getAvisoCobroPK().getIdPeriodo(), item.getAvisoCobroPK().getIdCuenta());
+               return  !contienePagos(item);
+               //  return ejbCuentaFacade.permiteRecalcular(item.getAvisoCobroPK().getIdPeriodo(), item.getAvisoCobroPK().getIdCuenta());
             }
         }
         return false;
     }
+     
+      public boolean contienePagos(AvisoCobro item) {
+          for (DetalleAvisoCobro det : item.getDetalleAvisoCobroList()) {
+              if(det.getPagado()){
+                  return true;
+              }
+          }
+          return false;
+      }
+     
 }

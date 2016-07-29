@@ -5,7 +5,10 @@
  */
 package cl.apr.controller.util;
 
+import cl.apr.enums.EnumFormatoFechaHora;
+import cl.apr.util.NumeroFormato;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Locale;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -36,5 +39,16 @@ public class UtilController implements Serializable{
         } else {
             return false;
         }
+    }
+    
+    public String fechaActual(){
+        return EnumFormatoFechaHora.formatoFecha.format(new Date());
+    }
+    
+    static public String formatearNumeroPesos(String pesos){
+        return NumeroFormato.formatearNumeroPesos(pesos);
+    }
+    static public String formatearNumeroPesos(int pesos){
+        return NumeroFormato.formatearNumeroPesos(pesos);
     }
 }

@@ -74,11 +74,11 @@ public class ReporteIngresosPDF {
                         //final Rectangle OFICIO = new Rectangle(612,934);
                         //document.setPageSize(OFICIO);
                         document.setPageSize(PageSize.LETTER);
-                        //document.setMargins(30, 30, 35,30);
+                        document.setMargins(15, 15, 20,20);
                         document.newPage();
-                        //document.setMargins(30, 30, 35,30);
+                        document.setMargins(15, 15, 20,20);
                         //int pagina = 1;
-                         URL urlImagen;
+                        URL urlImagen;
                         Image imagen = null;
                         try {
                             
@@ -108,7 +108,7 @@ public class ReporteIngresosPDF {
                         tablaTitulo.addCell(new Phrase(" ",fTitulo1));
                         
                         PdfPTable tabla   = new PdfPTable(11);
-                        tabla.setWidths(new float[] {9f, 9f, 7f, 8f,11f, 8f, 11f, 12f,8f, 8f, 10f}); 
+                        tabla.setWidths(new float[] {18f, 8f, 8f, 8f,8f, 8f, 8f, 8f,8f, 8f, 10f}); 
                         tabla.getDefaultCell().setBorder(Rectangle.BOX);
                         tabla.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
                         tabla.getDefaultCell().setFixedHeight(14);

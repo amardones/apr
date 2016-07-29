@@ -109,6 +109,10 @@ public class RegistroEstadoController implements Serializable {
         }
     }
 
+     public void setItems(List<RegistroEstado> items) {
+         this.items = items;
+     }
+     
     public List<RegistroEstado> getItems() {
         /*if (items == null) {
             items = getFacade().findAll();
@@ -125,7 +129,8 @@ public class RegistroEstadoController implements Serializable {
                     System.out.println("Registros de estado: "+items.size());
             }
         }
-        return items;        
+        return items;               
+        
     }
    
     public double getMetros() {

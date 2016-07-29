@@ -71,6 +71,8 @@ public class AvisoCobro implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
     
+    @Column(name = "informacion_aviso")
+    private String informacionAviso;
     
     /*
     @JoinColumn(name = "id_cuenta", referencedColumnName = "id_cuenta", insertable = false, updatable = false)
@@ -229,6 +231,13 @@ public class AvisoCobro implements Serializable {
         return "cl.apr.entity.AvisoCobro[ avisoCobroPK=" + avisoCobroPK + " ]";
     }
 
+     public String getInformacionAviso() {
+        return informacionAviso;
+    }
+
+    public void setInformacionAviso(String informacionAviso) {
+        this.informacionAviso = informacionAviso;
+    }
     
     
 }

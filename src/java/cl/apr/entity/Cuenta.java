@@ -90,8 +90,7 @@ public class Cuenta implements Serializable {
     @Column(name = "aplica_cuota_social")
     private Boolean aplicaCuotaSocial;
     
-    @Column(name = "informacion_aviso")
-    private String informacionAviso;
+    
      
     public Cuenta() {
     }
@@ -234,13 +233,7 @@ public class Cuenta implements Serializable {
         this.aplicaCuotaSocial = aplicaCuotaSocial;
     }
 
-    public String getInformacionAviso() {
-        return informacionAviso;
-    }
-
-    public void setInformacionAviso(String informacionAviso) {
-        this.informacionAviso = informacionAviso;
-    }
+   
     
     
     @Override

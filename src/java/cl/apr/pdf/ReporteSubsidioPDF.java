@@ -73,9 +73,9 @@ public class ReporteSubsidioPDF {
                         //final Rectangle OFICIO = new Rectangle(612,934);
                         //document.setPageSize(OFICIO);
                         document.setPageSize(PageSize.LETTER);
-                        //document.setMargins(30, 30, 35,30);
+                        document.setMargins(15, 15, 20,20);
                         document.newPage();
-                        //document.setMargins(30, 30, 35,30);
+                        document.setMargins(15, 15, 20,20);
                         //int pagina = 1;
                          URL urlImagen;
                         Image imagen = null;
@@ -102,6 +102,7 @@ public class ReporteSubsidioPDF {
                         tablaTitulo.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
                         tablaTitulo.getDefaultCell().setFixedHeight(40);
                         
+                 
                         tablaTitulo.addCell(imagen);
                         tablaTitulo.addCell(new Phrase("Reporte Subsidios",fTitulo1));
                         tablaTitulo.addCell(new Phrase(" ",fTitulo1));

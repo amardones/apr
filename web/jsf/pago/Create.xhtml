@@ -9,7 +9,7 @@
     <ui:composition>
 
         <p:dialog id="PagoCreateDlg" widgetVar="PagoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePagoTitle}">
-            <h:form id="PagoCreateForm">
+            <h:form id="PagoCreateForm" target="blank" >
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pagoController.selected != null}">
                         <p:outputLabel value="Buscar cuenta :" for="cuentaAuto" />
@@ -21,62 +21,97 @@
                                 itemLabel="#{idCuentaItem.idCuenta}#{idCuentaItem.idCuenta==null?'':'-'}#{idCuentaItem.rut.nombre}#{idCuentaItem.idCuenta==null?'':'-'}#{idCuentaItem.rut.apellido}" 
                                 forceSelection="true"
                                 >
-                            <p:ajax event="itemSelect"  listener="#{pagoController.limpiarDetalles}" process="@form" update="display2 display3"/> 
+                            <p:ajax event="itemSelect"  listener="#{pagoController.limpiarDetalles}" process="@this" update="display2 display3 display4"/> 
                         </p:autoComplete>
                     </p:panelGrid>  
                     <div style="height: 500px; width: 600px">
                         <h:panelGroup id="display2" >                            
-                            <p:panelGrid  columns="2" rendered="#{cuentaController.selected != null}">
-                              <h:form id="DetalleAvisoCobroListForm">
-                                  <p:dataTable id="datalist" value="#{pagoController.itemsDetalleAvisos}" var="item"
-                                                selection="#{pagoController.detalleAvisoPagos}"
-                                                     paginator="false"
-                                                     rowKey="#{item.idDetalleAvisoCobro}"
-                                                     rows="10"
-                                                     rowsPerPageTemplate="10,20,30,40,50"
-                                                     paginatorPosition="bottom"
-                                                     >
+                            <p:panelGrid   rendered="#{cuentaController.selected != null}">
+                                <p:row>
+                                     <p:column><h:outputText value="CUENTA"/></p:column>
+                                     <p:column><h:outputText value=": #{cuentaController.selected.idCuenta}"/></p:column>
+                                     <p:column><h:outputText value=" "/></p:column>
+                                     <p:column><h:outputText value=" "/></p:column>
+                                     <p:column><h:outputText value=" "/></p:column>
+                                     <p:column><h:outputText value=" "/></p:column>
+                                     <p:column><h:outputText value="FECHA"/></p:column>
+                                     <p:column><h:outputText value=": #{utilController.fechaActual()}"/></p:column>
+                                     <p:column><h:outputText value="L. ACTUAL"/></p:column>
+                                     <p:column><h:outputText value=": #{pagoController.avisoCobro.registroEstado.estadoActual}"/></p:column>
+                                </p:row>
+                                <p:row>
+                                     <p:column><h:outputText value="NOMBRE"/></p:column>
+                                     <p:column colspan="5"><h:outputText value=": #{cuentaController.selected.rut.nombre} #{cuentaController.selected.rut.apellido}"/></p:column>
+                                     <p:column><h:outputText value="RUT"/></p:column>
+                                     <p:column><h:outputText value=": #{cuentaController.selected.rut.rut}"/></p:column>
+                                     <p:column><h:outputText value="L. ANTERIOR"/></p:column>
+                                     <p:column><h:outputText value=": #{pagoController.avisoCobro.registroEstado.estadoAnterior}"/></p:column>
+                                </p:row>
+                                <p:row>
+                                     <p:column><h:outputText value="DIRECCIÓN"/></p:column>
+                                     <p:column colspan="5"><h:outputText value=":#{cuentaController.selected.rut.direccion}"/></p:column>
+                                    <p:column> <h:outputText value="#{pagoController.periodoStr}"/> </p:column>
+                                     <p:column >
+                                         <p:commandButton value="Aviso" action="#{pagoController.verAvisoCobro()}" ajax="false" immediate="true" rendered="#{pagoController.avisoCobro != null}"/>
+                                     </p:column>
+                                     <p:column><h:outputText value="CONS. (MT3)"/></p:column>
+                                     <p:column><h:outputText value=": #{pagoController.avisoCobro.registroEstado.metrosCubicos}"/></p:column>
+                                </p:row>
+                               <p:row rendered="#{pagoController.avisoCobro != null}">
+                                   <p:column colspan="10">
+                                            <h:form id="DetalleAvisoCobroListForm">
+                                                <p:dataTable id="datalist" value="#{pagoController.itemsDetalleAvisos}" var="item"
+                                                              selection="#{pagoController.detalleAvisoPagos}"
+                                                                   paginator="false"
+                                                                   rowKey="#{item.idDetalleAvisoCobro}"
+                                                                   rows="10"
+                                                                   rowsPerPageTemplate="10,20,30,40,50"
+                                                                   paginatorPosition="bottom"
+                                                                   >
 
-                                            <p:ajax event="rowSelect"  listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
-                                            <p:ajax event="rowUnselect" listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
-                                            <p:ajax event="rowSelectCheckbox"  listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
-                                            <p:ajax event="rowUnselectCheckbox" listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
-                                            <p:ajax event="toggleSelect"  listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
-                                            
-                                            <p:column selectionMode="multiple" style="width:16px;text-align:center" />
-                                           <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="Tipo de Cobro"/>
-                                                </f:facet>
-                                                <h:outputText value="#{item.idTipoCobro.nombre}"/>
-                                            </p:column>
-                                           <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListDetalleAvisoCobroTitle_subTotal}"/>
-                                                </f:facet>
-                                                <h:outputText value="#{item.subTotal}"/>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListDetalleAvisoCobroTitle_descuento}"/>
-                                                </f:facet>
-                                                <h:outputText value="#{item.descuento}"/>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListDetalleAvisoCobroTitle_total}"/>
-                                                </f:facet>
-                                                <h:outputText value="#{item.total}"/>
-                                            </p:column>                                                                                 
-                                  </p:dataTable>
-                              </h:form> 
+                                                          <p:ajax event="rowSelect"  listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
+                                                          <p:ajax event="rowUnselect" listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
+                                                          <p:ajax event="rowSelectCheckbox"  listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
+                                                          <p:ajax event="rowUnselectCheckbox" listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
+                                                          <p:ajax event="toggleSelect"  listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />
+
+                                                          <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                                                         <p:column>
+                                                              <f:facet name="header">
+                                                                  <h:outputText value="Tipo de Cobro"/>
+                                                              </f:facet>
+                                                              <h:outputText value="#{item.idTipoCobro.nombre}"/>
+                                                          </p:column>
+                                                         <p:column>
+                                                              <f:facet name="header">
+                                                                  <h:outputText value="#{bundle.ListDetalleAvisoCobroTitle_subTotal}"/>
+                                                              </f:facet>
+                                                              <h:outputText value="#{utilController.formatearNumeroPesos(item.subTotal)}"/>
+                                                          </p:column>
+                                                          <p:column>
+                                                              <f:facet name="header">
+                                                                  <h:outputText value="#{bundle.ListDetalleAvisoCobroTitle_descuento}"/>
+                                                              </f:facet>
+                                                              <h:outputText value="#{utilController.formatearNumeroPesos(item.descuento)}"/>
+                                                          </p:column>
+                                                          <p:column>
+                                                              <f:facet name="header">
+                                                                  <h:outputText value="#{bundle.ListDetalleAvisoCobroTitle_total}"/>
+                                                              </f:facet>
+                                                              <h:outputText value="#{utilController.formatearNumeroPesos(item.total)}"/>
+                                                          </p:column>                                                                                 
+                                                </p:dataTable>
+                                            </h:form> 
+                                   </p:column>
+                               </p:row>      
+                         
                             </p:panelGrid>     
 
                         </h:panelGroup >
                         <h:panelGroup id="display4" >
-                            <p:panelGrid  columns="2" rendered="#{cuentaController.selected != null}">
+                            <p:panelGrid  columns="2" rendered="#{pagoController.avisoCobro != null}">
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_subtotal}" for="subtotal" />
-                                <p:outputLabel  id="subtotal" value="#{pagoController.selected.subtotal}"   title="#{bundle.CreatePagoTitle_subtotal}" /> 
+                                <p:outputLabel  id="subtotal" value="#{utilController.formatearNumeroPesos(pagoController.selected.subtotal)}"   title="#{bundle.CreatePagoTitle_subtotal}" /> 
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_numeroDocumento}" for="numeroDocumento" />
                                 <p:inputText id="numeroDocumento" value="#{pagoController.selected.numeroDocumento}" title="#{bundle.CreatePagoTitle_numeroDocumento}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_numeroDocumento}"/>
                                 
@@ -85,12 +120,12 @@
                                                             <p:ajax event="change" update="dias total interes" listener="#{pagoController.calculaInteresManual()}"/>
                                 </p:inputText>            
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_interes}" for="interes" />
-                                <p:inputText id="interes" disabled="true"  value="#{pagoController.selected.interes}" title="#{bundle.CreatePagoTitle_interes}" >
+                                <p:inputText id="interes" disabled="true"  value="#{utilController.formatearNumeroPesos(pagoController.selected.interes)}" title="#{bundle.CreatePagoTitle_interes}" >
                                                             <!--<p:ajax event="change" update="total" listener="#{pagoController.calculaInteresManual()}"/>-->
 
                                 </p:inputText>
-                                <p:outputLabel value="#{bundle.CreatePagoLabel_total}" for="total" />
-                                <p:outputLabel  id="total" value="#{pagoController.selected.total}"   title="#{bundle.CreatePagoTitle_total}" /> 
+                                <p:outputLabel style="font-weight: bold;"  value="#{bundle.CreatePagoLabel_total}" for="total" />
+                                <p:outputLabel  style="font-weight: bold;" id="total" value="#{utilController.formatearNumeroPesos(pagoController.selected.total)}"   title="#{bundle.CreatePagoTitle_total}" /> 
                                
                             </p:panelGrid>
                           
@@ -99,8 +134,7 @@
                                       
                           
                     <h:panelGroup id="display3" >                               
-                        <p:commandButton actionListener="#{pagoController.create}" rendered="#{pagoController.selected.subtotal > 0}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>
-                                          
+                        <p:commandButton actionListener="#{pagoController.create}" rendered="#{pagoController.avisoCobro != null}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>               
                     </h:panelGroup>
                 </h:panelGroup>
             </h:form>

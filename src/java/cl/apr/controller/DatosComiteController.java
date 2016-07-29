@@ -87,6 +87,7 @@ public class DatosComiteController implements Serializable {
             try {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
+                    items=null;
                 } else {
                     getFacade().remove(selected);
                 }

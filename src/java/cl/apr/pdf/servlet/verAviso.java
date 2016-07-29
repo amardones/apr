@@ -8,12 +8,14 @@ import cl.apr.beans.BarChartItem;
 import cl.apr.entity.AvisoCobro;
 import cl.apr.entity.DatosComite;
 import cl.apr.entity.Periodo;
+import cl.apr.enums.EnumFormatoFechaHora;
 import cl.apr.pdf.AvisoPDF;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
@@ -50,7 +52,8 @@ public class verAviso extends HttpServlet {
         try{
                 Integer idPeriodo = (Integer)request.getAttribute("idPeriodo");
                 Integer idCuenta = (Integer)request.getAttribute("idCuenta");
-                 
+                String fileName  = "aviso_"+EnumFormatoFechaHora.formatoAnoMesDiaSinSeparador.format(new Date())+"_P"+idPeriodo;
+                
                 request.setCharacterEncoding("UTF-8");
                 //String json = (String)request.getParameter("registro");
                 //String nombre = (String)request.getParameter("nombre");
@@ -60,11 +63,14 @@ public class verAviso extends HttpServlet {
                 List<AvisoCobro> list = new ArrayList<AvisoCobro>();
                 if(ejbFacade != null && idPeriodo != null){
                     if(idCuenta != null && idCuenta != -1){
+                        fileName += "_C"+idCuenta;
                         list.add(ejbFacade.getAviso(idPeriodo, idCuenta));
                     }else{
                         list = ejbFacade.getAvisosPorPeriodo(idPeriodo);
                     }
                 }
+                 fileName += ".pdf";
+                 
                 List<DatosComite> datosList=new ArrayList<>();
                 if(comiteFacade != null){
                     datosList=comiteFacade.findAll();
@@ -84,7 +90,7 @@ public class verAviso extends HttpServlet {
                 }
                 Periodo periodoAnteriro = periodoFacade.getPeriodoAnterior(idPeriodo);
                 baos =  AvisoPDF.crearPdf(list,datosList,periodoAnteriro, hmapBarChartItems);
-
+               
                 if(baos != null)
                 {
                         // setting some response headers
@@ -97,7 +103,7 @@ public class verAviso extends HttpServlet {
                         response.setHeader("Expires", "0");
                         response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
                         response.setHeader("Pragma", "public");
-                        response.setHeader("Content-Disposition","inline; filename=ver.pdf");
+                        response.setHeader("Content-Disposition","inline; filename="+fileName);
                         response.setContentType("application/pdf");
             // the contentlength
                         response.setContentLength(baos.size());

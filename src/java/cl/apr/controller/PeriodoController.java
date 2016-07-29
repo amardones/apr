@@ -36,6 +36,15 @@ public class PeriodoController implements Serializable {
     @Inject
     private ValoresParametricosController valoresParametricosController;
     
+    @Inject
+    private AvisoCobroController avisoCobroController;
+    
+     @Inject
+    private RegistroEstadoController registroEstadoController;
+    
+    
+    
+            
     private List<Periodo> items = null;
     private Periodo selected;
     private Periodo ultimoPeriodo;
@@ -79,6 +88,9 @@ public class PeriodoController implements Serializable {
 
     public void setSelected(Periodo selected) {
         this.selected = selected;
+        
+        avisoCobroController.setItems(null);
+        registroEstadoController.setItems(null);
     }
 
     protected void setEmbeddableKeys() {
@@ -150,21 +162,23 @@ public class PeriodoController implements Serializable {
             try {
                 if (persistAction != PersistAction.DELETE) {
                     if(selected.getFechaFin().getTime()<selected.getFechaVencimiento().getTime()){
-                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Fecha FIN menor a Fecha vencimiento","Hola"));
+                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Fecha FIN menor a Fecha vencimiento","Mensaje"));
                         return;
                     }else{
                         if (selected.getFechaVencimiento().getTime()<selected.getFechaEmision().getTime()) {
-                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Fecha vencimiento menor a Fecha emisión ","Hola1"));
+                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Fecha vencimiento menor a Fecha emisión ","Mensaje"));
                         return;
                         }else{
-                            if(selected.getFechaEmision().getTime()<selected.getFechaTomaLectura().getTime()){
-                                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Fecha emisión menor a Fecha Lectura ","Hola2"));
+                            if(selected.getFechaEmision().getTime()> selected.getFechaFin().getTime()){
+                                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Fecha emisión mayor a Fecha fin ","Mensaje"));
                         return;
                             }else{
+                                /*
                                 if(selected.getFechaTomaLectura().getTime()<selected.getFechaInicio().getTime()){
                                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Fecha Lectura menor a Fecha inicio ","Hola3"));
-                        return;                                 
+                                 return;                                 
                                 }
+                                 */
                             }
                             
                         }

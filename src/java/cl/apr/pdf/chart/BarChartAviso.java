@@ -60,7 +60,8 @@ public class BarChartAviso {
                 
                 
                 /* Step -2:Define the JFreeChart object to create bar chart */
-                JFreeChart chart=ChartFactory.createBarChart("Detalle de sus consumos","","MT3",my_bar_chart_dataset,PlotOrientation.VERTICAL,true,true,false);         
+                //JFreeChart chart=ChartFactory.createBarChart("Detalle de sus consumos","","MT3",my_bar_chart_dataset,PlotOrientation.VERTICAL,true,true,false);    
+                JFreeChart chart=ChartFactory.createBarChart("","","MT3",my_bar_chart_dataset,PlotOrientation.VERTICAL,true,true,false);     
                
                 
                 
@@ -69,9 +70,8 @@ public class BarChartAviso {
                 final CategoryPlot plot = chart.getCategoryPlot(); 
                 CategoryItemRenderer renderer = new CustomRenderer(); 
         
-                renderer.setSeriesPaint(0, Color.gray );
-                   
-                   
+                renderer.setSeriesPaint(0, Color.DARK_GRAY );
+                    
                 plot.setRenderer(renderer);
                 plot.setBackgroundPaint(Color.white);
                

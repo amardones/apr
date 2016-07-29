@@ -357,7 +357,7 @@ public class CuentaController implements Serializable {
      public List<Cuenta> completeCuenta(String query) {
         List<Cuenta> filteredThemes = new ArrayList<Cuenta>();
         try{
-            List<Cuenta> allThemes = getFacade().findAll();
+             List<Cuenta> allThemes = getItems();
 
             Cuenta c = null;
             String s = "";        
@@ -365,7 +365,7 @@ public class CuentaController implements Serializable {
                  c = allThemes.get(i);
                  if(c != null){
                     s = c.getIdCuenta() + c.getRut().getRut() + c.getRut().getNombre() + c.getRut().getApellido();
-                    if(s.toLowerCase().contains(query)) {
+                    if(s.toLowerCase().contains(query.toLowerCase())) {
                         filteredThemes.add(c);
                     }
                  }

@@ -3,6 +3,7 @@ package cl.apr.controller;
 import cl.apr.entity.Pago;
 import cl.apr.controller.util.JsfUtil;
 import cl.apr.controller.util.JsfUtil.PersistAction;
+import cl.apr.entity.AvisoCobro;
 import cl.apr.entity.DetalleAvisoCobro;
 import cl.apr.entity.PagoTipoCobro;
 import cl.apr.entity.PagoTipoCobroPK;
@@ -43,7 +44,7 @@ public class PagoController implements Serializable {
 
     @EJB private cl.apr.facade.PagoFacade ejbFacade;
     @EJB private cl.apr.facade.DetalleAvisoCobroFacade ejbFacadeDetalleAviso;
-    
+    @EJB private cl.apr.facade.PeriodoFacade periodoFacade;
     
     private boolean esSeleccionTipo = false;
     private List<Pago> items = null;
@@ -58,14 +59,17 @@ public class PagoController implements Serializable {
     private int valorCodigo;
     private Date fechaInicio;
     private Date fechaFin;
-   
-
+    private AvisoCobro avisoCobro;
+    private String periodoStr = "";
+ 
     @Inject
     private CuentaController cuentaController;
     @Inject
     private PeriodoController periodoController;
     @Inject
     private TipoCobroController tipoCobroController;
+    @Inject
+    private AvisoCobroController avisoCobroController;
     
     private int interes;
     private int subtotal;
@@ -126,6 +130,10 @@ public class PagoController implements Serializable {
     public void setDias(int dias) {
         this.dias = dias;
     }
+
+    public String getPeriodoStr() {
+        return periodoStr;
+    }
     
 
     public List<DetalleAvisoCobro> getDetalleAvisoPagos() {
@@ -156,8 +164,16 @@ public class PagoController implements Serializable {
    
     public List<DetalleAvisoCobro> getItemsDetalleAvisos() {
         if(itemsDetalleAvisos == null){
-            itemsDetalleAvisos= ejbFacadeDetalleAviso.getDetalleAvisoCobroDisponibles(cuentaController.getSelected().getIdCuenta());
-            
+            itemsDetalleAvisos = new ArrayList<>();
+            //avisoCobro = avisoCobroController.getUltimoAvisoCobroPorCuenta(cuentaController.getSelected().getIdCuenta());
+            if(avisoCobro!=null){
+                for (DetalleAvisoCobro det : avisoCobro.getDetalleAvisoCobroList()) {
+                    if(!det.getPagado()){
+                       itemsDetalleAvisos.add(det);
+                    }
+                }
+                //itemsDetalleAvisos= ejbFacadeDetalleAviso.getDetalleAvisoCobroDisponibles(cuentaController.getSelected().getIdCuenta());
+            }
         }
         return itemsDetalleAvisos;
     }
@@ -211,7 +227,9 @@ public class PagoController implements Serializable {
         itemsDetalleAvisos = null;
         detalleAvisoPagos=null;
         setDias(0);
+        avisoCobro = null;
         return selected;
+    
     }
 
     public void create() {
@@ -370,9 +388,19 @@ public class PagoController implements Serializable {
         return true;
     }
     public void limpiarDetalles(AjaxBehaviorEvent event){
+        avisoCobro = null;
+        if(cuentaController.getSelected()!= null){
+            avisoCobro = avisoCobroController.getUltimoAvisoCobroPorCuenta(cuentaController.getSelected().getIdCuenta());
+            if(avisoCobro != null){
+                Periodo periodoAnterior = periodoFacade.getPeriodoAnterior(avisoCobro.getAvisoCobroPK().getIdPeriodo());
+                if(periodoAnterior != null ){
+                    periodoStr = periodoAnterior.getNombre();
+                }
+            }
+        }
+        
         itemsDetalleAvisos = null;
         detalleAvisoPagos = null; 
-        
         selected.setFechaCreacion(new Date());
         setSubtotal(0);
             for(int e=0;e<tipoCobroController.getItems().size();e++){
@@ -453,6 +481,16 @@ public class PagoController implements Serializable {
         
     }
 
+    public AvisoCobro getAvisoCobro() {
+        return avisoCobro;
+    }
+    
+    public void verAvisoCobro(){
+        if(avisoCobro != null){
+            avisoCobroController.verAviso(avisoCobro);
+        }
+    }
+    
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();

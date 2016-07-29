@@ -129,8 +129,26 @@ public class AvisoCobroFacade extends AbstractFacade<AvisoCobro> {
          return query.getResultList();
        
     }
-
      
+     public AvisoCobro getUltimoAvisoCobroPorCuenta(int idCuenta) {
+         try{
+        Query query1 = em.createQuery(""
+                                    + "SELECT v.avisoCobroPK.idPeriodo FROM AvisoCobro v WHERE v.avisoCobroPK.idCuenta=:idCuenta order by v.fechaCreacion desc ", Integer.class);
+        query1.setMaxResults(1);
+        query1.setParameter("idCuenta",idCuenta);
+        Integer idPeriodo =  (Integer) query1.getSingleResult(); 
+        if(idPeriodo != null){         
+         Query query = em.createQuery(""
+                                        + "SELECT DISTINCT a FROM AvisoCobro a WHERE a.registroEstado.periodo.idPeriodo  = :idPeriodo AND a.registroEstado.cuenta.idCuenta  = :idCuenta ", AvisoCobro.class);
+            query.setParameter("idPeriodo",idPeriodo);
+            query.setParameter("idCuenta",idCuenta);
+            return (AvisoCobro) query.getSingleResult();
+        }
+         }catch(Exception e){
+             
+         }
+        return null;
+    }      
      public AvisoCobro getAviso(int idPeriodo, int idCuenta) {
          Query query = em.createQuery(""
                                         + "SELECT DISTINCT a FROM AvisoCobro a WHERE a.registroEstado.periodo.idPeriodo  = :idPeriodo AND a.registroEstado.cuenta.idCuenta  = :idCuenta ", AvisoCobro.class);

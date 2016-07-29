@@ -13,18 +13,18 @@ $BODY$
 
 	SELECT  T2.id_periodo, T1.mes, T2.metros_cubicos FROM
 		(
-		SELECT '01' as num_mes, 'ENE' as mes UNION
-		SELECT '02' as num_mes, 'FEB' as mes UNION
-		SELECT '03' as num_mes, 'MAR' as mes UNION
-		SELECT '04' as num_mes, 'ABR' as mes UNION
-		SELECT '05' as num_mes, 'MAY' as mes UNION
-		SELECT '06' as num_mes, 'JUN' as mes UNION
-		SELECT '07' as num_mes, 'JUL' as mes UNION
-		SELECT '08' as num_mes, 'AGO' as mes UNION
-		SELECT '09' as num_mes, 'SEP' as mes UNION
-		SELECT '10' as num_mes, 'OCT' as mes UNION
-		SELECT '11' as num_mes, 'NOV' as mes UNION
-		SELECT '12' as num_mes, 'DIC' as mes UNION
+		SELECT '01' as num_mes, 'DIC' as mes UNION
+		SELECT '02' as num_mes, 'ENE' as mes UNION
+		SELECT '03' as num_mes, 'FEB' as mes UNION
+		SELECT '04' as num_mes, 'MAR' as mes UNION
+		SELECT '05' as num_mes, 'ABR' as mes UNION
+		SELECT '06' as num_mes, 'MAY' as mes UNION
+		SELECT '07' as num_mes, 'JUN' as mes UNION
+		SELECT '08' as num_mes, 'JUL' as mes UNION
+		SELECT '09' as num_mes, 'AGO' as mes UNION
+		SELECT '10' as num_mes, 'SEP' as mes UNION
+		SELECT '11' as num_mes, 'OCT' as mes UNION
+		SELECT '12' as num_mes, 'NOV' as mes UNION
 		SELECT '' as num_mes, '-' as mes 
 		) T1
 
@@ -65,5 +65,5 @@ $BODY$
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION fn_obtener_estados_historicos(integer,integer)
+ALTER FUNCTION fn_obtener_estados_historicos(integer, integer)
   OWNER TO postgres;
