@@ -109,7 +109,7 @@
 
                         </h:panelGroup >
                         <h:panelGroup id="display4" >
-                            <p:panelGrid  columns="2" rendered="#{pagoController.avisoCobro != null}">
+                            <p:panelGrid  columns="2" rendered="#{pagoController.selected.subtotal > 0}">
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_subtotal}" for="subtotal" />
                                 <p:outputLabel  id="subtotal" value="#{utilController.formatearNumeroPesos(pagoController.selected.subtotal)}"   title="#{bundle.CreatePagoTitle_subtotal}" /> 
                                 <p:outputLabel value="#{bundle.CreatePagoLabel_numeroDocumento}" for="numeroDocumento" />
@@ -134,7 +134,7 @@
                                       
                           
                     <h:panelGroup id="display3" >                               
-                        <p:commandButton actionListener="#{pagoController.create}" rendered="#{pagoController.avisoCobro != null}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>               
+                        <p:commandButton actionListener="#{pagoController.create}" rendered="#{pagoController.selected.subtotal > 0}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>               
                     </h:panelGroup>
                 </h:panelGroup>
             </h:form>

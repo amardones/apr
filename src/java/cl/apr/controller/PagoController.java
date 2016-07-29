@@ -389,6 +389,12 @@ public class PagoController implements Serializable {
     }
     public void limpiarDetalles(AjaxBehaviorEvent event){
         avisoCobro = null;
+        itemsDetalleAvisos = null;
+        detalleAvisoPagos = null; 
+        selected.setFechaCreacion(new Date());
+        selected.setSubtotal(0);
+        selected.setTotal(0);
+        
         if(cuentaController.getSelected()!= null){
             avisoCobro = avisoCobroController.getUltimoAvisoCobroPorCuenta(cuentaController.getSelected().getIdCuenta());
             if(avisoCobro != null){
@@ -399,10 +405,6 @@ public class PagoController implements Serializable {
             }
         }
         
-        itemsDetalleAvisos = null;
-        detalleAvisoPagos = null; 
-        selected.setFechaCreacion(new Date());
-        setSubtotal(0);
             for(int e=0;e<tipoCobroController.getItems().size();e++){
               if(tipoCobroController.getItems().get(e).getCodigoTipoCobro().equalsIgnoreCase("INTERES")){
                    valorCodigo=tipoCobroController.getItems().get(e).getValor();
