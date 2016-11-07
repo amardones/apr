@@ -64,9 +64,8 @@
                                                               selection="#{pagoController.detalleAvisoPagos}"
                                                                    paginator="false"
                                                                    rowKey="#{item.idDetalleAvisoCobro}"
-                                                                   rows="10"
-                                                                   rowsPerPageTemplate="10,20,30,40,50"
                                                                    paginatorPosition="bottom"
+                                                                   scrollable="true" scrollHeight="200"
                                                                    >
 
                                                           <p:ajax event="rowSelect"  listener="#{pagoController.calculaItems}" update=":PagoCreateForm:display4 :PagoCreateForm:display3" />

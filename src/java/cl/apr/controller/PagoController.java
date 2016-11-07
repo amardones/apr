@@ -167,6 +167,7 @@ public class PagoController implements Serializable {
             itemsDetalleAvisos = new ArrayList<>();
             //avisoCobro = avisoCobroController.getUltimoAvisoCobroPorCuenta(cuentaController.getSelected().getIdCuenta());
             if(avisoCobro!=null){
+                System.out.println("avisoCobro.getDetalleAvisoCobroList().size(): "+avisoCobro.getDetalleAvisoCobroList().size());
                 for (DetalleAvisoCobro det : avisoCobro.getDetalleAvisoCobroList()) {
                     if(!det.getPagado()){
                        itemsDetalleAvisos.add(det);
@@ -174,6 +175,7 @@ public class PagoController implements Serializable {
                 }
                 //itemsDetalleAvisos= ejbFacadeDetalleAviso.getDetalleAvisoCobroDisponibles(cuentaController.getSelected().getIdCuenta());
             }
+              System.out.println("itemsDetalleAvisos.size(): "+itemsDetalleAvisos.size());
         }
         return itemsDetalleAvisos;
     }

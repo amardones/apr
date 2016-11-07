@@ -39,25 +39,7 @@ import javax.imageio.ImageIO;
 
 public class ReporteIngresosPDF {
 	
-	private static BaseColor colorRelleno = WebColors.getRGBColor("#eeeeee");
-        private static BaseColor colorBlueLigth = WebColors.getRGBColor("#009edd"); 
-	private static BaseColor colorBlue = WebColors.getRGBColor("#00008B"); 
-	private static BaseColor borderColor = BaseColor.LIGHT_GRAY;
 	
-	private static Font fTitulo1 = new Font(Font.getFamily("ARIAL"),15,Font.NORMAL, colorBlue);
-	private static Font fTitulo2 = new Font(Font.getFamily("ARIAL"),10,Font.NORMAL, colorBlue);
-	private static Font fSeparador = new Font(Font.getFamily("ARIAL"),4,Font.NORMAL);
-	//private static Font fTitulo = new Font(Font.getFamily("ARIAL"),14,Font.BOLD);
-	//private static Font fTituloTabla = new Font(Font.getFamily("ARIAL"),11,Font.BOLD);
-	//private static Font fSubTituloTabla = new Font(Font.getFamily("ARIAL"),8,Font.BOLD);//10
-	private static Font fCuerpoCabeceraTabla= new Font(Font.getFamily("ARIAL"),7f,Font.BOLD);
-	private static Font fCuerpoCabeceraTablaWhite= new Font(Font.getFamily("ARIAL"),7f,Font.BOLD, BaseColor.WHITE);
-	private static Font fCuerpoTabla = new Font(Font.getFamily("ARIAL"),7f,Font.NORMAL, BaseColor.DARK_GRAY);
-        private static Font fCuerpoTablaBold = new Font(Font.getFamily("ARIAL"),7f,Font.BOLD, BaseColor.DARK_GRAY);
-	//private static BaseColor colorRellenoLightGray = BaseColor.LIGHT_GRAY;	
-	
-	private static Font fTextPlazo= new Font(Font.getFamily("ARIAL"),8,Font.BOLD | Font.UNDERLINE );
-	    
 	
 	static public ByteArrayOutputStream crearPdf(List<ItemReporte> list, ItemReporte totalIngreso){
 		
@@ -74,9 +56,9 @@ public class ReporteIngresosPDF {
                         //final Rectangle OFICIO = new Rectangle(612,934);
                         //document.setPageSize(OFICIO);
                         document.setPageSize(PageSize.LETTER);
-                        document.setMargins(15, 15, 20,20);
+                        document.setMargins(UtilPDF.MARGIN_LEFT, UtilPDF.MARGIN_RIGHT,UtilPDF.MARGIN_TOP,UtilPDF.MARGIN_BOTTOM);
                         document.newPage();
-                        document.setMargins(15, 15, 20,20);
+                        document.setMargins(UtilPDF.MARGIN_LEFT, UtilPDF.MARGIN_RIGHT,UtilPDF.MARGIN_TOP,UtilPDF.MARGIN_BOTTOM);
                         //int pagina = 1;
                         URL urlImagen;
                         Image imagen = null;
@@ -97,6 +79,7 @@ public class ReporteIngresosPDF {
 
                         //System.out.println("Creando aviso 0");
                         PdfPTable tablaTitulo   = new PdfPTable(3);
+                        tablaTitulo.setWidthPercentage(100);
                         tablaTitulo.setWidths(new float[] {20f, 60f,20f});
                         tablaTitulo.getDefaultCell().setBorder(Rectangle.NO_BORDER);
                         tablaTitulo.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -104,139 +87,143 @@ public class ReporteIngresosPDF {
                         tablaTitulo.getDefaultCell().setFixedHeight(40);
                         
                         tablaTitulo.addCell(imagen);
-                        tablaTitulo.addCell(new Phrase("Reporte Ingresos",fTitulo1));
-                        tablaTitulo.addCell(new Phrase(" ",fTitulo1));
+                        tablaTitulo.addCell(new Phrase("Reporte Ingresos",UtilPDF.fTitulo1));
+                        tablaTitulo.addCell(new Phrase(" ",UtilPDF.fTitulo1));
                         
                         PdfPTable tabla   = new PdfPTable(11);
+                        tabla.setWidthPercentage(100);
                         tabla.setWidths(new float[] {18f, 8f, 8f, 8f,8f, 8f, 8f, 8f,8f, 8f, 10f}); 
                         tabla.getDefaultCell().setBorder(Rectangle.BOX);
                         tabla.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
                         tabla.getDefaultCell().setFixedHeight(14);
                         
-                        PdfPCell  c = new PdfPCell(new Phrase("Cuenta",fCuerpoTablaBold));
+                        PdfPCell  c = new PdfPCell(new Phrase("Cuenta",UtilPDF.fCuerpoTablaBold));
                         c.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         c.setHorizontalAlignment(Element.ALIGN_CENTER); 
                         c.setBorder(Rectangle.BOX);
-                        c.setBackgroundColor(borderColor);
+                        c.setBackgroundColor(UtilPDF.borderColor);
                         c.setPadding(5);
                         tabla.addCell(c);
                         
-                        c = new PdfPCell(new Phrase("N° Docuemento",fCuerpoTablaBold));
+                        c = new PdfPCell(new Phrase("N° Docuemento",UtilPDF.fCuerpoTablaBold));
                         c.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         c.setHorizontalAlignment(Element.ALIGN_CENTER); 
                         c.setBorder(Rectangle.BOX);
-                        c.setBackgroundColor(borderColor);
+                        c.setBackgroundColor(UtilPDF.borderColor);
                         c.setPadding(5);
                         tabla.addCell(c);
                         
-                        c = new PdfPCell(new Phrase("Tarifa A.P.R",fCuerpoTablaBold));
+                        c = new PdfPCell(new Phrase("Tarifa A.P.R",UtilPDF.fCuerpoTablaBold));
                         c.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         c.setHorizontalAlignment(Element.ALIGN_CENTER); 
                         c.setBorder(Rectangle.BOX);
-                        c.setBackgroundColor(borderColor);
+                        c.setBackgroundColor(UtilPDF.borderColor);
                         c.setPadding(5);
                         tabla.addCell(c);
                         
-                        c = new PdfPCell(new Phrase("Cuota Social",fCuerpoTablaBold));
+                        c = new PdfPCell(new Phrase("Cuota Social",UtilPDF.fCuerpoTablaBold));
                         c.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         c.setHorizontalAlignment(Element.ALIGN_CENTER); 
                         c.setBorder(Rectangle.BOX);
-                        c.setBackgroundColor(borderColor);
+                        c.setBackgroundColor(UtilPDF.borderColor);
                         c.setPadding(5);
                         tabla.addCell(c);
                         
-                        c = new PdfPCell(new Phrase("Interés y Reajuste",fCuerpoTablaBold));
+                        c = new PdfPCell(new Phrase("Interés y Reajuste",UtilPDF.fCuerpoTablaBold));
                         c.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         c.setHorizontalAlignment(Element.ALIGN_CENTER); 
                         c.setBorder(Rectangle.BOX);
-                        c.setBackgroundColor(borderColor);
+                        c.setBackgroundColor(UtilPDF.borderColor);
                         c.setPadding(5);
                         tabla.addCell(c);
                         
-                        c = new PdfPCell(new Phrase("Multas",fCuerpoTablaBold));
+                        c = new PdfPCell(new Phrase("Multas",UtilPDF.fCuerpoTablaBold));
                         c.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         c.setHorizontalAlignment(Element.ALIGN_CENTER); 
                         c.setBorder(Rectangle.BOX);
-                        c.setBackgroundColor(borderColor);
+                        c.setBackgroundColor(UtilPDF.borderColor);
                         c.setPadding(5);
                         tabla.addCell(c);
                         
-                        c = new PdfPCell(new Phrase("Corte y reposición",fCuerpoTablaBold));
+                        c = new PdfPCell(new Phrase("Corte y reposición",UtilPDF.fCuerpoTablaBold));
                         c.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         c.setHorizontalAlignment(Element.ALIGN_CENTER); 
                         c.setBorder(Rectangle.BOX);
-                        c.setBackgroundColor(borderColor);
+                        c.setBackgroundColor(UtilPDF.borderColor);
                         c.setPadding(5);
                         tabla.addCell(c);
                         
-                        c = new PdfPCell(new Phrase("Derecho Incorporación",fCuerpoTablaBold));
+                        c = new PdfPCell(new Phrase("Derecho Incorporación",UtilPDF.fCuerpoTablaBold));
                         c.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         c.setHorizontalAlignment(Element.ALIGN_CENTER); 
                         c.setBorder(Rectangle.BOX);
-                        c.setBackgroundColor(borderColor);
+                        c.setBackgroundColor(UtilPDF.borderColor);
                         c.setPadding(5);
                         tabla.addCell(c);
                         
-                        c = new PdfPCell(new Phrase("Otras",fCuerpoTablaBold));
+                        c = new PdfPCell(new Phrase("Otras",UtilPDF.fCuerpoTablaBold));
                         c.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         c.setHorizontalAlignment(Element.ALIGN_CENTER); 
                         c.setBorder(Rectangle.BOX);
-                        c.setBackgroundColor(borderColor);
+                        c.setBackgroundColor(UtilPDF.borderColor);
                         c.setPadding(5);
                         tabla.addCell(c);
                         
-                        c = new PdfPCell(new Phrase("Total",fCuerpoTablaBold));
+                        c = new PdfPCell(new Phrase("Total",UtilPDF.fCuerpoTablaBold));
                         c.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         c.setHorizontalAlignment(Element.ALIGN_CENTER); 
                         c.setBorder(Rectangle.BOX);
-                        c.setBackgroundColor(borderColor);
+                        c.setBackgroundColor(UtilPDF.borderColor);
                         c.setPadding(5);
                         tabla.addCell(c);
                         
-                        c = new PdfPCell(new Phrase("Fecha Creación",fCuerpoTablaBold));
+                        c = new PdfPCell(new Phrase("Fecha Creación",UtilPDF.fCuerpoTablaBold));
                         c.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         c.setHorizontalAlignment(Element.ALIGN_CENTER); 
                         c.setBorder(Rectangle.BOX);
-                        c.setBackgroundColor(borderColor);
+                        c.setBackgroundColor(UtilPDF.borderColor);
                         c.setPadding(5);
                         tabla.addCell(c);
                     
                     /*
-                        tabla.addCell(new Phrase("Periodo",fCuerpoTablaBold));
-                        tabla.addCell(new Phrase("Cuenta",fCuerpoTablaBold));
-                        tabla.addCell(new Phrase("Fecha Creación",fCuerpoTablaBold));
-                        tabla.addCell(new Phrase("Valor Subsidiado",fCuerpoTablaBold));
+                        tabla.addCell(new Phrase("Periodo",UtilPDF.fCuerpoTablaBold));
+                        tabla.addCell(new Phrase("Cuenta",UtilPDF.fCuerpoTablaBold));
+                        tabla.addCell(new Phrase("Fecha Creación",UtilPDF.fCuerpoTablaBold));
+                        tabla.addCell(new Phrase("Valor Subsidiado",UtilPDF.fCuerpoTablaBold));
                         */
+                        
                         ItemReporte av;
                         for(int i=0;i<list.size();i++){
                             av=list.get(i);
-                            tabla.addCell(new Phrase(av.getCuenta(),fCuerpoTabla));
-                            tabla.addCell(new Phrase(av.getNumeroDocumento(),fCuerpoTabla));
-                            tabla.addCell(new Phrase(""+av.getConsumoAgua(),fCuerpoTabla));
-                            tabla.addCell(new Phrase(""+av.getCuotaSocial(),fCuerpoTabla));
-                            tabla.addCell(new Phrase(""+av.getInteres(),fCuerpoTabla));
-                            tabla.addCell(new Phrase(""+av.getMultas(),fCuerpoTabla));
-                            tabla.addCell(new Phrase(""+av.getCorteReposicion(),fCuerpoTabla));
-                            tabla.addCell(new Phrase(""+av.getDerechoIncorporacion(),fCuerpoTabla));
-                            tabla.addCell(new Phrase(""+av.getOtrosCobros(),fCuerpoTabla));
-                            tabla.addCell(new Phrase(""+av.getTotalItem(),fCuerpoTabla));
-                            tabla.addCell(new Phrase(av.getFechaCreacion(),fCuerpoTabla));
+                            tabla.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+                            tabla.addCell(new Phrase(av.getCuenta(),UtilPDF.fCuerpoTabla));
+                            tabla.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
+                            tabla.addCell(new Phrase(av.getNumeroDocumento(),UtilPDF.fCuerpoTabla));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(av.getConsumoAgua()),UtilPDF.fCuerpoTabla));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(av.getCuotaSocial()),UtilPDF.fCuerpoTabla));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(av.getInteres()),UtilPDF.fCuerpoTabla));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(av.getMultas()),UtilPDF.fCuerpoTabla));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(av.getCorteReposicion()),UtilPDF.fCuerpoTabla));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(av.getDerechoIncorporacion()),UtilPDF.fCuerpoTabla));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(av.getOtrosCobros()),UtilPDF.fCuerpoTabla));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(av.getTotalItem()),UtilPDF.fCuerpoTabla));
+                            tabla.addCell(new Phrase(av.getFechaCreacion(),UtilPDF.fCuerpoTabla));
                         }
-                            tabla.addCell(new Phrase("",fCuerpoTablaBold));
-                            tabla.addCell(new Phrase("TOTAL: ",fCuerpoTablaBold));
-                            tabla.addCell(new Phrase(""+totalIngreso.getConsumoAgua(),fCuerpoTablaBold));
-                            tabla.addCell(new Phrase(""+totalIngreso.getCuotaSocial(),fCuerpoTablaBold));
-                            tabla.addCell(new Phrase(""+totalIngreso.getInteres(),fCuerpoTablaBold));
-                            tabla.addCell(new Phrase(""+totalIngreso.getMultas(),fCuerpoTablaBold));
-                            tabla.addCell(new Phrase(""+totalIngreso.getCorteReposicion(),fCuerpoTablaBold));
-                            tabla.addCell(new Phrase(""+totalIngreso.getDerechoIncorporacion(),fCuerpoTablaBold));
-                            tabla.addCell(new Phrase(""+totalIngreso.getOtrosCobros(),fCuerpoTablaBold));
-                            tabla.addCell(new Phrase(""+totalIngreso.getTotalItem(),fCuerpoTablaBold));
-                            tabla.addCell(new Phrase("",fCuerpoTablaBold));
+                            tabla.addCell(new Phrase("",UtilPDF.fCuerpoTablaBold));
+                            tabla.addCell(new Phrase("TOTAL: ",UtilPDF.fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(totalIngreso.getConsumoAgua()),UtilPDF.fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(totalIngreso.getCuotaSocial()),UtilPDF.fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(totalIngreso.getInteres()),UtilPDF.fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(totalIngreso.getMultas()),UtilPDF.fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(totalIngreso.getCorteReposicion()),UtilPDF.fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(totalIngreso.getDerechoIncorporacion()),UtilPDF.fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(totalIngreso.getOtrosCobros()),UtilPDF.fCuerpoTablaBold));
+                            tabla.addCell(new Phrase(NumeroFormato.formatearNumeroPesos(totalIngreso.getTotalItem()),UtilPDF.fCuerpoTablaBold));
+                            tabla.addCell(new Phrase("",UtilPDF.fCuerpoTablaBold));
                         document.add(tablaTitulo);
                         document.add(tabla);
                        
-                        // document.add(new Phrase("FIN",fTitulo1));
+                        // document.add(new Phrase("FIN",UtilPDF.fTitulo1));
                         try{
                                 baosPDF.flush();
                                 baosPDF.close();
@@ -250,71 +237,5 @@ public class ReporteIngresosPDF {
 		
 		return baosPDF;
 		
-	}
-	
-
-	
-    /*	
-    static private PdfPTable getHeader(String folio) {
-       
-    	PdfPTable table = new PdfPTable(3);
-        try {
-        	URL urlImagen = new URL(UtilSolicitud.URL_LOGOTIPO);
-        	Image imagen = Image.getInstance(urlImagen);
-        	
-			table.setWidths(new float[] {15f, 70f, 15});
-	       // table.setTotalWidth(527);
-	       //table.setLockedWidth(true);
-	       // table.getDefaultCell().setFixedHeight(80);
-	        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);            
-	        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-	       // table.getDefaultCell().setPaddingTop(7.8f);
-	        
-
-	        PdfPCell cellTitulo1 = new PdfPCell(new Phrase(UtilSolicitud.TITULO_FORMULARIO1,fTitulo1));
-	        cellTitulo1.setVerticalAlignment(Element.ALIGN_BOTTOM);
-	        cellTitulo1.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        //cellTitulo.setFixedHeight(20);
-	        cellTitulo1.setBorder(Rectangle.NO_BORDER);
-	        cellTitulo1.setColspan(3);
-	        
-	        PdfPCell cellTitulo2 = new PdfPCell(new Phrase(UtilSolicitud.TITULO_FORMULARIO2,fTitulo2));
-	        cellTitulo2.setVerticalAlignment(Element.ALIGN_BOTTOM);
-	        cellTitulo2.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        //cellTitulo.setFixedHeight(20);
-	        cellTitulo2.setBorder(Rectangle.NO_BORDER);
-	        cellTitulo2.setColspan(3);
-	        
-	        PdfPCell cellLogo = new PdfPCell(imagen, true);
-	        cellLogo.setPadding(3);
-	        cellLogo.setFixedHeight(50);
-	        cellLogo.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        cellLogo.setVerticalAlignment(Element.ALIGN_BOTTOM);
-	        //cellLogo.setColspan(2);	       
-	        cellLogo.setBorder(Rectangle.NO_BORDER);
-	  
-	        PdfPCell cellFolio = new PdfPCell(new Phrase(UtilSolicitud.NUM+"   "+folio,fTitulo2));
-	        cellFolio.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        cellFolio.setHorizontalAlignment(Element.ALIGN_RIGHT);
-	        //cellTitulo.setFixedHeight(20);
-	        cellFolio.setBorder(Rectangle.NO_BORDER);
-	       
-	        
-	        table.addCell(cellTitulo1);
-	        table.addCell(cellTitulo2);
-	        table.addCell(new Phrase("",fTitulo1));
-	        table.addCell(cellLogo);
-	        table.addCell(cellFolio);
-	        
-        } catch (DocumentException e) {
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}      
-        return table;
-    }
-        
-        */
+	} 
 }
